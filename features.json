@@ -1,0 +1,338 @@
+{
+  "features": [
+    {
+      "id": "db-schema",
+      "category": "foundation",
+      "title": "Database Schema",
+      "description": "Set up Prisma schema with all core models for Quadratic",
+      "acceptanceCriteria": [
+        "Workspace model with name, slug, settings",
+        "User model with email, name, avatar, preferences",
+        "Team model with name, key, color, workspace relation",
+        "Project model with name, description, status, team relation",
+        "Issue model with title, description, status, priority, assignee, creator, project, team, cycle, labels",
+        "Cycle model with name, startDate, endDate, team relation",
+        "Label model with name, color, team relation",
+        "Comment model with content, author, issue relation",
+        "IssueHistory model for tracking changes",
+        "All relations properly defined with foreign keys",
+        "SQLite database initialized with migrations"
+      ],
+      "passes": false
+    },
+    {
+      "id": "auth-setup",
+      "category": "foundation",
+      "title": "Authentication System",
+      "description": "Configure Better Auth with credentials provider and workspace creation flow",
+      "acceptanceCriteria": [
+        "Verify Better Auth is properly configured in src/server/better-auth/",
+        "Create login page with email/password using shadcn/ui",
+        "Create registration page with workspace creation",
+        "Set up Better Auth client for frontend authentication",
+        "Create auth middleware for protected routes",
+        "Redirect to onboarding for new users",
+        "Logout functionality",
+        "Test authentication flow end-to-end"
+      ],
+      "passes": false
+    },
+    {
+      "id": "layout-shell",
+      "category": "ui",
+      "title": "Application Layout Shell",
+      "description": "Create the main app layout with sidebar navigation",
+      "acceptanceCriteria": [
+        "Collapsible left sidebar with team/project navigation",
+        "Top header with workspace switcher and search button",
+        "Command palette trigger (Cmd+K)",
+        "User avatar menu with settings/logout",
+        "Keyboard shortcut hints in UI",
+        "Dark mode support",
+        "Responsive design (sidebar collapses on mobile)",
+        "Smooth animations and transitions"
+      ],
+      "passes": false
+    },
+    {
+      "id": "issue-crud",
+      "category": "core",
+      "title": "Issue CRUD Operations",
+      "description": "Build tRPC procedures for creating, reading, updating, deleting issues",
+      "acceptanceCriteria": [
+        "Create issue procedure with title, description, team, project, assignee, priority, labels",
+        "Get issue by ID procedure with all relations",
+        "Update issue procedure for all fields",
+        "Delete/archive issue procedure",
+        "List issues with filtering (status, assignee, project, label)",
+        "Zod validation for all inputs",
+        "Proper error handling and authorization"
+      ],
+      "passes": false
+    },
+    {
+      "id": "issue-list-view",
+      "category": "ui",
+      "title": "Issue List View",
+      "description": "Create the main issues list with filtering and grouping",
+      "acceptanceCriteria": [
+        "Table view of issues showing identifier, title, status, priority, assignee, labels",
+        "Sortable columns",
+        "Filter sidebar with status, assignee, priority, label filters",
+        "Group by dropdown (status, assignee, priority, project, none)",
+        "Quick actions (change status, assign, set priority)",
+        "Create issue button with modal",
+        "Bulk selection and actions",
+        "Virtual scrolling for performance with 1000+ issues",
+        "Keyboard navigation (j/k for up/down, enter to open)"
+      ],
+      "passes": false
+    },
+    {
+      "id": "issue-board-view",
+      "category": "ui",
+      "title": "Issue Board View (Kanban)",
+      "description": "Build drag-and-drop Kanban board for issue management",
+      "acceptanceCriteria": [
+        "Kanban columns for each status (Backlog, Todo, In Progress, Done, Cancelled)",
+        "Drag and drop to change status (using @dnd-kit)",
+        "Issue cards showing title, identifier, priority, assignee avatar",
+        "Collapsible columns",
+        "Create issue button in each column",
+        "Quick filters (assignee, label)",
+        "Column headers showing issue count",
+        "Smooth drag animations"
+      ],
+      "passes": false
+    },
+    {
+      "id": "issue-detail",
+      "category": "ui",
+      "title": "Issue Detail Page",
+      "description": "Full-page issue view with editing and comments",
+      "acceptanceCriteria": [
+        "Issue title as editable input (auto-save)",
+        "Rich text description editor (use TipTap or similar)",
+        "Status dropdown with state icons",
+        "Priority selector (No Priority, Low, Medium, High, Urgent)",
+        "Assignee selector with search",
+        "Project selector",
+        "Label multi-select with color indicators",
+        "Due date picker",
+        "Comment section with threaded discussions",
+        "Issue activity/history timeline",
+        "Related issues section",
+        "Sub-issues list with create button",
+        "Keyboard shortcut: 'c' to close issue",
+        "Copy issue link button"
+      ],
+      "passes": false
+    },
+    {
+      "id": "cycles",
+      "category": "core",
+      "title": "Cycles (Sprints)",
+      "description": "Implement sprint/cycle management (Linear-style)",
+      "acceptanceCriteria": [
+        "Create cycle modal with name, start date, end date",
+        "Current cycle indicator in sidebar",
+        "Cycle detail page showing assigned issues",
+      "Cycle board view (Kanban filtered by cycle)",
+        "Cycle list view",
+        "Add/remove issues from cycle",
+        "Cycle progress bar (percentage complete)",
+        "Upcoming cycles list",
+        "Completed cycles archive"
+      ],
+      "passes": false
+    },
+    {
+      "id": "projects",
+      "category": "core",
+      "title": "Project Management",
+      "description": "Build project pages with roadmap and issue organization",
+      "acceptanceCriteria": [
+        "Create project modal with name, description, team, color",
+        "Project list view in sidebar",
+        "Project detail page with overview tab",
+        "Project board view (issues filtered by project)",
+        "Project list view",
+        "Project roadmap view (Gantt-style timeline)",
+        "Project settings (rename, archive, delete)",
+        "Project lead assignment",
+        "Start/target date fields"
+      ],
+      "passes": false
+    },
+    {
+      "id": "teams",
+      "category": "core",
+      "title": "Team Management",
+      "description": "Team creation and member management",
+      "acceptanceCriteria": [
+        "Create team with name, key (e.g., ENG), color",
+        "Team settings page",
+        "Invite members to team (by email)",
+        "Member list with roles (Admin, Member)",
+        "Remove members from team",
+        "Team issues view (all issues assigned to team)",
+        "Team cycle view",
+        "Default team selection"
+      ],
+      "passes": false
+    },
+    {
+      "id": "labels",
+      "category": "core",
+      "title": "Label System",
+      "description": "Color-coded labels for issue categorization",
+      "acceptanceCriteria": [
+        "Create label modal with name and color picker",
+        "Label management page listing all labels",
+        "Edit and delete labels",
+        "Apply multiple labels to issues",
+        "Filter by label in list/board views",
+        "Label display in issue cards",
+        "Quick label add/remove from issue detail"
+      ],
+      "passes": false
+    },
+    {
+      "id": "command-palette",
+      "category": "ux",
+      "title": "Command Palette",
+      "description": "Cmd+K command palette for navigation and actions",
+      "acceptanceCriteria": [
+        "Cmd+K shortcut opens command palette",
+        "Search for issues by title/identifier",
+        "Quick navigation to pages (Issues, Projects, Cycles, Teams)",
+        "Actions: Create issue, Create project, Start cycle",
+        "Recent items section",
+        "Keyboard navigation (arrow keys + enter)",
+        "Fuzzy search matching",
+        "Close with Escape key"
+      ],
+      "passes": false
+    },
+    {
+      "id": "keyboard-shortcuts",
+      "category": "ux",
+      "title": "Keyboard Shortcuts",
+      "description": "Keyboard navigation throughout app (Linear-style)",
+      "acceptanceCriteria": [
+        "? shortcut opens keyboard shortcuts help modal",
+        "c - Create new issue",
+        "j/k - Navigate up/down in lists",
+        "x - Select/deselect issue",
+        "Cmd+Enter - Save/Submit",
+        "Esc - Close modals/go back",
+        "/ - Focus search",
+        "g then i - Go to Issues",
+        "g then p - Go to Projects",
+        "g then c - Go to Cycles",
+        "Cmd+Shift+C - Copy issue URL",
+        "All shortcuts shown in UI tooltips"
+      ],
+      "passes": false
+    },
+    {
+      "id": "search",
+      "category": "core",
+      "title": "Global Search",
+      "description": "Full-text search across all entities",
+      "acceptanceCriteria": [
+        "Search issues by title, description, identifier",
+        "Search projects by name",
+        "Search cycles by name",
+        "Search users by name/email",
+        "Filter search by entity type",
+        "Recent searches",
+        "Click result to navigate",
+        "Fast search with debouncing"
+      ],
+      "passes": false
+    },
+    {
+      "id": "notifications",
+      "category": "core",
+      "title": "Notification System",
+      "description": "In-app notifications for issue updates",
+      "acceptanceCriteria": [
+        "Notification bell icon in header with badge",
+        "Dropdown showing recent notifications",
+        "Notification types: assigned, mentioned, status changed, commented",
+        "Mark all as read",
+        "Click notification to navigate to issue",
+        "Real-time updates via polling or SSE",
+        "Notification preferences (which events to notify)"
+      ],
+      "passes": false
+    },
+    {
+      "id": "analytics",
+      "category": "analytics",
+      "title": "Cycle Analytics",
+      "description": "Velocity and burndown charts for cycles",
+      "acceptanceCriteria": [
+        "Cycle analytics page",
+        "Issues completed chart (by day)",
+        "Story points/estimates if implemented",
+        "Team velocity calculation",
+        "Average cycle time",
+        "Issues by state pie chart",
+        "Compare current vs previous cycle"
+      ],
+      "passes": false
+    },
+    {
+      "id": "templates",
+      "category": "ux",
+      "title": "Issue Templates",
+      "description": "Template system for common issue types",
+      "acceptanceCriteria": [
+        "Create template modal with title/description defaults",
+        "Template management page",
+        "Apply template when creating issue",
+        "Default templates: Bug Report, Feature Request, Task",
+        "Team-specific templates"
+      ],
+      "passes": false
+    },
+    {
+      "id": "settings",
+      "category": "ui",
+      "title": "Settings Pages",
+      "description": "User and workspace settings",
+      "acceptanceCriteria": [
+        "User profile settings (name, avatar, email)",
+        "Workspace settings (name, slug, icon)",
+        "Appearance settings (theme, density)",
+        "Notification preferences",
+      "Team management in settings",
+        "Label management in settings",
+        "API keys section (placeholder for future)",
+        "Danger zone (delete workspace)"
+      ],
+      "passes": false
+    },
+    {
+      "id": "polish",
+      "category": "ux",
+      "title": "UI Polish & Performance",
+      "description": "Final polish, animations, and performance optimization",
+      "acceptanceCriteria": [
+        "All loading states with skeletons",
+        "Error boundaries for crash recovery",
+        "Optimistic updates for issue mutations",
+        "Smooth page transitions",
+        "Toast notifications for actions",
+        "Confirmation dialogs for destructive actions",
+        "Empty states for all views",
+        "Tooltip explanations throughout",
+        "Performance: First load under 2s",
+        "Performance: Issue list scrolls smoothly with 500+ items"
+      ],
+      "passes": false
+    }
+  ]
+}
