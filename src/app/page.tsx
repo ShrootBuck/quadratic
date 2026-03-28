@@ -1,103 +1,87 @@
-import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-
-import { LatestPost } from "~/app/_components/post";
-import { auth } from "~/server/better-auth";
+import { Button } from "@/components/ui/button";
 import { getSession } from "~/server/better-auth/server";
-import { api, HydrateClient } from "~/trpc/server";
 
 export default async function Home() {
-	const hello = await api.post.hello({ text: "from tRPC" });
 	const session = await getSession();
 
+	// Redirect to app if already logged in
 	if (session) {
-		void api.post.getLatest.prefetch();
+		redirect("/app");
 	}
 
 	return (
-		<HydrateClient>
-			<main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-				<div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-					<h1 className="font-extrabold text-5xl tracking-tight sm:text-[5rem]">
-						Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-					</h1>
-					<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-						<Link
-							className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-							href="https://create.t3.gg/en/usage/first-steps"
-							target="_blank"
+		<div className="flex min-h-screen flex-col items-center justify-center bg-[#0F1115] px-4">
+			<div className="mx-auto max-w-3xl text-center">
+				<div className="mb-6 flex justify-center">
+					<div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#5E6AD2]">
+						<svg
+							aria-label="Quadratic logo"
+							className="h-7 w-7 text-white"
+							fill="none"
+							height="24"
+							stroke="currentColor"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							strokeWidth="2"
+							viewBox="0 0 24 24"
+							width="24"
+							xmlns="http://www.w3.org/2000/svg"
 						>
-							<h3 className="font-bold text-2xl">First Steps →</h3>
-							<div className="text-lg">
-								Just the basics - Everything you need to know to set up your
-								database and authentication.
-							</div>
-						</Link>
-						<Link
-							className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-							href="https://create.t3.gg/en/introduction"
-							target="_blank"
-						>
-							<h3 className="font-bold text-2xl">Documentation →</h3>
-							<div className="text-lg">
-								Learn more about Create T3 App, the libraries it uses, and how
-								to deploy it.
-							</div>
-						</Link>
+							<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+						</svg>
 					</div>
-					<div className="flex flex-col items-center gap-2">
-						<p className="text-2xl text-white">
-							{hello ? hello.greeting : "Loading tRPC query..."}
-						</p>
-
-						<div className="flex flex-col items-center justify-center gap-4">
-							<p className="text-center text-2xl text-white">
-								{session && <span>Logged in as {session.user?.name}</span>}
-							</p>
-							{!session ? (
-								<form>
-									<button
-										className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
-										formAction={async () => {
-											"use server";
-											const res = await auth.api.signInSocial({
-												body: {
-													provider: "github",
-													callbackURL: "/",
-												},
-											});
-											if (!res.url) {
-												throw new Error("No URL returned from signInSocial");
-											}
-											redirect(res.url);
-										}}
-									>
-										Sign in with Github
-									</button>
-								</form>
-							) : (
-								<form>
-									<button
-										className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
-										formAction={async () => {
-											"use server";
-											await auth.api.signOut({
-												headers: await headers(),
-											});
-											redirect("/");
-										}}
-									>
-										Sign out
-									</button>
-								</form>
-							)}
-						</div>
-					</div>
-
-					{session?.user && <LatestPost />}
 				</div>
-			</main>
-		</HydrateClient>
+				<h1 className="mb-4 font-bold text-5xl text-[#F7F8F8] tracking-tight sm:text-6xl">
+					Quadratic
+				</h1>
+				<p className="mb-8 text-[#8A8F98] text-xl">
+					A Linear-style project management tool for modern teams.
+					<br />
+					Fast, keyboard-first, and beautifully designed.
+				</p>
+				<div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+					<Link href="/register">
+						<Button
+							className="bg-[#5E6AD2] px-8 text-white hover:bg-[#4E5AC2]"
+							size="lg"
+						>
+							Get Started
+						</Button>
+					</Link>
+					<Link href="/login">
+						<Button
+							className="border-[#2A2F35] bg-transparent px-8 text-[#F7F8F8] hover:bg-[#2A2F35]"
+							size="lg"
+							variant="outline"
+						>
+							Sign In
+						</Button>
+					</Link>
+				</div>
+			</div>
+
+			<div className="mt-16 grid max-w-4xl gap-8 sm:grid-cols-3">
+				<div className="rounded-lg border border-[#2A2F35] bg-[#16181D] p-6">
+					<h3 className="mb-2 font-semibold text-[#F7F8F8]">Issue Tracking</h3>
+					<p className="text-[#8A8F98] text-sm">
+						Organize and track issues with a fast, intuitive interface.
+					</p>
+				</div>
+				<div className="rounded-lg border border-[#2A2F35] bg-[#16181D] p-6">
+					<h3 className="mb-2 font-semibold text-[#F7F8F8]">Cycles</h3>
+					<p className="text-[#8A8F98] text-sm">
+						Plan and execute work in focused sprints.
+					</p>
+				</div>
+				<div className="rounded-lg border border-[#2A2F35] bg-[#16181D] p-6">
+					<h3 className="mb-2 font-semibold text-[#F7F8F8]">Keyboard First</h3>
+					<p className="text-[#8A8F98] text-sm">
+						Navigate and take action without lifting your fingers.
+					</p>
+				</div>
+			</div>
+		</div>
 	);
 }

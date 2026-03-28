@@ -35,7 +35,7 @@
 				"Logout functionality",
 				"Test authentication flow end-to-end"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "layout-shell",
