@@ -52,7 +52,7 @@
 				"Responsive design (sidebar collapses on mobile)",
 				"Smooth animations and transitions"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "issue-crud",

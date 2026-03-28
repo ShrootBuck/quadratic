@@ -1,4 +1,8 @@
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { AppShell } from "@/components/layout/app-shell";
+import { Sidebar } from "@/components/layout/sidebar";
+import { auth } from "~/server/better-auth";
 import { getSession } from "~/server/better-auth/server";
 
 export default async function AppLayout({
@@ -12,17 +16,34 @@ export default async function AppLayout({
 		redirect("/login");
 	}
 
+	const user = session.user;
+
+	async function handleSignOut() {
+		"use server";
+		await auth.api.signOut({
+			headers: await headers(),
+		});
+		redirect("/login");
+	}
+
 	return (
-		<div className="min-h-screen bg-[#0F1115]">
-			<header className="border-[#2A2F35] border-b bg-[#16181D]">
-				<div className="flex h-14 items-center px-4">
-					<div className="flex items-center gap-2">
-						<div className="h-6 w-6 rounded bg-[#5E6AD2]" />
-						<span className="font-semibold text-[#F7F8F8]">Quadratic</span>
-					</div>
-				</div>
-			</header>
-			<main>{children}</main>
+		<div className="flex h-screen overflow-hidden bg-[#0F1115]">
+			{/* Sidebar */}
+			<Sidebar className="hidden md:flex" />
+
+			{/* Main content area */}
+			<div className="flex flex-1 flex-col overflow-hidden">
+				<AppShell
+					onSignOut={handleSignOut}
+					user={{
+						name: user.name,
+						email: user.email,
+						image: user.image,
+					}}
+				>
+					<main className="flex-1 overflow-auto p-6">{children}</main>
+				</AppShell>
+			</div>
 		</div>
 	);
 }
