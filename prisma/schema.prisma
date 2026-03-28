@@ -33,11 +33,20 @@ model User {
   email         String
   emailVerified Boolean   @default(false)
   image         String? //@db.Text
+  preferences   String?   // JSON string for user preferences
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @default(now()) @updatedAt
   sessions      Session[]
   accounts      Account[]
   posts         Post[]
+
+  // Quadratic relations
+  memberships    WorkspaceMember[]
+  projectsLead   Project[]       @relation(name: "ProjectLead")
+  assignedIssues Issue[]         @relation(name: "AssignedIssues")
+  createdIssues  Issue[]         @relation(name: "CreatedIssues")
+  comments       Comment[]
+  issueHistory   IssueHistory[]
 
   @@unique([email])
   @@map("user")
@@ -86,4 +95,241 @@ model Verification {
   updatedAt  DateTime @default(now()) @updatedAt
 
   @@map("verification")
+}
+
+// Quadratic Models - Project Management
+
+model Workspace {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  settings  String? // JSON string for workspace settings
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  members WorkspaceMember[]
+  teams   Team[]
+  projects Project[]
+  issues  Issue[]
+  cycles  Cycle[]
+  labels  Label[]
+
+  @@map("workspace")
+}
+
+model WorkspaceMember {
+  id        String   @id @default(cuid())
+  role      WorkspaceRole @default(MEMBER)
+  joinedAt  DateTime @default(now())
+
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, userId])
+  @@index([userId])
+  @@map("workspace_member")
+}
+
+model Team {
+  id          String   @id @default(cuid())
+  name        String
+  key         String   // e.g., "ENG"
+  color       String   // e.g., "#5E6AD2"
+  createdAt   DateTime @default(now())
+
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  projects    Project[]
+  issues      Issue[]
+  cycles      Cycle[]
+  labels      Label[]
+
+  @@unique([workspaceId, key])
+  @@index([workspaceId])
+  @@map("team")
+}
+
+model Project {
+  id          String        @id @default(cuid())
+  name        String
+  description String?
+  status      ProjectStatus @default(PLANNED)
+  startDate   DateTime?
+  targetDate  DateTime?
+  createdAt   DateTime      @default(now())
+
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  teamId      String
+  team        Team      @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  leadId      String?
+  lead        User?     @relation(fields: [leadId], references: [id], name: "ProjectLead")
+  issues      Issue[]
+
+  @@index([workspaceId])
+  @@index([teamId])
+  @@index([leadId])
+  @@map("project")
+}
+
+model Cycle {
+  id          String      @id @default(cuid())
+  name        String
+  description String?
+  startDate   DateTime
+  endDate     DateTime
+  status      CycleStatus @default(UPCOMING)
+  createdAt   DateTime    @default(now())
+
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  teamId      String
+  team        Team      @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  issues      Issue[]
+
+  @@index([workspaceId])
+  @@index([teamId])
+  @@map("cycle")
+}
+
+model Label {
+  id        String   @id @default(cuid())
+  name      String
+  color     String   // e.g., "#4EC9B0"
+  createdAt DateTime @default(now())
+
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  teamId      String?
+  team        Team?     @relation(fields: [teamId], references: [id], onDelete: SetNull)
+  issueLabels IssueLabel[]
+
+  @@unique([workspaceId, name])
+  @@index([workspaceId])
+  @@index([teamId])
+  @@map("label")
+}
+
+model Issue {
+  id          String      @id @default(cuid())
+  identifier  String      // e.g., "ENG-123"
+  number      Int         // Auto-increment per team
+  title       String
+  description String?     // JSON string for TipTap content
+  status      IssueStatus @default(BACKLOG)
+  priority    Priority    @default(NO_PRIORITY)
+  dueDate     DateTime?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  teamId      String
+  team        Team      @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  projectId   String?
+  project     Project?  @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  cycleId     String?
+  cycle       Cycle?    @relation(fields: [cycleId], references: [id], onDelete: SetNull)
+  assigneeId  String?
+  assignee    User?     @relation(fields: [assigneeId], references: [id], name: "AssignedIssues")
+  creatorId   String
+  creator     User      @relation(fields: [creatorId], references: [id], name: "CreatedIssues")
+  
+  labels      IssueLabel[]
+  comments    Comment[]
+  history     IssueHistory[]
+
+  @@unique([teamId, number])
+  @@index([workspaceId])
+  @@index([teamId])
+  @@index([projectId])
+  @@index([cycleId])
+  @@index([assigneeId])
+  @@index([creatorId])
+  @@index([status])
+  @@index([priority])
+  @@map("issue")
+}
+
+model IssueLabel {
+  id        String @id @default(cuid())
+  issueId   String
+  issue     Issue  @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  labelId   String
+  label     Label  @relation(fields: [labelId], references: [id], onDelete: Cascade)
+
+  @@unique([issueId, labelId])
+  @@index([labelId])
+  @@map("issue_label")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String   // JSON string for TipTap content
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  issueId  String
+  issue    Issue  @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
+
+  @@index([issueId])
+  @@index([authorId])
+  @@map("comment")
+}
+
+model IssueHistory {
+  id        String   @id @default(cuid())
+  field     String   // e.g., "status", "assignee", "priority"
+  oldValue  String?  // JSON string
+  newValue  String   // JSON string
+  createdAt DateTime @default(now())
+
+  issueId  String
+  issue    Issue  @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  actorId  String
+  actor    User   @relation(fields: [actorId], references: [id])
+
+  @@index([issueId])
+  @@index([actorId])
+  @@map("issue_history")
+}
+
+// Enums
+
+enum WorkspaceRole {
+  ADMIN
+  MEMBER
+}
+
+enum ProjectStatus {
+  PLANNED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum CycleStatus {
+  UPCOMING
+  CURRENT
+  COMPLETED
+}
+
+enum IssueStatus {
+  BACKLOG
+  TODO
+  IN_PROGRESS
+  DONE
+  CANCELLED
+}
+
+enum Priority {
+  NO_PRIORITY
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
 }
