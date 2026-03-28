@@ -1,0 +1,573 @@
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+
+// Enums for validation
+const IssueStatus = z.enum([
+	"BACKLOG",
+	"TODO",
+	"IN_PROGRESS",
+	"DONE",
+	"CANCELLED",
+]);
+const Priority = z.enum(["NO_PRIORITY", "LOW", "MEDIUM", "HIGH", "URGENT"]);
+
+// Common schemas
+const issueIdSchema = z.object({
+	id: z.string(),
+});
+
+const createIssueInput = z.object({
+	title: z.string().min(1).max(500),
+	description: z.string().optional(),
+	teamId: z.string(),
+	projectId: z.string().optional(),
+	cycleId: z.string().optional(),
+	assigneeId: z.string().optional(),
+	priority: Priority.default("NO_PRIORITY"),
+	labelIds: z.array(z.string()).default([]),
+	status: IssueStatus.default("BACKLOG"),
+	dueDate: z.date().optional(),
+});
+
+const updateIssueInput = z.object({
+	id: z.string(),
+	title: z.string().min(1).max(500).optional(),
+	description: z.string().optional(),
+	projectId: z.string().optional().nullable(),
+	cycleId: z.string().optional().nullable(),
+	assigneeId: z.string().optional().nullable(),
+	priority: Priority.optional(),
+	status: IssueStatus.optional(),
+	dueDate: z.date().optional().nullable(),
+	labelIds: z.array(z.string()).optional(),
+});
+
+const listIssuesInput = z.object({
+	workspaceId: z.string(),
+	teamId: z.string().optional(),
+	projectId: z.string().optional(),
+	cycleId: z.string().optional(),
+	assigneeId: z.string().optional(),
+	status: IssueStatus.optional(),
+	priority: Priority.optional(),
+	labelIds: z.array(z.string()).optional(),
+	search: z.string().optional(),
+	limit: z.number().min(1).max(100).default(50),
+	offset: z.number().min(0).default(0),
+});
+
+export const issueRouter = createTRPCRouter({
+	// Create a new issue
+	create: protectedProcedure
+		.input(createIssueInput)
+		.mutation(async ({ ctx, input }) => {
+			// Verify user has access to the team
+			const team = await ctx.db.team.findUnique({
+				where: { id: input.teamId },
+				include: { workspace: true },
+			});
+
+			if (!team) {
+				throw new TRPCError({
+					code: "NOT_FOUND",
+					message: "Team not found",
+				});
+			}
+
+			// Check workspace membership
+			const membership = await ctx.db.workspaceMember.findFirst({
+				where: {
+					workspaceId: team.workspaceId,
+					userId: ctx.session.user.id,
+				},
+			});
+
+			if (!membership) {
+				throw new TRPCError({
+					code: "FORBIDDEN",
+					message: "You do not have access to this workspace",
+				});
+			}
+
+			// Verify project exists and belongs to team if provided
+			if (input.projectId) {
+				const project = await ctx.db.project.findUnique({
+					where: { id: input.projectId },
+				});
+
+				if (!project || project.teamId !== input.teamId) {
+					throw new TRPCError({
+						code: "NOT_FOUND",
+						message: "Project not found",
+					});
+				}
+			}
+
+			// Verify cycle exists and belongs to team if provided
+			if (input.cycleId) {
+				const cycle = await ctx.db.cycle.findUnique({
+					where: { id: input.cycleId },
+				});
+
+				if (!cycle || cycle.teamId !== input.teamId) {
+					throw new TRPCError({
+						code: "NOT_FOUND",
+						message: "Cycle not found",
+					});
+				}
+			}
+
+			// Get the next issue number for this team
+			const lastIssue = await ctx.db.issue.findFirst({
+				where: { teamId: input.teamId },
+				orderBy: { number: "desc" },
+			});
+
+			const nextNumber = (lastIssue?.number ?? 0) + 1;
+			const identifier = `${team.key}-${nextNumber}`;
+
+			// Create the issue in a transaction
+			const issue = await ctx.db.$transaction(async (tx) => {
+				// Create the issue
+				const newIssue = await tx.issue.create({
+					data: {
+						identifier,
+						number: nextNumber,
+						title: input.title,
+						description: input.description,
+						status: input.status,
+						priority: input.priority,
+						dueDate: input.dueDate,
+						workspaceId: team.workspaceId,
+						teamId: input.teamId,
+						projectId: input.projectId,
+						cycleId: input.cycleId,
+						assigneeId: input.assigneeId,
+						creatorId: ctx.session.user.id,
+						labels: {
+							create: input.labelIds.map((labelId) => ({
+								label: { connect: { id: labelId } },
+							})),
+						},
+					},
+					include: {
+						team: true,
+						project: true,
+						cycle: true,
+						assignee: true,
+						creator: true,
+						labels: {
+							include: {
+								label: true,
+							},
+						},
+						comments: {
+							include: {
+								author: true,
+							},
+						},
+						history: {
+							include: {
+								actor: true,
+							},
+							orderBy: { createdAt: "desc" },
+						},
+					},
+				});
+
+				// Create initial history entry
+				await tx.issueHistory.create({
+					data: {
+						issueId: newIssue.id,
+						actorId: ctx.session.user.id,
+						field: "created",
+						newValue: JSON.stringify({ title: input.title }),
+					},
+				});
+
+				return newIssue;
+			});
+
+			return issue;
+		}),
+
+	// Get issue by ID with all relations
+	byId: protectedProcedure
+		.input(issueIdSchema)
+		.query(async ({ ctx, input }) => {
+			const issue = await ctx.db.issue.findUnique({
+				where: { id: input.id },
+				include: {
+					team: true,
+					project: true,
+					cycle: true,
+					assignee: true,
+					creator: true,
+					workspace: true,
+					labels: {
+						include: {
+							label: true,
+						},
+					},
+					comments: {
+						include: {
+							author: true,
+						},
+						orderBy: { createdAt: "asc" },
+					},
+					history: {
+						include: {
+							actor: true,
+						},
+						orderBy: { createdAt: "desc" },
+					},
+				},
+			});
+
+			if (!issue) {
+				throw new TRPCError({
+					code: "NOT_FOUND",
+					message: "Issue not found",
+				});
+			}
+
+			// Check access
+			const membership = await ctx.db.workspaceMember.findFirst({
+				where: {
+					workspaceId: issue.workspaceId,
+					userId: ctx.session.user.id,
+				},
+			});
+
+			if (!membership) {
+				throw new TRPCError({
+					code: "FORBIDDEN",
+					message: "You do not have access to this issue",
+				});
+			}
+
+			return issue;
+		}),
+
+	// Update an issue
+	update: protectedProcedure
+		.input(updateIssueInput)
+		.mutation(async ({ ctx, input }) => {
+			const { id, labelIds, ...updateData } = input;
+
+			// Get the existing issue
+			const existingIssue = await ctx.db.issue.findUnique({
+				where: { id },
+			});
+
+			if (!existingIssue) {
+				throw new TRPCError({
+					code: "NOT_FOUND",
+					message: "Issue not found",
+				});
+			}
+
+			// Check access
+			const membership = await ctx.db.workspaceMember.findFirst({
+				where: {
+					workspaceId: existingIssue.workspaceId,
+					userId: ctx.session.user.id,
+				},
+			});
+
+			if (!membership) {
+				throw new TRPCError({
+					code: "FORBIDDEN",
+					message: "You do not have access to this issue",
+				});
+			}
+
+			// Update in transaction with history tracking
+			const updatedIssue = await ctx.db.$transaction(async (tx) => {
+				// Track changes for history
+				const changes: {
+					field: string;
+					oldValue: string | null;
+					newValue: string;
+				}[] = [];
+
+				if (
+					updateData.title !== undefined &&
+					updateData.title !== existingIssue.title
+				) {
+					changes.push({
+						field: "title",
+						oldValue: existingIssue.title,
+						newValue: updateData.title,
+					});
+				}
+
+				if (
+					updateData.status !== undefined &&
+					updateData.status !== existingIssue.status
+				) {
+					changes.push({
+						field: "status",
+						oldValue: String(existingIssue.status),
+						newValue: String(updateData.status),
+					});
+				}
+
+				if (
+					updateData.priority !== undefined &&
+					updateData.priority !== existingIssue.priority
+				) {
+					changes.push({
+						field: "priority",
+						oldValue: String(existingIssue.priority),
+						newValue: String(updateData.priority),
+					});
+				}
+
+				if (
+					updateData.assigneeId !== undefined &&
+					updateData.assigneeId !== existingIssue.assigneeId
+				) {
+					changes.push({
+						field: "assigneeId",
+						oldValue: existingIssue.assigneeId,
+						newValue: updateData.assigneeId ?? "null",
+					});
+				}
+
+				if (
+					updateData.projectId !== undefined &&
+					updateData.projectId !== existingIssue.projectId
+				) {
+					changes.push({
+						field: "projectId",
+						oldValue: existingIssue.projectId,
+						newValue: updateData.projectId ?? "null",
+					});
+				}
+
+				if (
+					updateData.cycleId !== undefined &&
+					updateData.cycleId !== existingIssue.cycleId
+				) {
+					changes.push({
+						field: "cycleId",
+						oldValue: existingIssue.cycleId,
+						newValue: updateData.cycleId ?? "null",
+					});
+				}
+
+				// Update the issue
+				const issue = await tx.issue.update({
+					where: { id },
+					data: {
+						...updateData,
+						labels:
+							labelIds !== undefined
+								? {
+										deleteMany: {},
+										create: labelIds.map((labelId) => ({
+											label: { connect: { id: labelId } },
+										})),
+									}
+								: undefined,
+					},
+					include: {
+						team: true,
+						project: true,
+						cycle: true,
+						assignee: true,
+						creator: true,
+						labels: {
+							include: {
+								label: true,
+							},
+						},
+						comments: {
+							include: {
+								author: true,
+							},
+							orderBy: { createdAt: "asc" },
+						},
+						history: {
+							include: {
+								actor: true,
+							},
+							orderBy: { createdAt: "desc" },
+						},
+					},
+				});
+
+				// Create history entries for all changes
+				for (const change of changes) {
+					await tx.issueHistory.create({
+						data: {
+							issueId: id,
+							actorId: ctx.session.user.id,
+							field: change.field,
+							oldValue: change.oldValue
+								? JSON.stringify({ value: change.oldValue })
+								: null,
+							newValue: JSON.stringify({ value: change.newValue }),
+						},
+					});
+				}
+
+				return issue;
+			});
+
+			return updatedIssue;
+		}),
+
+	// Delete (archive) an issue
+	delete: protectedProcedure
+		.input(issueIdSchema)
+		.mutation(async ({ ctx, input }) => {
+			const issue = await ctx.db.issue.findUnique({
+				where: { id: input.id },
+			});
+
+			if (!issue) {
+				throw new TRPCError({
+					code: "NOT_FOUND",
+					message: "Issue not found",
+				});
+			}
+
+			// Check access
+			const membership = await ctx.db.workspaceMember.findFirst({
+				where: {
+					workspaceId: issue.workspaceId,
+					userId: ctx.session.user.id,
+				},
+			});
+
+			if (!membership) {
+				throw new TRPCError({
+					code: "FORBIDDEN",
+					message: "You do not have access to this issue",
+				});
+			}
+
+			// For now, we'll delete the issue. In the future, we might want to archive instead.
+			await ctx.db.issue.delete({
+				where: { id: input.id },
+			});
+
+			return { success: true };
+		}),
+
+	// List issues with filtering
+	list: protectedProcedure
+		.input(listIssuesInput)
+		.query(async ({ ctx, input }) => {
+			const {
+				workspaceId,
+				teamId,
+				projectId,
+				cycleId,
+				assigneeId,
+				status,
+				priority,
+				labelIds,
+				search,
+				limit,
+				offset,
+			} = input;
+
+			// Verify workspace access
+			const membership = await ctx.db.workspaceMember.findFirst({
+				where: {
+					workspaceId,
+					userId: ctx.session.user.id,
+				},
+			});
+
+			if (!membership) {
+				throw new TRPCError({
+					code: "FORBIDDEN",
+					message: "You do not have access to this workspace",
+				});
+			}
+
+			// Build the where clause
+			const where: Record<string, unknown> = {
+				workspaceId,
+			};
+
+			if (teamId) {
+				where.teamId = teamId;
+			}
+
+			if (projectId) {
+				where.projectId = projectId;
+			}
+
+			if (cycleId) {
+				where.cycleId = cycleId;
+			}
+
+			if (assigneeId) {
+				where.assigneeId = assigneeId;
+			}
+
+			if (status) {
+				where.status = status;
+			}
+
+			if (priority) {
+				where.priority = priority;
+			}
+
+			if (labelIds && labelIds.length > 0) {
+				where.labels = {
+					some: {
+						labelId: {
+							in: labelIds,
+						},
+					},
+				};
+			}
+
+			if (search) {
+				where.OR = [
+					{ title: { contains: search, mode: "insensitive" } },
+					{ identifier: { contains: search, mode: "insensitive" } },
+				];
+			}
+
+			// Get total count for pagination
+			const total = await ctx.db.issue.count({ where });
+
+			// Get the issues
+			const issues = await ctx.db.issue.findMany({
+				where,
+				include: {
+					team: true,
+					project: true,
+					cycle: true,
+					assignee: true,
+					creator: true,
+					labels: {
+						include: {
+							label: true,
+						},
+					},
+				},
+				orderBy: [{ createdAt: "desc" }],
+				skip: offset,
+				take: limit,
+			});
+
+			return {
+				issues,
+				pagination: {
+					total,
+					limit,
+					offset,
+					hasMore: offset + issues.length < total,
+				},
+			};
+		}),
+});
