@@ -77,24 +77,41 @@ export default function ProjectsPage() {
 
 	const { workspaceId } = useCurrentWorkspace();
 
-	const { data: projectsData, isLoading } = api.project.list.useQuery({
-		workspaceId,
-		limit: PROJECT_LIST_LIMIT,
-	});
+	const { data: projectsData, isLoading } = api.project.list.useQuery(
+		{
+			workspaceId: workspaceId ?? "",
+			limit: PROJECT_LIST_LIMIT,
+		},
+		{
+			enabled: !!workspaceId,
+		},
+	);
 
-	const { data: teamsData } = api.workspace.getTeams.useQuery({
-		workspaceId,
-	});
+	const { data: teamsData } = api.workspace.getTeams.useQuery(
+		{
+			workspaceId: workspaceId ?? "",
+		},
+		{
+			enabled: !!workspaceId,
+		},
+	);
 
-	const { data: membersData } = api.workspace.getMembers.useQuery({
-		workspaceId,
-	});
+	const { data: membersData } = api.workspace.getMembers.useQuery(
+		{
+			workspaceId: workspaceId ?? "",
+		},
+		{
+			enabled: !!workspaceId,
+		},
+	);
 
 	const utils = api.useUtils();
 
 	const createProject = api.project.create.useMutation({
 		onSuccess: () => {
-			utils.project.list.invalidate({ workspaceId });
+			if (workspaceId) {
+				utils.project.list.invalidate({ workspaceId });
+			}
 			setCreateModalOpen(false);
 			setFormData({
 				name: "",
@@ -110,13 +127,15 @@ export default function ProjectsPage() {
 
 	const archiveProject = api.project.archive.useMutation({
 		onSuccess: () => {
-			utils.project.list.invalidate({ workspaceId });
+			if (workspaceId) {
+				utils.project.list.invalidate({ workspaceId });
+			}
 		},
 	});
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		if (!formData.teamId) return;
+		if (!formData.teamId || !workspaceId) return;
 
 		createProject.mutate({
 			name: formData.name,
@@ -320,7 +339,9 @@ export default function ProjectsPage() {
 
 							<Button
 								className="w-full bg-[#5E6AD2] text-white hover:bg-[#4F57B3]"
-								disabled={createProject.isPending || !formData.teamId}
+								disabled={
+									createProject.isPending || !formData.teamId || !workspaceId
+								}
 								type="submit"
 							>
 								{createProject.isPending ? "Creating..." : "Create Project"}

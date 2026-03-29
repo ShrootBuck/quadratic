@@ -49,20 +49,32 @@ export default function CyclesPage() {
 
 	const { workspaceId } = useCurrentWorkspace();
 
-	const { data: cyclesData, isLoading } = api.cycle.list.useQuery({
-		workspaceId,
-		limit: CYCLE_LIST_LIMIT,
-	});
+	const { data: cyclesData, isLoading } = api.cycle.list.useQuery(
+		{
+			workspaceId: workspaceId ?? "",
+			limit: CYCLE_LIST_LIMIT,
+		},
+		{
+			enabled: !!workspaceId,
+		},
+	);
 
-	const { data: teamsData } = api.workspace.getTeams.useQuery({
-		workspaceId,
-	});
+	const { data: teamsData } = api.workspace.getTeams.useQuery(
+		{
+			workspaceId: workspaceId ?? "",
+		},
+		{
+			enabled: !!workspaceId,
+		},
+	);
 
 	const utils = api.useUtils();
 
 	const createCycle = api.cycle.create.useMutation({
 		onSuccess: () => {
-			utils.cycle.list.invalidate({ workspaceId });
+			if (workspaceId) {
+				utils.cycle.list.invalidate({ workspaceId });
+			}
 			setCreateModalOpen(false);
 			setFormData({
 				name: "",
@@ -76,7 +88,7 @@ export default function CyclesPage() {
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		if (!formData.teamId) return;
+		if (!formData.teamId || !workspaceId) return;
 
 		createCycle.mutate({
 			name: formData.name,
@@ -223,7 +235,9 @@ export default function CyclesPage() {
 
 							<Button
 								className="w-full bg-[#5E6AD2] text-white hover:bg-[#4F57B3]"
-								disabled={createCycle.isPending || !formData.teamId}
+								disabled={
+									createCycle.isPending || !formData.teamId || !workspaceId
+								}
 								type="submit"
 							>
 								{createCycle.isPending ? "Creating..." : "Create Cycle"}

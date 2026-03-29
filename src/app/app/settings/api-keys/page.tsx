@@ -50,6 +50,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useCurrentWorkspace } from "@/hooks/use-current-workspace";
 import { COPIED_STATE_TIMEOUT_MS } from "~/constants";
 import { api } from "~/trpc/react";
 
@@ -95,9 +96,11 @@ function WebhookStatusBadge({ status }: { status: string }) {
 function CreateApiKeyModal({
 	isOpen,
 	onClose,
+	workspaceId,
 }: {
 	isOpen: boolean;
 	onClose: () => void;
+	workspaceId: string;
 }) {
 	const [name, setName] = useState("");
 	const [scope, setScope] = useState<"READ" | "WRITE" | "ADMIN">("READ");
@@ -109,7 +112,9 @@ function CreateApiKeyModal({
 	const createMutation = api.apiKeys.create.useMutation({
 		onSuccess: (data) => {
 			setCreatedKey(data.apiKey);
-			void utils.apiKeys.list.invalidate({ workspaceId: "clz1234567890" });
+			if (workspaceId) {
+				void utils.apiKeys.list.invalidate({ workspaceId });
+			}
 		},
 	});
 
@@ -322,9 +327,11 @@ function CreateApiKeyModal({
 function CreateWebhookModal({
 	isOpen,
 	onClose,
+	workspaceId,
 }: {
 	isOpen: boolean;
 	onClose: () => void;
+	workspaceId: string;
 }) {
 	const [name, setName] = useState("");
 	const [url, setUrl] = useState("");
@@ -341,9 +348,11 @@ function CreateWebhookModal({
 			if ("secret" in data && data.secret) {
 				setCreatedWebhook({ secret: data.secret });
 			}
-			void utils.apiKeys.listWebhooks.invalidate({
-				workspaceId: "clz1234567890",
-			});
+			if (workspaceId) {
+				void utils.apiKeys.listWebhooks.invalidate({
+					workspaceId,
+				});
+			}
 		},
 	});
 
@@ -581,17 +590,21 @@ function DeleteWebhookDialog({
 	isOpen,
 	onClose,
 	webhook,
+	workspaceId,
 }: {
 	isOpen: boolean;
 	onClose: () => void;
 	webhook: { id: string; name: string } | null;
+	workspaceId: string;
 }) {
 	const utils = api.useUtils();
 	const deleteMutation = api.apiKeys.deleteWebhook.useMutation({
 		onSuccess: () => {
-			void utils.apiKeys.listWebhooks.invalidate({
-				workspaceId: "clz1234567890",
-			});
+			if (workspaceId) {
+				void utils.apiKeys.listWebhooks.invalidate({
+					workspaceId,
+				});
+			}
 			onClose();
 		},
 	});
@@ -635,15 +648,19 @@ function RevokeApiKeyDialog({
 	isOpen,
 	onClose,
 	apiKey,
+	workspaceId,
 }: {
 	isOpen: boolean;
 	onClose: () => void;
 	apiKey: { id: string; name: string } | null;
+	workspaceId: string;
 }) {
 	const utils = api.useUtils();
 	const revokeMutation = api.apiKeys.revoke.useMutation({
 		onSuccess: () => {
-			void utils.apiKeys.list.invalidate({ workspaceId: "clz1234567890" });
+			if (workspaceId) {
+				void utils.apiKeys.list.invalidate({ workspaceId });
+			}
 			onClose();
 		},
 	});
@@ -931,15 +948,19 @@ export default function ApiKeysPage() {
 	} | null>(null);
 	const [activeTab, setActiveTab] = useState("api-keys");
 
-	const workspaceId = "clz1234567890";
+	const { workspaceId } = useCurrentWorkspace();
 
 	const { data: apiKeys, isLoading: isLoadingKeys } = api.apiKeys.list.useQuery(
-		{ workspaceId },
+		{ workspaceId: workspaceId ?? "" },
+		{ enabled: !!workspaceId },
 	);
 	const { data: webhooks, isLoading: isLoadingWebhooks } =
-		api.apiKeys.listWebhooks.useQuery({
-			workspaceId,
-		});
+		api.apiKeys.listWebhooks.useQuery(
+			{
+				workspaceId: workspaceId ?? "",
+			},
+			{ enabled: !!workspaceId },
+		);
 
 	return (
 		<div className="mx-auto max-w-4xl p-8">
@@ -1225,20 +1246,24 @@ export default function ApiKeysPage() {
 			<CreateApiKeyModal
 				isOpen={isCreateKeyModalOpen}
 				onClose={() => setIsCreateKeyModalOpen(false)}
+				workspaceId={workspaceId ?? ""}
 			/>
 			<CreateWebhookModal
 				isOpen={isCreateWebhookModalOpen}
 				onClose={() => setIsCreateWebhookModalOpen(false)}
+				workspaceId={workspaceId ?? ""}
 			/>
 			<RevokeApiKeyDialog
 				apiKey={revokingKey}
 				isOpen={!!revokingKey}
 				onClose={() => setRevokingKey(null)}
+				workspaceId={workspaceId ?? ""}
 			/>
 			<DeleteWebhookDialog
 				isOpen={!!deletingWebhook}
 				onClose={() => setDeletingWebhook(null)}
 				webhook={deletingWebhook}
+				workspaceId={workspaceId ?? ""}
 			/>
 		</div>
 	);

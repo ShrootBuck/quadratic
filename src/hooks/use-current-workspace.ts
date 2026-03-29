@@ -6,7 +6,7 @@ export function useCurrentWorkspace() {
 	const { data: workspace, isLoading } = api.workspace.getCurrent.useQuery();
 
 	return {
-		workspaceId: workspace?.id ?? "",
+		workspaceId: workspace?.id,
 		workspace,
 		isLoading,
 	};

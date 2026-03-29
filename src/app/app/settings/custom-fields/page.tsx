@@ -46,6 +46,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { useCurrentWorkspace } from "@/hooks/use-current-workspace";
 import { api } from "~/trpc/react";
 
 const FIELD_TYPES = [
@@ -62,7 +63,7 @@ type FieldType = (typeof FIELD_TYPES)[number]["value"];
 interface CreateCustomFieldModalProps {
 	isOpen: boolean;
 	onClose: () => void;
-	workspaceId: string;
+	workspaceId: string | undefined;
 }
 
 function CreateCustomFieldModal({
@@ -79,7 +80,9 @@ function CreateCustomFieldModal({
 
 	const createMutation = api.customField.create.useMutation({
 		onSuccess: () => {
-			void utils.customField.list.invalidate({ workspaceId });
+			if (workspaceId) {
+				void utils.customField.list.invalidate({ workspaceId });
+			}
 			setName("");
 			setDescription("");
 			setType("TEXT");
@@ -101,7 +104,7 @@ function CreateCustomFieldModal({
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		if (!name.trim()) return;
+		if (!name.trim() || !workspaceId) return;
 
 		createMutation.mutate({
 			name: name.trim(),
@@ -275,7 +278,7 @@ interface EditCustomFieldModalProps {
 		type: FieldType;
 		options: string[] | null;
 	};
-	workspaceId: string;
+	workspaceId: string | undefined;
 }
 
 function EditCustomFieldModal({
@@ -292,7 +295,9 @@ function EditCustomFieldModal({
 
 	const updateMutation = api.customField.update.useMutation({
 		onSuccess: () => {
-			void utils.customField.list.invalidate({ workspaceId });
+			if (workspaceId) {
+				void utils.customField.list.invalidate({ workspaceId });
+			}
 			onClose();
 		},
 	});
@@ -467,7 +472,7 @@ interface DeleteCustomFieldDialogProps {
 		id: string;
 		name: string;
 	};
-	workspaceId: string;
+	workspaceId: string | undefined;
 }
 
 function DeleteCustomFieldDialog({
@@ -480,7 +485,9 @@ function DeleteCustomFieldDialog({
 
 	const deleteMutation = api.customField.delete.useMutation({
 		onSuccess: () => {
-			void utils.customField.list.invalidate({ workspaceId });
+			if (workspaceId) {
+				void utils.customField.list.invalidate({ workspaceId });
+			}
 			onClose();
 		},
 	});
@@ -537,21 +544,24 @@ export default function CustomFieldsPage() {
 		name: string;
 	} | null>(null);
 
-	const workspaceId = "clz1234567890";
-	const { data: fields, isLoading } = api.customField.list.useQuery({
-		workspaceId,
-	});
-
-	const reorderMutation = api.customField.reorder.useMutation({
-		onSuccess: () => {
-			void utils.customField.list.invalidate({ workspaceId });
-		},
-	});
+	const { workspaceId } = useCurrentWorkspace();
+	const { data: fields, isLoading } = api.customField.list.useQuery(
+		{ workspaceId: workspaceId ?? "" },
+		{ enabled: !!workspaceId },
+	);
 
 	const utils = api.useUtils();
 
+	const reorderMutation = api.customField.reorder.useMutation({
+		onSuccess: () => {
+			if (workspaceId) {
+				void utils.customField.list.invalidate({ workspaceId });
+			}
+		},
+	});
+
 	const handleMoveUp = (index: number) => {
-		if (!fields || index === 0) return;
+		if (!fields || index === 0 || !workspaceId) return;
 		const newOrder = [...fields];
 		const temp = newOrder[index];
 		if (!temp) return;
@@ -566,7 +576,7 @@ export default function CustomFieldsPage() {
 	};
 
 	const handleMoveDown = (index: number) => {
-		if (!fields || index === fields.length - 1) return;
+		if (!fields || index === fields.length - 1 || !workspaceId) return;
 		const newOrder = [...fields];
 		const temp = newOrder[index];
 		if (!temp) return;

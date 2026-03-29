@@ -18,6 +18,7 @@ import {
 	XAxis,
 	YAxis,
 } from "recharts";
+import { useCurrentWorkspace } from "@/hooks/use-current-workspace";
 import { ANALYTICS_ITEMS_LIMIT } from "~/constants";
 import { api } from "~/trpc/react";
 
@@ -33,14 +34,20 @@ const ANALYTICS_PRIORITY_COLORS: Record<string, string> = {
 export default function CycleAnalyticsPage() {
 	const params = useParams();
 	const cycleId = params.id as string;
+	const { workspaceId } = useCurrentWorkspace();
 
 	const { data: cycleData, isLoading: cycleLoading } =
 		api.analytics.getCycleAnalytics.useQuery({ cycleId });
 
-	const { data: velocityData } = api.analytics.getVelocityAnalytics.useQuery({
-		workspaceId: "clz1234567890",
-		limit: ANALYTICS_ITEMS_LIMIT,
-	});
+	const { data: velocityData } = api.analytics.getVelocityAnalytics.useQuery(
+		{
+			workspaceId: workspaceId ?? "",
+			limit: ANALYTICS_ITEMS_LIMIT,
+		},
+		{
+			enabled: !!workspaceId,
+		},
+	);
 
 	api.analytics.getIssueDistribution.useQuery({ cycleId });
 

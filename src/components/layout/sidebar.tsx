@@ -32,7 +32,7 @@ import { api } from "~/trpc/react";
 
 interface SidebarProps {
 	className?: string;
-	workspaceId: string;
+	workspaceId: string | undefined;
 }
 
 const mainNavItems = [
@@ -90,22 +90,83 @@ const secondaryNavItems = [
 	},
 ];
 
-// Mock data - will be replaced with real data from API
-const mockTeams = [
-	{ id: "1", name: "Engineering", key: "ENG", color: "#5E6AD2" },
-	{ id: "2", name: "Design", key: "DES", color: "#F87171" },
-];
+function TeamsList({
+	collapsed,
+	workspaceId,
+}: {
+	collapsed: boolean;
+	workspaceId: string | undefined;
+}) {
+	const { data: teams } = api.workspace.getTeams.useQuery(
+		{ workspaceId: workspaceId ?? "" },
+		{
+			enabled: !!workspaceId,
+		},
+	);
+
+	const pathname = usePathname();
+
+	if (collapsed || !workspaceId) return null;
+
+	if (!teams || teams.length === 0) return null;
+
+	return (
+		<div className="mb-2">
+			<div className="mb-2 flex items-center justify-between px-3">
+				<span className="font-medium text-[#8A8F98] text-xs">Teams</span>
+				<Link href="/app/teams">
+					<Button
+						className="h-5 w-5 text-[#8A8F98] hover:text-[#F7F8F8]"
+						size="icon"
+						variant="ghost"
+					>
+						<Plus className="h-3 w-3" />
+					</Button>
+				</Link>
+			</div>
+			<div className="space-y-1">
+				{teams.slice(0, SIDEBAR_DISPLAY_LIMIT).map((team) => (
+					<Link
+						className={cn(
+							"flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
+							pathname === `/app/teams/${team.id}`
+								? "bg-[#2A2F35] text-[#F7F8F8]"
+								: "text-[#8A8F98] hover:bg-[#2A2F35] hover:text-[#F7F8F8]",
+						)}
+						href={`/app/teams/${team.id}`}
+						key={team.id}
+					>
+						<div
+							className="h-2 w-2 rounded-full"
+							style={{ backgroundColor: team.color }}
+						/>
+						<span className="flex-1">{team.name}</span>
+						<span className="text-[#8A8F98] text-xs">{team.key}</span>
+					</Link>
+				))}
+				{teams.length > SIDEBAR_DISPLAY_LIMIT && (
+					<Link
+						className="flex items-center gap-3 rounded-md px-3 py-2 text-[#8A8F98] text-sm transition-colors hover:bg-[#2A2F35] hover:text-[#F7F8F8]"
+						href="/app/teams"
+					>
+						<span className="flex-1">View all teams</span>
+					</Link>
+				)}
+			</div>
+		</div>
+	);
+}
 
 function ProjectsList({
 	collapsed,
 	workspaceId,
 }: {
 	collapsed: boolean;
-	workspaceId: string;
+	workspaceId: string | undefined;
 }) {
 	const { data: projectsData } = api.project.list.useQuery(
 		{
-			workspaceId,
+			workspaceId: workspaceId ?? "",
 			limit: SIDEBAR_ITEMS_LIMIT,
 		},
 		{
@@ -175,11 +236,11 @@ function CurrentCycleIndicator({
 	workspaceId,
 }: {
 	collapsed: boolean;
-	workspaceId: string;
+	workspaceId: string | undefined;
 }) {
 	const { data: cycles } = api.cycle.list.useQuery(
 		{
-			workspaceId,
+			workspaceId: workspaceId ?? "",
 			status: "CURRENT",
 			limit: 1,
 		},
@@ -372,43 +433,7 @@ export function Sidebar({ className, workspaceId }: SidebarProps) {
 					{collapsed && <div className="my-4 h-px bg-[#2A2F35]" />}
 
 					{/* Teams Section */}
-					{!collapsed && (
-						<div className="mb-2">
-							<div className="mb-2 flex items-center justify-between px-3">
-								<span className="font-medium text-[#8A8F98] text-xs">
-									Teams
-								</span>
-								<Button
-									className="h-5 w-5 text-[#8A8F98] hover:text-[#F7F8F8]"
-									size="icon"
-									variant="ghost"
-								>
-									<Plus className="h-3 w-3" />
-								</Button>
-							</div>
-							<div className="space-y-1">
-								{mockTeams.map((team) => (
-									<Link
-										className={cn(
-											"flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
-											pathname === `/app/teams/${team.id}`
-												? "bg-[#2A2F35] text-[#F7F8F8]"
-												: "text-[#8A8F98] hover:bg-[#2A2F35] hover:text-[#F7F8F8]",
-										)}
-										href={`/app/teams/${team.id}`}
-										key={team.id}
-									>
-										<div
-											className="h-2 w-2 rounded-full"
-											style={{ backgroundColor: team.color }}
-										/>
-										<span className="flex-1">{team.name}</span>
-										<span className="text-[#8A8F98] text-xs">{team.key}</span>
-									</Link>
-								))}
-							</div>
-						</div>
-					)}
+					<TeamsList collapsed={collapsed} workspaceId={workspaceId} />
 
 					{!collapsed && <Separator className="my-4 bg-[#2A2F35]" />}
 					{collapsed && <div className="my-4 h-px bg-[#2A2F35]" />}

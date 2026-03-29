@@ -69,15 +69,22 @@ export default function TeamsPage() {
 
 	const { workspaceId } = useCurrentWorkspace();
 
-	const { data: teams, isLoading } = api.team.list.useQuery({
-		workspaceId,
-	});
+	const { data: teams, isLoading } = api.team.list.useQuery(
+		{
+			workspaceId: workspaceId ?? "",
+		},
+		{
+			enabled: !!workspaceId,
+		},
+	);
 
 	const utils = api.useUtils();
 
 	const createTeam = api.team.create.useMutation({
 		onSuccess: () => {
-			utils.team.list.invalidate({ workspaceId });
+			if (workspaceId) {
+				utils.team.list.invalidate({ workspaceId });
+			}
 			setCreateModalOpen(false);
 			setFormData({
 				name: "",
@@ -89,7 +96,9 @@ export default function TeamsPage() {
 
 	const deleteTeam = api.team.delete.useMutation({
 		onSuccess: () => {
-			utils.team.list.invalidate({ workspaceId });
+			if (workspaceId) {
+				utils.team.list.invalidate({ workspaceId });
+			}
 			setDeleteDialogOpen(false);
 			setTeamToDelete(null);
 		},
@@ -97,7 +106,7 @@ export default function TeamsPage() {
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		if (!formData.name || !formData.key) return;
+		if (!formData.name || !formData.key || !workspaceId) return;
 
 		createTeam.mutate({
 			name: formData.name,
@@ -206,7 +215,10 @@ export default function TeamsPage() {
 							<Button
 								className="w-full bg-[#5E6AD2] text-white hover:bg-[#4F57B3]"
 								disabled={
-									createTeam.isPending || !formData.name || !formData.key
+									createTeam.isPending ||
+									!formData.name ||
+									!formData.key ||
+									!workspaceId
 								}
 								type="submit"
 							>

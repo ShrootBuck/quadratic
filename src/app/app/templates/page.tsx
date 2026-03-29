@@ -379,9 +379,14 @@ export default function TemplatesPage() {
 	} | null>(null);
 
 	const { workspaceId } = useCurrentWorkspace();
-	const { data: templates, isLoading } = api.template.list.useQuery({
-		workspaceId,
-	});
+	const { data: templates, isLoading } = api.template.list.useQuery(
+		{
+			workspaceId: workspaceId ?? "",
+		},
+		{
+			enabled: !!workspaceId,
+		},
+	);
 
 	return (
 		<div className="flex h-full flex-col">
@@ -536,7 +541,7 @@ export default function TemplatesPage() {
 			<CreateTemplateModal
 				isOpen={isCreateModalOpen}
 				onClose={() => setIsCreateModalOpen(false)}
-				workspaceId={workspaceId}
+				workspaceId={workspaceId ?? ""}
 			/>
 
 			{deletingTemplate && (
@@ -544,7 +549,7 @@ export default function TemplatesPage() {
 					isOpen={!!deletingTemplate}
 					onClose={() => setDeletingTemplate(null)}
 					template={deletingTemplate}
-					workspaceId={workspaceId}
+					workspaceId={workspaceId ?? ""}
 				/>
 			)}
 		</div>

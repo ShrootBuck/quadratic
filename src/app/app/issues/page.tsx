@@ -52,16 +52,21 @@ export default function IssuesPage() {
 
 	const { workspaceId } = useCurrentWorkspace();
 
-	const { data, isLoading } = api.issue.list.useQuery({
-		workspaceId,
-		status: filters.status ?? undefined,
-		priority: filters.priority ?? undefined,
-		assigneeId: filters.assigneeId ?? undefined,
-		projectId: filters.projectId ?? undefined,
-		labelIds: filters.labelIds.length > 0 ? filters.labelIds : undefined,
-		search: filters.search || undefined,
-		limit: DEFAULT_PAGINATION_LIMIT,
-	});
+	const { data, isLoading } = api.issue.list.useQuery(
+		{
+			workspaceId: workspaceId ?? "",
+			status: filters.status ?? undefined,
+			priority: filters.priority ?? undefined,
+			assigneeId: filters.assigneeId ?? undefined,
+			projectId: filters.projectId ?? undefined,
+			labelIds: filters.labelIds.length > 0 ? filters.labelIds : undefined,
+			search: filters.search || undefined,
+			limit: DEFAULT_PAGINATION_LIMIT,
+		},
+		{
+			enabled: !!workspaceId,
+		},
+	);
 
 	const handleFilterChange = <K extends keyof Filters>(
 		key: K,
@@ -222,7 +227,7 @@ export default function IssuesPage() {
 							filters={filters}
 							onChange={handleFilterChange}
 							onClear={clearFilters}
-							workspaceId={workspaceId}
+							workspaceId={workspaceId ?? ""}
 						/>
 					</div>
 				)}
@@ -230,7 +235,7 @@ export default function IssuesPage() {
 				{/* Issue List */}
 				<div className="flex-1 overflow-auto">
 					<IssueListTable
-						_workspaceId={workspaceId}
+						_workspaceId={workspaceId ?? ""}
 						groupBy={groupBy}
 						isLoading={isLoading}
 						issues={data?.issues ?? []}
@@ -242,7 +247,7 @@ export default function IssuesPage() {
 			<CreateIssueModal
 				onOpenChange={setCreateModalOpen}
 				open={createModalOpen}
-				workspaceId={workspaceId}
+				workspaceId={workspaceId ?? ""}
 			/>
 		</div>
 	);

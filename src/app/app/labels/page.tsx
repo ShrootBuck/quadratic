@@ -367,9 +367,14 @@ export default function LabelsPage() {
 	} | null>(null);
 
 	const { workspaceId } = useCurrentWorkspace();
-	const { data: labels, isLoading } = api.label.list.useQuery({
-		workspaceId,
-	});
+	const { data: labels, isLoading } = api.label.list.useQuery(
+		{
+			workspaceId: workspaceId ?? "",
+		},
+		{
+			enabled: !!workspaceId,
+		},
+	);
 
 	return (
 		<TooltipProvider>
@@ -528,7 +533,7 @@ export default function LabelsPage() {
 				<CreateLabelModal
 					isOpen={isCreateModalOpen}
 					onClose={() => setIsCreateModalOpen(false)}
-					workspaceId={workspaceId}
+					workspaceId={workspaceId ?? ""}
 				/>
 
 				{editingLabel && (
@@ -536,7 +541,7 @@ export default function LabelsPage() {
 						isOpen={!!editingLabel}
 						label={editingLabel}
 						onClose={() => setEditingLabel(null)}
-						workspaceId={workspaceId}
+						workspaceId={workspaceId ?? ""}
 					/>
 				)}
 
@@ -545,7 +550,7 @@ export default function LabelsPage() {
 						isOpen={!!deletingLabel}
 						label={deletingLabel}
 						onClose={() => setDeletingLabel(null)}
-						workspaceId={workspaceId}
+						workspaceId={workspaceId ?? ""}
 					/>
 				)}
 			</div>

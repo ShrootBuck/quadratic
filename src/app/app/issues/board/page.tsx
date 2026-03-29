@@ -5,6 +5,7 @@ import { useState } from "react";
 import { CreateIssueModal } from "@/components/features/issues/create-issue-modal";
 import { KanbanBoard } from "@/components/features/issues/kanban-board";
 import { Button } from "@/components/ui/button";
+import { useCurrentWorkspace } from "@/hooks/use-current-workspace";
 import {
 	BOARD_PAGINATION_LIMIT,
 	type IssueStatus,
@@ -32,19 +33,23 @@ export default function BoardPage() {
 	});
 	const [createModalOpen, setCreateModalOpen] = useState(false);
 
-	// For now, we'll use a mock workspace ID since we're in single-workspace mode
-	const workspaceId = "clz1234567890";
+	const { workspaceId } = useCurrentWorkspace();
 
-	const { data, isLoading } = api.issue.list.useQuery({
-		workspaceId,
-		status: filters.status ?? undefined,
-		priority: filters.priority ?? undefined,
-		assigneeId: filters.assigneeId ?? undefined,
-		projectId: filters.projectId ?? undefined,
-		labelIds: filters.labelIds.length > 0 ? filters.labelIds : undefined,
-		search: filters.search || undefined,
-		limit: BOARD_PAGINATION_LIMIT,
-	});
+	const { data, isLoading } = api.issue.list.useQuery(
+		{
+			workspaceId: workspaceId ?? "",
+			status: filters.status ?? undefined,
+			priority: filters.priority ?? undefined,
+			assigneeId: filters.assigneeId ?? undefined,
+			projectId: filters.projectId ?? undefined,
+			labelIds: filters.labelIds.length > 0 ? filters.labelIds : undefined,
+			search: filters.search || undefined,
+			limit: BOARD_PAGINATION_LIMIT,
+		},
+		{
+			enabled: !!workspaceId,
+		},
+	);
 
 	return (
 		<div className="flex h-full flex-col">
@@ -91,14 +96,14 @@ export default function BoardPage() {
 			<KanbanBoard
 				isLoading={isLoading}
 				issues={data?.issues ?? []}
-				workspaceId={workspaceId}
+				workspaceId={workspaceId ?? ""}
 			/>
 
 			{/* Create Issue Modal */}
 			<CreateIssueModal
 				onOpenChange={setCreateModalOpen}
 				open={createModalOpen}
-				workspaceId={workspaceId}
+				workspaceId={workspaceId ?? ""}
 			/>
 		</div>
 	);

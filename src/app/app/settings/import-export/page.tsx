@@ -42,6 +42,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import { useCurrentWorkspace } from "@/hooks/use-current-workspace";
 import {
 	PRIORITY_COLORS,
 	STATUS_COLORS,
@@ -118,8 +119,14 @@ function ExportFilters({
 		"NO_PRIORITY" | "LOW" | "MEDIUM" | "HIGH" | "URGENT" | undefined
 	>(undefined);
 
-	const { data: teams } = api.team.list.useQuery({ workspaceId });
-	const { data: projects } = api.project.list.useQuery({ workspaceId });
+	const { data: teams } = api.team.list.useQuery(
+		{ workspaceId },
+		{ enabled: !!workspaceId },
+	);
+	const { data: projects } = api.project.list.useQuery(
+		{ workspaceId },
+		{ enabled: !!workspaceId },
+	);
 
 	const handleExport = (format: "csv" | "json") => {
 		onExport(format);
@@ -494,7 +501,7 @@ export default function ImportExportPage() {
 	const [defaultTeamKey, setDefaultTeamKey] = useState("");
 	const [showSuccess, setShowSuccess] = useState(false);
 
-	const workspaceId = "clz1234567890";
+	const { workspaceId } = useCurrentWorkspace();
 
 	const exportCSVMutation = api.importExport.exportToCSV.useMutation({
 		onSuccess: (data) => {
@@ -607,6 +614,7 @@ export default function ImportExportPage() {
 	});
 
 	const handleExport = (format: "csv" | "json") => {
+		if (!workspaceId) return;
 		const filters = {
 			workspaceId,
 		};
@@ -618,7 +626,7 @@ export default function ImportExportPage() {
 	};
 
 	const handlePreview = () => {
-		if (!importData.trim()) return;
+		if (!importData.trim() || !workspaceId) return;
 
 		if (importType === "csv") {
 			previewCSVMutation.mutate({
@@ -648,6 +656,7 @@ export default function ImportExportPage() {
 	};
 
 	const handleImport = (items: Array<Record<string, unknown>>) => {
+		if (!workspaceId) return;
 		if (importType === "csv") {
 			importCSVMutation.mutate({
 				workspaceId,
@@ -760,7 +769,7 @@ export default function ImportExportPage() {
 						<CardContent>
 							<ExportFilters
 								onExport={handleExport}
-								workspaceId={workspaceId}
+								workspaceId={workspaceId ?? ""}
 							/>
 						</CardContent>
 					</Card>
