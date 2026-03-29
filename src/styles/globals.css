@@ -38,17 +38,15 @@
 	box-shadow: 0 0 0 4px black !important;
 }
 
-/* Enhanced Focus Styles */
-.enhanced-focus *:focus-visible,
+/* Enhanced Focus Styles - Base level first, then enhanced overrides */
 *:focus-visible {
 	outline: 3px solid #5e6ad2;
 	outline-offset: 2px;
 }
 
-.enhanced-focus button:focus-visible,
-.enhanced-focus a:focus-visible {
+.enhanced-focus *:focus-visible {
 	outline: 3px solid #5e6ad2;
-	outline-offset: 4px;
+	outline-offset: 2px;
 }
 
 /* Skip Links */

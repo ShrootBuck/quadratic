@@ -332,7 +332,7 @@ export const customFieldRouter = createTRPCRouter({
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
-			const { workspaceId, teamId, fieldIds } = input;
+			const { workspaceId, teamId: _teamId, fieldIds } = input;
 
 			// Check workspace membership
 			const membership = await ctx.db.workspaceMember.findFirst({

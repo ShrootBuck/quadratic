@@ -5,7 +5,6 @@ import {
 	Inbox,
 	type LucideIcon,
 	Search,
-	Settings,
 	Tag,
 	Users,
 } from "lucide-react";

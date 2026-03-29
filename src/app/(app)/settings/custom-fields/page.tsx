@@ -4,7 +4,6 @@ import {
 	Calendar,
 	ChevronDown,
 	ChevronUp,
-	GripVertical,
 	Hash,
 	Link,
 	List,
@@ -47,7 +46,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
 import { api } from "~/trpc/react";
 
 const FIELD_TYPES = [
@@ -557,7 +555,9 @@ export default function CustomFieldsPage() {
 		const newOrder = [...fields];
 		const temp = newOrder[index];
 		if (!temp) return;
-		newOrder[index] = newOrder[index - 1]!;
+		const prevItem = newOrder[index - 1];
+		if (!prevItem) return;
+		newOrder[index] = prevItem;
 		newOrder[index - 1] = temp;
 		reorderMutation.mutate({
 			workspaceId,
@@ -570,7 +570,9 @@ export default function CustomFieldsPage() {
 		const newOrder = [...fields];
 		const temp = newOrder[index];
 		if (!temp) return;
-		newOrder[index] = newOrder[index + 1]!;
+		const nextItem = newOrder[index + 1];
+		if (!nextItem) return;
+		newOrder[index] = nextItem;
 		newOrder[index + 1] = temp;
 		reorderMutation.mutate({
 			workspaceId,
