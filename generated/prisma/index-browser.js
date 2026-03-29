@@ -243,6 +243,7 @@ exports.Prisma.IssueScalarFieldEnum = {
   status: 'status',
   priority: 'priority',
   dueDate: 'dueDate',
+  estimatedTime: 'estimatedTime',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   workspaceId: 'workspaceId',
@@ -257,6 +258,20 @@ exports.Prisma.IssueLabelScalarFieldEnum = {
   id: 'id',
   issueId: 'issueId',
   labelId: 'labelId'
+};
+
+exports.Prisma.TimeEntryScalarFieldEnum = {
+  id: 'id',
+  duration: 'duration',
+  description: 'description',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt',
+  isRunning: 'isRunning',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  issueId: 'issueId',
+  userId: 'userId',
+  workspaceId: 'workspaceId'
 };
 
 exports.Prisma.CommentScalarFieldEnum = {
@@ -455,6 +470,7 @@ exports.Prisma.ModelName = {
   Label: 'Label',
   Issue: 'Issue',
   IssueLabel: 'IssueLabel',
+  TimeEntry: 'TimeEntry',
   Comment: 'Comment',
   IssueHistory: 'IssueHistory',
   Notification: 'Notification',

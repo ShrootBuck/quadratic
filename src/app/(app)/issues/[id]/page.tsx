@@ -18,6 +18,8 @@ import { useEffect, useRef, useState } from "react";
 import { GitHubPullRequests } from "@/components/features/github/github-pull-requests";
 import { IssueActivity } from "@/components/features/issues/issue-activity";
 import { IssueComments } from "@/components/features/issues/issue-comments";
+import { EstimatedTimeEditor } from "@/components/features/time-tracking/estimated-time-editor";
+import { TimeTrackingPanel } from "@/components/features/time-tracking/time-tracking-panel";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -32,6 +34,7 @@ import RichTextEditor, {
 	type RichTextEditorRef,
 } from "@/components/ui/rich-text-editor";
 import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
 	Tooltip,
 	TooltipContent,
@@ -364,11 +367,40 @@ export default function IssueDetailPage({ params }: IssueDetailPageProps) {
 
 						<Separator className="my-6 bg-[#2A2F35]" />
 
-						<IssueComments issueId={issue.id} />
-
-						<Separator className="my-6 bg-[#2A2F35]" />
-
-						<IssueActivity history={issue.history} />
+						<Tabs className="w-full" defaultValue="comments">
+							<TabsList className="grid w-full grid-cols-3 bg-[#16181D]">
+								<TabsTrigger
+									className="data-[state=active]:bg-[#2A2F35] data-[state=active]:text-[#F7F8F8]"
+									value="comments"
+								>
+									Comments ({issue.comments.length})
+								</TabsTrigger>
+								<TabsTrigger
+									className="data-[state=active]:bg-[#2A2F35] data-[state=active]:text-[#F7F8F8]"
+									value="activity"
+								>
+									Activity
+								</TabsTrigger>
+								<TabsTrigger
+									className="data-[state=active]:bg-[#2A2F35] data-[state=active]:text-[#F7F8F8]"
+									value="time-tracking"
+								>
+									Time Tracking
+								</TabsTrigger>
+							</TabsList>
+							<TabsContent className="mt-6" value="comments">
+								<IssueComments issueId={issue.id} />
+							</TabsContent>
+							<TabsContent className="mt-6" value="activity">
+								<IssueActivity history={issue.history} />
+							</TabsContent>
+							<TabsContent className="mt-6" value="time-tracking">
+								<TimeTrackingPanel
+									issueId={issue.id}
+									workspaceId={issue.workspaceId}
+								/>
+							</TabsContent>
+						</Tabs>
 					</div>
 
 					<div className="w-72 border-[#2A2F35] border-l bg-[#16181D] p-4">
@@ -553,6 +585,16 @@ export default function IssueDetailPage({ params }: IssueDetailPageProps) {
 										? new Date(issue.dueDate).toLocaleDateString()
 										: "No due date"}
 								</span>
+							</div>
+
+							<div>
+								<span className="mb-2 block font-medium text-[#8A8F98] text-xs uppercase tracking-wider">
+									Estimated Time
+								</span>
+								<EstimatedTimeEditor
+									currentEstimate={issue.estimatedTime}
+									issueId={issue.id}
+								/>
 							</div>
 
 							<div>

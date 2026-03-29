@@ -1,5 +1,4 @@
 import { Bell, Brush, Key, Palette, Settings, User } from "lucide-react";
-import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getSession } from "~/server/better-auth/server";
@@ -25,7 +24,7 @@ export default async function SettingsLayout({
 		orderBy: { joinedAt: "asc" },
 	});
 
-	const workspace = membership?.workspace;
+	const _workspace = membership?.workspace;
 	const isAdmin = membership?.role === "ADMIN";
 
 	const settingsNav = [

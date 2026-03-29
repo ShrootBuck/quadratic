@@ -9,6 +9,7 @@ import { postRouter } from "~/server/api/routers/post";
 import { projectRouter } from "~/server/api/routers/project";
 import { teamRouter } from "~/server/api/routers/team";
 import { templateRouter } from "~/server/api/routers/template";
+import { timeTrackingRouter } from "~/server/api/routers/timeTracking";
 import { userRouter } from "~/server/api/routers/user";
 import { workspaceRouter } from "~/server/api/routers/workspace";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
@@ -32,6 +33,7 @@ export const appRouter = createTRPCRouter({
 	user: userRouter,
 	automation: automationRouter,
 	github: githubRouter,
+	timeTracking: timeTrackingRouter,
 });
 
 // export type definition of API

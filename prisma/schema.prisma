@@ -50,6 +50,7 @@ model User {
   notifications           Notification[] @relation("UserNotifications")
   notificationsTriggered  Notification[] @relation("NotificationActor")
   notificationPreferences NotificationPreferences[]
+  timeEntries             TimeEntry[]
 
   @@unique([email])
   @@map("user")
@@ -122,6 +123,7 @@ model Workspace {
   automationRules   AutomationRule[]
   automationLogs    AutomationLog[]
   pullRequests      GitHubPullRequest[]
+  timeEntries       TimeEntry[]
 
   @@map("workspace")
 }
@@ -233,6 +235,7 @@ model Issue {
   status      IssueStatus @default(BACKLOG)
   priority    Priority    @default(NO_PRIORITY)
   dueDate     DateTime?
+  estimatedTime Float?    // Estimated time in hours
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 
@@ -254,6 +257,7 @@ model Issue {
   history            IssueHistory[]
   notifications      Notification[]
   pullRequests       GitHubPullRequest[]
+  timeEntries        TimeEntry[]
 
   @@unique([teamId, number])
   @@index([workspaceId])
@@ -277,6 +281,31 @@ model IssueLabel {
   @@unique([issueId, labelId])
   @@index([labelId])
   @@map("issue_label")
+}
+
+model TimeEntry {
+  id          String    @id @default(cuid())
+  duration    Float     // Duration in hours (can be fractional like 0.5 for 30 minutes)
+  description String?
+  startedAt   DateTime  @default(now())
+  endedAt     DateTime?
+  isRunning   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  issueId     String
+  issue       Issue     @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([issueId])
+  @@index([userId])
+  @@index([workspaceId])
+  @@index([startedAt])
+  @@index([isRunning])
+  @@map("time_entry")
 }
 
 model Comment {

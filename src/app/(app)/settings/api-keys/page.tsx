@@ -1,5 +1,4 @@
 import { Key, Lock } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 export default function ApiKeysPage() {
 	return (

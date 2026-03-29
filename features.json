@@ -395,7 +395,7 @@
 				"Time tracking reports per cycle/project",
 				"Export time logs to CSV"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "api-keys",

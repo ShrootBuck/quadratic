@@ -79,6 +79,11 @@ export type Issue = $Result.DefaultSelection<Prisma.$IssuePayload>
  */
 export type IssueLabel = $Result.DefaultSelection<Prisma.$IssueLabelPayload>
 /**
+ * Model TimeEntry
+ * 
+ */
+export type TimeEntry = $Result.DefaultSelection<Prisma.$TimeEntryPayload>
+/**
  * Model Comment
  * 
  */
@@ -499,6 +504,16 @@ export class PrismaClient<
     * ```
     */
   get issueLabel(): Prisma.IssueLabelDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.timeEntry`: Exposes CRUD operations for the **TimeEntry** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TimeEntries
+    * const timeEntries = await prisma.timeEntry.findMany()
+    * ```
+    */
+  get timeEntry(): Prisma.TimeEntryDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.comment`: Exposes CRUD operations for the **Comment** model.
@@ -1033,6 +1048,7 @@ export namespace Prisma {
     Label: 'Label',
     Issue: 'Issue',
     IssueLabel: 'IssueLabel',
+    TimeEntry: 'TimeEntry',
     Comment: 'Comment',
     IssueHistory: 'IssueHistory',
     Notification: 'Notification',
@@ -1059,7 +1075,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "post" | "user" | "session" | "account" | "verification" | "workspace" | "workspaceMember" | "team" | "project" | "cycle" | "label" | "issue" | "issueLabel" | "comment" | "issueHistory" | "notification" | "notificationPreferences" | "template" | "automationRule" | "automationLog" | "gitHubPullRequest"
+      modelProps: "post" | "user" | "session" | "account" | "verification" | "workspace" | "workspaceMember" | "team" | "project" | "cycle" | "label" | "issue" | "issueLabel" | "timeEntry" | "comment" | "issueHistory" | "notification" | "notificationPreferences" | "template" | "automationRule" | "automationLog" | "gitHubPullRequest"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2025,6 +2041,80 @@ export namespace Prisma {
           }
         }
       }
+      TimeEntry: {
+        payload: Prisma.$TimeEntryPayload<ExtArgs>
+        fields: Prisma.TimeEntryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TimeEntryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimeEntryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TimeEntryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimeEntryPayload>
+          }
+          findFirst: {
+            args: Prisma.TimeEntryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimeEntryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TimeEntryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimeEntryPayload>
+          }
+          findMany: {
+            args: Prisma.TimeEntryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimeEntryPayload>[]
+          }
+          create: {
+            args: Prisma.TimeEntryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimeEntryPayload>
+          }
+          createMany: {
+            args: Prisma.TimeEntryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TimeEntryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimeEntryPayload>[]
+          }
+          delete: {
+            args: Prisma.TimeEntryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimeEntryPayload>
+          }
+          update: {
+            args: Prisma.TimeEntryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimeEntryPayload>
+          }
+          deleteMany: {
+            args: Prisma.TimeEntryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TimeEntryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TimeEntryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimeEntryPayload>[]
+          }
+          upsert: {
+            args: Prisma.TimeEntryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimeEntryPayload>
+          }
+          aggregate: {
+            args: Prisma.TimeEntryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTimeEntry>
+          }
+          groupBy: {
+            args: Prisma.TimeEntryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TimeEntryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TimeEntryCountArgs<ExtArgs>
+            result: $Utils.Optional<TimeEntryCountAggregateOutputType> | number
+          }
+        }
+      }
       Comment: {
         payload: Prisma.$CommentPayload<ExtArgs>
         fields: Prisma.CommentFieldRefs
@@ -2726,6 +2816,7 @@ export namespace Prisma {
     label?: LabelOmit
     issue?: IssueOmit
     issueLabel?: IssueLabelOmit
+    timeEntry?: TimeEntryOmit
     comment?: CommentOmit
     issueHistory?: IssueHistoryOmit
     notification?: NotificationOmit
@@ -2826,6 +2917,7 @@ export namespace Prisma {
     notifications: number
     notificationsTriggered: number
     notificationPreferences: number
+    timeEntries: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2841,6 +2933,7 @@ export namespace Prisma {
     notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
     notificationsTriggered?: boolean | UserCountOutputTypeCountNotificationsTriggeredArgs
     notificationPreferences?: boolean | UserCountOutputTypeCountNotificationPreferencesArgs
+    timeEntries?: boolean | UserCountOutputTypeCountTimeEntriesArgs
   }
 
   // Custom InputTypes
@@ -2938,6 +3031,13 @@ export namespace Prisma {
     where?: NotificationPreferencesWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTimeEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TimeEntryWhereInput
+  }
+
 
   /**
    * Count Type WorkspaceCountOutputType
@@ -2956,6 +3056,7 @@ export namespace Prisma {
     automationRules: number
     automationLogs: number
     pullRequests: number
+    timeEntries: number
   }
 
   export type WorkspaceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2971,6 +3072,7 @@ export namespace Prisma {
     automationRules?: boolean | WorkspaceCountOutputTypeCountAutomationRulesArgs
     automationLogs?: boolean | WorkspaceCountOutputTypeCountAutomationLogsArgs
     pullRequests?: boolean | WorkspaceCountOutputTypeCountPullRequestsArgs
+    timeEntries?: boolean | WorkspaceCountOutputTypeCountTimeEntriesArgs
   }
 
   // Custom InputTypes
@@ -3066,6 +3168,13 @@ export namespace Prisma {
    */
   export type WorkspaceCountOutputTypeCountPullRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: GitHubPullRequestWhereInput
+  }
+
+  /**
+   * WorkspaceCountOutputType without action
+   */
+  export type WorkspaceCountOutputTypeCountTimeEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TimeEntryWhereInput
   }
 
 
@@ -3248,6 +3357,7 @@ export namespace Prisma {
     history: number
     notifications: number
     pullRequests: number
+    timeEntries: number
   }
 
   export type IssueCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3256,6 +3366,7 @@ export namespace Prisma {
     history?: boolean | IssueCountOutputTypeCountHistoryArgs
     notifications?: boolean | IssueCountOutputTypeCountNotificationsArgs
     pullRequests?: boolean | IssueCountOutputTypeCountPullRequestsArgs
+    timeEntries?: boolean | IssueCountOutputTypeCountTimeEntriesArgs
   }
 
   // Custom InputTypes
@@ -3302,6 +3413,13 @@ export namespace Prisma {
    */
   export type IssueCountOutputTypeCountPullRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: GitHubPullRequestWhereInput
+  }
+
+  /**
+   * IssueCountOutputType without action
+   */
+  export type IssueCountOutputTypeCountTimeEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TimeEntryWhereInput
   }
 
 
@@ -4596,6 +4714,7 @@ export namespace Prisma {
     notifications?: boolean | User$notificationsArgs<ExtArgs>
     notificationsTriggered?: boolean | User$notificationsTriggeredArgs<ExtArgs>
     notificationPreferences?: boolean | User$notificationPreferencesArgs<ExtArgs>
+    timeEntries?: boolean | User$timeEntriesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -4646,6 +4765,7 @@ export namespace Prisma {
     notifications?: boolean | User$notificationsArgs<ExtArgs>
     notificationsTriggered?: boolean | User$notificationsTriggeredArgs<ExtArgs>
     notificationPreferences?: boolean | User$notificationPreferencesArgs<ExtArgs>
+    timeEntries?: boolean | User$timeEntriesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -4666,6 +4786,7 @@ export namespace Prisma {
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
       notificationsTriggered: Prisma.$NotificationPayload<ExtArgs>[]
       notificationPreferences: Prisma.$NotificationPreferencesPayload<ExtArgs>[]
+      timeEntries: Prisma.$TimeEntryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5082,6 +5203,7 @@ export namespace Prisma {
     notifications<T extends User$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notificationsTriggered<T extends User$notificationsTriggeredArgs<ExtArgs> = {}>(args?: Subset<T, User$notificationsTriggeredArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notificationPreferences<T extends User$notificationPreferencesArgs<ExtArgs> = {}>(args?: Subset<T, User$notificationPreferencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPreferencesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    timeEntries<T extends User$timeEntriesArgs<ExtArgs> = {}>(args?: Subset<T, User$timeEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TimeEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5790,6 +5912,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: NotificationPreferencesScalarFieldEnum | NotificationPreferencesScalarFieldEnum[]
+  }
+
+  /**
+   * User.timeEntries
+   */
+  export type User$timeEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TimeEntry
+     */
+    select?: TimeEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TimeEntry
+     */
+    omit?: TimeEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimeEntryInclude<ExtArgs> | null
+    where?: TimeEntryWhereInput
+    orderBy?: TimeEntryOrderByWithRelationInput | TimeEntryOrderByWithRelationInput[]
+    cursor?: TimeEntryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TimeEntryScalarFieldEnum | TimeEntryScalarFieldEnum[]
   }
 
   /**
@@ -9256,6 +9402,7 @@ export namespace Prisma {
     automationRules?: boolean | Workspace$automationRulesArgs<ExtArgs>
     automationLogs?: boolean | Workspace$automationLogsArgs<ExtArgs>
     pullRequests?: boolean | Workspace$pullRequestsArgs<ExtArgs>
+    timeEntries?: boolean | Workspace$timeEntriesArgs<ExtArgs>
     _count?: boolean | WorkspaceCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["workspace"]>
 
@@ -9300,6 +9447,7 @@ export namespace Prisma {
     automationRules?: boolean | Workspace$automationRulesArgs<ExtArgs>
     automationLogs?: boolean | Workspace$automationLogsArgs<ExtArgs>
     pullRequests?: boolean | Workspace$pullRequestsArgs<ExtArgs>
+    timeEntries?: boolean | Workspace$timeEntriesArgs<ExtArgs>
     _count?: boolean | WorkspaceCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type WorkspaceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -9320,6 +9468,7 @@ export namespace Prisma {
       automationRules: Prisma.$AutomationRulePayload<ExtArgs>[]
       automationLogs: Prisma.$AutomationLogPayload<ExtArgs>[]
       pullRequests: Prisma.$GitHubPullRequestPayload<ExtArgs>[]
+      timeEntries: Prisma.$TimeEntryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -9734,6 +9883,7 @@ export namespace Prisma {
     automationRules<T extends Workspace$automationRulesArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$automationRulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     automationLogs<T extends Workspace$automationLogsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$automationLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     pullRequests<T extends Workspace$pullRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$pullRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GitHubPullRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    timeEntries<T extends Workspace$timeEntriesArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$timeEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TimeEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10440,6 +10590,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: GitHubPullRequestScalarFieldEnum | GitHubPullRequestScalarFieldEnum[]
+  }
+
+  /**
+   * Workspace.timeEntries
+   */
+  export type Workspace$timeEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TimeEntry
+     */
+    select?: TimeEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TimeEntry
+     */
+    omit?: TimeEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimeEntryInclude<ExtArgs> | null
+    where?: TimeEntryWhereInput
+    orderBy?: TimeEntryOrderByWithRelationInput | TimeEntryOrderByWithRelationInput[]
+    cursor?: TimeEntryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TimeEntryScalarFieldEnum | TimeEntryScalarFieldEnum[]
   }
 
   /**
@@ -16249,10 +16423,12 @@ export namespace Prisma {
 
   export type IssueAvgAggregateOutputType = {
     number: number | null
+    estimatedTime: number | null
   }
 
   export type IssueSumAggregateOutputType = {
     number: number | null
+    estimatedTime: number | null
   }
 
   export type IssueMinAggregateOutputType = {
@@ -16264,6 +16440,7 @@ export namespace Prisma {
     status: $Enums.IssueStatus | null
     priority: $Enums.Priority | null
     dueDate: Date | null
+    estimatedTime: number | null
     createdAt: Date | null
     updatedAt: Date | null
     workspaceId: string | null
@@ -16283,6 +16460,7 @@ export namespace Prisma {
     status: $Enums.IssueStatus | null
     priority: $Enums.Priority | null
     dueDate: Date | null
+    estimatedTime: number | null
     createdAt: Date | null
     updatedAt: Date | null
     workspaceId: string | null
@@ -16302,6 +16480,7 @@ export namespace Prisma {
     status: number
     priority: number
     dueDate: number
+    estimatedTime: number
     createdAt: number
     updatedAt: number
     workspaceId: number
@@ -16316,10 +16495,12 @@ export namespace Prisma {
 
   export type IssueAvgAggregateInputType = {
     number?: true
+    estimatedTime?: true
   }
 
   export type IssueSumAggregateInputType = {
     number?: true
+    estimatedTime?: true
   }
 
   export type IssueMinAggregateInputType = {
@@ -16331,6 +16512,7 @@ export namespace Prisma {
     status?: true
     priority?: true
     dueDate?: true
+    estimatedTime?: true
     createdAt?: true
     updatedAt?: true
     workspaceId?: true
@@ -16350,6 +16532,7 @@ export namespace Prisma {
     status?: true
     priority?: true
     dueDate?: true
+    estimatedTime?: true
     createdAt?: true
     updatedAt?: true
     workspaceId?: true
@@ -16369,6 +16552,7 @@ export namespace Prisma {
     status?: true
     priority?: true
     dueDate?: true
+    estimatedTime?: true
     createdAt?: true
     updatedAt?: true
     workspaceId?: true
@@ -16475,6 +16659,7 @@ export namespace Prisma {
     status: $Enums.IssueStatus
     priority: $Enums.Priority
     dueDate: Date | null
+    estimatedTime: number | null
     createdAt: Date
     updatedAt: Date
     workspaceId: string
@@ -16513,6 +16698,7 @@ export namespace Prisma {
     status?: boolean
     priority?: boolean
     dueDate?: boolean
+    estimatedTime?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     workspaceId?: boolean
@@ -16532,6 +16718,7 @@ export namespace Prisma {
     history?: boolean | Issue$historyArgs<ExtArgs>
     notifications?: boolean | Issue$notificationsArgs<ExtArgs>
     pullRequests?: boolean | Issue$pullRequestsArgs<ExtArgs>
+    timeEntries?: boolean | Issue$timeEntriesArgs<ExtArgs>
     _count?: boolean | IssueCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["issue"]>
 
@@ -16544,6 +16731,7 @@ export namespace Prisma {
     status?: boolean
     priority?: boolean
     dueDate?: boolean
+    estimatedTime?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     workspaceId?: boolean
@@ -16569,6 +16757,7 @@ export namespace Prisma {
     status?: boolean
     priority?: boolean
     dueDate?: boolean
+    estimatedTime?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     workspaceId?: boolean
@@ -16594,6 +16783,7 @@ export namespace Prisma {
     status?: boolean
     priority?: boolean
     dueDate?: boolean
+    estimatedTime?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     workspaceId?: boolean
@@ -16604,7 +16794,7 @@ export namespace Prisma {
     creatorId?: boolean
   }
 
-  export type IssueOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "identifier" | "number" | "title" | "description" | "status" | "priority" | "dueDate" | "createdAt" | "updatedAt" | "workspaceId" | "teamId" | "projectId" | "cycleId" | "assigneeId" | "creatorId", ExtArgs["result"]["issue"]>
+  export type IssueOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "identifier" | "number" | "title" | "description" | "status" | "priority" | "dueDate" | "estimatedTime" | "createdAt" | "updatedAt" | "workspaceId" | "teamId" | "projectId" | "cycleId" | "assigneeId" | "creatorId", ExtArgs["result"]["issue"]>
   export type IssueInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
     team?: boolean | TeamDefaultArgs<ExtArgs>
@@ -16617,6 +16807,7 @@ export namespace Prisma {
     history?: boolean | Issue$historyArgs<ExtArgs>
     notifications?: boolean | Issue$notificationsArgs<ExtArgs>
     pullRequests?: boolean | Issue$pullRequestsArgs<ExtArgs>
+    timeEntries?: boolean | Issue$timeEntriesArgs<ExtArgs>
     _count?: boolean | IssueCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type IssueIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -16650,6 +16841,7 @@ export namespace Prisma {
       history: Prisma.$IssueHistoryPayload<ExtArgs>[]
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
       pullRequests: Prisma.$GitHubPullRequestPayload<ExtArgs>[]
+      timeEntries: Prisma.$TimeEntryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -16660,6 +16852,7 @@ export namespace Prisma {
       status: $Enums.IssueStatus
       priority: $Enums.Priority
       dueDate: Date | null
+      estimatedTime: number | null
       createdAt: Date
       updatedAt: Date
       workspaceId: string
@@ -17073,6 +17266,7 @@ export namespace Prisma {
     history<T extends Issue$historyArgs<ExtArgs> = {}>(args?: Subset<T, Issue$historyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IssueHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notifications<T extends Issue$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Issue$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     pullRequests<T extends Issue$pullRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Issue$pullRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GitHubPullRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    timeEntries<T extends Issue$timeEntriesArgs<ExtArgs> = {}>(args?: Subset<T, Issue$timeEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TimeEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -17110,6 +17304,7 @@ export namespace Prisma {
     readonly status: FieldRef<"Issue", 'IssueStatus'>
     readonly priority: FieldRef<"Issue", 'Priority'>
     readonly dueDate: FieldRef<"Issue", 'DateTime'>
+    readonly estimatedTime: FieldRef<"Issue", 'Float'>
     readonly createdAt: FieldRef<"Issue", 'DateTime'>
     readonly updatedAt: FieldRef<"Issue", 'DateTime'>
     readonly workspaceId: FieldRef<"Issue", 'String'>
@@ -17686,6 +17881,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: GitHubPullRequestScalarFieldEnum | GitHubPullRequestScalarFieldEnum[]
+  }
+
+  /**
+   * Issue.timeEntries
+   */
+  export type Issue$timeEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TimeEntry
+     */
+    select?: TimeEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TimeEntry
+     */
+    omit?: TimeEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimeEntryInclude<ExtArgs> | null
+    where?: TimeEntryWhereInput
+    orderBy?: TimeEntryOrderByWithRelationInput | TimeEntryOrderByWithRelationInput[]
+    cursor?: TimeEntryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TimeEntryScalarFieldEnum | TimeEntryScalarFieldEnum[]
   }
 
   /**
@@ -18742,6 +18961,1190 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: IssueLabelInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model TimeEntry
+   */
+
+  export type AggregateTimeEntry = {
+    _count: TimeEntryCountAggregateOutputType | null
+    _avg: TimeEntryAvgAggregateOutputType | null
+    _sum: TimeEntrySumAggregateOutputType | null
+    _min: TimeEntryMinAggregateOutputType | null
+    _max: TimeEntryMaxAggregateOutputType | null
+  }
+
+  export type TimeEntryAvgAggregateOutputType = {
+    duration: number | null
+  }
+
+  export type TimeEntrySumAggregateOutputType = {
+    duration: number | null
+  }
+
+  export type TimeEntryMinAggregateOutputType = {
+    id: string | null
+    duration: number | null
+    description: string | null
+    startedAt: Date | null
+    endedAt: Date | null
+    isRunning: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    issueId: string | null
+    userId: string | null
+    workspaceId: string | null
+  }
+
+  export type TimeEntryMaxAggregateOutputType = {
+    id: string | null
+    duration: number | null
+    description: string | null
+    startedAt: Date | null
+    endedAt: Date | null
+    isRunning: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    issueId: string | null
+    userId: string | null
+    workspaceId: string | null
+  }
+
+  export type TimeEntryCountAggregateOutputType = {
+    id: number
+    duration: number
+    description: number
+    startedAt: number
+    endedAt: number
+    isRunning: number
+    createdAt: number
+    updatedAt: number
+    issueId: number
+    userId: number
+    workspaceId: number
+    _all: number
+  }
+
+
+  export type TimeEntryAvgAggregateInputType = {
+    duration?: true
+  }
+
+  export type TimeEntrySumAggregateInputType = {
+    duration?: true
+  }
+
+  export type TimeEntryMinAggregateInputType = {
+    id?: true
+    duration?: true
+    description?: true
+    startedAt?: true
+    endedAt?: true
+    isRunning?: true
+    createdAt?: true
+    updatedAt?: true
+    issueId?: true
+    userId?: true
+    workspaceId?: true
+  }
+
+  export type TimeEntryMaxAggregateInputType = {
+    id?: true
+    duration?: true
+    description?: true
+    startedAt?: true
+    endedAt?: true
+    isRunning?: true
+    createdAt?: true
+    updatedAt?: true
+    issueId?: true
+    userId?: true
+    workspaceId?: true
+  }
+
+  export type TimeEntryCountAggregateInputType = {
+    id?: true
+    duration?: true
+    description?: true
+    startedAt?: true
+    endedAt?: true
+    isRunning?: true
+    createdAt?: true
+    updatedAt?: true
+    issueId?: true
+    userId?: true
+    workspaceId?: true
+    _all?: true
+  }
+
+  export type TimeEntryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TimeEntry to aggregate.
+     */
+    where?: TimeEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TimeEntries to fetch.
+     */
+    orderBy?: TimeEntryOrderByWithRelationInput | TimeEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TimeEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TimeEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TimeEntries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TimeEntries
+    **/
+    _count?: true | TimeEntryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TimeEntryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TimeEntrySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TimeEntryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TimeEntryMaxAggregateInputType
+  }
+
+  export type GetTimeEntryAggregateType<T extends TimeEntryAggregateArgs> = {
+        [P in keyof T & keyof AggregateTimeEntry]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTimeEntry[P]>
+      : GetScalarType<T[P], AggregateTimeEntry[P]>
+  }
+
+
+
+
+  export type TimeEntryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TimeEntryWhereInput
+    orderBy?: TimeEntryOrderByWithAggregationInput | TimeEntryOrderByWithAggregationInput[]
+    by: TimeEntryScalarFieldEnum[] | TimeEntryScalarFieldEnum
+    having?: TimeEntryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TimeEntryCountAggregateInputType | true
+    _avg?: TimeEntryAvgAggregateInputType
+    _sum?: TimeEntrySumAggregateInputType
+    _min?: TimeEntryMinAggregateInputType
+    _max?: TimeEntryMaxAggregateInputType
+  }
+
+  export type TimeEntryGroupByOutputType = {
+    id: string
+    duration: number
+    description: string | null
+    startedAt: Date
+    endedAt: Date | null
+    isRunning: boolean
+    createdAt: Date
+    updatedAt: Date
+    issueId: string
+    userId: string
+    workspaceId: string
+    _count: TimeEntryCountAggregateOutputType | null
+    _avg: TimeEntryAvgAggregateOutputType | null
+    _sum: TimeEntrySumAggregateOutputType | null
+    _min: TimeEntryMinAggregateOutputType | null
+    _max: TimeEntryMaxAggregateOutputType | null
+  }
+
+  type GetTimeEntryGroupByPayload<T extends TimeEntryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TimeEntryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TimeEntryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TimeEntryGroupByOutputType[P]>
+            : GetScalarType<T[P], TimeEntryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TimeEntrySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    duration?: boolean
+    description?: boolean
+    startedAt?: boolean
+    endedAt?: boolean
+    isRunning?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    issueId?: boolean
+    userId?: boolean
+    workspaceId?: boolean
+    issue?: boolean | IssueDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["timeEntry"]>
+
+  export type TimeEntrySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    duration?: boolean
+    description?: boolean
+    startedAt?: boolean
+    endedAt?: boolean
+    isRunning?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    issueId?: boolean
+    userId?: boolean
+    workspaceId?: boolean
+    issue?: boolean | IssueDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["timeEntry"]>
+
+  export type TimeEntrySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    duration?: boolean
+    description?: boolean
+    startedAt?: boolean
+    endedAt?: boolean
+    isRunning?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    issueId?: boolean
+    userId?: boolean
+    workspaceId?: boolean
+    issue?: boolean | IssueDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["timeEntry"]>
+
+  export type TimeEntrySelectScalar = {
+    id?: boolean
+    duration?: boolean
+    description?: boolean
+    startedAt?: boolean
+    endedAt?: boolean
+    isRunning?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    issueId?: boolean
+    userId?: boolean
+    workspaceId?: boolean
+  }
+
+  export type TimeEntryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "duration" | "description" | "startedAt" | "endedAt" | "isRunning" | "createdAt" | "updatedAt" | "issueId" | "userId" | "workspaceId", ExtArgs["result"]["timeEntry"]>
+  export type TimeEntryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    issue?: boolean | IssueDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }
+  export type TimeEntryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    issue?: boolean | IssueDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }
+  export type TimeEntryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    issue?: boolean | IssueDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }
+
+  export type $TimeEntryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TimeEntry"
+    objects: {
+      issue: Prisma.$IssuePayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+      workspace: Prisma.$WorkspacePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      duration: number
+      description: string | null
+      startedAt: Date
+      endedAt: Date | null
+      isRunning: boolean
+      createdAt: Date
+      updatedAt: Date
+      issueId: string
+      userId: string
+      workspaceId: string
+    }, ExtArgs["result"]["timeEntry"]>
+    composites: {}
+  }
+
+  type TimeEntryGetPayload<S extends boolean | null | undefined | TimeEntryDefaultArgs> = $Result.GetResult<Prisma.$TimeEntryPayload, S>
+
+  type TimeEntryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TimeEntryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TimeEntryCountAggregateInputType | true
+    }
+
+  export interface TimeEntryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TimeEntry'], meta: { name: 'TimeEntry' } }
+    /**
+     * Find zero or one TimeEntry that matches the filter.
+     * @param {TimeEntryFindUniqueArgs} args - Arguments to find a TimeEntry
+     * @example
+     * // Get one TimeEntry
+     * const timeEntry = await prisma.timeEntry.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TimeEntryFindUniqueArgs>(args: SelectSubset<T, TimeEntryFindUniqueArgs<ExtArgs>>): Prisma__TimeEntryClient<$Result.GetResult<Prisma.$TimeEntryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TimeEntry that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TimeEntryFindUniqueOrThrowArgs} args - Arguments to find a TimeEntry
+     * @example
+     * // Get one TimeEntry
+     * const timeEntry = await prisma.timeEntry.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TimeEntryFindUniqueOrThrowArgs>(args: SelectSubset<T, TimeEntryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TimeEntryClient<$Result.GetResult<Prisma.$TimeEntryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TimeEntry that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TimeEntryFindFirstArgs} args - Arguments to find a TimeEntry
+     * @example
+     * // Get one TimeEntry
+     * const timeEntry = await prisma.timeEntry.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TimeEntryFindFirstArgs>(args?: SelectSubset<T, TimeEntryFindFirstArgs<ExtArgs>>): Prisma__TimeEntryClient<$Result.GetResult<Prisma.$TimeEntryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TimeEntry that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TimeEntryFindFirstOrThrowArgs} args - Arguments to find a TimeEntry
+     * @example
+     * // Get one TimeEntry
+     * const timeEntry = await prisma.timeEntry.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TimeEntryFindFirstOrThrowArgs>(args?: SelectSubset<T, TimeEntryFindFirstOrThrowArgs<ExtArgs>>): Prisma__TimeEntryClient<$Result.GetResult<Prisma.$TimeEntryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TimeEntries that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TimeEntryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TimeEntries
+     * const timeEntries = await prisma.timeEntry.findMany()
+     * 
+     * // Get first 10 TimeEntries
+     * const timeEntries = await prisma.timeEntry.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const timeEntryWithIdOnly = await prisma.timeEntry.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TimeEntryFindManyArgs>(args?: SelectSubset<T, TimeEntryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TimeEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TimeEntry.
+     * @param {TimeEntryCreateArgs} args - Arguments to create a TimeEntry.
+     * @example
+     * // Create one TimeEntry
+     * const TimeEntry = await prisma.timeEntry.create({
+     *   data: {
+     *     // ... data to create a TimeEntry
+     *   }
+     * })
+     * 
+     */
+    create<T extends TimeEntryCreateArgs>(args: SelectSubset<T, TimeEntryCreateArgs<ExtArgs>>): Prisma__TimeEntryClient<$Result.GetResult<Prisma.$TimeEntryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TimeEntries.
+     * @param {TimeEntryCreateManyArgs} args - Arguments to create many TimeEntries.
+     * @example
+     * // Create many TimeEntries
+     * const timeEntry = await prisma.timeEntry.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TimeEntryCreateManyArgs>(args?: SelectSubset<T, TimeEntryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TimeEntries and returns the data saved in the database.
+     * @param {TimeEntryCreateManyAndReturnArgs} args - Arguments to create many TimeEntries.
+     * @example
+     * // Create many TimeEntries
+     * const timeEntry = await prisma.timeEntry.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TimeEntries and only return the `id`
+     * const timeEntryWithIdOnly = await prisma.timeEntry.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TimeEntryCreateManyAndReturnArgs>(args?: SelectSubset<T, TimeEntryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TimeEntryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TimeEntry.
+     * @param {TimeEntryDeleteArgs} args - Arguments to delete one TimeEntry.
+     * @example
+     * // Delete one TimeEntry
+     * const TimeEntry = await prisma.timeEntry.delete({
+     *   where: {
+     *     // ... filter to delete one TimeEntry
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TimeEntryDeleteArgs>(args: SelectSubset<T, TimeEntryDeleteArgs<ExtArgs>>): Prisma__TimeEntryClient<$Result.GetResult<Prisma.$TimeEntryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TimeEntry.
+     * @param {TimeEntryUpdateArgs} args - Arguments to update one TimeEntry.
+     * @example
+     * // Update one TimeEntry
+     * const timeEntry = await prisma.timeEntry.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TimeEntryUpdateArgs>(args: SelectSubset<T, TimeEntryUpdateArgs<ExtArgs>>): Prisma__TimeEntryClient<$Result.GetResult<Prisma.$TimeEntryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TimeEntries.
+     * @param {TimeEntryDeleteManyArgs} args - Arguments to filter TimeEntries to delete.
+     * @example
+     * // Delete a few TimeEntries
+     * const { count } = await prisma.timeEntry.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TimeEntryDeleteManyArgs>(args?: SelectSubset<T, TimeEntryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TimeEntries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TimeEntryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TimeEntries
+     * const timeEntry = await prisma.timeEntry.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TimeEntryUpdateManyArgs>(args: SelectSubset<T, TimeEntryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TimeEntries and returns the data updated in the database.
+     * @param {TimeEntryUpdateManyAndReturnArgs} args - Arguments to update many TimeEntries.
+     * @example
+     * // Update many TimeEntries
+     * const timeEntry = await prisma.timeEntry.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TimeEntries and only return the `id`
+     * const timeEntryWithIdOnly = await prisma.timeEntry.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TimeEntryUpdateManyAndReturnArgs>(args: SelectSubset<T, TimeEntryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TimeEntryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TimeEntry.
+     * @param {TimeEntryUpsertArgs} args - Arguments to update or create a TimeEntry.
+     * @example
+     * // Update or create a TimeEntry
+     * const timeEntry = await prisma.timeEntry.upsert({
+     *   create: {
+     *     // ... data to create a TimeEntry
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TimeEntry we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TimeEntryUpsertArgs>(args: SelectSubset<T, TimeEntryUpsertArgs<ExtArgs>>): Prisma__TimeEntryClient<$Result.GetResult<Prisma.$TimeEntryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TimeEntries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TimeEntryCountArgs} args - Arguments to filter TimeEntries to count.
+     * @example
+     * // Count the number of TimeEntries
+     * const count = await prisma.timeEntry.count({
+     *   where: {
+     *     // ... the filter for the TimeEntries we want to count
+     *   }
+     * })
+    **/
+    count<T extends TimeEntryCountArgs>(
+      args?: Subset<T, TimeEntryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TimeEntryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TimeEntry.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TimeEntryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TimeEntryAggregateArgs>(args: Subset<T, TimeEntryAggregateArgs>): Prisma.PrismaPromise<GetTimeEntryAggregateType<T>>
+
+    /**
+     * Group by TimeEntry.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TimeEntryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TimeEntryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TimeEntryGroupByArgs['orderBy'] }
+        : { orderBy?: TimeEntryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TimeEntryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTimeEntryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TimeEntry model
+   */
+  readonly fields: TimeEntryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TimeEntry.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TimeEntryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    issue<T extends IssueDefaultArgs<ExtArgs> = {}>(args?: Subset<T, IssueDefaultArgs<ExtArgs>>): Prisma__IssueClient<$Result.GetResult<Prisma.$IssuePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    workspace<T extends WorkspaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkspaceDefaultArgs<ExtArgs>>): Prisma__WorkspaceClient<$Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TimeEntry model
+   */
+  interface TimeEntryFieldRefs {
+    readonly id: FieldRef<"TimeEntry", 'String'>
+    readonly duration: FieldRef<"TimeEntry", 'Float'>
+    readonly description: FieldRef<"TimeEntry", 'String'>
+    readonly startedAt: FieldRef<"TimeEntry", 'DateTime'>
+    readonly endedAt: FieldRef<"TimeEntry", 'DateTime'>
+    readonly isRunning: FieldRef<"TimeEntry", 'Boolean'>
+    readonly createdAt: FieldRef<"TimeEntry", 'DateTime'>
+    readonly updatedAt: FieldRef<"TimeEntry", 'DateTime'>
+    readonly issueId: FieldRef<"TimeEntry", 'String'>
+    readonly userId: FieldRef<"TimeEntry", 'String'>
+    readonly workspaceId: FieldRef<"TimeEntry", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TimeEntry findUnique
+   */
+  export type TimeEntryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TimeEntry
+     */
+    select?: TimeEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TimeEntry
+     */
+    omit?: TimeEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimeEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which TimeEntry to fetch.
+     */
+    where: TimeEntryWhereUniqueInput
+  }
+
+  /**
+   * TimeEntry findUniqueOrThrow
+   */
+  export type TimeEntryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TimeEntry
+     */
+    select?: TimeEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TimeEntry
+     */
+    omit?: TimeEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimeEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which TimeEntry to fetch.
+     */
+    where: TimeEntryWhereUniqueInput
+  }
+
+  /**
+   * TimeEntry findFirst
+   */
+  export type TimeEntryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TimeEntry
+     */
+    select?: TimeEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TimeEntry
+     */
+    omit?: TimeEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimeEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which TimeEntry to fetch.
+     */
+    where?: TimeEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TimeEntries to fetch.
+     */
+    orderBy?: TimeEntryOrderByWithRelationInput | TimeEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TimeEntries.
+     */
+    cursor?: TimeEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TimeEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TimeEntries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TimeEntries.
+     */
+    distinct?: TimeEntryScalarFieldEnum | TimeEntryScalarFieldEnum[]
+  }
+
+  /**
+   * TimeEntry findFirstOrThrow
+   */
+  export type TimeEntryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TimeEntry
+     */
+    select?: TimeEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TimeEntry
+     */
+    omit?: TimeEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimeEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which TimeEntry to fetch.
+     */
+    where?: TimeEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TimeEntries to fetch.
+     */
+    orderBy?: TimeEntryOrderByWithRelationInput | TimeEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TimeEntries.
+     */
+    cursor?: TimeEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TimeEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TimeEntries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TimeEntries.
+     */
+    distinct?: TimeEntryScalarFieldEnum | TimeEntryScalarFieldEnum[]
+  }
+
+  /**
+   * TimeEntry findMany
+   */
+  export type TimeEntryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TimeEntry
+     */
+    select?: TimeEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TimeEntry
+     */
+    omit?: TimeEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimeEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which TimeEntries to fetch.
+     */
+    where?: TimeEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TimeEntries to fetch.
+     */
+    orderBy?: TimeEntryOrderByWithRelationInput | TimeEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TimeEntries.
+     */
+    cursor?: TimeEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TimeEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TimeEntries.
+     */
+    skip?: number
+    distinct?: TimeEntryScalarFieldEnum | TimeEntryScalarFieldEnum[]
+  }
+
+  /**
+   * TimeEntry create
+   */
+  export type TimeEntryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TimeEntry
+     */
+    select?: TimeEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TimeEntry
+     */
+    omit?: TimeEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimeEntryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TimeEntry.
+     */
+    data: XOR<TimeEntryCreateInput, TimeEntryUncheckedCreateInput>
+  }
+
+  /**
+   * TimeEntry createMany
+   */
+  export type TimeEntryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TimeEntries.
+     */
+    data: TimeEntryCreateManyInput | TimeEntryCreateManyInput[]
+  }
+
+  /**
+   * TimeEntry createManyAndReturn
+   */
+  export type TimeEntryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TimeEntry
+     */
+    select?: TimeEntrySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TimeEntry
+     */
+    omit?: TimeEntryOmit<ExtArgs> | null
+    /**
+     * The data used to create many TimeEntries.
+     */
+    data: TimeEntryCreateManyInput | TimeEntryCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimeEntryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TimeEntry update
+   */
+  export type TimeEntryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TimeEntry
+     */
+    select?: TimeEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TimeEntry
+     */
+    omit?: TimeEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimeEntryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TimeEntry.
+     */
+    data: XOR<TimeEntryUpdateInput, TimeEntryUncheckedUpdateInput>
+    /**
+     * Choose, which TimeEntry to update.
+     */
+    where: TimeEntryWhereUniqueInput
+  }
+
+  /**
+   * TimeEntry updateMany
+   */
+  export type TimeEntryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TimeEntries.
+     */
+    data: XOR<TimeEntryUpdateManyMutationInput, TimeEntryUncheckedUpdateManyInput>
+    /**
+     * Filter which TimeEntries to update
+     */
+    where?: TimeEntryWhereInput
+    /**
+     * Limit how many TimeEntries to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TimeEntry updateManyAndReturn
+   */
+  export type TimeEntryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TimeEntry
+     */
+    select?: TimeEntrySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TimeEntry
+     */
+    omit?: TimeEntryOmit<ExtArgs> | null
+    /**
+     * The data used to update TimeEntries.
+     */
+    data: XOR<TimeEntryUpdateManyMutationInput, TimeEntryUncheckedUpdateManyInput>
+    /**
+     * Filter which TimeEntries to update
+     */
+    where?: TimeEntryWhereInput
+    /**
+     * Limit how many TimeEntries to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimeEntryIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TimeEntry upsert
+   */
+  export type TimeEntryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TimeEntry
+     */
+    select?: TimeEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TimeEntry
+     */
+    omit?: TimeEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimeEntryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TimeEntry to update in case it exists.
+     */
+    where: TimeEntryWhereUniqueInput
+    /**
+     * In case the TimeEntry found by the `where` argument doesn't exist, create a new TimeEntry with this data.
+     */
+    create: XOR<TimeEntryCreateInput, TimeEntryUncheckedCreateInput>
+    /**
+     * In case the TimeEntry was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TimeEntryUpdateInput, TimeEntryUncheckedUpdateInput>
+  }
+
+  /**
+   * TimeEntry delete
+   */
+  export type TimeEntryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TimeEntry
+     */
+    select?: TimeEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TimeEntry
+     */
+    omit?: TimeEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimeEntryInclude<ExtArgs> | null
+    /**
+     * Filter which TimeEntry to delete.
+     */
+    where: TimeEntryWhereUniqueInput
+  }
+
+  /**
+   * TimeEntry deleteMany
+   */
+  export type TimeEntryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TimeEntries to delete
+     */
+    where?: TimeEntryWhereInput
+    /**
+     * Limit how many TimeEntries to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TimeEntry without action
+   */
+  export type TimeEntryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TimeEntry
+     */
+    select?: TimeEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TimeEntry
+     */
+    omit?: TimeEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimeEntryInclude<ExtArgs> | null
   }
 
 
@@ -28154,6 +29557,7 @@ export namespace Prisma {
     status: 'status',
     priority: 'priority',
     dueDate: 'dueDate',
+    estimatedTime: 'estimatedTime',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     workspaceId: 'workspaceId',
@@ -28174,6 +29578,23 @@ export namespace Prisma {
   };
 
   export type IssueLabelScalarFieldEnum = (typeof IssueLabelScalarFieldEnum)[keyof typeof IssueLabelScalarFieldEnum]
+
+
+  export const TimeEntryScalarFieldEnum: {
+    id: 'id',
+    duration: 'duration',
+    description: 'description',
+    startedAt: 'startedAt',
+    endedAt: 'endedAt',
+    isRunning: 'isRunning',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    issueId: 'issueId',
+    userId: 'userId',
+    workspaceId: 'workspaceId'
+  };
+
+  export type TimeEntryScalarFieldEnum = (typeof TimeEntryScalarFieldEnum)[keyof typeof TimeEntryScalarFieldEnum]
 
 
   export const CommentScalarFieldEnum: {
@@ -28393,6 +29814,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
    * Reference to a field of type 'NotificationType'
    */
   export type EnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType'>
@@ -28417,13 +29845,6 @@ export namespace Prisma {
    * Reference to a field of type 'PullRequestStatus'
    */
   export type EnumPullRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PullRequestStatus'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float'
-   */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
     
   /**
    * Deep Input Types
@@ -28509,6 +29930,7 @@ export namespace Prisma {
     notifications?: NotificationListRelationFilter
     notificationsTriggered?: NotificationListRelationFilter
     notificationPreferences?: NotificationPreferencesListRelationFilter
+    timeEntries?: TimeEntryListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -28532,6 +29954,7 @@ export namespace Prisma {
     notifications?: NotificationOrderByRelationAggregateInput
     notificationsTriggered?: NotificationOrderByRelationAggregateInput
     notificationPreferences?: NotificationPreferencesOrderByRelationAggregateInput
+    timeEntries?: TimeEntryOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -28558,6 +29981,7 @@ export namespace Prisma {
     notifications?: NotificationListRelationFilter
     notificationsTriggered?: NotificationListRelationFilter
     notificationPreferences?: NotificationPreferencesListRelationFilter
+    timeEntries?: TimeEntryListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -28832,6 +30256,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleListRelationFilter
     automationLogs?: AutomationLogListRelationFilter
     pullRequests?: GitHubPullRequestListRelationFilter
+    timeEntries?: TimeEntryListRelationFilter
   }
 
   export type WorkspaceOrderByWithRelationInput = {
@@ -28853,6 +30278,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleOrderByRelationAggregateInput
     automationLogs?: AutomationLogOrderByRelationAggregateInput
     pullRequests?: GitHubPullRequestOrderByRelationAggregateInput
+    timeEntries?: TimeEntryOrderByRelationAggregateInput
   }
 
   export type WorkspaceWhereUniqueInput = Prisma.AtLeast<{
@@ -28877,6 +30303,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleListRelationFilter
     automationLogs?: AutomationLogListRelationFilter
     pullRequests?: GitHubPullRequestListRelationFilter
+    timeEntries?: TimeEntryListRelationFilter
   }, "id" | "slug">
 
   export type WorkspaceOrderByWithAggregationInput = {
@@ -29295,6 +30722,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFilter<"Issue"> | $Enums.IssueStatus
     priority?: EnumPriorityFilter<"Issue"> | $Enums.Priority
     dueDate?: DateTimeNullableFilter<"Issue"> | Date | string | null
+    estimatedTime?: FloatNullableFilter<"Issue"> | number | null
     createdAt?: DateTimeFilter<"Issue"> | Date | string
     updatedAt?: DateTimeFilter<"Issue"> | Date | string
     workspaceId?: StringFilter<"Issue"> | string
@@ -29314,6 +30742,7 @@ export namespace Prisma {
     history?: IssueHistoryListRelationFilter
     notifications?: NotificationListRelationFilter
     pullRequests?: GitHubPullRequestListRelationFilter
+    timeEntries?: TimeEntryListRelationFilter
   }
 
   export type IssueOrderByWithRelationInput = {
@@ -29325,6 +30754,7 @@ export namespace Prisma {
     status?: SortOrder
     priority?: SortOrder
     dueDate?: SortOrderInput | SortOrder
+    estimatedTime?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     workspaceId?: SortOrder
@@ -29344,6 +30774,7 @@ export namespace Prisma {
     history?: IssueHistoryOrderByRelationAggregateInput
     notifications?: NotificationOrderByRelationAggregateInput
     pullRequests?: GitHubPullRequestOrderByRelationAggregateInput
+    timeEntries?: TimeEntryOrderByRelationAggregateInput
   }
 
   export type IssueWhereUniqueInput = Prisma.AtLeast<{
@@ -29359,6 +30790,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFilter<"Issue"> | $Enums.IssueStatus
     priority?: EnumPriorityFilter<"Issue"> | $Enums.Priority
     dueDate?: DateTimeNullableFilter<"Issue"> | Date | string | null
+    estimatedTime?: FloatNullableFilter<"Issue"> | number | null
     createdAt?: DateTimeFilter<"Issue"> | Date | string
     updatedAt?: DateTimeFilter<"Issue"> | Date | string
     workspaceId?: StringFilter<"Issue"> | string
@@ -29378,6 +30810,7 @@ export namespace Prisma {
     history?: IssueHistoryListRelationFilter
     notifications?: NotificationListRelationFilter
     pullRequests?: GitHubPullRequestListRelationFilter
+    timeEntries?: TimeEntryListRelationFilter
   }, "id" | "teamId_number">
 
   export type IssueOrderByWithAggregationInput = {
@@ -29389,6 +30822,7 @@ export namespace Prisma {
     status?: SortOrder
     priority?: SortOrder
     dueDate?: SortOrderInput | SortOrder
+    estimatedTime?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     workspaceId?: SortOrder
@@ -29416,6 +30850,7 @@ export namespace Prisma {
     status?: EnumIssueStatusWithAggregatesFilter<"Issue"> | $Enums.IssueStatus
     priority?: EnumPriorityWithAggregatesFilter<"Issue"> | $Enums.Priority
     dueDate?: DateTimeNullableWithAggregatesFilter<"Issue"> | Date | string | null
+    estimatedTime?: FloatNullableWithAggregatesFilter<"Issue"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Issue"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Issue"> | Date | string
     workspaceId?: StringWithAggregatesFilter<"Issue"> | string
@@ -29473,6 +30908,99 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"IssueLabel"> | string
     issueId?: StringWithAggregatesFilter<"IssueLabel"> | string
     labelId?: StringWithAggregatesFilter<"IssueLabel"> | string
+  }
+
+  export type TimeEntryWhereInput = {
+    AND?: TimeEntryWhereInput | TimeEntryWhereInput[]
+    OR?: TimeEntryWhereInput[]
+    NOT?: TimeEntryWhereInput | TimeEntryWhereInput[]
+    id?: StringFilter<"TimeEntry"> | string
+    duration?: FloatFilter<"TimeEntry"> | number
+    description?: StringNullableFilter<"TimeEntry"> | string | null
+    startedAt?: DateTimeFilter<"TimeEntry"> | Date | string
+    endedAt?: DateTimeNullableFilter<"TimeEntry"> | Date | string | null
+    isRunning?: BoolFilter<"TimeEntry"> | boolean
+    createdAt?: DateTimeFilter<"TimeEntry"> | Date | string
+    updatedAt?: DateTimeFilter<"TimeEntry"> | Date | string
+    issueId?: StringFilter<"TimeEntry"> | string
+    userId?: StringFilter<"TimeEntry"> | string
+    workspaceId?: StringFilter<"TimeEntry"> | string
+    issue?: XOR<IssueScalarRelationFilter, IssueWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
+  }
+
+  export type TimeEntryOrderByWithRelationInput = {
+    id?: SortOrder
+    duration?: SortOrder
+    description?: SortOrderInput | SortOrder
+    startedAt?: SortOrder
+    endedAt?: SortOrderInput | SortOrder
+    isRunning?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    issueId?: SortOrder
+    userId?: SortOrder
+    workspaceId?: SortOrder
+    issue?: IssueOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+    workspace?: WorkspaceOrderByWithRelationInput
+  }
+
+  export type TimeEntryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: TimeEntryWhereInput | TimeEntryWhereInput[]
+    OR?: TimeEntryWhereInput[]
+    NOT?: TimeEntryWhereInput | TimeEntryWhereInput[]
+    duration?: FloatFilter<"TimeEntry"> | number
+    description?: StringNullableFilter<"TimeEntry"> | string | null
+    startedAt?: DateTimeFilter<"TimeEntry"> | Date | string
+    endedAt?: DateTimeNullableFilter<"TimeEntry"> | Date | string | null
+    isRunning?: BoolFilter<"TimeEntry"> | boolean
+    createdAt?: DateTimeFilter<"TimeEntry"> | Date | string
+    updatedAt?: DateTimeFilter<"TimeEntry"> | Date | string
+    issueId?: StringFilter<"TimeEntry"> | string
+    userId?: StringFilter<"TimeEntry"> | string
+    workspaceId?: StringFilter<"TimeEntry"> | string
+    issue?: XOR<IssueScalarRelationFilter, IssueWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
+  }, "id">
+
+  export type TimeEntryOrderByWithAggregationInput = {
+    id?: SortOrder
+    duration?: SortOrder
+    description?: SortOrderInput | SortOrder
+    startedAt?: SortOrder
+    endedAt?: SortOrderInput | SortOrder
+    isRunning?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    issueId?: SortOrder
+    userId?: SortOrder
+    workspaceId?: SortOrder
+    _count?: TimeEntryCountOrderByAggregateInput
+    _avg?: TimeEntryAvgOrderByAggregateInput
+    _max?: TimeEntryMaxOrderByAggregateInput
+    _min?: TimeEntryMinOrderByAggregateInput
+    _sum?: TimeEntrySumOrderByAggregateInput
+  }
+
+  export type TimeEntryScalarWhereWithAggregatesInput = {
+    AND?: TimeEntryScalarWhereWithAggregatesInput | TimeEntryScalarWhereWithAggregatesInput[]
+    OR?: TimeEntryScalarWhereWithAggregatesInput[]
+    NOT?: TimeEntryScalarWhereWithAggregatesInput | TimeEntryScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TimeEntry"> | string
+    duration?: FloatWithAggregatesFilter<"TimeEntry"> | number
+    description?: StringNullableWithAggregatesFilter<"TimeEntry"> | string | null
+    startedAt?: DateTimeWithAggregatesFilter<"TimeEntry"> | Date | string
+    endedAt?: DateTimeNullableWithAggregatesFilter<"TimeEntry"> | Date | string | null
+    isRunning?: BoolWithAggregatesFilter<"TimeEntry"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"TimeEntry"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"TimeEntry"> | Date | string
+    issueId?: StringWithAggregatesFilter<"TimeEntry"> | string
+    userId?: StringWithAggregatesFilter<"TimeEntry"> | string
+    workspaceId?: StringWithAggregatesFilter<"TimeEntry"> | string
   }
 
   export type CommentWhereInput = {
@@ -30248,6 +31776,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -30271,6 +31800,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationUncheckedCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -30294,6 +31824,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -30317,6 +31848,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUncheckedUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -30621,6 +32153,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateInput = {
@@ -30642,6 +32175,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUpdateInput = {
@@ -30663,6 +32197,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateInput = {
@@ -30684,6 +32219,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceCreateManyInput = {
@@ -31112,6 +32648,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspace: WorkspaceCreateNestedOneWithoutIssuesInput
@@ -31125,6 +32662,7 @@ export namespace Prisma {
     history?: IssueHistoryCreateNestedManyWithoutIssueInput
     notifications?: NotificationCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateInput = {
@@ -31136,6 +32674,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspaceId: string
@@ -31149,6 +32688,7 @@ export namespace Prisma {
     history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUpdateInput = {
@@ -31160,6 +32700,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspace?: WorkspaceUpdateOneRequiredWithoutIssuesNestedInput
@@ -31173,6 +32714,7 @@ export namespace Prisma {
     history?: IssueHistoryUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateInput = {
@@ -31184,6 +32726,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspaceId?: StringFieldUpdateOperationsInput | string
@@ -31197,6 +32740,7 @@ export namespace Prisma {
     history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueCreateManyInput = {
@@ -31208,6 +32752,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspaceId: string
@@ -31227,6 +32772,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -31240,6 +32786,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspaceId?: StringFieldUpdateOperationsInput | string
@@ -31288,6 +32835,101 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     issueId?: StringFieldUpdateOperationsInput | string
     labelId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TimeEntryCreateInput = {
+    id?: string
+    duration: number
+    description?: string | null
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    isRunning?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    issue: IssueCreateNestedOneWithoutTimeEntriesInput
+    user: UserCreateNestedOneWithoutTimeEntriesInput
+    workspace: WorkspaceCreateNestedOneWithoutTimeEntriesInput
+  }
+
+  export type TimeEntryUncheckedCreateInput = {
+    id?: string
+    duration: number
+    description?: string | null
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    isRunning?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    issueId: string
+    userId: string
+    workspaceId: string
+  }
+
+  export type TimeEntryUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    duration?: FloatFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isRunning?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    issue?: IssueUpdateOneRequiredWithoutTimeEntriesNestedInput
+    user?: UserUpdateOneRequiredWithoutTimeEntriesNestedInput
+    workspace?: WorkspaceUpdateOneRequiredWithoutTimeEntriesNestedInput
+  }
+
+  export type TimeEntryUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    duration?: FloatFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isRunning?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    issueId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TimeEntryCreateManyInput = {
+    id?: string
+    duration: number
+    description?: string | null
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    isRunning?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    issueId: string
+    userId: string
+    workspaceId: string
+  }
+
+  export type TimeEntryUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    duration?: FloatFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isRunning?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TimeEntryUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    duration?: FloatFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isRunning?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    issueId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
   }
 
   export type CommentCreateInput = {
@@ -32196,6 +33838,12 @@ export namespace Prisma {
     none?: NotificationPreferencesWhereInput
   }
 
+  export type TimeEntryListRelationFilter = {
+    every?: TimeEntryWhereInput
+    some?: TimeEntryWhereInput
+    none?: TimeEntryWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -32238,6 +33886,10 @@ export namespace Prisma {
   }
 
   export type NotificationPreferencesOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TimeEntryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -32806,6 +34458,17 @@ export namespace Prisma {
     not?: NestedEnumPriorityFilter<$PrismaModel> | $Enums.Priority
   }
 
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type ProjectNullableScalarRelationFilter = {
     is?: ProjectWhereInput | null
     isNot?: ProjectWhereInput | null
@@ -32830,6 +34493,7 @@ export namespace Prisma {
     status?: SortOrder
     priority?: SortOrder
     dueDate?: SortOrder
+    estimatedTime?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     workspaceId?: SortOrder
@@ -32842,6 +34506,7 @@ export namespace Prisma {
 
   export type IssueAvgOrderByAggregateInput = {
     number?: SortOrder
+    estimatedTime?: SortOrder
   }
 
   export type IssueMaxOrderByAggregateInput = {
@@ -32853,6 +34518,7 @@ export namespace Prisma {
     status?: SortOrder
     priority?: SortOrder
     dueDate?: SortOrder
+    estimatedTime?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     workspaceId?: SortOrder
@@ -32872,6 +34538,7 @@ export namespace Prisma {
     status?: SortOrder
     priority?: SortOrder
     dueDate?: SortOrder
+    estimatedTime?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     workspaceId?: SortOrder
@@ -32884,6 +34551,7 @@ export namespace Prisma {
 
   export type IssueSumOrderByAggregateInput = {
     number?: SortOrder
+    estimatedTime?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -32922,6 +34590,22 @@ export namespace Prisma {
     _max?: NestedEnumPriorityFilter<$PrismaModel>
   }
 
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
   export type IssueScalarRelationFilter = {
     is?: IssueWhereInput
     isNot?: IssueWhereInput
@@ -32953,6 +34637,83 @@ export namespace Prisma {
     id?: SortOrder
     issueId?: SortOrder
     labelId?: SortOrder
+  }
+
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type TimeEntryCountOrderByAggregateInput = {
+    id?: SortOrder
+    duration?: SortOrder
+    description?: SortOrder
+    startedAt?: SortOrder
+    endedAt?: SortOrder
+    isRunning?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    issueId?: SortOrder
+    userId?: SortOrder
+    workspaceId?: SortOrder
+  }
+
+  export type TimeEntryAvgOrderByAggregateInput = {
+    duration?: SortOrder
+  }
+
+  export type TimeEntryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    duration?: SortOrder
+    description?: SortOrder
+    startedAt?: SortOrder
+    endedAt?: SortOrder
+    isRunning?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    issueId?: SortOrder
+    userId?: SortOrder
+    workspaceId?: SortOrder
+  }
+
+  export type TimeEntryMinOrderByAggregateInput = {
+    id?: SortOrder
+    duration?: SortOrder
+    description?: SortOrder
+    startedAt?: SortOrder
+    endedAt?: SortOrder
+    isRunning?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    issueId?: SortOrder
+    userId?: SortOrder
+    workspaceId?: SortOrder
+  }
+
+  export type TimeEntrySumOrderByAggregateInput = {
+    duration?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type CommentCountOrderByAggregateInput = {
@@ -33481,6 +35242,13 @@ export namespace Prisma {
     connect?: NotificationPreferencesWhereUniqueInput | NotificationPreferencesWhereUniqueInput[]
   }
 
+  export type TimeEntryCreateNestedManyWithoutUserInput = {
+    create?: XOR<TimeEntryCreateWithoutUserInput, TimeEntryUncheckedCreateWithoutUserInput> | TimeEntryCreateWithoutUserInput[] | TimeEntryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TimeEntryCreateOrConnectWithoutUserInput | TimeEntryCreateOrConnectWithoutUserInput[]
+    createMany?: TimeEntryCreateManyUserInputEnvelope
+    connect?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+  }
+
   export type SessionUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -33563,6 +35331,13 @@ export namespace Prisma {
     connectOrCreate?: NotificationPreferencesCreateOrConnectWithoutUserInput | NotificationPreferencesCreateOrConnectWithoutUserInput[]
     createMany?: NotificationPreferencesCreateManyUserInputEnvelope
     connect?: NotificationPreferencesWhereUniqueInput | NotificationPreferencesWhereUniqueInput[]
+  }
+
+  export type TimeEntryUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<TimeEntryCreateWithoutUserInput, TimeEntryUncheckedCreateWithoutUserInput> | TimeEntryCreateWithoutUserInput[] | TimeEntryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TimeEntryCreateOrConnectWithoutUserInput | TimeEntryCreateOrConnectWithoutUserInput[]
+    createMany?: TimeEntryCreateManyUserInputEnvelope
+    connect?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -33741,6 +35516,20 @@ export namespace Prisma {
     deleteMany?: NotificationPreferencesScalarWhereInput | NotificationPreferencesScalarWhereInput[]
   }
 
+  export type TimeEntryUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TimeEntryCreateWithoutUserInput, TimeEntryUncheckedCreateWithoutUserInput> | TimeEntryCreateWithoutUserInput[] | TimeEntryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TimeEntryCreateOrConnectWithoutUserInput | TimeEntryCreateOrConnectWithoutUserInput[]
+    upsert?: TimeEntryUpsertWithWhereUniqueWithoutUserInput | TimeEntryUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TimeEntryCreateManyUserInputEnvelope
+    set?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    disconnect?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    delete?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    connect?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    update?: TimeEntryUpdateWithWhereUniqueWithoutUserInput | TimeEntryUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TimeEntryUpdateManyWithWhereWithoutUserInput | TimeEntryUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TimeEntryScalarWhereInput | TimeEntryScalarWhereInput[]
+  }
+
   export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -33909,6 +35698,20 @@ export namespace Prisma {
     deleteMany?: NotificationPreferencesScalarWhereInput | NotificationPreferencesScalarWhereInput[]
   }
 
+  export type TimeEntryUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TimeEntryCreateWithoutUserInput, TimeEntryUncheckedCreateWithoutUserInput> | TimeEntryCreateWithoutUserInput[] | TimeEntryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TimeEntryCreateOrConnectWithoutUserInput | TimeEntryCreateOrConnectWithoutUserInput[]
+    upsert?: TimeEntryUpsertWithWhereUniqueWithoutUserInput | TimeEntryUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TimeEntryCreateManyUserInputEnvelope
+    set?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    disconnect?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    delete?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    connect?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    update?: TimeEntryUpdateWithWhereUniqueWithoutUserInput | TimeEntryUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TimeEntryUpdateManyWithWhereWithoutUserInput | TimeEntryUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TimeEntryScalarWhereInput | TimeEntryScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutSessionsInput = {
     create?: XOR<UserCreateWithoutSessionsInput, UserUncheckedCreateWithoutSessionsInput>
     connectOrCreate?: UserCreateOrConnectWithoutSessionsInput
@@ -34025,6 +35828,13 @@ export namespace Prisma {
     connect?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
   }
 
+  export type TimeEntryCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<TimeEntryCreateWithoutWorkspaceInput, TimeEntryUncheckedCreateWithoutWorkspaceInput> | TimeEntryCreateWithoutWorkspaceInput[] | TimeEntryUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: TimeEntryCreateOrConnectWithoutWorkspaceInput | TimeEntryCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: TimeEntryCreateManyWorkspaceInputEnvelope
+    connect?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+  }
+
   export type WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput = {
     create?: XOR<WorkspaceMemberCreateWithoutWorkspaceInput, WorkspaceMemberUncheckedCreateWithoutWorkspaceInput> | WorkspaceMemberCreateWithoutWorkspaceInput[] | WorkspaceMemberUncheckedCreateWithoutWorkspaceInput[]
     connectOrCreate?: WorkspaceMemberCreateOrConnectWithoutWorkspaceInput | WorkspaceMemberCreateOrConnectWithoutWorkspaceInput[]
@@ -34107,6 +35917,13 @@ export namespace Prisma {
     connectOrCreate?: GitHubPullRequestCreateOrConnectWithoutWorkspaceInput | GitHubPullRequestCreateOrConnectWithoutWorkspaceInput[]
     createMany?: GitHubPullRequestCreateManyWorkspaceInputEnvelope
     connect?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
+  }
+
+  export type TimeEntryUncheckedCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<TimeEntryCreateWithoutWorkspaceInput, TimeEntryUncheckedCreateWithoutWorkspaceInput> | TimeEntryCreateWithoutWorkspaceInput[] | TimeEntryUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: TimeEntryCreateOrConnectWithoutWorkspaceInput | TimeEntryCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: TimeEntryCreateManyWorkspaceInputEnvelope
+    connect?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
   }
 
   export type WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput = {
@@ -34277,6 +36094,20 @@ export namespace Prisma {
     deleteMany?: GitHubPullRequestScalarWhereInput | GitHubPullRequestScalarWhereInput[]
   }
 
+  export type TimeEntryUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<TimeEntryCreateWithoutWorkspaceInput, TimeEntryUncheckedCreateWithoutWorkspaceInput> | TimeEntryCreateWithoutWorkspaceInput[] | TimeEntryUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: TimeEntryCreateOrConnectWithoutWorkspaceInput | TimeEntryCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: TimeEntryUpsertWithWhereUniqueWithoutWorkspaceInput | TimeEntryUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: TimeEntryCreateManyWorkspaceInputEnvelope
+    set?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    disconnect?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    delete?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    connect?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    update?: TimeEntryUpdateWithWhereUniqueWithoutWorkspaceInput | TimeEntryUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: TimeEntryUpdateManyWithWhereWithoutWorkspaceInput | TimeEntryUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: TimeEntryScalarWhereInput | TimeEntryScalarWhereInput[]
+  }
+
   export type WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput = {
     create?: XOR<WorkspaceMemberCreateWithoutWorkspaceInput, WorkspaceMemberUncheckedCreateWithoutWorkspaceInput> | WorkspaceMemberCreateWithoutWorkspaceInput[] | WorkspaceMemberUncheckedCreateWithoutWorkspaceInput[]
     connectOrCreate?: WorkspaceMemberCreateOrConnectWithoutWorkspaceInput | WorkspaceMemberCreateOrConnectWithoutWorkspaceInput[]
@@ -34443,6 +36274,20 @@ export namespace Prisma {
     update?: GitHubPullRequestUpdateWithWhereUniqueWithoutWorkspaceInput | GitHubPullRequestUpdateWithWhereUniqueWithoutWorkspaceInput[]
     updateMany?: GitHubPullRequestUpdateManyWithWhereWithoutWorkspaceInput | GitHubPullRequestUpdateManyWithWhereWithoutWorkspaceInput[]
     deleteMany?: GitHubPullRequestScalarWhereInput | GitHubPullRequestScalarWhereInput[]
+  }
+
+  export type TimeEntryUncheckedUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<TimeEntryCreateWithoutWorkspaceInput, TimeEntryUncheckedCreateWithoutWorkspaceInput> | TimeEntryCreateWithoutWorkspaceInput[] | TimeEntryUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: TimeEntryCreateOrConnectWithoutWorkspaceInput | TimeEntryCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: TimeEntryUpsertWithWhereUniqueWithoutWorkspaceInput | TimeEntryUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: TimeEntryCreateManyWorkspaceInputEnvelope
+    set?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    disconnect?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    delete?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    connect?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    update?: TimeEntryUpdateWithWhereUniqueWithoutWorkspaceInput | TimeEntryUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: TimeEntryUpdateManyWithWhereWithoutWorkspaceInput | TimeEntryUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: TimeEntryScalarWhereInput | TimeEntryScalarWhereInput[]
   }
 
   export type WorkspaceCreateNestedOneWithoutMembersInput = {
@@ -35050,6 +36895,13 @@ export namespace Prisma {
     connect?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
   }
 
+  export type TimeEntryCreateNestedManyWithoutIssueInput = {
+    create?: XOR<TimeEntryCreateWithoutIssueInput, TimeEntryUncheckedCreateWithoutIssueInput> | TimeEntryCreateWithoutIssueInput[] | TimeEntryUncheckedCreateWithoutIssueInput[]
+    connectOrCreate?: TimeEntryCreateOrConnectWithoutIssueInput | TimeEntryCreateOrConnectWithoutIssueInput[]
+    createMany?: TimeEntryCreateManyIssueInputEnvelope
+    connect?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+  }
+
   export type IssueLabelUncheckedCreateNestedManyWithoutIssueInput = {
     create?: XOR<IssueLabelCreateWithoutIssueInput, IssueLabelUncheckedCreateWithoutIssueInput> | IssueLabelCreateWithoutIssueInput[] | IssueLabelUncheckedCreateWithoutIssueInput[]
     connectOrCreate?: IssueLabelCreateOrConnectWithoutIssueInput | IssueLabelCreateOrConnectWithoutIssueInput[]
@@ -35085,6 +36937,13 @@ export namespace Prisma {
     connect?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
   }
 
+  export type TimeEntryUncheckedCreateNestedManyWithoutIssueInput = {
+    create?: XOR<TimeEntryCreateWithoutIssueInput, TimeEntryUncheckedCreateWithoutIssueInput> | TimeEntryCreateWithoutIssueInput[] | TimeEntryUncheckedCreateWithoutIssueInput[]
+    connectOrCreate?: TimeEntryCreateOrConnectWithoutIssueInput | TimeEntryCreateOrConnectWithoutIssueInput[]
+    createMany?: TimeEntryCreateManyIssueInputEnvelope
+    connect?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -35099,6 +36958,14 @@ export namespace Prisma {
 
   export type EnumPriorityFieldUpdateOperationsInput = {
     set?: $Enums.Priority
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type WorkspaceUpdateOneRequiredWithoutIssuesNestedInput = {
@@ -35225,6 +37092,20 @@ export namespace Prisma {
     deleteMany?: GitHubPullRequestScalarWhereInput | GitHubPullRequestScalarWhereInput[]
   }
 
+  export type TimeEntryUpdateManyWithoutIssueNestedInput = {
+    create?: XOR<TimeEntryCreateWithoutIssueInput, TimeEntryUncheckedCreateWithoutIssueInput> | TimeEntryCreateWithoutIssueInput[] | TimeEntryUncheckedCreateWithoutIssueInput[]
+    connectOrCreate?: TimeEntryCreateOrConnectWithoutIssueInput | TimeEntryCreateOrConnectWithoutIssueInput[]
+    upsert?: TimeEntryUpsertWithWhereUniqueWithoutIssueInput | TimeEntryUpsertWithWhereUniqueWithoutIssueInput[]
+    createMany?: TimeEntryCreateManyIssueInputEnvelope
+    set?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    disconnect?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    delete?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    connect?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    update?: TimeEntryUpdateWithWhereUniqueWithoutIssueInput | TimeEntryUpdateWithWhereUniqueWithoutIssueInput[]
+    updateMany?: TimeEntryUpdateManyWithWhereWithoutIssueInput | TimeEntryUpdateManyWithWhereWithoutIssueInput[]
+    deleteMany?: TimeEntryScalarWhereInput | TimeEntryScalarWhereInput[]
+  }
+
   export type IssueLabelUncheckedUpdateManyWithoutIssueNestedInput = {
     create?: XOR<IssueLabelCreateWithoutIssueInput, IssueLabelUncheckedCreateWithoutIssueInput> | IssueLabelCreateWithoutIssueInput[] | IssueLabelUncheckedCreateWithoutIssueInput[]
     connectOrCreate?: IssueLabelCreateOrConnectWithoutIssueInput | IssueLabelCreateOrConnectWithoutIssueInput[]
@@ -35295,6 +37176,20 @@ export namespace Prisma {
     deleteMany?: GitHubPullRequestScalarWhereInput | GitHubPullRequestScalarWhereInput[]
   }
 
+  export type TimeEntryUncheckedUpdateManyWithoutIssueNestedInput = {
+    create?: XOR<TimeEntryCreateWithoutIssueInput, TimeEntryUncheckedCreateWithoutIssueInput> | TimeEntryCreateWithoutIssueInput[] | TimeEntryUncheckedCreateWithoutIssueInput[]
+    connectOrCreate?: TimeEntryCreateOrConnectWithoutIssueInput | TimeEntryCreateOrConnectWithoutIssueInput[]
+    upsert?: TimeEntryUpsertWithWhereUniqueWithoutIssueInput | TimeEntryUpsertWithWhereUniqueWithoutIssueInput[]
+    createMany?: TimeEntryCreateManyIssueInputEnvelope
+    set?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    disconnect?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    delete?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    connect?: TimeEntryWhereUniqueInput | TimeEntryWhereUniqueInput[]
+    update?: TimeEntryUpdateWithWhereUniqueWithoutIssueInput | TimeEntryUpdateWithWhereUniqueWithoutIssueInput[]
+    updateMany?: TimeEntryUpdateManyWithWhereWithoutIssueInput | TimeEntryUpdateManyWithWhereWithoutIssueInput[]
+    deleteMany?: TimeEntryScalarWhereInput | TimeEntryScalarWhereInput[]
+  }
+
   export type IssueCreateNestedOneWithoutLabelsInput = {
     create?: XOR<IssueCreateWithoutLabelsInput, IssueUncheckedCreateWithoutLabelsInput>
     connectOrCreate?: IssueCreateOrConnectWithoutLabelsInput
@@ -35321,6 +37216,56 @@ export namespace Prisma {
     upsert?: LabelUpsertWithoutIssueLabelsInput
     connect?: LabelWhereUniqueInput
     update?: XOR<XOR<LabelUpdateToOneWithWhereWithoutIssueLabelsInput, LabelUpdateWithoutIssueLabelsInput>, LabelUncheckedUpdateWithoutIssueLabelsInput>
+  }
+
+  export type IssueCreateNestedOneWithoutTimeEntriesInput = {
+    create?: XOR<IssueCreateWithoutTimeEntriesInput, IssueUncheckedCreateWithoutTimeEntriesInput>
+    connectOrCreate?: IssueCreateOrConnectWithoutTimeEntriesInput
+    connect?: IssueWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutTimeEntriesInput = {
+    create?: XOR<UserCreateWithoutTimeEntriesInput, UserUncheckedCreateWithoutTimeEntriesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTimeEntriesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type WorkspaceCreateNestedOneWithoutTimeEntriesInput = {
+    create?: XOR<WorkspaceCreateWithoutTimeEntriesInput, WorkspaceUncheckedCreateWithoutTimeEntriesInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutTimeEntriesInput
+    connect?: WorkspaceWhereUniqueInput
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type IssueUpdateOneRequiredWithoutTimeEntriesNestedInput = {
+    create?: XOR<IssueCreateWithoutTimeEntriesInput, IssueUncheckedCreateWithoutTimeEntriesInput>
+    connectOrCreate?: IssueCreateOrConnectWithoutTimeEntriesInput
+    upsert?: IssueUpsertWithoutTimeEntriesInput
+    connect?: IssueWhereUniqueInput
+    update?: XOR<XOR<IssueUpdateToOneWithWhereWithoutTimeEntriesInput, IssueUpdateWithoutTimeEntriesInput>, IssueUncheckedUpdateWithoutTimeEntriesInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutTimeEntriesNestedInput = {
+    create?: XOR<UserCreateWithoutTimeEntriesInput, UserUncheckedCreateWithoutTimeEntriesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTimeEntriesInput
+    upsert?: UserUpsertWithoutTimeEntriesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTimeEntriesInput, UserUpdateWithoutTimeEntriesInput>, UserUncheckedUpdateWithoutTimeEntriesInput>
+  }
+
+  export type WorkspaceUpdateOneRequiredWithoutTimeEntriesNestedInput = {
+    create?: XOR<WorkspaceCreateWithoutTimeEntriesInput, WorkspaceUncheckedCreateWithoutTimeEntriesInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutTimeEntriesInput
+    upsert?: WorkspaceUpsertWithoutTimeEntriesInput
+    connect?: WorkspaceWhereUniqueInput
+    update?: XOR<XOR<WorkspaceUpdateToOneWithWhereWithoutTimeEntriesInput, WorkspaceUpdateWithoutTimeEntriesInput>, WorkspaceUncheckedUpdateWithoutTimeEntriesInput>
   }
 
   export type IssueCreateNestedOneWithoutCommentsInput = {
@@ -35853,6 +37798,17 @@ export namespace Prisma {
     not?: NestedEnumPriorityFilter<$PrismaModel> | $Enums.Priority
   }
 
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
@@ -35898,6 +37854,38 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumPriorityFilter<$PrismaModel>
     _max?: NestedEnumPriorityFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type NestedEnumNotificationTypeFilter<$PrismaModel = never> = {
@@ -35988,6 +37976,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPostsInput = {
@@ -36010,6 +37999,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationUncheckedCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPostsInput = {
@@ -36048,6 +38038,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPostsInput = {
@@ -36070,6 +38061,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUncheckedUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SessionCreateWithoutUserInput = {
@@ -36232,6 +38224,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspace: WorkspaceCreateNestedOneWithoutIssuesInput
@@ -36244,6 +38237,7 @@ export namespace Prisma {
     history?: IssueHistoryCreateNestedManyWithoutIssueInput
     notifications?: NotificationCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateWithoutAssigneeInput = {
@@ -36255,6 +38249,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspaceId: string
@@ -36267,6 +38262,7 @@ export namespace Prisma {
     history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueCreateOrConnectWithoutAssigneeInput = {
@@ -36287,6 +38283,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspace: WorkspaceCreateNestedOneWithoutIssuesInput
@@ -36299,6 +38296,7 @@ export namespace Prisma {
     history?: IssueHistoryCreateNestedManyWithoutIssueInput
     notifications?: NotificationCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateWithoutCreatorInput = {
@@ -36310,6 +38308,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspaceId: string
@@ -36322,6 +38321,7 @@ export namespace Prisma {
     history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueCreateOrConnectWithoutCreatorInput = {
@@ -36488,6 +38488,41 @@ export namespace Prisma {
 
   export type NotificationPreferencesCreateManyUserInputEnvelope = {
     data: NotificationPreferencesCreateManyUserInput | NotificationPreferencesCreateManyUserInput[]
+  }
+
+  export type TimeEntryCreateWithoutUserInput = {
+    id?: string
+    duration: number
+    description?: string | null
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    isRunning?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    issue: IssueCreateNestedOneWithoutTimeEntriesInput
+    workspace: WorkspaceCreateNestedOneWithoutTimeEntriesInput
+  }
+
+  export type TimeEntryUncheckedCreateWithoutUserInput = {
+    id?: string
+    duration: number
+    description?: string | null
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    isRunning?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    issueId: string
+    workspaceId: string
+  }
+
+  export type TimeEntryCreateOrConnectWithoutUserInput = {
+    where: TimeEntryWhereUniqueInput
+    create: XOR<TimeEntryCreateWithoutUserInput, TimeEntryUncheckedCreateWithoutUserInput>
+  }
+
+  export type TimeEntryCreateManyUserInputEnvelope = {
+    data: TimeEntryCreateManyUserInput | TimeEntryCreateManyUserInput[]
   }
 
   export type SessionUpsertWithWhereUniqueWithoutUserInput = {
@@ -36670,6 +38705,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFilter<"Issue"> | $Enums.IssueStatus
     priority?: EnumPriorityFilter<"Issue"> | $Enums.Priority
     dueDate?: DateTimeNullableFilter<"Issue"> | Date | string | null
+    estimatedTime?: FloatNullableFilter<"Issue"> | number | null
     createdAt?: DateTimeFilter<"Issue"> | Date | string
     updatedAt?: DateTimeFilter<"Issue"> | Date | string
     workspaceId?: StringFilter<"Issue"> | string
@@ -36835,6 +38871,39 @@ export namespace Prisma {
     workspaceId?: StringFilter<"NotificationPreferences"> | string
   }
 
+  export type TimeEntryUpsertWithWhereUniqueWithoutUserInput = {
+    where: TimeEntryWhereUniqueInput
+    update: XOR<TimeEntryUpdateWithoutUserInput, TimeEntryUncheckedUpdateWithoutUserInput>
+    create: XOR<TimeEntryCreateWithoutUserInput, TimeEntryUncheckedCreateWithoutUserInput>
+  }
+
+  export type TimeEntryUpdateWithWhereUniqueWithoutUserInput = {
+    where: TimeEntryWhereUniqueInput
+    data: XOR<TimeEntryUpdateWithoutUserInput, TimeEntryUncheckedUpdateWithoutUserInput>
+  }
+
+  export type TimeEntryUpdateManyWithWhereWithoutUserInput = {
+    where: TimeEntryScalarWhereInput
+    data: XOR<TimeEntryUpdateManyMutationInput, TimeEntryUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type TimeEntryScalarWhereInput = {
+    AND?: TimeEntryScalarWhereInput | TimeEntryScalarWhereInput[]
+    OR?: TimeEntryScalarWhereInput[]
+    NOT?: TimeEntryScalarWhereInput | TimeEntryScalarWhereInput[]
+    id?: StringFilter<"TimeEntry"> | string
+    duration?: FloatFilter<"TimeEntry"> | number
+    description?: StringNullableFilter<"TimeEntry"> | string | null
+    startedAt?: DateTimeFilter<"TimeEntry"> | Date | string
+    endedAt?: DateTimeNullableFilter<"TimeEntry"> | Date | string | null
+    isRunning?: BoolFilter<"TimeEntry"> | boolean
+    createdAt?: DateTimeFilter<"TimeEntry"> | Date | string
+    updatedAt?: DateTimeFilter<"TimeEntry"> | Date | string
+    issueId?: StringFilter<"TimeEntry"> | string
+    userId?: StringFilter<"TimeEntry"> | string
+    workspaceId?: StringFilter<"TimeEntry"> | string
+  }
+
   export type UserCreateWithoutSessionsInput = {
     id: string
     name: string
@@ -36855,6 +38924,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -36877,6 +38947,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationUncheckedCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -36915,6 +38986,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -36937,6 +39009,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUncheckedUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -36959,6 +39032,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -36981,6 +39055,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationUncheckedCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -37019,6 +39094,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -37041,6 +39117,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUncheckedUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type WorkspaceMemberCreateWithoutWorkspaceInput = {
@@ -37149,6 +39226,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     team: TeamCreateNestedOneWithoutIssuesInput
@@ -37161,6 +39239,7 @@ export namespace Prisma {
     history?: IssueHistoryCreateNestedManyWithoutIssueInput
     notifications?: NotificationCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateWithoutWorkspaceInput = {
@@ -37172,6 +39251,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     teamId: string
@@ -37184,6 +39264,7 @@ export namespace Prisma {
     history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueCreateOrConnectWithoutWorkspaceInput = {
@@ -37475,6 +39556,41 @@ export namespace Prisma {
 
   export type GitHubPullRequestCreateManyWorkspaceInputEnvelope = {
     data: GitHubPullRequestCreateManyWorkspaceInput | GitHubPullRequestCreateManyWorkspaceInput[]
+  }
+
+  export type TimeEntryCreateWithoutWorkspaceInput = {
+    id?: string
+    duration: number
+    description?: string | null
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    isRunning?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    issue: IssueCreateNestedOneWithoutTimeEntriesInput
+    user: UserCreateNestedOneWithoutTimeEntriesInput
+  }
+
+  export type TimeEntryUncheckedCreateWithoutWorkspaceInput = {
+    id?: string
+    duration: number
+    description?: string | null
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    isRunning?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    issueId: string
+    userId: string
+  }
+
+  export type TimeEntryCreateOrConnectWithoutWorkspaceInput = {
+    where: TimeEntryWhereUniqueInput
+    create: XOR<TimeEntryCreateWithoutWorkspaceInput, TimeEntryUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type TimeEntryCreateManyWorkspaceInputEnvelope = {
+    data: TimeEntryCreateManyWorkspaceInput | TimeEntryCreateManyWorkspaceInput[]
   }
 
   export type WorkspaceMemberUpsertWithWhereUniqueWithoutWorkspaceInput = {
@@ -37781,6 +39897,22 @@ export namespace Prisma {
     workspaceId?: StringFilter<"GitHubPullRequest"> | string
   }
 
+  export type TimeEntryUpsertWithWhereUniqueWithoutWorkspaceInput = {
+    where: TimeEntryWhereUniqueInput
+    update: XOR<TimeEntryUpdateWithoutWorkspaceInput, TimeEntryUncheckedUpdateWithoutWorkspaceInput>
+    create: XOR<TimeEntryCreateWithoutWorkspaceInput, TimeEntryUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type TimeEntryUpdateWithWhereUniqueWithoutWorkspaceInput = {
+    where: TimeEntryWhereUniqueInput
+    data: XOR<TimeEntryUpdateWithoutWorkspaceInput, TimeEntryUncheckedUpdateWithoutWorkspaceInput>
+  }
+
+  export type TimeEntryUpdateManyWithWhereWithoutWorkspaceInput = {
+    where: TimeEntryScalarWhereInput
+    data: XOR<TimeEntryUpdateManyMutationInput, TimeEntryUncheckedUpdateManyWithoutWorkspaceInput>
+  }
+
   export type WorkspaceCreateWithoutMembersInput = {
     id?: string
     name: string
@@ -37799,6 +39931,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutMembersInput = {
@@ -37819,6 +39952,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutMembersInput = {
@@ -37846,6 +39980,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMembershipsInput = {
@@ -37868,6 +40003,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationUncheckedCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMembershipsInput = {
@@ -37904,6 +40040,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutMembersInput = {
@@ -37924,6 +40061,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type UserUpsertWithoutMembershipsInput = {
@@ -37957,6 +40095,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMembershipsInput = {
@@ -37979,6 +40118,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUncheckedUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type WorkspaceCreateWithoutTeamsInput = {
@@ -37999,6 +40139,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutTeamsInput = {
@@ -38019,6 +40160,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutTeamsInput = {
@@ -38072,6 +40214,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspace: WorkspaceCreateNestedOneWithoutIssuesInput
@@ -38084,6 +40227,7 @@ export namespace Prisma {
     history?: IssueHistoryCreateNestedManyWithoutIssueInput
     notifications?: NotificationCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateWithoutTeamInput = {
@@ -38095,6 +40239,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspaceId: string
@@ -38107,6 +40252,7 @@ export namespace Prisma {
     history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueCreateOrConnectWithoutTeamInput = {
@@ -38285,6 +40431,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutTeamsInput = {
@@ -38305,6 +40452,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type ProjectUpsertWithWhereUniqueWithoutTeamInput = {
@@ -38421,6 +40569,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutProjectsInput = {
@@ -38441,6 +40590,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutProjectsInput = {
@@ -38501,6 +40651,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutProjectsLeadInput = {
@@ -38523,6 +40674,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationUncheckedCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutProjectsLeadInput = {
@@ -38539,6 +40691,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspace: WorkspaceCreateNestedOneWithoutIssuesInput
@@ -38551,6 +40704,7 @@ export namespace Prisma {
     history?: IssueHistoryCreateNestedManyWithoutIssueInput
     notifications?: NotificationCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateWithoutProjectInput = {
@@ -38562,6 +40716,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspaceId: string
@@ -38574,6 +40729,7 @@ export namespace Prisma {
     history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueCreateOrConnectWithoutProjectInput = {
@@ -38614,6 +40770,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutProjectsInput = {
@@ -38634,6 +40791,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TeamUpsertWithoutProjectsInput = {
@@ -38706,6 +40864,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProjectsLeadInput = {
@@ -38728,6 +40887,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUncheckedUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type IssueUpsertWithWhereUniqueWithoutProjectInput = {
@@ -38764,6 +40924,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutCyclesInput = {
@@ -38784,6 +40945,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutCyclesInput = {
@@ -38833,6 +40995,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspace: WorkspaceCreateNestedOneWithoutIssuesInput
@@ -38845,6 +41008,7 @@ export namespace Prisma {
     history?: IssueHistoryCreateNestedManyWithoutIssueInput
     notifications?: NotificationCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateWithoutCycleInput = {
@@ -38856,6 +41020,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspaceId: string
@@ -38868,6 +41033,7 @@ export namespace Prisma {
     history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueCreateOrConnectWithoutCycleInput = {
@@ -38908,6 +41074,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutCyclesInput = {
@@ -38928,6 +41095,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TeamUpsertWithoutCyclesInput = {
@@ -39003,6 +41171,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutLabelsInput = {
@@ -39023,6 +41192,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutLabelsInput = {
@@ -39111,6 +41281,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutLabelsInput = {
@@ -39131,6 +41302,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TeamUpsertWithoutLabelsInput = {
@@ -39215,6 +41387,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutIssuesInput = {
@@ -39235,6 +41408,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutIssuesInput = {
@@ -39357,6 +41531,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssignedIssuesInput = {
@@ -39379,6 +41554,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationUncheckedCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssignedIssuesInput = {
@@ -39406,6 +41582,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreatedIssuesInput = {
@@ -39428,6 +41605,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationUncheckedCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreatedIssuesInput = {
@@ -39584,6 +41762,41 @@ export namespace Prisma {
     data: GitHubPullRequestCreateManyIssueInput | GitHubPullRequestCreateManyIssueInput[]
   }
 
+  export type TimeEntryCreateWithoutIssueInput = {
+    id?: string
+    duration: number
+    description?: string | null
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    isRunning?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutTimeEntriesInput
+    workspace: WorkspaceCreateNestedOneWithoutTimeEntriesInput
+  }
+
+  export type TimeEntryUncheckedCreateWithoutIssueInput = {
+    id?: string
+    duration: number
+    description?: string | null
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    isRunning?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    workspaceId: string
+  }
+
+  export type TimeEntryCreateOrConnectWithoutIssueInput = {
+    where: TimeEntryWhereUniqueInput
+    create: XOR<TimeEntryCreateWithoutIssueInput, TimeEntryUncheckedCreateWithoutIssueInput>
+  }
+
+  export type TimeEntryCreateManyIssueInputEnvelope = {
+    data: TimeEntryCreateManyIssueInput | TimeEntryCreateManyIssueInput[]
+  }
+
   export type WorkspaceUpsertWithoutIssuesInput = {
     update: XOR<WorkspaceUpdateWithoutIssuesInput, WorkspaceUncheckedUpdateWithoutIssuesInput>
     create: XOR<WorkspaceCreateWithoutIssuesInput, WorkspaceUncheckedCreateWithoutIssuesInput>
@@ -39613,6 +41826,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutIssuesInput = {
@@ -39633,6 +41847,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TeamUpsertWithoutIssuesInput = {
@@ -39779,6 +41994,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssignedIssuesInput = {
@@ -39801,6 +42017,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUncheckedUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutCreatedIssuesInput = {
@@ -39834,6 +42051,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedIssuesInput = {
@@ -39856,6 +42074,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUncheckedUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type IssueLabelUpsertWithWhereUniqueWithoutIssueInput = {
@@ -39938,6 +42157,22 @@ export namespace Prisma {
     data: XOR<GitHubPullRequestUpdateManyMutationInput, GitHubPullRequestUncheckedUpdateManyWithoutIssueInput>
   }
 
+  export type TimeEntryUpsertWithWhereUniqueWithoutIssueInput = {
+    where: TimeEntryWhereUniqueInput
+    update: XOR<TimeEntryUpdateWithoutIssueInput, TimeEntryUncheckedUpdateWithoutIssueInput>
+    create: XOR<TimeEntryCreateWithoutIssueInput, TimeEntryUncheckedCreateWithoutIssueInput>
+  }
+
+  export type TimeEntryUpdateWithWhereUniqueWithoutIssueInput = {
+    where: TimeEntryWhereUniqueInput
+    data: XOR<TimeEntryUpdateWithoutIssueInput, TimeEntryUncheckedUpdateWithoutIssueInput>
+  }
+
+  export type TimeEntryUpdateManyWithWhereWithoutIssueInput = {
+    where: TimeEntryScalarWhereInput
+    data: XOR<TimeEntryUpdateManyMutationInput, TimeEntryUncheckedUpdateManyWithoutIssueInput>
+  }
+
   export type IssueCreateWithoutLabelsInput = {
     id?: string
     identifier: string
@@ -39947,6 +42182,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspace: WorkspaceCreateNestedOneWithoutIssuesInput
@@ -39959,6 +42195,7 @@ export namespace Prisma {
     history?: IssueHistoryCreateNestedManyWithoutIssueInput
     notifications?: NotificationCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateWithoutLabelsInput = {
@@ -39970,6 +42207,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspaceId: string
@@ -39982,6 +42220,7 @@ export namespace Prisma {
     history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueCreateOrConnectWithoutLabelsInput = {
@@ -40032,6 +42271,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspace?: WorkspaceUpdateOneRequiredWithoutIssuesNestedInput
@@ -40044,6 +42284,7 @@ export namespace Prisma {
     history?: IssueHistoryUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateWithoutLabelsInput = {
@@ -40055,6 +42296,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspaceId?: StringFieldUpdateOperationsInput | string
@@ -40067,6 +42309,7 @@ export namespace Prisma {
     history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type LabelUpsertWithoutIssueLabelsInput = {
@@ -40098,6 +42341,330 @@ export namespace Prisma {
     teamId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type IssueCreateWithoutTimeEntriesInput = {
+    id?: string
+    identifier: string
+    number: number
+    title: string
+    description?: string | null
+    status?: $Enums.IssueStatus
+    priority?: $Enums.Priority
+    dueDate?: Date | string | null
+    estimatedTime?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutIssuesInput
+    team: TeamCreateNestedOneWithoutIssuesInput
+    project?: ProjectCreateNestedOneWithoutIssuesInput
+    cycle?: CycleCreateNestedOneWithoutIssuesInput
+    assignee?: UserCreateNestedOneWithoutAssignedIssuesInput
+    creator: UserCreateNestedOneWithoutCreatedIssuesInput
+    labels?: IssueLabelCreateNestedManyWithoutIssueInput
+    comments?: CommentCreateNestedManyWithoutIssueInput
+    history?: IssueHistoryCreateNestedManyWithoutIssueInput
+    notifications?: NotificationCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
+  }
+
+  export type IssueUncheckedCreateWithoutTimeEntriesInput = {
+    id?: string
+    identifier: string
+    number: number
+    title: string
+    description?: string | null
+    status?: $Enums.IssueStatus
+    priority?: $Enums.Priority
+    dueDate?: Date | string | null
+    estimatedTime?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspaceId: string
+    teamId: string
+    projectId?: string | null
+    cycleId?: string | null
+    assigneeId?: string | null
+    creatorId: string
+    labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput
+    comments?: CommentUncheckedCreateNestedManyWithoutIssueInput
+    history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
+  }
+
+  export type IssueCreateOrConnectWithoutTimeEntriesInput = {
+    where: IssueWhereUniqueInput
+    create: XOR<IssueCreateWithoutTimeEntriesInput, IssueUncheckedCreateWithoutTimeEntriesInput>
+  }
+
+  export type UserCreateWithoutTimeEntriesInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified?: boolean
+    image?: string | null
+    preferences?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    posts?: PostCreateNestedManyWithoutCreatedByInput
+    memberships?: WorkspaceMemberCreateNestedManyWithoutUserInput
+    projectsLead?: ProjectCreateNestedManyWithoutLeadInput
+    assignedIssues?: IssueCreateNestedManyWithoutAssigneeInput
+    createdIssues?: IssueCreateNestedManyWithoutCreatorInput
+    comments?: CommentCreateNestedManyWithoutAuthorInput
+    issueHistory?: IssueHistoryCreateNestedManyWithoutActorInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    notificationsTriggered?: NotificationCreateNestedManyWithoutActorInput
+    notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutTimeEntriesInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified?: boolean
+    image?: string | null
+    preferences?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    posts?: PostUncheckedCreateNestedManyWithoutCreatedByInput
+    memberships?: WorkspaceMemberUncheckedCreateNestedManyWithoutUserInput
+    projectsLead?: ProjectUncheckedCreateNestedManyWithoutLeadInput
+    assignedIssues?: IssueUncheckedCreateNestedManyWithoutAssigneeInput
+    createdIssues?: IssueUncheckedCreateNestedManyWithoutCreatorInput
+    comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
+    issueHistory?: IssueHistoryUncheckedCreateNestedManyWithoutActorInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    notificationsTriggered?: NotificationUncheckedCreateNestedManyWithoutActorInput
+    notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutTimeEntriesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTimeEntriesInput, UserUncheckedCreateWithoutTimeEntriesInput>
+  }
+
+  export type WorkspaceCreateWithoutTimeEntriesInput = {
+    id?: string
+    name: string
+    slug: string
+    settings?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: WorkspaceMemberCreateNestedManyWithoutWorkspaceInput
+    teams?: TeamCreateNestedManyWithoutWorkspaceInput
+    projects?: ProjectCreateNestedManyWithoutWorkspaceInput
+    issues?: IssueCreateNestedManyWithoutWorkspaceInput
+    cycles?: CycleCreateNestedManyWithoutWorkspaceInput
+    labels?: LabelCreateNestedManyWithoutWorkspaceInput
+    notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
+    notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceUncheckedCreateWithoutTimeEntriesInput = {
+    id?: string
+    name: string
+    slug: string
+    settings?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput
+    teams?: TeamUncheckedCreateNestedManyWithoutWorkspaceInput
+    projects?: ProjectUncheckedCreateNestedManyWithoutWorkspaceInput
+    issues?: IssueUncheckedCreateNestedManyWithoutWorkspaceInput
+    cycles?: CycleUncheckedCreateNestedManyWithoutWorkspaceInput
+    labels?: LabelUncheckedCreateNestedManyWithoutWorkspaceInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
+    notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceCreateOrConnectWithoutTimeEntriesInput = {
+    where: WorkspaceWhereUniqueInput
+    create: XOR<WorkspaceCreateWithoutTimeEntriesInput, WorkspaceUncheckedCreateWithoutTimeEntriesInput>
+  }
+
+  export type IssueUpsertWithoutTimeEntriesInput = {
+    update: XOR<IssueUpdateWithoutTimeEntriesInput, IssueUncheckedUpdateWithoutTimeEntriesInput>
+    create: XOR<IssueCreateWithoutTimeEntriesInput, IssueUncheckedCreateWithoutTimeEntriesInput>
+    where?: IssueWhereInput
+  }
+
+  export type IssueUpdateToOneWithWhereWithoutTimeEntriesInput = {
+    where?: IssueWhereInput
+    data: XOR<IssueUpdateWithoutTimeEntriesInput, IssueUncheckedUpdateWithoutTimeEntriesInput>
+  }
+
+  export type IssueUpdateWithoutTimeEntriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    identifier?: StringFieldUpdateOperationsInput | string
+    number?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutIssuesNestedInput
+    team?: TeamUpdateOneRequiredWithoutIssuesNestedInput
+    project?: ProjectUpdateOneWithoutIssuesNestedInput
+    cycle?: CycleUpdateOneWithoutIssuesNestedInput
+    assignee?: UserUpdateOneWithoutAssignedIssuesNestedInput
+    creator?: UserUpdateOneRequiredWithoutCreatedIssuesNestedInput
+    labels?: IssueLabelUpdateManyWithoutIssueNestedInput
+    comments?: CommentUpdateManyWithoutIssueNestedInput
+    history?: IssueHistoryUpdateManyWithoutIssueNestedInput
+    notifications?: NotificationUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
+  }
+
+  export type IssueUncheckedUpdateWithoutTimeEntriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    identifier?: StringFieldUpdateOperationsInput | string
+    number?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    teamId?: StringFieldUpdateOperationsInput | string
+    projectId?: NullableStringFieldUpdateOperationsInput | string | null
+    cycleId?: NullableStringFieldUpdateOperationsInput | string | null
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    creatorId?: StringFieldUpdateOperationsInput | string
+    labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutIssueNestedInput
+    history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
+  }
+
+  export type UserUpsertWithoutTimeEntriesInput = {
+    update: XOR<UserUpdateWithoutTimeEntriesInput, UserUncheckedUpdateWithoutTimeEntriesInput>
+    create: XOR<UserCreateWithoutTimeEntriesInput, UserUncheckedCreateWithoutTimeEntriesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTimeEntriesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTimeEntriesInput, UserUncheckedUpdateWithoutTimeEntriesInput>
+  }
+
+  export type UserUpdateWithoutTimeEntriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    preferences?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    posts?: PostUpdateManyWithoutCreatedByNestedInput
+    memberships?: WorkspaceMemberUpdateManyWithoutUserNestedInput
+    projectsLead?: ProjectUpdateManyWithoutLeadNestedInput
+    assignedIssues?: IssueUpdateManyWithoutAssigneeNestedInput
+    createdIssues?: IssueUpdateManyWithoutCreatorNestedInput
+    comments?: CommentUpdateManyWithoutAuthorNestedInput
+    issueHistory?: IssueHistoryUpdateManyWithoutActorNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    notificationsTriggered?: NotificationUpdateManyWithoutActorNestedInput
+    notificationPreferences?: NotificationPreferencesUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTimeEntriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    preferences?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    posts?: PostUncheckedUpdateManyWithoutCreatedByNestedInput
+    memberships?: WorkspaceMemberUncheckedUpdateManyWithoutUserNestedInput
+    projectsLead?: ProjectUncheckedUpdateManyWithoutLeadNestedInput
+    assignedIssues?: IssueUncheckedUpdateManyWithoutAssigneeNestedInput
+    createdIssues?: IssueUncheckedUpdateManyWithoutCreatorNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
+    issueHistory?: IssueHistoryUncheckedUpdateManyWithoutActorNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    notificationsTriggered?: NotificationUncheckedUpdateManyWithoutActorNestedInput
+    notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type WorkspaceUpsertWithoutTimeEntriesInput = {
+    update: XOR<WorkspaceUpdateWithoutTimeEntriesInput, WorkspaceUncheckedUpdateWithoutTimeEntriesInput>
+    create: XOR<WorkspaceCreateWithoutTimeEntriesInput, WorkspaceUncheckedCreateWithoutTimeEntriesInput>
+    where?: WorkspaceWhereInput
+  }
+
+  export type WorkspaceUpdateToOneWithWhereWithoutTimeEntriesInput = {
+    where?: WorkspaceWhereInput
+    data: XOR<WorkspaceUpdateWithoutTimeEntriesInput, WorkspaceUncheckedUpdateWithoutTimeEntriesInput>
+  }
+
+  export type WorkspaceUpdateWithoutTimeEntriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput
+    teams?: TeamUpdateManyWithoutWorkspaceNestedInput
+    projects?: ProjectUpdateManyWithoutWorkspaceNestedInput
+    issues?: IssueUpdateManyWithoutWorkspaceNestedInput
+    cycles?: CycleUpdateManyWithoutWorkspaceNestedInput
+    labels?: LabelUpdateManyWithoutWorkspaceNestedInput
+    notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
+    notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type WorkspaceUncheckedUpdateWithoutTimeEntriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput
+    teams?: TeamUncheckedUpdateManyWithoutWorkspaceNestedInput
+    projects?: ProjectUncheckedUpdateManyWithoutWorkspaceNestedInput
+    issues?: IssueUncheckedUpdateManyWithoutWorkspaceNestedInput
+    cycles?: CycleUncheckedUpdateManyWithoutWorkspaceNestedInput
+    labels?: LabelUncheckedUpdateManyWithoutWorkspaceNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
+    notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+  }
+
   export type IssueCreateWithoutCommentsInput = {
     id?: string
     identifier: string
@@ -40107,6 +42674,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspace: WorkspaceCreateNestedOneWithoutIssuesInput
@@ -40119,6 +42687,7 @@ export namespace Prisma {
     history?: IssueHistoryCreateNestedManyWithoutIssueInput
     notifications?: NotificationCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateWithoutCommentsInput = {
@@ -40130,6 +42699,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspaceId: string
@@ -40142,6 +42712,7 @@ export namespace Prisma {
     history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueCreateOrConnectWithoutCommentsInput = {
@@ -40169,6 +42740,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCommentsInput = {
@@ -40191,6 +42763,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationUncheckedCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCommentsInput = {
@@ -40218,6 +42791,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspace?: WorkspaceUpdateOneRequiredWithoutIssuesNestedInput
@@ -40230,6 +42804,7 @@ export namespace Prisma {
     history?: IssueHistoryUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateWithoutCommentsInput = {
@@ -40241,6 +42816,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspaceId?: StringFieldUpdateOperationsInput | string
@@ -40253,6 +42829,7 @@ export namespace Prisma {
     history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type UserUpsertWithoutCommentsInput = {
@@ -40286,6 +42863,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCommentsInput = {
@@ -40308,6 +42886,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUncheckedUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type IssueCreateWithoutHistoryInput = {
@@ -40319,6 +42898,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspace: WorkspaceCreateNestedOneWithoutIssuesInput
@@ -40331,6 +42911,7 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutIssueInput
     notifications?: NotificationCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateWithoutHistoryInput = {
@@ -40342,6 +42923,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspaceId: string
@@ -40354,6 +42936,7 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutIssueInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueCreateOrConnectWithoutHistoryInput = {
@@ -40381,6 +42964,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutIssueHistoryInput = {
@@ -40403,6 +42987,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationUncheckedCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutIssueHistoryInput = {
@@ -40430,6 +43015,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspace?: WorkspaceUpdateOneRequiredWithoutIssuesNestedInput
@@ -40442,6 +43028,7 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateWithoutHistoryInput = {
@@ -40453,6 +43040,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspaceId?: StringFieldUpdateOperationsInput | string
@@ -40465,6 +43053,7 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type UserUpsertWithoutIssueHistoryInput = {
@@ -40498,6 +43087,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutIssueHistoryInput = {
@@ -40520,6 +43110,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUncheckedUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutNotificationsInput = {
@@ -40542,6 +43133,7 @@ export namespace Prisma {
     issueHistory?: IssueHistoryCreateNestedManyWithoutActorInput
     notificationsTriggered?: NotificationCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -40564,6 +43156,7 @@ export namespace Prisma {
     issueHistory?: IssueHistoryUncheckedCreateNestedManyWithoutActorInput
     notificationsTriggered?: NotificationUncheckedCreateNestedManyWithoutActorInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -40589,6 +43182,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutNotificationsInput = {
@@ -40609,6 +43203,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutNotificationsInput = {
@@ -40625,6 +43220,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspace: WorkspaceCreateNestedOneWithoutIssuesInput
@@ -40637,6 +43233,7 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutIssueInput
     history?: IssueHistoryCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateWithoutNotificationsInput = {
@@ -40648,6 +43245,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspaceId: string
@@ -40660,6 +43258,7 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutIssueInput
     history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueCreateOrConnectWithoutNotificationsInput = {
@@ -40687,6 +43286,7 @@ export namespace Prisma {
     issueHistory?: IssueHistoryCreateNestedManyWithoutActorInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsTriggeredInput = {
@@ -40709,6 +43309,7 @@ export namespace Prisma {
     issueHistory?: IssueHistoryUncheckedCreateNestedManyWithoutActorInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutUserInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsTriggeredInput = {
@@ -40747,6 +43348,7 @@ export namespace Prisma {
     issueHistory?: IssueHistoryUpdateManyWithoutActorNestedInput
     notificationsTriggered?: NotificationUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -40769,6 +43371,7 @@ export namespace Prisma {
     issueHistory?: IssueHistoryUncheckedUpdateManyWithoutActorNestedInput
     notificationsTriggered?: NotificationUncheckedUpdateManyWithoutActorNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type WorkspaceUpsertWithoutNotificationsInput = {
@@ -40800,6 +43403,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutNotificationsInput = {
@@ -40820,6 +43424,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type IssueUpsertWithoutNotificationsInput = {
@@ -40842,6 +43447,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspace?: WorkspaceUpdateOneRequiredWithoutIssuesNestedInput
@@ -40854,6 +43460,7 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateWithoutNotificationsInput = {
@@ -40865,6 +43472,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspaceId?: StringFieldUpdateOperationsInput | string
@@ -40877,6 +43485,7 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type UserUpsertWithoutNotificationsTriggeredInput = {
@@ -40910,6 +43519,7 @@ export namespace Prisma {
     issueHistory?: IssueHistoryUpdateManyWithoutActorNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsTriggeredInput = {
@@ -40932,6 +43542,7 @@ export namespace Prisma {
     issueHistory?: IssueHistoryUncheckedUpdateManyWithoutActorNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutUserNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutNotificationPreferencesInput = {
@@ -40954,6 +43565,7 @@ export namespace Prisma {
     issueHistory?: IssueHistoryCreateNestedManyWithoutActorInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationCreateNestedManyWithoutActorInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationPreferencesInput = {
@@ -40976,6 +43588,7 @@ export namespace Prisma {
     issueHistory?: IssueHistoryUncheckedCreateNestedManyWithoutActorInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     notificationsTriggered?: NotificationUncheckedCreateNestedManyWithoutActorInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationPreferencesInput = {
@@ -41001,6 +43614,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutNotificationPreferencesInput = {
@@ -41021,6 +43635,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutNotificationPreferencesInput = {
@@ -41059,6 +43674,7 @@ export namespace Prisma {
     issueHistory?: IssueHistoryUpdateManyWithoutActorNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUpdateManyWithoutActorNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationPreferencesInput = {
@@ -41081,6 +43697,7 @@ export namespace Prisma {
     issueHistory?: IssueHistoryUncheckedUpdateManyWithoutActorNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     notificationsTriggered?: NotificationUncheckedUpdateManyWithoutActorNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type WorkspaceUpsertWithoutNotificationPreferencesInput = {
@@ -41112,6 +43729,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutNotificationPreferencesInput = {
@@ -41132,6 +43750,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceCreateWithoutTemplatesInput = {
@@ -41152,6 +43771,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutTemplatesInput = {
@@ -41172,6 +43792,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutTemplatesInput = {
@@ -41241,6 +43862,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutTemplatesInput = {
@@ -41261,6 +43883,7 @@ export namespace Prisma {
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TeamUpsertWithoutTemplatesInput = {
@@ -41320,6 +43943,7 @@ export namespace Prisma {
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutAutomationRulesInput = {
@@ -41340,6 +43964,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutAutomationRulesInput = {
@@ -41440,6 +44065,7 @@ export namespace Prisma {
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutAutomationRulesInput = {
@@ -41460,6 +44086,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TeamUpsertWithoutAutomationRulesInput = {
@@ -41570,6 +44197,7 @@ export namespace Prisma {
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutAutomationLogsInput = {
@@ -41590,6 +44218,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutAutomationLogsInput = {
@@ -41667,6 +44296,7 @@ export namespace Prisma {
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutAutomationLogsInput = {
@@ -41687,6 +44317,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type IssueCreateWithoutPullRequestsInput = {
@@ -41698,6 +44329,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspace: WorkspaceCreateNestedOneWithoutIssuesInput
@@ -41710,6 +44342,7 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutIssueInput
     history?: IssueHistoryCreateNestedManyWithoutIssueInput
     notifications?: NotificationCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateWithoutPullRequestsInput = {
@@ -41721,6 +44354,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspaceId: string
@@ -41733,6 +44367,7 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutIssueInput
     history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueCreateOrConnectWithoutPullRequestsInput = {
@@ -41758,6 +44393,7 @@ export namespace Prisma {
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutPullRequestsInput = {
@@ -41778,6 +44414,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    timeEntries?: TimeEntryUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutPullRequestsInput = {
@@ -41805,6 +44442,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspace?: WorkspaceUpdateOneRequiredWithoutIssuesNestedInput
@@ -41817,6 +44455,7 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateWithoutPullRequestsInput = {
@@ -41828,6 +44467,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspaceId?: StringFieldUpdateOperationsInput | string
@@ -41840,6 +44480,7 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type WorkspaceUpsertWithoutPullRequestsInput = {
@@ -41871,6 +44512,7 @@ export namespace Prisma {
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutPullRequestsInput = {
@@ -41891,6 +44533,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type SessionCreateManyUserInput = {
@@ -41954,6 +44597,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspaceId: string
@@ -41972,6 +44616,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspaceId: string
@@ -42034,6 +44679,19 @@ export namespace Prisma {
     notifyOnCycleStart?: boolean
     notifyOnCycleEnd?: boolean
     updatedAt?: Date | string
+    workspaceId: string
+  }
+
+  export type TimeEntryCreateManyUserInput = {
+    id?: string
+    duration: number
+    description?: string | null
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    isRunning?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    issueId: string
     workspaceId: string
   }
 
@@ -42204,6 +44862,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspace?: WorkspaceUpdateOneRequiredWithoutIssuesNestedInput
@@ -42216,6 +44875,7 @@ export namespace Prisma {
     history?: IssueHistoryUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateWithoutAssigneeInput = {
@@ -42227,6 +44887,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspaceId?: StringFieldUpdateOperationsInput | string
@@ -42239,6 +44900,7 @@ export namespace Prisma {
     history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateManyWithoutAssigneeInput = {
@@ -42250,6 +44912,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspaceId?: StringFieldUpdateOperationsInput | string
@@ -42268,6 +44931,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspace?: WorkspaceUpdateOneRequiredWithoutIssuesNestedInput
@@ -42280,6 +44944,7 @@ export namespace Prisma {
     history?: IssueHistoryUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateWithoutCreatorInput = {
@@ -42291,6 +44956,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspaceId?: StringFieldUpdateOperationsInput | string
@@ -42303,6 +44969,7 @@ export namespace Prisma {
     history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateManyWithoutCreatorInput = {
@@ -42314,6 +44981,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspaceId?: StringFieldUpdateOperationsInput | string
@@ -42491,6 +45159,45 @@ export namespace Prisma {
     workspaceId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type TimeEntryUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    duration?: FloatFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isRunning?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    issue?: IssueUpdateOneRequiredWithoutTimeEntriesNestedInput
+    workspace?: WorkspaceUpdateOneRequiredWithoutTimeEntriesNestedInput
+  }
+
+  export type TimeEntryUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    duration?: FloatFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isRunning?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    issueId?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TimeEntryUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    duration?: FloatFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isRunning?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    issueId?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type WorkspaceMemberCreateManyWorkspaceInput = {
     id?: string
     role?: $Enums.WorkspaceRole
@@ -42528,6 +45235,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     teamId: string
@@ -42639,6 +45347,19 @@ export namespace Prisma {
     issueId: string
   }
 
+  export type TimeEntryCreateManyWorkspaceInput = {
+    id?: string
+    duration: number
+    description?: string | null
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    isRunning?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    issueId: string
+    userId: string
+  }
+
   export type WorkspaceMemberUpdateWithoutWorkspaceInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole
@@ -42746,6 +45467,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     team?: TeamUpdateOneRequiredWithoutIssuesNestedInput
@@ -42758,6 +45480,7 @@ export namespace Prisma {
     history?: IssueHistoryUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateWithoutWorkspaceInput = {
@@ -42769,6 +45492,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     teamId?: StringFieldUpdateOperationsInput | string
@@ -42781,6 +45505,7 @@ export namespace Prisma {
     history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateManyWithoutWorkspaceInput = {
@@ -42792,6 +45517,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     teamId?: StringFieldUpdateOperationsInput | string
@@ -43113,6 +45839,45 @@ export namespace Prisma {
     issueId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type TimeEntryUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    duration?: FloatFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isRunning?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    issue?: IssueUpdateOneRequiredWithoutTimeEntriesNestedInput
+    user?: UserUpdateOneRequiredWithoutTimeEntriesNestedInput
+  }
+
+  export type TimeEntryUncheckedUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    duration?: FloatFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isRunning?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    issueId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TimeEntryUncheckedUpdateManyWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    duration?: FloatFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isRunning?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    issueId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type ProjectCreateManyTeamInput = {
     id?: string
     name: string
@@ -43135,6 +45900,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspaceId: string
@@ -43242,6 +46008,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspace?: WorkspaceUpdateOneRequiredWithoutIssuesNestedInput
@@ -43254,6 +46021,7 @@ export namespace Prisma {
     history?: IssueHistoryUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateWithoutTeamInput = {
@@ -43265,6 +46033,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspaceId?: StringFieldUpdateOperationsInput | string
@@ -43277,6 +46046,7 @@ export namespace Prisma {
     history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateManyWithoutTeamInput = {
@@ -43288,6 +46058,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspaceId?: StringFieldUpdateOperationsInput | string
@@ -43456,6 +46227,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspaceId: string
@@ -43474,6 +46246,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspace?: WorkspaceUpdateOneRequiredWithoutIssuesNestedInput
@@ -43486,6 +46259,7 @@ export namespace Prisma {
     history?: IssueHistoryUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateWithoutProjectInput = {
@@ -43497,6 +46271,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspaceId?: StringFieldUpdateOperationsInput | string
@@ -43509,6 +46284,7 @@ export namespace Prisma {
     history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateManyWithoutProjectInput = {
@@ -43520,6 +46296,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspaceId?: StringFieldUpdateOperationsInput | string
@@ -43538,6 +46315,7 @@ export namespace Prisma {
     status?: $Enums.IssueStatus
     priority?: $Enums.Priority
     dueDate?: Date | string | null
+    estimatedTime?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspaceId: string
@@ -43556,6 +46334,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspace?: WorkspaceUpdateOneRequiredWithoutIssuesNestedInput
@@ -43568,6 +46347,7 @@ export namespace Prisma {
     history?: IssueHistoryUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateWithoutCycleInput = {
@@ -43579,6 +46359,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspaceId?: StringFieldUpdateOperationsInput | string
@@ -43591,6 +46372,7 @@ export namespace Prisma {
     history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
     pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
+    timeEntries?: TimeEntryUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateManyWithoutCycleInput = {
@@ -43602,6 +46384,7 @@ export namespace Prisma {
     status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estimatedTime?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspaceId?: StringFieldUpdateOperationsInput | string
@@ -43680,6 +46463,19 @@ export namespace Prisma {
     mergedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    workspaceId: string
+  }
+
+  export type TimeEntryCreateManyIssueInput = {
+    id?: string
+    duration: number
+    description?: string | null
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    isRunning?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
     workspaceId: string
   }
 
@@ -43836,6 +46632,45 @@ export namespace Prisma {
     mergedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TimeEntryUpdateWithoutIssueInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    duration?: FloatFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isRunning?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutTimeEntriesNestedInput
+    workspace?: WorkspaceUpdateOneRequiredWithoutTimeEntriesNestedInput
+  }
+
+  export type TimeEntryUncheckedUpdateWithoutIssueInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    duration?: FloatFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isRunning?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TimeEntryUncheckedUpdateManyWithoutIssueInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    duration?: FloatFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isRunning?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
     workspaceId?: StringFieldUpdateOperationsInput | string
   }
 

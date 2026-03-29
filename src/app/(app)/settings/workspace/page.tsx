@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertTriangle, Building2, CheckCircle2, Trash2 } from "lucide-react";
+import { AlertTriangle, Building2, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {

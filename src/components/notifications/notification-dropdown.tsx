@@ -3,7 +3,6 @@
 import {
 	AlertCircle,
 	Bell,
-	Check,
 	CheckCheck,
 	Inbox,
 	MessageSquare,
@@ -11,7 +10,7 @@ import {
 	User,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {

@@ -19,7 +19,7 @@ export function ActiveEditorsIndicator({
 			if (!acc[editor.field]) {
 				acc[editor.field] = [];
 			}
-			acc[editor.field]!.push(editor);
+			acc[editor.field]?.push(editor);
 			return acc;
 		},
 		{},
