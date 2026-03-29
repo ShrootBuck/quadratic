@@ -72,6 +72,7 @@ const listIssuesInput = z.object({
 	search: z.string().optional(),
 	limit: z.number().min(1).max(100).default(50),
 	offset: z.number().min(0).default(0),
+	customFieldFilters: z.record(z.unknown()).optional(), // { customFieldId: value }
 });
 
 export const issueRouter = createTRPCRouter({
@@ -304,6 +305,11 @@ export const issueRouter = createTRPCRouter({
 						},
 						orderBy: { createdAt: "desc" },
 					},
+					customFieldValues: {
+						include: {
+							customField: true,
+						},
+					},
 				},
 			});
 
@@ -329,7 +335,13 @@ export const issueRouter = createTRPCRouter({
 				});
 			}
 
-			return issue;
+			return {
+				...issue,
+				customFieldValues: issue.customFieldValues.map((v) => ({
+					...v,
+					value: JSON.parse(v.value),
+				})),
+			};
 		}),
 
 	// Update an issue
@@ -688,6 +700,7 @@ export const issueRouter = createTRPCRouter({
 				search,
 				limit,
 				offset,
+				customFieldFilters,
 			} = input;
 
 			// Verify workspace access
@@ -751,6 +764,54 @@ export const issueRouter = createTRPCRouter({
 				];
 			}
 
+			// Handle custom field filtering
+			if (customFieldFilters && Object.keys(customFieldFilters).length > 0) {
+				// Get all issues with their custom field values first
+				const issuesWithFields = await ctx.db.issue.findMany({
+					where,
+					include: {
+						customFieldValues: {
+							include: {
+								customField: true,
+							},
+						},
+					},
+				});
+
+				// Filter issues based on custom field values
+				const filteredIssueIds = issuesWithFields
+					.filter((issue) => {
+						return Object.entries(customFieldFilters).every(
+							([fieldId, filterValue]) => {
+								const fieldValue = issue.customFieldValues.find(
+									(v) => v.customFieldId === fieldId,
+								);
+								if (!fieldValue) return false;
+
+								const parsedValue = JSON.parse(fieldValue.value);
+
+								// Handle different filter types
+								if (Array.isArray(filterValue)) {
+									// For multi-select, check if any value matches
+									if (Array.isArray(parsedValue)) {
+										return filterValue.some((v) => parsedValue.includes(v));
+									}
+									return filterValue.includes(parsedValue);
+								}
+
+								// For single value match
+								return parsedValue === filterValue;
+							},
+						);
+					})
+					.map((issue) => issue.id);
+
+				// Update where clause to only include filtered issues
+				where.id = {
+					in: filteredIssueIds,
+				};
+			}
+
 			// Get total count for pagination
 			const total = await ctx.db.issue.count({ where });
 
@@ -768,6 +829,11 @@ export const issueRouter = createTRPCRouter({
 							label: true,
 						},
 					},
+					customFieldValues: {
+						include: {
+							customField: true,
+						},
+					},
 				},
 				orderBy: [{ createdAt: "desc" }],
 				skip: offset,
@@ -775,7 +841,13 @@ export const issueRouter = createTRPCRouter({
 			});
 
 			return {
-				issues,
+				issues: issues.map((issue) => ({
+					...issue,
+					customFieldValues: issue.customFieldValues.map((v) => ({
+						...v,
+						value: JSON.parse(v.value),
+					})),
+				})),
 				pagination: {
 					total,
 					limit,

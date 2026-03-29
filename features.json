@@ -462,7 +462,7 @@
 				"Custom field ordering",
 				"Delete custom field (with confirmation)"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "polish",

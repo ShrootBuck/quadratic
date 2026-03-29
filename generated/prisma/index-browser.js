@@ -321,6 +321,28 @@ exports.Prisma.NotificationPreferencesScalarFieldEnum = {
   workspaceId: 'workspaceId'
 };
 
+exports.Prisma.CustomFieldScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  type: 'type',
+  description: 'description',
+  options: 'options',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  workspaceId: 'workspaceId',
+  teamId: 'teamId'
+};
+
+exports.Prisma.CustomFieldValueScalarFieldEnum = {
+  id: 'id',
+  value: 'value',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  customFieldId: 'customFieldId',
+  issueId: 'issueId'
+};
+
 exports.Prisma.TemplateScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -480,6 +502,15 @@ exports.NotificationType = exports.$Enums.NotificationType = {
   CYCLE_ENDED: 'CYCLE_ENDED'
 };
 
+exports.CustomFieldType = exports.$Enums.CustomFieldType = {
+  TEXT: 'TEXT',
+  NUMBER: 'NUMBER',
+  SELECT: 'SELECT',
+  MULTI_SELECT: 'MULTI_SELECT',
+  DATE: 'DATE',
+  URL: 'URL'
+};
+
 exports.AutomationTrigger = exports.$Enums.AutomationTrigger = {
   ISSUE_CREATED: 'ISSUE_CREATED',
   ISSUE_UPDATED: 'ISSUE_UPDATED',
@@ -545,6 +576,8 @@ exports.Prisma.ModelName = {
   IssueHistory: 'IssueHistory',
   Notification: 'Notification',
   NotificationPreferences: 'NotificationPreferences',
+  CustomField: 'CustomField',
+  CustomFieldValue: 'CustomFieldValue',
   Template: 'Template',
   AutomationRule: 'AutomationRule',
   AutomationLog: 'AutomationLog',

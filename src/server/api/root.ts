@@ -1,6 +1,7 @@
 import { analyticsRouter } from "~/server/api/routers/analytics";
 import { apiKeysRouter } from "~/server/api/routers/apiKeys";
 import { automationRouter } from "~/server/api/routers/automation";
+import { customFieldRouter } from "~/server/api/routers/customField";
 import { cycleRouter } from "~/server/api/routers/cycle";
 import { githubRouter } from "~/server/api/routers/github";
 import { importExportRouter } from "~/server/api/routers/importExport";
@@ -38,6 +39,7 @@ export const appRouter = createTRPCRouter({
 	timeTracking: timeTrackingRouter,
 	apiKeys: apiKeysRouter,
 	importExport: importExportRouter,
+	customField: customFieldRouter,
 });
 
 // export type definition of API

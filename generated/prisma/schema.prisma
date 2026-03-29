@@ -126,6 +126,7 @@ model Workspace {
   timeEntries             TimeEntry[]
   apiKeys                 ApiKey[]
   webhooks                Webhook[]
+  customFields            CustomField[]
 
   @@map("workspace")
 }
@@ -160,6 +161,7 @@ model Team {
   labels          Label[]
   templates       Template[]
   automationRules AutomationRule[]
+  customFields    CustomField[]
 
   @@unique([workspaceId, key])
   @@index([workspaceId])
@@ -254,12 +256,13 @@ model Issue {
   creatorId   String
   creator     User      @relation(fields: [creatorId], references: [id], name: "CreatedIssues")
 
-  labels        IssueLabel[]
-  comments      Comment[]
-  history       IssueHistory[]
-  notifications Notification[]
-  pullRequests  GitHubPullRequest[]
-  timeEntries   TimeEntry[]
+  labels            IssueLabel[]
+  comments          Comment[]
+  history           IssueHistory[]
+  notifications     Notification[]
+  pullRequests      GitHubPullRequest[]
+  timeEntries       TimeEntry[]
+  customFieldValues CustomFieldValue[]
 
   @@unique([teamId, number])
   @@index([workspaceId])
@@ -393,6 +396,50 @@ model NotificationPreferences {
   @@map("notification_preferences")
 }
 
+model CustomField {
+  id          String          @id @default(cuid())
+  name        String
+  type        CustomFieldType
+  description String?
+  // For SELECT and MULTI_SELECT types, store options as JSON array
+  options     String?
+  // Field order for display
+  order       Int             @default(0)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  // Custom fields can be at workspace level or team level
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  teamId      String?
+  team        Team?     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  values CustomFieldValue[]
+
+  @@index([workspaceId])
+  @@index([teamId])
+  @@index([order])
+  @@map("custom_field")
+}
+
+model CustomFieldValue {
+  id        String   @id @default(cuid())
+  // Store value as JSON string to handle different types
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  customFieldId String
+  customField   CustomField @relation(fields: [customFieldId], references: [id], onDelete: Cascade)
+  issueId       String
+  issue         Issue       @relation(fields: [issueId], references: [id], onDelete: Cascade)
+
+  @@unique([customFieldId, issueId])
+  @@index([customFieldId])
+  @@index([issueId])
+  @@map("custom_field_value")
+}
+
 model Template {
   id          String      @id @default(cuid())
   name        String
@@ -521,6 +568,17 @@ enum NotificationType {
   ISSUE_CREATED
   CYCLE_STARTED
   CYCLE_ENDED
+}
+
+// Custom Fields
+
+enum CustomFieldType {
+  TEXT
+  NUMBER
+  SELECT
+  MULTI_SELECT
+  DATE
+  URL
 }
 
 // API Keys & Webhooks
