@@ -124,6 +124,8 @@ model Workspace {
   automationLogs    AutomationLog[]
   pullRequests      GitHubPullRequest[]
   timeEntries       TimeEntry[]
+  apiKeys           ApiKey[]
+  webhooks          Webhook[]
 
   @@map("workspace")
 }
@@ -519,6 +521,102 @@ enum NotificationType {
   ISSUE_CREATED
   CYCLE_STARTED
   CYCLE_ENDED
+}
+
+// API Keys & Webhooks
+
+enum ApiKeyScope {
+  READ
+  WRITE
+  ADMIN
+}
+
+model ApiKey {
+  id          String      @id @default(cuid())
+  name        String
+  keyHash     String      @unique // Hashed key for storage
+  keyPrefix   String      // First 8 chars of key for display
+  scope       ApiKeyScope @default(READ)
+  lastUsedAt  DateTime?
+  expiresAt   DateTime?
+  isRevoked   Boolean     @default(false)
+  revokedAt   DateTime?
+  revokedById String?
+  createdAt   DateTime    @default(now())
+  
+  // Rate limiting
+  rateLimitRequests Int @default(1000) // Requests per hour
+  
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  createdById String
+  
+  @@index([workspaceId])
+  @@index([keyHash])
+  @@index([isRevoked])
+  @@index([createdAt])
+  @@map("api_key")
+}
+
+enum WebhookEvent {
+  ISSUE_CREATED
+  ISSUE_UPDATED
+  ISSUE_DELETED
+}
+
+enum WebhookStatus {
+  ACTIVE
+  PAUSED
+  FAILED
+}
+
+model Webhook {
+  id          String       @id @default(cuid())
+  name        String
+  url         String
+  events      String       // JSON array of WebhookEvent
+  secret      String       // For HMAC signature
+  status      WebhookStatus @default(ACTIVE)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  
+  workspaceId String
+  workspace   Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  createdById String
+  deliveries  WebhookDelivery[]
+  
+  @@index([workspaceId])
+  @@index([status])
+  @@map("webhook")
+}
+
+enum DeliveryStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  RETRYING
+}
+
+model WebhookDelivery {
+  id           String         @id @default(cuid())
+  eventType    WebhookEvent
+  payload      String         // JSON payload
+  status       DeliveryStatus @default(PENDING)
+  responseCode Int?
+  responseBody String?
+  errorMessage String?
+  attemptCount Int            @default(0)
+  nextRetryAt  DateTime?
+  deliveredAt  DateTime?
+  createdAt    DateTime       @default(now())
+  
+  webhookId    String
+  webhook      Webhook        @relation(fields: [webhookId], references: [id], onDelete: Cascade)
+  
+  @@index([webhookId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("webhook_delivery")
 }
 
 // GitHub Integration Models

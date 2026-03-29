@@ -206,6 +206,35 @@ Before marking a feature done:
 
 ---
 
+## Code Quality Standards
+
+### Clean Code Mandate
+
+You are NOT allowed to ship garbage. Every iteration must leave the codebase cleaner than you found it.
+
+**Linting & Type Safety:**
+- Run `bun run check` and fix ALL errors before committing
+- Run `bun run typecheck` and fix ALL errors before committing
+- NO TypeScript `any` types. Ever. Use proper types or `unknown` if you must
+- NO `@ts-ignore` or `@ts-expect-error` comments (unless explicitly approved)
+- Fix lint errors properly, not with `eslint-disable` or `biome-ignore`
+
+**Clean Code Principles:**
+- Refactor messy code you encounter - don't just work around it
+- Delete dead code, unused imports, and commented-out code
+- Use meaningful variable and function names
+- Extract complex logic into well-named functions
+- Keep functions small and focused on a single responsibility
+- Write code that the next developer (which might be you) will understand
+
+**Technical Debt:**
+- If you see a "TODO" or "FIXME", either fix it or don't add more
+- Don't introduce new warnings to silence later
+- Spend the actual tokens and time to do it right
+- The build must pass. The checks must pass. No shortcuts.
+
+---
+
 ## Now Go Build
 
 Read features.json. Find the next incomplete feature. Build it. Test it. Commit it. Signal completion.

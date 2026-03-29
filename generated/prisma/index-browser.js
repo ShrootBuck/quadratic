@@ -364,6 +364,51 @@ exports.Prisma.AutomationLogScalarFieldEnum = {
   issueId: 'issueId'
 };
 
+exports.Prisma.ApiKeyScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  keyHash: 'keyHash',
+  keyPrefix: 'keyPrefix',
+  scope: 'scope',
+  lastUsedAt: 'lastUsedAt',
+  expiresAt: 'expiresAt',
+  isRevoked: 'isRevoked',
+  revokedAt: 'revokedAt',
+  revokedById: 'revokedById',
+  createdAt: 'createdAt',
+  rateLimitRequests: 'rateLimitRequests',
+  workspaceId: 'workspaceId',
+  createdById: 'createdById'
+};
+
+exports.Prisma.WebhookScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  url: 'url',
+  events: 'events',
+  secret: 'secret',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  workspaceId: 'workspaceId',
+  createdById: 'createdById'
+};
+
+exports.Prisma.WebhookDeliveryScalarFieldEnum = {
+  id: 'id',
+  eventType: 'eventType',
+  payload: 'payload',
+  status: 'status',
+  responseCode: 'responseCode',
+  responseBody: 'responseBody',
+  errorMessage: 'errorMessage',
+  attemptCount: 'attemptCount',
+  nextRetryAt: 'nextRetryAt',
+  deliveredAt: 'deliveredAt',
+  createdAt: 'createdAt',
+  webhookId: 'webhookId'
+};
+
 exports.Prisma.GitHubPullRequestScalarFieldEnum = {
   id: 'id',
   githubId: 'githubId',
@@ -449,6 +494,31 @@ exports.AutomationLogStatus = exports.$Enums.AutomationLogStatus = {
   SKIPPED: 'SKIPPED'
 };
 
+exports.ApiKeyScope = exports.$Enums.ApiKeyScope = {
+  READ: 'READ',
+  WRITE: 'WRITE',
+  ADMIN: 'ADMIN'
+};
+
+exports.WebhookStatus = exports.$Enums.WebhookStatus = {
+  ACTIVE: 'ACTIVE',
+  PAUSED: 'PAUSED',
+  FAILED: 'FAILED'
+};
+
+exports.WebhookEvent = exports.$Enums.WebhookEvent = {
+  ISSUE_CREATED: 'ISSUE_CREATED',
+  ISSUE_UPDATED: 'ISSUE_UPDATED',
+  ISSUE_DELETED: 'ISSUE_DELETED'
+};
+
+exports.DeliveryStatus = exports.$Enums.DeliveryStatus = {
+  PENDING: 'PENDING',
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED',
+  RETRYING: 'RETRYING'
+};
+
 exports.PullRequestStatus = exports.$Enums.PullRequestStatus = {
   OPEN: 'OPEN',
   MERGED: 'MERGED',
@@ -478,6 +548,9 @@ exports.Prisma.ModelName = {
   Template: 'Template',
   AutomationRule: 'AutomationRule',
   AutomationLog: 'AutomationLog',
+  ApiKey: 'ApiKey',
+  Webhook: 'Webhook',
+  WebhookDelivery: 'WebhookDelivery',
   GitHubPullRequest: 'GitHubPullRequest'
 };
 

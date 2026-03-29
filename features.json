@@ -411,7 +411,7 @@
 				"Webhook delivery log with retry",
 				"API documentation page"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "accessibility",
@@ -491,6 +491,23 @@
 				"Polished dropdown menus and modals",
 				"Refined sidebar styling and navigation",
 				"Icon consistency (use same icon set throughout)"
+			],
+			"passes": false
+		},
+		{
+			"id": "cleanup",
+			"category": "maintenance",
+			"title": "Code Cleanup & Quality Assurance",
+			"description": "Final pass to clean up lint errors, type issues, and technical debt before feature completion",
+			"acceptanceCriteria": [
+				"Run `bun run check` and fix ALL Biome lint errors",
+				"Run `bun run typecheck` and fix ALL TypeScript errors",
+				"No TypeScript `any` types - use proper types or `unknown`",
+				"No `@ts-ignore` or `@ts-expect-error` without justification",
+				"Remove dead code, unused imports, and commented-out code",
+				"Refactor messy code encountered during this feature",
+				"Ensure clean, maintainable code that the next dev can understand",
+				"All builds pass with zero errors or warnings"
 			],
 			"passes": false
 		},
