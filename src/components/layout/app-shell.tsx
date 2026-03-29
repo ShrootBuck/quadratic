@@ -1,7 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useCommandPaletteStore } from "@/stores/command-palette";
 import { CommandPalette } from "./command-palette";
 import { Header } from "./header";
 
@@ -12,24 +11,26 @@ interface AppShellProps {
 		image?: string | null;
 	};
 	onSignOut: () => void;
+	workspaceId: string;
 	children: React.ReactNode;
 }
 
-export function AppShell({ user, onSignOut, children }: AppShellProps) {
-	const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
-	const _router = useRouter();
+export function AppShell({
+	user,
+	onSignOut,
+	workspaceId,
+	children,
+}: AppShellProps) {
+	const { setIsOpen } = useCommandPaletteStore();
 
 	return (
 		<>
 			<Header
-				onSearchClick={() => setCommandPaletteOpen(true)}
+				onSearchClick={() => setIsOpen(true)}
 				onSignOut={onSignOut}
 				user={user}
 			/>
-			<CommandPalette
-				onOpenChange={setCommandPaletteOpen}
-				open={commandPaletteOpen}
-			/>
+			<CommandPalette workspaceId={workspaceId} />
 			{children}
 		</>
 	);

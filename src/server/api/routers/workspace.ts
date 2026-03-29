@@ -1,6 +1,38 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
+// Fuzzy match function for search
+function fuzzyMatch(text: string, query: string): boolean {
+	const lowerText = text.toLowerCase();
+	const lowerQuery = query.toLowerCase();
+	let queryIndex = 0;
+	for (let i = 0; i < lowerText.length && queryIndex < lowerQuery.length; i++) {
+		if (lowerText[i] === lowerQuery[queryIndex]) {
+			queryIndex++;
+		}
+	}
+	return queryIndex === lowerQuery.length;
+}
+
+function calculateRelevance(text: string, query: string): number {
+	const lowerText = text.toLowerCase();
+	const lowerQuery = query.toLowerCase();
+
+	// Exact match gets highest score
+	if (lowerText === lowerQuery) return 100;
+
+	// Starts with query gets high score
+	if (lowerText.startsWith(lowerQuery)) return 80;
+
+	// Contains query gets medium score
+	if (lowerText.includes(lowerQuery)) return 60;
+
+	// Fuzzy match gets lower score
+	if (fuzzyMatch(text, query)) return 40;
+
+	return 0;
+}
+
 export const workspaceRouter = createTRPCRouter({
 	create: protectedProcedure
 		.input(
@@ -157,5 +189,193 @@ export const workspaceRouter = createTRPCRouter({
 				where: { workspaceId: input.workspaceId },
 				orderBy: { name: "asc" },
 			});
+		}),
+
+	search: protectedProcedure
+		.input(
+			z.object({
+				workspaceId: z.string(),
+				query: z.string().min(1),
+				limit: z.number().min(1).max(20).default(10),
+			}),
+		)
+		.query(async ({ ctx, input }) => {
+			// Check membership
+			const membership = await ctx.db.workspaceMember.findFirst({
+				where: {
+					workspaceId: input.workspaceId,
+					userId: ctx.session.user.id,
+				},
+			});
+
+			if (!membership) {
+				throw new Error("Access denied");
+			}
+
+			const { query, workspaceId, limit } = input;
+
+			// Helper for SQLite case-insensitive search
+			const searchPattern = `%${query}%`;
+
+			// Search issues using raw query for SQLite case-insensitivity
+			const issues = (await ctx.db.$queryRaw`
+				SELECT i.*, t.key as teamKey, t.name as teamName,
+					u.id as assigneeId, u.name as assigneeName, u.image as assigneeImage
+				FROM Issue i
+				LEFT JOIN Team t ON i.teamId = t.id
+				LEFT JOIN User u ON i.assigneeId = u.id
+				WHERE i.workspaceId = ${workspaceId}
+					AND (LOWER(i.title) LIKE LOWER(${searchPattern}) 
+						OR LOWER(i.identifier) LIKE LOWER(${searchPattern}))
+				ORDER BY i.updatedAt DESC
+				LIMIT ${limit}
+			`) as Array<{
+				id: string;
+				title: string;
+				identifier: string;
+				teamId: string;
+				teamKey: string;
+				teamName: string;
+				assigneeId: string | null;
+				assigneeName: string | null;
+				assigneeImage: string | null;
+			}>;
+
+			// Search projects
+			const projects = (await ctx.db.$queryRaw`
+				SELECT p.*, t.key as teamKey, t.name as teamName
+				FROM Project p
+				LEFT JOIN Team t ON p.teamId = t.id
+				WHERE p.workspaceId = ${workspaceId}
+					AND LOWER(p.name) LIKE LOWER(${searchPattern})
+				ORDER BY p.updatedAt DESC
+				LIMIT ${limit}
+			`) as Array<{
+				id: string;
+				name: string;
+				teamId: string;
+				teamKey: string;
+				teamName: string;
+			}>;
+
+			// Search cycles
+			const cycles = (await ctx.db.$queryRaw`
+				SELECT c.*, t.key as teamKey, t.name as teamName
+				FROM Cycle c
+				LEFT JOIN Team t ON c.teamId = t.id
+				WHERE c.workspaceId = ${workspaceId}
+					AND LOWER(c.name) LIKE LOWER(${searchPattern})
+				ORDER BY c.startDate DESC
+				LIMIT ${limit}
+			`) as Array<{
+				id: string;
+				name: string;
+				teamId: string;
+				teamKey: string;
+				teamName: string;
+			}>;
+
+			// Search teams
+			const teams = (await ctx.db.$queryRaw`
+				SELECT t.*
+				FROM Team t
+				WHERE t.workspaceId = ${workspaceId}
+					AND (LOWER(t.name) LIKE LOWER(${searchPattern}) 
+						OR LOWER(t.key) LIKE LOWER(${searchPattern}))
+				ORDER BY t.name ASC
+				LIMIT ${limit}
+			`) as Array<{
+				id: string;
+				name: string;
+				key: string;
+				color: string;
+			}>;
+
+			// Search users
+			const users = (await ctx.db.$queryRaw`
+				SELECT DISTINCT u.id, u.name, u.email, u.image
+				FROM User u
+				JOIN WorkspaceMember wm ON u.id = wm.userId
+				WHERE wm.workspaceId = ${workspaceId}
+					AND (LOWER(u.name) LIKE LOWER(${searchPattern}) 
+						OR LOWER(u.email) LIKE LOWER(${searchPattern}))
+				ORDER BY u.name ASC
+				LIMIT ${limit}
+			`) as Array<{
+				id: string;
+				name: string | null;
+				email: string;
+				image: string | null;
+			}>;
+
+			// Calculate relevance and sort
+			const scoredIssues = issues.map((issue) => ({
+				...issue,
+				relevance: Math.max(
+					calculateRelevance(issue.title, query),
+					calculateRelevance(issue.identifier, query) * 1.2, // Boost identifier matches
+				),
+				type: "issue" as const,
+				team: {
+					id: issue.teamId,
+					key: issue.teamKey,
+					name: issue.teamName,
+				},
+				assignee: issue.assigneeId
+					? {
+							id: issue.assigneeId,
+							name: issue.assigneeName,
+							image: issue.assigneeImage,
+						}
+					: null,
+			}));
+
+			const scoredProjects = projects.map((project) => ({
+				...project,
+				relevance: calculateRelevance(project.name, query),
+				type: "project" as const,
+				team: {
+					id: project.teamId,
+					key: project.teamKey,
+					name: project.teamName,
+				},
+			}));
+
+			const scoredCycles = cycles.map((cycle) => ({
+				...cycle,
+				relevance: calculateRelevance(cycle.name, query),
+				type: "cycle" as const,
+				team: {
+					id: cycle.teamId,
+					key: cycle.teamKey,
+					name: cycle.teamName,
+				},
+			}));
+
+			const scoredTeams = teams.map((team) => ({
+				...team,
+				relevance: Math.max(
+					calculateRelevance(team.name, query),
+					calculateRelevance(team.key, query) * 1.1,
+				),
+				type: "team" as const,
+			}));
+
+			const scoredUsers = users.map((user) => ({
+				...user,
+				relevance: Math.max(
+					calculateRelevance(user.name || "", query),
+					calculateRelevance(user.email, query) * 0.8,
+				),
+				type: "user" as const,
+			}));
+
+			return {
+				issues: scoredIssues.sort((a, b) => b.relevance - a.relevance),
+				projects: scoredProjects.sort((a, b) => b.relevance - a.relevance),
+				cycles: scoredCycles.sort((a, b) => b.relevance - a.relevance),
+				teams: scoredTeams.sort((a, b) => b.relevance - a.relevance),
+				users: scoredUsers.sort((a, b) => b.relevance - a.relevance),
+			};
 		}),
 });

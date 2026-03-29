@@ -4,6 +4,7 @@ import { AppShell } from "@/components/layout/app-shell";
 import { Sidebar } from "@/components/layout/sidebar";
 import { auth } from "~/server/better-auth";
 import { getSession } from "~/server/better-auth/server";
+import { db } from "~/server/db";
 
 export default async function AppLayout({
 	children,
@@ -17,6 +18,15 @@ export default async function AppLayout({
 	}
 
 	const user = session.user;
+
+	// Get user's workspace
+	const membership = await db.workspaceMember.findFirst({
+		where: { userId: user.id },
+		include: { workspace: true },
+		orderBy: { joinedAt: "asc" },
+	});
+
+	const workspace = membership?.workspace;
 
 	async function handleSignOut() {
 		"use server";
@@ -40,6 +50,7 @@ export default async function AppLayout({
 						email: user.email,
 						image: user.image,
 					}}
+					workspaceId={workspace?.id ?? ""}
 				>
 					<main className="flex-1 overflow-auto p-6">{children}</main>
 				</AppShell>

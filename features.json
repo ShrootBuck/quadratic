@@ -212,7 +212,7 @@
 				"Fuzzy search matching",
 				"Close with Escape key"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "keyboard-shortcuts",
