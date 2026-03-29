@@ -28,9 +28,11 @@ This entire application is being built by an AI agent (OpenCode) running in an a
 
 ### Why?
 
-Kimi Code gave me a monstrous amount of inference and I need to burn it. This is surely not the last time I will try this.
+Kimi Code gave me a monstrous amount of inference and I need to burn it.
 
-(If any providers want to sponsor my compute addiction, hit me up).
+I'm running this experiment on **Kimi K2.5** which is... definitely not the smartest model I could be using right now. I believe the loop matters more than the IQ. Give an agent a solid iterative process, clear constraints, and the ability to learn from its own git history, and it'll outperform the raw "intelligence" of whatever frontier model is trending on Twitter this week.
+
+This is surely not the last time I will try this. For future projects, I'm likely going to attempt many different types of models, from frontier models to self hosted LLMs.
 
 ## The Build Process
 

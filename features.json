@@ -179,7 +179,7 @@
 				"Team cycle view",
 				"Default team selection"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "labels",

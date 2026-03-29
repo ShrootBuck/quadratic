@@ -2,6 +2,7 @@ import { cycleRouter } from "~/server/api/routers/cycle";
 import { issueRouter } from "~/server/api/routers/issue";
 import { postRouter } from "~/server/api/routers/post";
 import { projectRouter } from "~/server/api/routers/project";
+import { teamRouter } from "~/server/api/routers/team";
 import { workspaceRouter } from "~/server/api/routers/workspace";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 
@@ -16,6 +17,7 @@ export const appRouter = createTRPCRouter({
 	issue: issueRouter,
 	cycle: cycleRouter,
 	project: projectRouter,
+	team: teamRouter,
 });
 
 // export type definition of API
