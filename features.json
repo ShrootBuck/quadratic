@@ -429,7 +429,7 @@
 				"Accessible error messages and form validation",
 				"High contrast mode option"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "import-export",

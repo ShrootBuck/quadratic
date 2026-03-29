@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 type ConnectionStatus = "connecting" | "connected" | "disconnected" | "error";
 
-type RealtimeEvent =
+type _RealtimeEvent =
 	| { type: "connected"; data: { connected: boolean; userId: string } }
 	| { type: "ping"; data: Record<string, never> }
 	| { type: "issue_created"; data: { issue: unknown } }

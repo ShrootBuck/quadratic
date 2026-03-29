@@ -43,7 +43,7 @@ export function RealtimeProvider({
 	children,
 	workspaceId,
 	userId,
-	userName,
+	userName: _userName,
 }: RealtimeProviderProps) {
 	const [activeEditors, setActiveEditors] = useState<
 		Map<string, { userId: string; userName: string; field: string }[]>

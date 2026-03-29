@@ -123,13 +123,17 @@ export function NotificationDropdown({
 		<DropdownMenu onOpenChange={setIsOpen} open={isOpen}>
 			<DropdownMenuTrigger asChild>
 				<Button
+					aria-label={`Notifications ${unreadCount > 0 ? `(${unreadCount} unread)` : ""}`}
 					className="relative h-9 w-9 text-[#8A8F98] hover:bg-[#2A2F35] hover:text-[#F7F8F8]"
 					size="icon"
 					variant="ghost"
 				>
-					<Bell className="h-4 w-4" />
+					<Bell aria-hidden="true" className="h-4 w-4" />
 					{unreadCount > 0 && (
-						<span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#5E6AD2] font-medium text-[10px] text-white">
+						<span
+							aria-hidden="true"
+							className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#5E6AD2] font-medium text-[10px] text-white"
+						>
 							{unreadCount > 99 ? "99+" : unreadCount}
 						</span>
 					)}

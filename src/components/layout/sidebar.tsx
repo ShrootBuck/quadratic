@@ -228,22 +228,25 @@ export function Sidebar({ className }: SidebarProps) {
 
 	return (
 		<TooltipProvider delayDuration={0}>
-			<div
+			<nav
+				aria-label="Main navigation"
 				className={cn(
 					"flex flex-col border-[#2A2F35] border-r bg-[#0F1115] transition-all duration-300",
 					collapsed ? "w-16" : "w-64",
 					className,
 				)}
+				id="navigation"
 			>
 				{/* Header */}
 				<div className="flex h-14 items-center justify-between border-[#2A2F35] border-b px-4">
 					{!collapsed ? (
 						<Link
+							aria-label="Quadratic Home"
 							className="flex items-center gap-2 text-[#F7F8F8]"
 							href="/app"
 						>
 							<div className="flex h-6 w-6 items-center justify-center rounded bg-[#5E6AD2]">
-								<LayoutGrid className="h-4 w-4 text-white" />
+								<LayoutGrid aria-hidden="true" className="h-4 w-4 text-white" />
 							</div>
 							<span className="font-semibold">Quadratic</span>
 						</Link>
@@ -251,10 +254,14 @@ export function Sidebar({ className }: SidebarProps) {
 						<Tooltip>
 							<TooltipTrigger asChild>
 								<Link
+									aria-label="Quadratic Home"
 									className="flex h-6 w-6 items-center justify-center rounded bg-[#5E6AD2]"
 									href="/app"
 								>
-									<LayoutGrid className="h-4 w-4 text-white" />
+									<LayoutGrid
+										aria-hidden="true"
+										className="h-4 w-4 text-white"
+									/>
 								</Link>
 							</TooltipTrigger>
 							<TooltipContent side="right">
@@ -263,15 +270,17 @@ export function Sidebar({ className }: SidebarProps) {
 						</Tooltip>
 					)}
 					<Button
+						aria-expanded={!collapsed}
+						aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
 						className="h-8 w-8 text-[#8A8F98] hover:bg-[#2A2F35] hover:text-[#F7F8F8]"
 						onClick={() => setCollapsed(!collapsed)}
 						size="icon"
 						variant="ghost"
 					>
 						{collapsed ? (
-							<ChevronRight className="h-4 w-4" />
+							<ChevronRight aria-hidden="true" className="h-4 w-4" />
 						) : (
-							<ChevronLeft className="h-4 w-4" />
+							<ChevronLeft aria-hidden="true" className="h-4 w-4" />
 						)}
 					</Button>
 				</div>
@@ -291,6 +300,8 @@ export function Sidebar({ className }: SidebarProps) {
 								<Tooltip key={item.name}>
 									<TooltipTrigger asChild>
 										<Link
+											aria-current={isActive ? "page" : undefined}
+											aria-label={item.name}
 											className={cn(
 												"flex h-9 w-9 items-center justify-center rounded-md transition-colors",
 												isActive
@@ -299,7 +310,7 @@ export function Sidebar({ className }: SidebarProps) {
 											)}
 											href={item.href}
 										>
-											<Icon className="h-4 w-4" />
+											<Icon aria-hidden="true" className="h-4 w-4" />
 										</Link>
 									</TooltipTrigger>
 									<TooltipContent side="right">
@@ -310,6 +321,7 @@ export function Sidebar({ className }: SidebarProps) {
 								</Tooltip>
 							) : (
 								<Link
+									aria-current={isActive ? "page" : undefined}
 									className={cn(
 										"flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
 										isActive
@@ -319,10 +331,10 @@ export function Sidebar({ className }: SidebarProps) {
 									href={item.href}
 									key={item.name}
 								>
-									<Icon className="h-4 w-4" />
+									<Icon aria-hidden="true" className="h-4 w-4" />
 									<span className="flex-1">{item.name}</span>
 									{item.shortcut && (
-										<span className="text-[#8A8F98] text-xs">
+										<span aria-hidden="true" className="text-[#8A8F98] text-xs">
 											{item.shortcut}
 										</span>
 									)}
@@ -423,7 +435,7 @@ export function Sidebar({ className }: SidebarProps) {
 						})}
 					</div>
 				</ScrollArea>
-			</div>
+			</nav>
 		</TooltipProvider>
 	);
 }

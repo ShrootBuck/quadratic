@@ -1,6 +1,17 @@
 "use client";
 
-import { Check, LayoutGrid, Moon, Rows3, Sun, SunMoon } from "lucide-react";
+import {
+	Check,
+	Eye,
+	LayoutGrid,
+	Moon,
+	Rows3,
+	Sun,
+	SunMoon,
+	Zap,
+} from "lucide-react";
+import { useAccessibility } from "@/components/accessibility";
+import { Switch } from "@/components/ui/switch";
 import { api } from "~/trpc/react";
 
 const themes = [
@@ -184,6 +195,105 @@ export default function AppearanceSettingsPage() {
 							</button>
 						);
 					})}
+				</div>
+			</div>
+
+			{/* Accessibility Section */}
+			<AccessibilitySection />
+		</div>
+	);
+}
+
+function AccessibilitySection() {
+	const {
+		contrastMode,
+		setContrastMode,
+		reduceMotion,
+		setReduceMotion,
+		focusMode,
+		setFocusMode,
+	} = useAccessibility();
+
+	return (
+		<div className="mt-8">
+			<h2 className="mb-4 font-medium text-[#F7F8F8]">Accessibility</h2>
+			<div className="space-y-4">
+				{/* High Contrast Mode */}
+				<div className="flex items-center justify-between rounded-lg border border-[#2A2F35] bg-[#16181D] p-4">
+					<div className="flex items-center gap-4">
+						<div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#2A2F35]">
+							<Eye className="h-5 w-5 text-[#8A8F98]" />
+						</div>
+						<div>
+							<p className="font-medium text-[#F7F8F8]">High Contrast Mode</p>
+							<p className="text-[#8A8F98] text-sm">
+								Increase contrast for better visibility
+							</p>
+						</div>
+					</div>
+					<Switch
+						aria-label="Toggle high contrast mode"
+						checked={contrastMode === "high"}
+						onCheckedChange={(checked) =>
+							setContrastMode(checked ? "high" : "normal")
+						}
+					/>
+				</div>
+
+				{/* Reduced Motion */}
+				<div className="flex items-center justify-between rounded-lg border border-[#2A2F35] bg-[#16181D] p-4">
+					<div className="flex items-center gap-4">
+						<div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#2A2F35]">
+							<Zap className="h-5 w-5 text-[#8A8F98]" />
+						</div>
+						<div>
+							<p className="font-medium text-[#F7F8F8]">Reduced Motion</p>
+							<p className="text-[#8A8F98] text-sm">
+								Minimize animations and transitions
+							</p>
+						</div>
+					</div>
+					<Switch
+						aria-label="Toggle reduced motion"
+						checked={reduceMotion}
+						onCheckedChange={setReduceMotion}
+					/>
+				</div>
+
+				{/* Enhanced Focus */}
+				<div className="flex items-center justify-between rounded-lg border border-[#2A2F35] bg-[#16181D] p-4">
+					<div className="flex items-center gap-4">
+						<div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#2A2F35]">
+							<Check className="h-5 w-5 text-[#8A8F98]" />
+						</div>
+						<div>
+							<p className="font-medium text-[#F7F8F8]">
+								Enhanced Focus Indicators
+							</p>
+							<p className="text-[#8A8F98] text-sm">
+								Make focus rings more visible
+							</p>
+						</div>
+					</div>
+					<Switch
+						aria-label="Toggle enhanced focus indicators"
+						checked={focusMode === "enhanced"}
+						onCheckedChange={(checked) =>
+							setFocusMode(checked ? "enhanced" : "default")
+						}
+					/>
+				</div>
+
+				{/* Keyboard Shortcuts Info */}
+				<div className="mt-6 rounded-lg border border-[#2A2F35] bg-[#16181D] p-4">
+					<p className="mb-2 font-medium text-[#F7F8F8]">Keyboard Shortcuts</p>
+					<p className="text-[#8A8F98] text-sm">
+						Press{" "}
+						<kbd className="rounded border border-[#2A2F35] bg-[#0F1115] px-1.5 font-mono text-xs">
+							?
+						</kbd>{" "}
+						to view all available keyboard shortcuts for faster navigation.
+					</p>
 				</div>
 			</div>
 		</div>

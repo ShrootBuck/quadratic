@@ -47,6 +47,7 @@ export function Header({
 				{/* Left side - Search */}
 				<div className="flex items-center gap-4">
 					<Button
+						aria-label="Search issues, projects, and more (Cmd+K)"
 						className="h-9 w-64 justify-start gap-2 border-[#2A2F35] bg-[#16181D] text-[#8A8F98] hover:bg-[#2A2F35] hover:text-[#F7F8F8]"
 						onClick={onSearchClick}
 						variant="outline"
@@ -65,6 +66,7 @@ export function Header({
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<Button
+								aria-label="View keyboard shortcuts (press ?)"
 								className="h-9 w-9 text-[#8A8F98] hover:bg-[#2A2F35] hover:text-[#F7F8F8]"
 								onClick={() => router.push("/app/shortcuts")}
 								size="icon"
@@ -90,7 +92,11 @@ export function Header({
 					{/* User Menu */}
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
-							<Button className="relative h-9 w-9 rounded-full" variant="ghost">
+							<Button
+								aria-label={`User menu for ${user.name || "User"}`}
+								className="relative h-9 w-9 rounded-full"
+								variant="ghost"
+							>
 								<Avatar className="h-8 w-8">
 									<AvatarImage
 										alt={user.name || "User"}

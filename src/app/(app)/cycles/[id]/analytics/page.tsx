@@ -85,7 +85,12 @@ export default function CycleAnalyticsPage() {
 	}
 
 	const { cycle, summary, issuesByStatus } = cycleData;
-	const pieData = issuesByStatus.filter((d: any) => d.value > 0);
+	interface StatusData {
+		name: string;
+		value: number;
+		color: string;
+	}
+	const pieData = issuesByStatus.filter((d: StatusData) => d.value > 0);
 	const velocityChartData = velocityData?.cycles.slice(0, 6) ?? [];
 	const avgCycleTime = cycleData.avgCycleTime;
 
@@ -210,7 +215,7 @@ export default function CycleAnalyticsPage() {
 										outerRadius={80}
 										paddingAngle={5}
 									>
-										{pieData.map((entry: any) => (
+										{pieData.map((entry: StatusData) => (
 											<Cell
 												fill={entry.color}
 												key={entry.name ?? Math.random()}
