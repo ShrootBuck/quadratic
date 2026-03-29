@@ -38,6 +38,12 @@ const mainNavItems = [
 		shortcut: "G I",
 	},
 	{
+		name: "Board",
+		href: "/app/issues/board",
+		icon: LayoutGrid,
+		shortcut: "G B",
+	},
+	{
 		name: "Projects",
 		href: "/app/projects",
 		icon: FolderKanban,

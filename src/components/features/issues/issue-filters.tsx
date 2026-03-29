@@ -5,18 +5,8 @@ import { api } from "~/trpc/react";
 type IssueStatus = "BACKLOG" | "TODO" | "IN_PROGRESS" | "DONE" | "CANCELLED";
 type Priority = "NO_PRIORITY" | "LOW" | "MEDIUM" | "HIGH" | "URGENT";
 
-import {
-	CheckCircle2,
-	Circle,
-	CircleDashed,
-	CircleDot,
-	Search,
-	X,
-	XCircle,
-} from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { CheckCircle2, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";

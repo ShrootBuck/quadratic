@@ -261,7 +261,7 @@ export function IssueListTable({
 					break;
 			}
 		},
-		[focusedIndex, sortedIssues],
+		[focusedIndex, sortedIssues, toggleSelection],
 	);
 
 	useEffect(() => {

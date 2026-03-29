@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, Filter, Plus } from "lucide-react";
+import { ChevronDown, Filter, LayoutGrid, ListTodo, Plus } from "lucide-react";
 import { useState } from "react";
 import { CreateIssueModal } from "@/components/features/issues/create-issue-modal";
 import { IssueFilters } from "@/components/features/issues/issue-filters";
@@ -173,6 +173,27 @@ export default function IssuesPage() {
 						New Issue
 					</Button>
 				</div>
+			</div>
+
+			{/* View Switcher */}
+			<div className="flex items-center gap-2 border-[#2A2F35] border-b px-6 py-2">
+				<Button
+					className="border-[#2A2F35] bg-[#2A2F35] text-[#F7F8F8]"
+					size="sm"
+					variant="outline"
+				>
+					<ListTodo className="mr-2 h-4 w-4" />
+					List
+				</Button>
+				<Button
+					className="border-[#2A2F35] bg-transparent text-[#8A8F98] hover:bg-[#2A2F35] hover:text-[#F7F8F8]"
+					onClick={() => (window.location.href = "/app/issues/board")}
+					size="sm"
+					variant="outline"
+				>
+					<LayoutGrid className="mr-2 h-4 w-4" />
+					Board
+				</Button>
 			</div>
 
 			{/* Content */}

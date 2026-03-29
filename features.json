@@ -103,7 +103,7 @@
 				"Column headers showing issue count",
 				"Smooth drag animations"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "issue-detail",
