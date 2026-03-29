@@ -12,6 +12,21 @@ const IssueStatus = z.enum([
 ]);
 const Priority = z.enum(["NO_PRIORITY", "LOW", "MEDIUM", "HIGH", "URGENT"]);
 
+// Comment schemas
+const createCommentInput = z.object({
+	issueId: z.string(),
+	content: z.string().min(1),
+});
+
+const updateCommentInput = z.object({
+	id: z.string(),
+	content: z.string().min(1),
+});
+
+const deleteCommentInput = z.object({
+	id: z.string(),
+});
+
 // Common schemas
 const issueIdSchema = z.object({
 	id: z.string(),
@@ -569,5 +584,141 @@ export const issueRouter = createTRPCRouter({
 					hasMore: offset + issues.length < total,
 				},
 			};
+		}),
+
+	// Comment procedures
+	createComment: protectedProcedure
+		.input(createCommentInput)
+		.mutation(async ({ ctx, input }) => {
+			// Verify issue exists and user has access
+			const issue = await ctx.db.issue.findUnique({
+				where: { id: input.issueId },
+			});
+
+			if (!issue) {
+				throw new TRPCError({
+					code: "NOT_FOUND",
+					message: "Issue not found",
+				});
+			}
+
+			// Check workspace access
+			const membership = await ctx.db.workspaceMember.findFirst({
+				where: {
+					workspaceId: issue.workspaceId,
+					userId: ctx.session.user.id,
+				},
+			});
+
+			if (!membership) {
+				throw new TRPCError({
+					code: "FORBIDDEN",
+					message: "You do not have access to this issue",
+				});
+			}
+
+			// Create comment and history entry in transaction
+			const [comment] = await ctx.db.$transaction(async (tx) => {
+				const newComment = await tx.comment.create({
+					data: {
+						content: input.content,
+						issueId: input.issueId,
+						authorId: ctx.session.user.id,
+					},
+					include: {
+						author: true,
+					},
+				});
+
+				await tx.issueHistory.create({
+					data: {
+						issueId: input.issueId,
+						actorId: ctx.session.user.id,
+						field: "comment",
+						newValue: JSON.stringify({ commentId: newComment.id }),
+					},
+				});
+
+				return [newComment];
+			});
+
+			return comment;
+		}),
+
+	updateComment: protectedProcedure
+		.input(updateCommentInput)
+		.mutation(async ({ ctx, input }) => {
+			const comment = await ctx.db.comment.findUnique({
+				where: { id: input.id },
+			});
+
+			if (!comment) {
+				throw new TRPCError({
+					code: "NOT_FOUND",
+					message: "Comment not found",
+				});
+			}
+
+			// Only the author can edit their comment
+			if (comment.authorId !== ctx.session.user.id) {
+				throw new TRPCError({
+					code: "FORBIDDEN",
+					message: "You can only edit your own comments",
+				});
+			}
+
+			const updatedComment = await ctx.db.comment.update({
+				where: { id: input.id },
+				data: {
+					content: input.content,
+				},
+				include: {
+					author: true,
+				},
+			});
+
+			return updatedComment;
+		}),
+
+	deleteComment: protectedProcedure
+		.input(deleteCommentInput)
+		.mutation(async ({ ctx, input }) => {
+			const comment = await ctx.db.comment.findUnique({
+				where: { id: input.id },
+				include: {
+					issue: true,
+				},
+			});
+
+			if (!comment) {
+				throw new TRPCError({
+					code: "NOT_FOUND",
+					message: "Comment not found",
+				});
+			}
+
+			// Only the author or workspace admin can delete
+			const membership = await ctx.db.workspaceMember.findFirst({
+				where: {
+					workspaceId: comment.issue.workspaceId,
+					userId: ctx.session.user.id,
+				},
+			});
+
+			if (
+				comment.authorId !== ctx.session.user.id &&
+				membership?.role !== "ADMIN"
+			) {
+				throw new TRPCError({
+					code: "FORBIDDEN",
+					message: "You can only delete your own comments",
+				});
+			}
+
+			await ctx.db.comment.delete({
+				where: { id: input.id },
+			});
+
+			return { success: true };
 		}),
 });

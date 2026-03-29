@@ -126,7 +126,7 @@
 				"Keyboard shortcut: 'c' to close issue",
 				"Copy issue link button"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "cycles",
