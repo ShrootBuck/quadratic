@@ -1,7 +1,7 @@
 "use client";
 
 import { formatDistanceToNow } from "date-fns";
-import { History, MessageSquare, Plus, User } from "lucide-react";
+import { History, MessageSquare, Plus } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface HistoryItem {
@@ -35,7 +35,7 @@ function getActivityIcon(field: string) {
 function formatActivityText(
 	field: string,
 	newValue: string,
-	oldValue: string | null,
+	_oldValue: string | null,
 ) {
 	switch (field) {
 		case "created":

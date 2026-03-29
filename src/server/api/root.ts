@@ -1,5 +1,6 @@
 import { cycleRouter } from "~/server/api/routers/cycle";
 import { issueRouter } from "~/server/api/routers/issue";
+import { labelRouter } from "~/server/api/routers/label";
 import { postRouter } from "~/server/api/routers/post";
 import { projectRouter } from "~/server/api/routers/project";
 import { teamRouter } from "~/server/api/routers/team";
@@ -18,6 +19,7 @@ export const appRouter = createTRPCRouter({
 	cycle: cycleRouter,
 	project: projectRouter,
 	team: teamRouter,
+	label: labelRouter,
 });
 
 // export type definition of API

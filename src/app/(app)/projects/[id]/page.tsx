@@ -7,7 +7,6 @@ import {
 	ArrowLeft,
 	Calendar,
 	CheckCircle2,
-	Clock,
 	FolderKanban,
 	LayoutGrid,
 	ListTodo,

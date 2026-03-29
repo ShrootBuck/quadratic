@@ -195,7 +195,7 @@
 				"Label display in issue cards",
 				"Quick label add/remove from issue detail"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "command-palette",
