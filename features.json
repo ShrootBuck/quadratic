@@ -509,7 +509,7 @@
 				"Add environment variable examples for .env.production",
 				"Include troubleshooting section for common deployment issues"
 			],
-			"passes": false
+			"passes": true
 		}
 	]
 }

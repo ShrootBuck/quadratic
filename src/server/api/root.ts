@@ -1,6 +1,7 @@
 import { analyticsRouter } from "~/server/api/routers/analytics";
 import { automationRouter } from "~/server/api/routers/automation";
 import { cycleRouter } from "~/server/api/routers/cycle";
+import { githubRouter } from "~/server/api/routers/github";
 import { issueRouter } from "~/server/api/routers/issue";
 import { labelRouter } from "~/server/api/routers/label";
 import { notificationRouter } from "~/server/api/routers/notification";
@@ -30,6 +31,7 @@ export const appRouter = createTRPCRouter({
 	template: templateRouter,
 	user: userRouter,
 	automation: automationRouter,
+	github: githubRouter,
 });
 
 // export type definition of API

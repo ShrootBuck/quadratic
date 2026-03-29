@@ -119,8 +119,9 @@ model Workspace {
   notifications           Notification[]
   notificationPreferences NotificationPreferences[]
   templates               Template[]
-  automationRules         AutomationRule[]
-  automationLogs          AutomationLog[]
+  automationRules   AutomationRule[]
+  automationLogs    AutomationLog[]
+  pullRequests      GitHubPullRequest[]
 
   @@map("workspace")
 }
@@ -248,10 +249,11 @@ model Issue {
   creatorId   String
   creator     User      @relation(fields: [creatorId], references: [id], name: "CreatedIssues")
   
-  labels        IssueLabel[]
-  comments      Comment[]
-  history       IssueHistory[]
-  notifications Notification[]
+  labels             IssueLabel[]
+  comments           Comment[]
+  history            IssueHistory[]
+  notifications      Notification[]
+  pullRequests       GitHubPullRequest[]
 
   @@unique([teamId, number])
   @@index([workspaceId])
@@ -488,4 +490,42 @@ enum NotificationType {
   ISSUE_CREATED
   CYCLE_STARTED
   CYCLE_ENDED
+}
+
+// GitHub Integration Models
+
+enum PullRequestStatus {
+  OPEN
+  MERGED
+  CLOSED
+  DRAFT
+}
+
+model GitHubPullRequest {
+  id          String              @id @default(cuid())
+  githubId    String              // GitHub PR ID
+  number      Int                 // PR number in the repo
+  title       String
+  url         String              // GitHub PR URL
+  status      PullRequestStatus   @default(OPEN)
+  branch      String              // Source branch name
+  baseBranch  String              // Target branch name
+  author      String              // GitHub username
+  repository  String              // Full repo name (owner/repo)
+  mergedAt    DateTime?
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  // Relations
+  issueId     String
+  issue       Issue               @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  workspaceId String
+  workspace   Workspace           @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([issueId, githubId])
+  @@index([workspaceId])
+  @@index([issueId])
+  @@index([status])
+  @@index([repository])
+  @@map("github_pull_request")
 }

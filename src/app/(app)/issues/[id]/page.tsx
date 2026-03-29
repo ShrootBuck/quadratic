@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { GitHubPullRequests } from "@/components/features/github/github-pull-requests";
 import { IssueActivity } from "@/components/features/issues/issue-activity";
 import { IssueComments } from "@/components/features/issues/issue-comments";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -581,6 +582,8 @@ export default function IssueDetailPage({ params }: IssueDetailPageProps) {
 									</span>
 								</div>
 							</div>
+
+							<GitHubPullRequests issueId={issue.id} />
 						</div>
 					</div>
 				</div>
