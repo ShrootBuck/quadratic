@@ -113,6 +113,11 @@ export type AutomationRule = $Result.DefaultSelection<Prisma.$AutomationRulePayl
  * 
  */
 export type AutomationLog = $Result.DefaultSelection<Prisma.$AutomationLogPayload>
+/**
+ * Model GitHubPullRequest
+ * 
+ */
+export type GitHubPullRequest = $Result.DefaultSelection<Prisma.$GitHubPullRequestPayload>
 
 /**
  * Enums
@@ -199,6 +204,16 @@ export const NotificationType: {
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
 
+
+export const PullRequestStatus: {
+  OPEN: 'OPEN',
+  MERGED: 'MERGED',
+  CLOSED: 'CLOSED',
+  DRAFT: 'DRAFT'
+};
+
+export type PullRequestStatus = (typeof PullRequestStatus)[keyof typeof PullRequestStatus]
+
 }
 
 export type AutomationTrigger = $Enums.AutomationTrigger
@@ -232,6 +247,10 @@ export const Priority: typeof $Enums.Priority
 export type NotificationType = $Enums.NotificationType
 
 export const NotificationType: typeof $Enums.NotificationType
+
+export type PullRequestStatus = $Enums.PullRequestStatus
+
+export const PullRequestStatus: typeof $Enums.PullRequestStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -550,6 +569,16 @@ export class PrismaClient<
     * ```
     */
   get automationLog(): Prisma.AutomationLogDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.gitHubPullRequest`: Exposes CRUD operations for the **GitHubPullRequest** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GitHubPullRequests
+    * const gitHubPullRequests = await prisma.gitHubPullRequest.findMany()
+    * ```
+    */
+  get gitHubPullRequest(): Prisma.GitHubPullRequestDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1010,7 +1039,8 @@ export namespace Prisma {
     NotificationPreferences: 'NotificationPreferences',
     Template: 'Template',
     AutomationRule: 'AutomationRule',
-    AutomationLog: 'AutomationLog'
+    AutomationLog: 'AutomationLog',
+    GitHubPullRequest: 'GitHubPullRequest'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1029,7 +1059,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "post" | "user" | "session" | "account" | "verification" | "workspace" | "workspaceMember" | "team" | "project" | "cycle" | "label" | "issue" | "issueLabel" | "comment" | "issueHistory" | "notification" | "notificationPreferences" | "template" | "automationRule" | "automationLog"
+      modelProps: "post" | "user" | "session" | "account" | "verification" | "workspace" | "workspaceMember" | "team" | "project" | "cycle" | "label" | "issue" | "issueLabel" | "comment" | "issueHistory" | "notification" | "notificationPreferences" | "template" | "automationRule" | "automationLog" | "gitHubPullRequest"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2513,6 +2543,80 @@ export namespace Prisma {
           }
         }
       }
+      GitHubPullRequest: {
+        payload: Prisma.$GitHubPullRequestPayload<ExtArgs>
+        fields: Prisma.GitHubPullRequestFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GitHubPullRequestFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GitHubPullRequestPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GitHubPullRequestFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GitHubPullRequestPayload>
+          }
+          findFirst: {
+            args: Prisma.GitHubPullRequestFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GitHubPullRequestPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GitHubPullRequestFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GitHubPullRequestPayload>
+          }
+          findMany: {
+            args: Prisma.GitHubPullRequestFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GitHubPullRequestPayload>[]
+          }
+          create: {
+            args: Prisma.GitHubPullRequestCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GitHubPullRequestPayload>
+          }
+          createMany: {
+            args: Prisma.GitHubPullRequestCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GitHubPullRequestCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GitHubPullRequestPayload>[]
+          }
+          delete: {
+            args: Prisma.GitHubPullRequestDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GitHubPullRequestPayload>
+          }
+          update: {
+            args: Prisma.GitHubPullRequestUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GitHubPullRequestPayload>
+          }
+          deleteMany: {
+            args: Prisma.GitHubPullRequestDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GitHubPullRequestUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.GitHubPullRequestUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GitHubPullRequestPayload>[]
+          }
+          upsert: {
+            args: Prisma.GitHubPullRequestUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GitHubPullRequestPayload>
+          }
+          aggregate: {
+            args: Prisma.GitHubPullRequestAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGitHubPullRequest>
+          }
+          groupBy: {
+            args: Prisma.GitHubPullRequestGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GitHubPullRequestGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GitHubPullRequestCountArgs<ExtArgs>
+            result: $Utils.Optional<GitHubPullRequestCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2629,6 +2733,7 @@ export namespace Prisma {
     template?: TemplateOmit
     automationRule?: AutomationRuleOmit
     automationLog?: AutomationLogOmit
+    gitHubPullRequest?: GitHubPullRequestOmit
   }
 
   /* Types for Logging */
@@ -2850,6 +2955,7 @@ export namespace Prisma {
     templates: number
     automationRules: number
     automationLogs: number
+    pullRequests: number
   }
 
   export type WorkspaceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2864,6 +2970,7 @@ export namespace Prisma {
     templates?: boolean | WorkspaceCountOutputTypeCountTemplatesArgs
     automationRules?: boolean | WorkspaceCountOutputTypeCountAutomationRulesArgs
     automationLogs?: boolean | WorkspaceCountOutputTypeCountAutomationLogsArgs
+    pullRequests?: boolean | WorkspaceCountOutputTypeCountPullRequestsArgs
   }
 
   // Custom InputTypes
@@ -2952,6 +3059,13 @@ export namespace Prisma {
    */
   export type WorkspaceCountOutputTypeCountAutomationLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AutomationLogWhereInput
+  }
+
+  /**
+   * WorkspaceCountOutputType without action
+   */
+  export type WorkspaceCountOutputTypeCountPullRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GitHubPullRequestWhereInput
   }
 
 
@@ -3133,6 +3247,7 @@ export namespace Prisma {
     comments: number
     history: number
     notifications: number
+    pullRequests: number
   }
 
   export type IssueCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3140,6 +3255,7 @@ export namespace Prisma {
     comments?: boolean | IssueCountOutputTypeCountCommentsArgs
     history?: boolean | IssueCountOutputTypeCountHistoryArgs
     notifications?: boolean | IssueCountOutputTypeCountNotificationsArgs
+    pullRequests?: boolean | IssueCountOutputTypeCountPullRequestsArgs
   }
 
   // Custom InputTypes
@@ -3179,6 +3295,13 @@ export namespace Prisma {
    */
   export type IssueCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: NotificationWhereInput
+  }
+
+  /**
+   * IssueCountOutputType without action
+   */
+  export type IssueCountOutputTypeCountPullRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GitHubPullRequestWhereInput
   }
 
 
@@ -9132,6 +9255,7 @@ export namespace Prisma {
     templates?: boolean | Workspace$templatesArgs<ExtArgs>
     automationRules?: boolean | Workspace$automationRulesArgs<ExtArgs>
     automationLogs?: boolean | Workspace$automationLogsArgs<ExtArgs>
+    pullRequests?: boolean | Workspace$pullRequestsArgs<ExtArgs>
     _count?: boolean | WorkspaceCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["workspace"]>
 
@@ -9175,6 +9299,7 @@ export namespace Prisma {
     templates?: boolean | Workspace$templatesArgs<ExtArgs>
     automationRules?: boolean | Workspace$automationRulesArgs<ExtArgs>
     automationLogs?: boolean | Workspace$automationLogsArgs<ExtArgs>
+    pullRequests?: boolean | Workspace$pullRequestsArgs<ExtArgs>
     _count?: boolean | WorkspaceCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type WorkspaceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -9194,6 +9319,7 @@ export namespace Prisma {
       templates: Prisma.$TemplatePayload<ExtArgs>[]
       automationRules: Prisma.$AutomationRulePayload<ExtArgs>[]
       automationLogs: Prisma.$AutomationLogPayload<ExtArgs>[]
+      pullRequests: Prisma.$GitHubPullRequestPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -9607,6 +9733,7 @@ export namespace Prisma {
     templates<T extends Workspace$templatesArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$templatesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     automationRules<T extends Workspace$automationRulesArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$automationRulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     automationLogs<T extends Workspace$automationLogsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$automationLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    pullRequests<T extends Workspace$pullRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$pullRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GitHubPullRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10289,6 +10416,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AutomationLogScalarFieldEnum | AutomationLogScalarFieldEnum[]
+  }
+
+  /**
+   * Workspace.pullRequests
+   */
+  export type Workspace$pullRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GitHubPullRequest
+     */
+    select?: GitHubPullRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GitHubPullRequest
+     */
+    omit?: GitHubPullRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GitHubPullRequestInclude<ExtArgs> | null
+    where?: GitHubPullRequestWhereInput
+    orderBy?: GitHubPullRequestOrderByWithRelationInput | GitHubPullRequestOrderByWithRelationInput[]
+    cursor?: GitHubPullRequestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GitHubPullRequestScalarFieldEnum | GitHubPullRequestScalarFieldEnum[]
   }
 
   /**
@@ -16380,6 +16531,7 @@ export namespace Prisma {
     comments?: boolean | Issue$commentsArgs<ExtArgs>
     history?: boolean | Issue$historyArgs<ExtArgs>
     notifications?: boolean | Issue$notificationsArgs<ExtArgs>
+    pullRequests?: boolean | Issue$pullRequestsArgs<ExtArgs>
     _count?: boolean | IssueCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["issue"]>
 
@@ -16464,6 +16616,7 @@ export namespace Prisma {
     comments?: boolean | Issue$commentsArgs<ExtArgs>
     history?: boolean | Issue$historyArgs<ExtArgs>
     notifications?: boolean | Issue$notificationsArgs<ExtArgs>
+    pullRequests?: boolean | Issue$pullRequestsArgs<ExtArgs>
     _count?: boolean | IssueCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type IssueIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -16496,6 +16649,7 @@ export namespace Prisma {
       comments: Prisma.$CommentPayload<ExtArgs>[]
       history: Prisma.$IssueHistoryPayload<ExtArgs>[]
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
+      pullRequests: Prisma.$GitHubPullRequestPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -16918,6 +17072,7 @@ export namespace Prisma {
     comments<T extends Issue$commentsArgs<ExtArgs> = {}>(args?: Subset<T, Issue$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     history<T extends Issue$historyArgs<ExtArgs> = {}>(args?: Subset<T, Issue$historyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IssueHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notifications<T extends Issue$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Issue$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    pullRequests<T extends Issue$pullRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Issue$pullRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GitHubPullRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -17507,6 +17662,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
+   * Issue.pullRequests
+   */
+  export type Issue$pullRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GitHubPullRequest
+     */
+    select?: GitHubPullRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GitHubPullRequest
+     */
+    omit?: GitHubPullRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GitHubPullRequestInclude<ExtArgs> | null
+    where?: GitHubPullRequestWhereInput
+    orderBy?: GitHubPullRequestOrderByWithRelationInput | GitHubPullRequestOrderByWithRelationInput[]
+    cursor?: GitHubPullRequestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GitHubPullRequestScalarFieldEnum | GitHubPullRequestScalarFieldEnum[]
   }
 
   /**
@@ -26579,6 +26758,1234 @@ export namespace Prisma {
 
 
   /**
+   * Model GitHubPullRequest
+   */
+
+  export type AggregateGitHubPullRequest = {
+    _count: GitHubPullRequestCountAggregateOutputType | null
+    _avg: GitHubPullRequestAvgAggregateOutputType | null
+    _sum: GitHubPullRequestSumAggregateOutputType | null
+    _min: GitHubPullRequestMinAggregateOutputType | null
+    _max: GitHubPullRequestMaxAggregateOutputType | null
+  }
+
+  export type GitHubPullRequestAvgAggregateOutputType = {
+    number: number | null
+  }
+
+  export type GitHubPullRequestSumAggregateOutputType = {
+    number: number | null
+  }
+
+  export type GitHubPullRequestMinAggregateOutputType = {
+    id: string | null
+    githubId: string | null
+    number: number | null
+    title: string | null
+    url: string | null
+    status: $Enums.PullRequestStatus | null
+    branch: string | null
+    baseBranch: string | null
+    author: string | null
+    repository: string | null
+    mergedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    issueId: string | null
+    workspaceId: string | null
+  }
+
+  export type GitHubPullRequestMaxAggregateOutputType = {
+    id: string | null
+    githubId: string | null
+    number: number | null
+    title: string | null
+    url: string | null
+    status: $Enums.PullRequestStatus | null
+    branch: string | null
+    baseBranch: string | null
+    author: string | null
+    repository: string | null
+    mergedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    issueId: string | null
+    workspaceId: string | null
+  }
+
+  export type GitHubPullRequestCountAggregateOutputType = {
+    id: number
+    githubId: number
+    number: number
+    title: number
+    url: number
+    status: number
+    branch: number
+    baseBranch: number
+    author: number
+    repository: number
+    mergedAt: number
+    createdAt: number
+    updatedAt: number
+    issueId: number
+    workspaceId: number
+    _all: number
+  }
+
+
+  export type GitHubPullRequestAvgAggregateInputType = {
+    number?: true
+  }
+
+  export type GitHubPullRequestSumAggregateInputType = {
+    number?: true
+  }
+
+  export type GitHubPullRequestMinAggregateInputType = {
+    id?: true
+    githubId?: true
+    number?: true
+    title?: true
+    url?: true
+    status?: true
+    branch?: true
+    baseBranch?: true
+    author?: true
+    repository?: true
+    mergedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    issueId?: true
+    workspaceId?: true
+  }
+
+  export type GitHubPullRequestMaxAggregateInputType = {
+    id?: true
+    githubId?: true
+    number?: true
+    title?: true
+    url?: true
+    status?: true
+    branch?: true
+    baseBranch?: true
+    author?: true
+    repository?: true
+    mergedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    issueId?: true
+    workspaceId?: true
+  }
+
+  export type GitHubPullRequestCountAggregateInputType = {
+    id?: true
+    githubId?: true
+    number?: true
+    title?: true
+    url?: true
+    status?: true
+    branch?: true
+    baseBranch?: true
+    author?: true
+    repository?: true
+    mergedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    issueId?: true
+    workspaceId?: true
+    _all?: true
+  }
+
+  export type GitHubPullRequestAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GitHubPullRequest to aggregate.
+     */
+    where?: GitHubPullRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GitHubPullRequests to fetch.
+     */
+    orderBy?: GitHubPullRequestOrderByWithRelationInput | GitHubPullRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GitHubPullRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GitHubPullRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GitHubPullRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned GitHubPullRequests
+    **/
+    _count?: true | GitHubPullRequestCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: GitHubPullRequestAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: GitHubPullRequestSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GitHubPullRequestMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GitHubPullRequestMaxAggregateInputType
+  }
+
+  export type GetGitHubPullRequestAggregateType<T extends GitHubPullRequestAggregateArgs> = {
+        [P in keyof T & keyof AggregateGitHubPullRequest]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGitHubPullRequest[P]>
+      : GetScalarType<T[P], AggregateGitHubPullRequest[P]>
+  }
+
+
+
+
+  export type GitHubPullRequestGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GitHubPullRequestWhereInput
+    orderBy?: GitHubPullRequestOrderByWithAggregationInput | GitHubPullRequestOrderByWithAggregationInput[]
+    by: GitHubPullRequestScalarFieldEnum[] | GitHubPullRequestScalarFieldEnum
+    having?: GitHubPullRequestScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GitHubPullRequestCountAggregateInputType | true
+    _avg?: GitHubPullRequestAvgAggregateInputType
+    _sum?: GitHubPullRequestSumAggregateInputType
+    _min?: GitHubPullRequestMinAggregateInputType
+    _max?: GitHubPullRequestMaxAggregateInputType
+  }
+
+  export type GitHubPullRequestGroupByOutputType = {
+    id: string
+    githubId: string
+    number: number
+    title: string
+    url: string
+    status: $Enums.PullRequestStatus
+    branch: string
+    baseBranch: string
+    author: string
+    repository: string
+    mergedAt: Date | null
+    createdAt: Date
+    updatedAt: Date
+    issueId: string
+    workspaceId: string
+    _count: GitHubPullRequestCountAggregateOutputType | null
+    _avg: GitHubPullRequestAvgAggregateOutputType | null
+    _sum: GitHubPullRequestSumAggregateOutputType | null
+    _min: GitHubPullRequestMinAggregateOutputType | null
+    _max: GitHubPullRequestMaxAggregateOutputType | null
+  }
+
+  type GetGitHubPullRequestGroupByPayload<T extends GitHubPullRequestGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GitHubPullRequestGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GitHubPullRequestGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GitHubPullRequestGroupByOutputType[P]>
+            : GetScalarType<T[P], GitHubPullRequestGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GitHubPullRequestSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    githubId?: boolean
+    number?: boolean
+    title?: boolean
+    url?: boolean
+    status?: boolean
+    branch?: boolean
+    baseBranch?: boolean
+    author?: boolean
+    repository?: boolean
+    mergedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    issueId?: boolean
+    workspaceId?: boolean
+    issue?: boolean | IssueDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["gitHubPullRequest"]>
+
+  export type GitHubPullRequestSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    githubId?: boolean
+    number?: boolean
+    title?: boolean
+    url?: boolean
+    status?: boolean
+    branch?: boolean
+    baseBranch?: boolean
+    author?: boolean
+    repository?: boolean
+    mergedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    issueId?: boolean
+    workspaceId?: boolean
+    issue?: boolean | IssueDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["gitHubPullRequest"]>
+
+  export type GitHubPullRequestSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    githubId?: boolean
+    number?: boolean
+    title?: boolean
+    url?: boolean
+    status?: boolean
+    branch?: boolean
+    baseBranch?: boolean
+    author?: boolean
+    repository?: boolean
+    mergedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    issueId?: boolean
+    workspaceId?: boolean
+    issue?: boolean | IssueDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["gitHubPullRequest"]>
+
+  export type GitHubPullRequestSelectScalar = {
+    id?: boolean
+    githubId?: boolean
+    number?: boolean
+    title?: boolean
+    url?: boolean
+    status?: boolean
+    branch?: boolean
+    baseBranch?: boolean
+    author?: boolean
+    repository?: boolean
+    mergedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    issueId?: boolean
+    workspaceId?: boolean
+  }
+
+  export type GitHubPullRequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "githubId" | "number" | "title" | "url" | "status" | "branch" | "baseBranch" | "author" | "repository" | "mergedAt" | "createdAt" | "updatedAt" | "issueId" | "workspaceId", ExtArgs["result"]["gitHubPullRequest"]>
+  export type GitHubPullRequestInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    issue?: boolean | IssueDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }
+  export type GitHubPullRequestIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    issue?: boolean | IssueDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }
+  export type GitHubPullRequestIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    issue?: boolean | IssueDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }
+
+  export type $GitHubPullRequestPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "GitHubPullRequest"
+    objects: {
+      issue: Prisma.$IssuePayload<ExtArgs>
+      workspace: Prisma.$WorkspacePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      githubId: string
+      number: number
+      title: string
+      url: string
+      status: $Enums.PullRequestStatus
+      branch: string
+      baseBranch: string
+      author: string
+      repository: string
+      mergedAt: Date | null
+      createdAt: Date
+      updatedAt: Date
+      issueId: string
+      workspaceId: string
+    }, ExtArgs["result"]["gitHubPullRequest"]>
+    composites: {}
+  }
+
+  type GitHubPullRequestGetPayload<S extends boolean | null | undefined | GitHubPullRequestDefaultArgs> = $Result.GetResult<Prisma.$GitHubPullRequestPayload, S>
+
+  type GitHubPullRequestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<GitHubPullRequestFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: GitHubPullRequestCountAggregateInputType | true
+    }
+
+  export interface GitHubPullRequestDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GitHubPullRequest'], meta: { name: 'GitHubPullRequest' } }
+    /**
+     * Find zero or one GitHubPullRequest that matches the filter.
+     * @param {GitHubPullRequestFindUniqueArgs} args - Arguments to find a GitHubPullRequest
+     * @example
+     * // Get one GitHubPullRequest
+     * const gitHubPullRequest = await prisma.gitHubPullRequest.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GitHubPullRequestFindUniqueArgs>(args: SelectSubset<T, GitHubPullRequestFindUniqueArgs<ExtArgs>>): Prisma__GitHubPullRequestClient<$Result.GetResult<Prisma.$GitHubPullRequestPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one GitHubPullRequest that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {GitHubPullRequestFindUniqueOrThrowArgs} args - Arguments to find a GitHubPullRequest
+     * @example
+     * // Get one GitHubPullRequest
+     * const gitHubPullRequest = await prisma.gitHubPullRequest.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GitHubPullRequestFindUniqueOrThrowArgs>(args: SelectSubset<T, GitHubPullRequestFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GitHubPullRequestClient<$Result.GetResult<Prisma.$GitHubPullRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GitHubPullRequest that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GitHubPullRequestFindFirstArgs} args - Arguments to find a GitHubPullRequest
+     * @example
+     * // Get one GitHubPullRequest
+     * const gitHubPullRequest = await prisma.gitHubPullRequest.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GitHubPullRequestFindFirstArgs>(args?: SelectSubset<T, GitHubPullRequestFindFirstArgs<ExtArgs>>): Prisma__GitHubPullRequestClient<$Result.GetResult<Prisma.$GitHubPullRequestPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GitHubPullRequest that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GitHubPullRequestFindFirstOrThrowArgs} args - Arguments to find a GitHubPullRequest
+     * @example
+     * // Get one GitHubPullRequest
+     * const gitHubPullRequest = await prisma.gitHubPullRequest.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GitHubPullRequestFindFirstOrThrowArgs>(args?: SelectSubset<T, GitHubPullRequestFindFirstOrThrowArgs<ExtArgs>>): Prisma__GitHubPullRequestClient<$Result.GetResult<Prisma.$GitHubPullRequestPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more GitHubPullRequests that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GitHubPullRequestFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all GitHubPullRequests
+     * const gitHubPullRequests = await prisma.gitHubPullRequest.findMany()
+     * 
+     * // Get first 10 GitHubPullRequests
+     * const gitHubPullRequests = await prisma.gitHubPullRequest.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const gitHubPullRequestWithIdOnly = await prisma.gitHubPullRequest.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GitHubPullRequestFindManyArgs>(args?: SelectSubset<T, GitHubPullRequestFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GitHubPullRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a GitHubPullRequest.
+     * @param {GitHubPullRequestCreateArgs} args - Arguments to create a GitHubPullRequest.
+     * @example
+     * // Create one GitHubPullRequest
+     * const GitHubPullRequest = await prisma.gitHubPullRequest.create({
+     *   data: {
+     *     // ... data to create a GitHubPullRequest
+     *   }
+     * })
+     * 
+     */
+    create<T extends GitHubPullRequestCreateArgs>(args: SelectSubset<T, GitHubPullRequestCreateArgs<ExtArgs>>): Prisma__GitHubPullRequestClient<$Result.GetResult<Prisma.$GitHubPullRequestPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many GitHubPullRequests.
+     * @param {GitHubPullRequestCreateManyArgs} args - Arguments to create many GitHubPullRequests.
+     * @example
+     * // Create many GitHubPullRequests
+     * const gitHubPullRequest = await prisma.gitHubPullRequest.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GitHubPullRequestCreateManyArgs>(args?: SelectSubset<T, GitHubPullRequestCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many GitHubPullRequests and returns the data saved in the database.
+     * @param {GitHubPullRequestCreateManyAndReturnArgs} args - Arguments to create many GitHubPullRequests.
+     * @example
+     * // Create many GitHubPullRequests
+     * const gitHubPullRequest = await prisma.gitHubPullRequest.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many GitHubPullRequests and only return the `id`
+     * const gitHubPullRequestWithIdOnly = await prisma.gitHubPullRequest.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GitHubPullRequestCreateManyAndReturnArgs>(args?: SelectSubset<T, GitHubPullRequestCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GitHubPullRequestPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a GitHubPullRequest.
+     * @param {GitHubPullRequestDeleteArgs} args - Arguments to delete one GitHubPullRequest.
+     * @example
+     * // Delete one GitHubPullRequest
+     * const GitHubPullRequest = await prisma.gitHubPullRequest.delete({
+     *   where: {
+     *     // ... filter to delete one GitHubPullRequest
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GitHubPullRequestDeleteArgs>(args: SelectSubset<T, GitHubPullRequestDeleteArgs<ExtArgs>>): Prisma__GitHubPullRequestClient<$Result.GetResult<Prisma.$GitHubPullRequestPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one GitHubPullRequest.
+     * @param {GitHubPullRequestUpdateArgs} args - Arguments to update one GitHubPullRequest.
+     * @example
+     * // Update one GitHubPullRequest
+     * const gitHubPullRequest = await prisma.gitHubPullRequest.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GitHubPullRequestUpdateArgs>(args: SelectSubset<T, GitHubPullRequestUpdateArgs<ExtArgs>>): Prisma__GitHubPullRequestClient<$Result.GetResult<Prisma.$GitHubPullRequestPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more GitHubPullRequests.
+     * @param {GitHubPullRequestDeleteManyArgs} args - Arguments to filter GitHubPullRequests to delete.
+     * @example
+     * // Delete a few GitHubPullRequests
+     * const { count } = await prisma.gitHubPullRequest.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GitHubPullRequestDeleteManyArgs>(args?: SelectSubset<T, GitHubPullRequestDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GitHubPullRequests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GitHubPullRequestUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many GitHubPullRequests
+     * const gitHubPullRequest = await prisma.gitHubPullRequest.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GitHubPullRequestUpdateManyArgs>(args: SelectSubset<T, GitHubPullRequestUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GitHubPullRequests and returns the data updated in the database.
+     * @param {GitHubPullRequestUpdateManyAndReturnArgs} args - Arguments to update many GitHubPullRequests.
+     * @example
+     * // Update many GitHubPullRequests
+     * const gitHubPullRequest = await prisma.gitHubPullRequest.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more GitHubPullRequests and only return the `id`
+     * const gitHubPullRequestWithIdOnly = await prisma.gitHubPullRequest.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends GitHubPullRequestUpdateManyAndReturnArgs>(args: SelectSubset<T, GitHubPullRequestUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GitHubPullRequestPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one GitHubPullRequest.
+     * @param {GitHubPullRequestUpsertArgs} args - Arguments to update or create a GitHubPullRequest.
+     * @example
+     * // Update or create a GitHubPullRequest
+     * const gitHubPullRequest = await prisma.gitHubPullRequest.upsert({
+     *   create: {
+     *     // ... data to create a GitHubPullRequest
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the GitHubPullRequest we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GitHubPullRequestUpsertArgs>(args: SelectSubset<T, GitHubPullRequestUpsertArgs<ExtArgs>>): Prisma__GitHubPullRequestClient<$Result.GetResult<Prisma.$GitHubPullRequestPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of GitHubPullRequests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GitHubPullRequestCountArgs} args - Arguments to filter GitHubPullRequests to count.
+     * @example
+     * // Count the number of GitHubPullRequests
+     * const count = await prisma.gitHubPullRequest.count({
+     *   where: {
+     *     // ... the filter for the GitHubPullRequests we want to count
+     *   }
+     * })
+    **/
+    count<T extends GitHubPullRequestCountArgs>(
+      args?: Subset<T, GitHubPullRequestCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GitHubPullRequestCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a GitHubPullRequest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GitHubPullRequestAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GitHubPullRequestAggregateArgs>(args: Subset<T, GitHubPullRequestAggregateArgs>): Prisma.PrismaPromise<GetGitHubPullRequestAggregateType<T>>
+
+    /**
+     * Group by GitHubPullRequest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GitHubPullRequestGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GitHubPullRequestGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GitHubPullRequestGroupByArgs['orderBy'] }
+        : { orderBy?: GitHubPullRequestGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GitHubPullRequestGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGitHubPullRequestGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the GitHubPullRequest model
+   */
+  readonly fields: GitHubPullRequestFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for GitHubPullRequest.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GitHubPullRequestClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    issue<T extends IssueDefaultArgs<ExtArgs> = {}>(args?: Subset<T, IssueDefaultArgs<ExtArgs>>): Prisma__IssueClient<$Result.GetResult<Prisma.$IssuePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    workspace<T extends WorkspaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkspaceDefaultArgs<ExtArgs>>): Prisma__WorkspaceClient<$Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the GitHubPullRequest model
+   */
+  interface GitHubPullRequestFieldRefs {
+    readonly id: FieldRef<"GitHubPullRequest", 'String'>
+    readonly githubId: FieldRef<"GitHubPullRequest", 'String'>
+    readonly number: FieldRef<"GitHubPullRequest", 'Int'>
+    readonly title: FieldRef<"GitHubPullRequest", 'String'>
+    readonly url: FieldRef<"GitHubPullRequest", 'String'>
+    readonly status: FieldRef<"GitHubPullRequest", 'PullRequestStatus'>
+    readonly branch: FieldRef<"GitHubPullRequest", 'String'>
+    readonly baseBranch: FieldRef<"GitHubPullRequest", 'String'>
+    readonly author: FieldRef<"GitHubPullRequest", 'String'>
+    readonly repository: FieldRef<"GitHubPullRequest", 'String'>
+    readonly mergedAt: FieldRef<"GitHubPullRequest", 'DateTime'>
+    readonly createdAt: FieldRef<"GitHubPullRequest", 'DateTime'>
+    readonly updatedAt: FieldRef<"GitHubPullRequest", 'DateTime'>
+    readonly issueId: FieldRef<"GitHubPullRequest", 'String'>
+    readonly workspaceId: FieldRef<"GitHubPullRequest", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * GitHubPullRequest findUnique
+   */
+  export type GitHubPullRequestFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GitHubPullRequest
+     */
+    select?: GitHubPullRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GitHubPullRequest
+     */
+    omit?: GitHubPullRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GitHubPullRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which GitHubPullRequest to fetch.
+     */
+    where: GitHubPullRequestWhereUniqueInput
+  }
+
+  /**
+   * GitHubPullRequest findUniqueOrThrow
+   */
+  export type GitHubPullRequestFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GitHubPullRequest
+     */
+    select?: GitHubPullRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GitHubPullRequest
+     */
+    omit?: GitHubPullRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GitHubPullRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which GitHubPullRequest to fetch.
+     */
+    where: GitHubPullRequestWhereUniqueInput
+  }
+
+  /**
+   * GitHubPullRequest findFirst
+   */
+  export type GitHubPullRequestFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GitHubPullRequest
+     */
+    select?: GitHubPullRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GitHubPullRequest
+     */
+    omit?: GitHubPullRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GitHubPullRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which GitHubPullRequest to fetch.
+     */
+    where?: GitHubPullRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GitHubPullRequests to fetch.
+     */
+    orderBy?: GitHubPullRequestOrderByWithRelationInput | GitHubPullRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GitHubPullRequests.
+     */
+    cursor?: GitHubPullRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GitHubPullRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GitHubPullRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GitHubPullRequests.
+     */
+    distinct?: GitHubPullRequestScalarFieldEnum | GitHubPullRequestScalarFieldEnum[]
+  }
+
+  /**
+   * GitHubPullRequest findFirstOrThrow
+   */
+  export type GitHubPullRequestFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GitHubPullRequest
+     */
+    select?: GitHubPullRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GitHubPullRequest
+     */
+    omit?: GitHubPullRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GitHubPullRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which GitHubPullRequest to fetch.
+     */
+    where?: GitHubPullRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GitHubPullRequests to fetch.
+     */
+    orderBy?: GitHubPullRequestOrderByWithRelationInput | GitHubPullRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GitHubPullRequests.
+     */
+    cursor?: GitHubPullRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GitHubPullRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GitHubPullRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GitHubPullRequests.
+     */
+    distinct?: GitHubPullRequestScalarFieldEnum | GitHubPullRequestScalarFieldEnum[]
+  }
+
+  /**
+   * GitHubPullRequest findMany
+   */
+  export type GitHubPullRequestFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GitHubPullRequest
+     */
+    select?: GitHubPullRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GitHubPullRequest
+     */
+    omit?: GitHubPullRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GitHubPullRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which GitHubPullRequests to fetch.
+     */
+    where?: GitHubPullRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GitHubPullRequests to fetch.
+     */
+    orderBy?: GitHubPullRequestOrderByWithRelationInput | GitHubPullRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing GitHubPullRequests.
+     */
+    cursor?: GitHubPullRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GitHubPullRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GitHubPullRequests.
+     */
+    skip?: number
+    distinct?: GitHubPullRequestScalarFieldEnum | GitHubPullRequestScalarFieldEnum[]
+  }
+
+  /**
+   * GitHubPullRequest create
+   */
+  export type GitHubPullRequestCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GitHubPullRequest
+     */
+    select?: GitHubPullRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GitHubPullRequest
+     */
+    omit?: GitHubPullRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GitHubPullRequestInclude<ExtArgs> | null
+    /**
+     * The data needed to create a GitHubPullRequest.
+     */
+    data: XOR<GitHubPullRequestCreateInput, GitHubPullRequestUncheckedCreateInput>
+  }
+
+  /**
+   * GitHubPullRequest createMany
+   */
+  export type GitHubPullRequestCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many GitHubPullRequests.
+     */
+    data: GitHubPullRequestCreateManyInput | GitHubPullRequestCreateManyInput[]
+  }
+
+  /**
+   * GitHubPullRequest createManyAndReturn
+   */
+  export type GitHubPullRequestCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GitHubPullRequest
+     */
+    select?: GitHubPullRequestSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GitHubPullRequest
+     */
+    omit?: GitHubPullRequestOmit<ExtArgs> | null
+    /**
+     * The data used to create many GitHubPullRequests.
+     */
+    data: GitHubPullRequestCreateManyInput | GitHubPullRequestCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GitHubPullRequestIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GitHubPullRequest update
+   */
+  export type GitHubPullRequestUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GitHubPullRequest
+     */
+    select?: GitHubPullRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GitHubPullRequest
+     */
+    omit?: GitHubPullRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GitHubPullRequestInclude<ExtArgs> | null
+    /**
+     * The data needed to update a GitHubPullRequest.
+     */
+    data: XOR<GitHubPullRequestUpdateInput, GitHubPullRequestUncheckedUpdateInput>
+    /**
+     * Choose, which GitHubPullRequest to update.
+     */
+    where: GitHubPullRequestWhereUniqueInput
+  }
+
+  /**
+   * GitHubPullRequest updateMany
+   */
+  export type GitHubPullRequestUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update GitHubPullRequests.
+     */
+    data: XOR<GitHubPullRequestUpdateManyMutationInput, GitHubPullRequestUncheckedUpdateManyInput>
+    /**
+     * Filter which GitHubPullRequests to update
+     */
+    where?: GitHubPullRequestWhereInput
+    /**
+     * Limit how many GitHubPullRequests to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * GitHubPullRequest updateManyAndReturn
+   */
+  export type GitHubPullRequestUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GitHubPullRequest
+     */
+    select?: GitHubPullRequestSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GitHubPullRequest
+     */
+    omit?: GitHubPullRequestOmit<ExtArgs> | null
+    /**
+     * The data used to update GitHubPullRequests.
+     */
+    data: XOR<GitHubPullRequestUpdateManyMutationInput, GitHubPullRequestUncheckedUpdateManyInput>
+    /**
+     * Filter which GitHubPullRequests to update
+     */
+    where?: GitHubPullRequestWhereInput
+    /**
+     * Limit how many GitHubPullRequests to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GitHubPullRequestIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GitHubPullRequest upsert
+   */
+  export type GitHubPullRequestUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GitHubPullRequest
+     */
+    select?: GitHubPullRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GitHubPullRequest
+     */
+    omit?: GitHubPullRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GitHubPullRequestInclude<ExtArgs> | null
+    /**
+     * The filter to search for the GitHubPullRequest to update in case it exists.
+     */
+    where: GitHubPullRequestWhereUniqueInput
+    /**
+     * In case the GitHubPullRequest found by the `where` argument doesn't exist, create a new GitHubPullRequest with this data.
+     */
+    create: XOR<GitHubPullRequestCreateInput, GitHubPullRequestUncheckedCreateInput>
+    /**
+     * In case the GitHubPullRequest was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GitHubPullRequestUpdateInput, GitHubPullRequestUncheckedUpdateInput>
+  }
+
+  /**
+   * GitHubPullRequest delete
+   */
+  export type GitHubPullRequestDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GitHubPullRequest
+     */
+    select?: GitHubPullRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GitHubPullRequest
+     */
+    omit?: GitHubPullRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GitHubPullRequestInclude<ExtArgs> | null
+    /**
+     * Filter which GitHubPullRequest to delete.
+     */
+    where: GitHubPullRequestWhereUniqueInput
+  }
+
+  /**
+   * GitHubPullRequest deleteMany
+   */
+  export type GitHubPullRequestDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GitHubPullRequests to delete
+     */
+    where?: GitHubPullRequestWhereInput
+    /**
+     * Limit how many GitHubPullRequests to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * GitHubPullRequest without action
+   */
+  export type GitHubPullRequestDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GitHubPullRequest
+     */
+    select?: GitHubPullRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GitHubPullRequest
+     */
+    omit?: GitHubPullRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GitHubPullRequestInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -26880,6 +28287,27 @@ export namespace Prisma {
   export type AutomationLogScalarFieldEnum = (typeof AutomationLogScalarFieldEnum)[keyof typeof AutomationLogScalarFieldEnum]
 
 
+  export const GitHubPullRequestScalarFieldEnum: {
+    id: 'id',
+    githubId: 'githubId',
+    number: 'number',
+    title: 'title',
+    url: 'url',
+    status: 'status',
+    branch: 'branch',
+    baseBranch: 'baseBranch',
+    author: 'author',
+    repository: 'repository',
+    mergedAt: 'mergedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    issueId: 'issueId',
+    workspaceId: 'workspaceId'
+  };
+
+  export type GitHubPullRequestScalarFieldEnum = (typeof GitHubPullRequestScalarFieldEnum)[keyof typeof GitHubPullRequestScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -26982,6 +28410,13 @@ export namespace Prisma {
    * Reference to a field of type 'AutomationLogStatus'
    */
   export type EnumAutomationLogStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AutomationLogStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'PullRequestStatus'
+   */
+  export type EnumPullRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PullRequestStatus'>
     
 
 
@@ -27396,6 +28831,7 @@ export namespace Prisma {
     templates?: TemplateListRelationFilter
     automationRules?: AutomationRuleListRelationFilter
     automationLogs?: AutomationLogListRelationFilter
+    pullRequests?: GitHubPullRequestListRelationFilter
   }
 
   export type WorkspaceOrderByWithRelationInput = {
@@ -27416,6 +28852,7 @@ export namespace Prisma {
     templates?: TemplateOrderByRelationAggregateInput
     automationRules?: AutomationRuleOrderByRelationAggregateInput
     automationLogs?: AutomationLogOrderByRelationAggregateInput
+    pullRequests?: GitHubPullRequestOrderByRelationAggregateInput
   }
 
   export type WorkspaceWhereUniqueInput = Prisma.AtLeast<{
@@ -27439,6 +28876,7 @@ export namespace Prisma {
     templates?: TemplateListRelationFilter
     automationRules?: AutomationRuleListRelationFilter
     automationLogs?: AutomationLogListRelationFilter
+    pullRequests?: GitHubPullRequestListRelationFilter
   }, "id" | "slug">
 
   export type WorkspaceOrderByWithAggregationInput = {
@@ -27875,6 +29313,7 @@ export namespace Prisma {
     comments?: CommentListRelationFilter
     history?: IssueHistoryListRelationFilter
     notifications?: NotificationListRelationFilter
+    pullRequests?: GitHubPullRequestListRelationFilter
   }
 
   export type IssueOrderByWithRelationInput = {
@@ -27904,6 +29343,7 @@ export namespace Prisma {
     comments?: CommentOrderByRelationAggregateInput
     history?: IssueHistoryOrderByRelationAggregateInput
     notifications?: NotificationOrderByRelationAggregateInput
+    pullRequests?: GitHubPullRequestOrderByRelationAggregateInput
   }
 
   export type IssueWhereUniqueInput = Prisma.AtLeast<{
@@ -27937,6 +29377,7 @@ export namespace Prisma {
     comments?: CommentListRelationFilter
     history?: IssueHistoryListRelationFilter
     notifications?: NotificationListRelationFilter
+    pullRequests?: GitHubPullRequestListRelationFilter
   }, "id" | "teamId_number">
 
   export type IssueOrderByWithAggregationInput = {
@@ -28620,6 +30061,117 @@ export namespace Prisma {
     issueId?: StringNullableWithAggregatesFilter<"AutomationLog"> | string | null
   }
 
+  export type GitHubPullRequestWhereInput = {
+    AND?: GitHubPullRequestWhereInput | GitHubPullRequestWhereInput[]
+    OR?: GitHubPullRequestWhereInput[]
+    NOT?: GitHubPullRequestWhereInput | GitHubPullRequestWhereInput[]
+    id?: StringFilter<"GitHubPullRequest"> | string
+    githubId?: StringFilter<"GitHubPullRequest"> | string
+    number?: IntFilter<"GitHubPullRequest"> | number
+    title?: StringFilter<"GitHubPullRequest"> | string
+    url?: StringFilter<"GitHubPullRequest"> | string
+    status?: EnumPullRequestStatusFilter<"GitHubPullRequest"> | $Enums.PullRequestStatus
+    branch?: StringFilter<"GitHubPullRequest"> | string
+    baseBranch?: StringFilter<"GitHubPullRequest"> | string
+    author?: StringFilter<"GitHubPullRequest"> | string
+    repository?: StringFilter<"GitHubPullRequest"> | string
+    mergedAt?: DateTimeNullableFilter<"GitHubPullRequest"> | Date | string | null
+    createdAt?: DateTimeFilter<"GitHubPullRequest"> | Date | string
+    updatedAt?: DateTimeFilter<"GitHubPullRequest"> | Date | string
+    issueId?: StringFilter<"GitHubPullRequest"> | string
+    workspaceId?: StringFilter<"GitHubPullRequest"> | string
+    issue?: XOR<IssueScalarRelationFilter, IssueWhereInput>
+    workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
+  }
+
+  export type GitHubPullRequestOrderByWithRelationInput = {
+    id?: SortOrder
+    githubId?: SortOrder
+    number?: SortOrder
+    title?: SortOrder
+    url?: SortOrder
+    status?: SortOrder
+    branch?: SortOrder
+    baseBranch?: SortOrder
+    author?: SortOrder
+    repository?: SortOrder
+    mergedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    issueId?: SortOrder
+    workspaceId?: SortOrder
+    issue?: IssueOrderByWithRelationInput
+    workspace?: WorkspaceOrderByWithRelationInput
+  }
+
+  export type GitHubPullRequestWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    issueId_githubId?: GitHubPullRequestIssueIdGithubIdCompoundUniqueInput
+    AND?: GitHubPullRequestWhereInput | GitHubPullRequestWhereInput[]
+    OR?: GitHubPullRequestWhereInput[]
+    NOT?: GitHubPullRequestWhereInput | GitHubPullRequestWhereInput[]
+    githubId?: StringFilter<"GitHubPullRequest"> | string
+    number?: IntFilter<"GitHubPullRequest"> | number
+    title?: StringFilter<"GitHubPullRequest"> | string
+    url?: StringFilter<"GitHubPullRequest"> | string
+    status?: EnumPullRequestStatusFilter<"GitHubPullRequest"> | $Enums.PullRequestStatus
+    branch?: StringFilter<"GitHubPullRequest"> | string
+    baseBranch?: StringFilter<"GitHubPullRequest"> | string
+    author?: StringFilter<"GitHubPullRequest"> | string
+    repository?: StringFilter<"GitHubPullRequest"> | string
+    mergedAt?: DateTimeNullableFilter<"GitHubPullRequest"> | Date | string | null
+    createdAt?: DateTimeFilter<"GitHubPullRequest"> | Date | string
+    updatedAt?: DateTimeFilter<"GitHubPullRequest"> | Date | string
+    issueId?: StringFilter<"GitHubPullRequest"> | string
+    workspaceId?: StringFilter<"GitHubPullRequest"> | string
+    issue?: XOR<IssueScalarRelationFilter, IssueWhereInput>
+    workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
+  }, "id" | "issueId_githubId">
+
+  export type GitHubPullRequestOrderByWithAggregationInput = {
+    id?: SortOrder
+    githubId?: SortOrder
+    number?: SortOrder
+    title?: SortOrder
+    url?: SortOrder
+    status?: SortOrder
+    branch?: SortOrder
+    baseBranch?: SortOrder
+    author?: SortOrder
+    repository?: SortOrder
+    mergedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    issueId?: SortOrder
+    workspaceId?: SortOrder
+    _count?: GitHubPullRequestCountOrderByAggregateInput
+    _avg?: GitHubPullRequestAvgOrderByAggregateInput
+    _max?: GitHubPullRequestMaxOrderByAggregateInput
+    _min?: GitHubPullRequestMinOrderByAggregateInput
+    _sum?: GitHubPullRequestSumOrderByAggregateInput
+  }
+
+  export type GitHubPullRequestScalarWhereWithAggregatesInput = {
+    AND?: GitHubPullRequestScalarWhereWithAggregatesInput | GitHubPullRequestScalarWhereWithAggregatesInput[]
+    OR?: GitHubPullRequestScalarWhereWithAggregatesInput[]
+    NOT?: GitHubPullRequestScalarWhereWithAggregatesInput | GitHubPullRequestScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"GitHubPullRequest"> | string
+    githubId?: StringWithAggregatesFilter<"GitHubPullRequest"> | string
+    number?: IntWithAggregatesFilter<"GitHubPullRequest"> | number
+    title?: StringWithAggregatesFilter<"GitHubPullRequest"> | string
+    url?: StringWithAggregatesFilter<"GitHubPullRequest"> | string
+    status?: EnumPullRequestStatusWithAggregatesFilter<"GitHubPullRequest"> | $Enums.PullRequestStatus
+    branch?: StringWithAggregatesFilter<"GitHubPullRequest"> | string
+    baseBranch?: StringWithAggregatesFilter<"GitHubPullRequest"> | string
+    author?: StringWithAggregatesFilter<"GitHubPullRequest"> | string
+    repository?: StringWithAggregatesFilter<"GitHubPullRequest"> | string
+    mergedAt?: DateTimeNullableWithAggregatesFilter<"GitHubPullRequest"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"GitHubPullRequest"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"GitHubPullRequest"> | Date | string
+    issueId?: StringWithAggregatesFilter<"GitHubPullRequest"> | string
+    workspaceId?: StringWithAggregatesFilter<"GitHubPullRequest"> | string
+  }
+
   export type PostCreateInput = {
     id?: string
     name: string
@@ -29068,6 +30620,7 @@ export namespace Prisma {
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateInput = {
@@ -29088,6 +30641,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUpdateInput = {
@@ -29108,6 +30662,7 @@ export namespace Prisma {
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateInput = {
@@ -29128,6 +30683,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceCreateManyInput = {
@@ -29568,6 +31124,7 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutIssueInput
     history?: IssueHistoryCreateNestedManyWithoutIssueInput
     notifications?: NotificationCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateInput = {
@@ -29591,6 +31148,7 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutIssueInput
     history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUpdateInput = {
@@ -29614,6 +31172,7 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateInput = {
@@ -29637,6 +31196,7 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueCreateManyInput = {
@@ -30348,6 +31908,130 @@ export namespace Prisma {
     issueId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type GitHubPullRequestCreateInput = {
+    id?: string
+    githubId: string
+    number: number
+    title: string
+    url: string
+    status?: $Enums.PullRequestStatus
+    branch: string
+    baseBranch: string
+    author: string
+    repository: string
+    mergedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    issue: IssueCreateNestedOneWithoutPullRequestsInput
+    workspace: WorkspaceCreateNestedOneWithoutPullRequestsInput
+  }
+
+  export type GitHubPullRequestUncheckedCreateInput = {
+    id?: string
+    githubId: string
+    number: number
+    title: string
+    url: string
+    status?: $Enums.PullRequestStatus
+    branch: string
+    baseBranch: string
+    author: string
+    repository: string
+    mergedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    issueId: string
+    workspaceId: string
+  }
+
+  export type GitHubPullRequestUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    githubId?: StringFieldUpdateOperationsInput | string
+    number?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    status?: EnumPullRequestStatusFieldUpdateOperationsInput | $Enums.PullRequestStatus
+    branch?: StringFieldUpdateOperationsInput | string
+    baseBranch?: StringFieldUpdateOperationsInput | string
+    author?: StringFieldUpdateOperationsInput | string
+    repository?: StringFieldUpdateOperationsInput | string
+    mergedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    issue?: IssueUpdateOneRequiredWithoutPullRequestsNestedInput
+    workspace?: WorkspaceUpdateOneRequiredWithoutPullRequestsNestedInput
+  }
+
+  export type GitHubPullRequestUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    githubId?: StringFieldUpdateOperationsInput | string
+    number?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    status?: EnumPullRequestStatusFieldUpdateOperationsInput | $Enums.PullRequestStatus
+    branch?: StringFieldUpdateOperationsInput | string
+    baseBranch?: StringFieldUpdateOperationsInput | string
+    author?: StringFieldUpdateOperationsInput | string
+    repository?: StringFieldUpdateOperationsInput | string
+    mergedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    issueId?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GitHubPullRequestCreateManyInput = {
+    id?: string
+    githubId: string
+    number: number
+    title: string
+    url: string
+    status?: $Enums.PullRequestStatus
+    branch: string
+    baseBranch: string
+    author: string
+    repository: string
+    mergedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    issueId: string
+    workspaceId: string
+  }
+
+  export type GitHubPullRequestUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    githubId?: StringFieldUpdateOperationsInput | string
+    number?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    status?: EnumPullRequestStatusFieldUpdateOperationsInput | $Enums.PullRequestStatus
+    branch?: StringFieldUpdateOperationsInput | string
+    baseBranch?: StringFieldUpdateOperationsInput | string
+    author?: StringFieldUpdateOperationsInput | string
+    repository?: StringFieldUpdateOperationsInput | string
+    mergedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GitHubPullRequestUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    githubId?: StringFieldUpdateOperationsInput | string
+    number?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    status?: EnumPullRequestStatusFieldUpdateOperationsInput | $Enums.PullRequestStatus
+    branch?: StringFieldUpdateOperationsInput | string
+    baseBranch?: StringFieldUpdateOperationsInput | string
+    author?: StringFieldUpdateOperationsInput | string
+    repository?: StringFieldUpdateOperationsInput | string
+    mergedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    issueId?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -30784,6 +32468,12 @@ export namespace Prisma {
     none?: AutomationLogWhereInput
   }
 
+  export type GitHubPullRequestListRelationFilter = {
+    every?: GitHubPullRequestWhereInput
+    some?: GitHubPullRequestWhereInput
+    none?: GitHubPullRequestWhereInput
+  }
+
   export type TeamOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -30805,6 +32495,10 @@ export namespace Prisma {
   }
 
   export type AutomationLogOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type GitHubPullRequestOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -31597,6 +33291,90 @@ export namespace Prisma {
     _max?: NestedEnumAutomationLogStatusFilter<$PrismaModel>
   }
 
+  export type EnumPullRequestStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.PullRequestStatus | EnumPullRequestStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PullRequestStatus[]
+    notIn?: $Enums.PullRequestStatus[]
+    not?: NestedEnumPullRequestStatusFilter<$PrismaModel> | $Enums.PullRequestStatus
+  }
+
+  export type GitHubPullRequestIssueIdGithubIdCompoundUniqueInput = {
+    issueId: string
+    githubId: string
+  }
+
+  export type GitHubPullRequestCountOrderByAggregateInput = {
+    id?: SortOrder
+    githubId?: SortOrder
+    number?: SortOrder
+    title?: SortOrder
+    url?: SortOrder
+    status?: SortOrder
+    branch?: SortOrder
+    baseBranch?: SortOrder
+    author?: SortOrder
+    repository?: SortOrder
+    mergedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    issueId?: SortOrder
+    workspaceId?: SortOrder
+  }
+
+  export type GitHubPullRequestAvgOrderByAggregateInput = {
+    number?: SortOrder
+  }
+
+  export type GitHubPullRequestMaxOrderByAggregateInput = {
+    id?: SortOrder
+    githubId?: SortOrder
+    number?: SortOrder
+    title?: SortOrder
+    url?: SortOrder
+    status?: SortOrder
+    branch?: SortOrder
+    baseBranch?: SortOrder
+    author?: SortOrder
+    repository?: SortOrder
+    mergedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    issueId?: SortOrder
+    workspaceId?: SortOrder
+  }
+
+  export type GitHubPullRequestMinOrderByAggregateInput = {
+    id?: SortOrder
+    githubId?: SortOrder
+    number?: SortOrder
+    title?: SortOrder
+    url?: SortOrder
+    status?: SortOrder
+    branch?: SortOrder
+    baseBranch?: SortOrder
+    author?: SortOrder
+    repository?: SortOrder
+    mergedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    issueId?: SortOrder
+    workspaceId?: SortOrder
+  }
+
+  export type GitHubPullRequestSumOrderByAggregateInput = {
+    number?: SortOrder
+  }
+
+  export type EnumPullRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PullRequestStatus | EnumPullRequestStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PullRequestStatus[]
+    notIn?: $Enums.PullRequestStatus[]
+    not?: NestedEnumPullRequestStatusWithAggregatesFilter<$PrismaModel> | $Enums.PullRequestStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPullRequestStatusFilter<$PrismaModel>
+    _max?: NestedEnumPullRequestStatusFilter<$PrismaModel>
+  }
+
   export type UserCreateNestedOneWithoutPostsInput = {
     create?: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
     connectOrCreate?: UserCreateOrConnectWithoutPostsInput
@@ -32240,6 +34018,13 @@ export namespace Prisma {
     connect?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
   }
 
+  export type GitHubPullRequestCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<GitHubPullRequestCreateWithoutWorkspaceInput, GitHubPullRequestUncheckedCreateWithoutWorkspaceInput> | GitHubPullRequestCreateWithoutWorkspaceInput[] | GitHubPullRequestUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: GitHubPullRequestCreateOrConnectWithoutWorkspaceInput | GitHubPullRequestCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: GitHubPullRequestCreateManyWorkspaceInputEnvelope
+    connect?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
+  }
+
   export type WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput = {
     create?: XOR<WorkspaceMemberCreateWithoutWorkspaceInput, WorkspaceMemberUncheckedCreateWithoutWorkspaceInput> | WorkspaceMemberCreateWithoutWorkspaceInput[] | WorkspaceMemberUncheckedCreateWithoutWorkspaceInput[]
     connectOrCreate?: WorkspaceMemberCreateOrConnectWithoutWorkspaceInput | WorkspaceMemberCreateOrConnectWithoutWorkspaceInput[]
@@ -32315,6 +34100,13 @@ export namespace Prisma {
     connectOrCreate?: AutomationLogCreateOrConnectWithoutWorkspaceInput | AutomationLogCreateOrConnectWithoutWorkspaceInput[]
     createMany?: AutomationLogCreateManyWorkspaceInputEnvelope
     connect?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
+  }
+
+  export type GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<GitHubPullRequestCreateWithoutWorkspaceInput, GitHubPullRequestUncheckedCreateWithoutWorkspaceInput> | GitHubPullRequestCreateWithoutWorkspaceInput[] | GitHubPullRequestUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: GitHubPullRequestCreateOrConnectWithoutWorkspaceInput | GitHubPullRequestCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: GitHubPullRequestCreateManyWorkspaceInputEnvelope
+    connect?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
   }
 
   export type WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput = {
@@ -32471,6 +34263,20 @@ export namespace Prisma {
     deleteMany?: AutomationLogScalarWhereInput | AutomationLogScalarWhereInput[]
   }
 
+  export type GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<GitHubPullRequestCreateWithoutWorkspaceInput, GitHubPullRequestUncheckedCreateWithoutWorkspaceInput> | GitHubPullRequestCreateWithoutWorkspaceInput[] | GitHubPullRequestUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: GitHubPullRequestCreateOrConnectWithoutWorkspaceInput | GitHubPullRequestCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: GitHubPullRequestUpsertWithWhereUniqueWithoutWorkspaceInput | GitHubPullRequestUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: GitHubPullRequestCreateManyWorkspaceInputEnvelope
+    set?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
+    disconnect?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
+    delete?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
+    connect?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
+    update?: GitHubPullRequestUpdateWithWhereUniqueWithoutWorkspaceInput | GitHubPullRequestUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: GitHubPullRequestUpdateManyWithWhereWithoutWorkspaceInput | GitHubPullRequestUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: GitHubPullRequestScalarWhereInput | GitHubPullRequestScalarWhereInput[]
+  }
+
   export type WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput = {
     create?: XOR<WorkspaceMemberCreateWithoutWorkspaceInput, WorkspaceMemberUncheckedCreateWithoutWorkspaceInput> | WorkspaceMemberCreateWithoutWorkspaceInput[] | WorkspaceMemberUncheckedCreateWithoutWorkspaceInput[]
     connectOrCreate?: WorkspaceMemberCreateOrConnectWithoutWorkspaceInput | WorkspaceMemberCreateOrConnectWithoutWorkspaceInput[]
@@ -32623,6 +34429,20 @@ export namespace Prisma {
     update?: AutomationLogUpdateWithWhereUniqueWithoutWorkspaceInput | AutomationLogUpdateWithWhereUniqueWithoutWorkspaceInput[]
     updateMany?: AutomationLogUpdateManyWithWhereWithoutWorkspaceInput | AutomationLogUpdateManyWithWhereWithoutWorkspaceInput[]
     deleteMany?: AutomationLogScalarWhereInput | AutomationLogScalarWhereInput[]
+  }
+
+  export type GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<GitHubPullRequestCreateWithoutWorkspaceInput, GitHubPullRequestUncheckedCreateWithoutWorkspaceInput> | GitHubPullRequestCreateWithoutWorkspaceInput[] | GitHubPullRequestUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: GitHubPullRequestCreateOrConnectWithoutWorkspaceInput | GitHubPullRequestCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: GitHubPullRequestUpsertWithWhereUniqueWithoutWorkspaceInput | GitHubPullRequestUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: GitHubPullRequestCreateManyWorkspaceInputEnvelope
+    set?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
+    disconnect?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
+    delete?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
+    connect?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
+    update?: GitHubPullRequestUpdateWithWhereUniqueWithoutWorkspaceInput | GitHubPullRequestUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: GitHubPullRequestUpdateManyWithWhereWithoutWorkspaceInput | GitHubPullRequestUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: GitHubPullRequestScalarWhereInput | GitHubPullRequestScalarWhereInput[]
   }
 
   export type WorkspaceCreateNestedOneWithoutMembersInput = {
@@ -33223,6 +35043,13 @@ export namespace Prisma {
     connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
+  export type GitHubPullRequestCreateNestedManyWithoutIssueInput = {
+    create?: XOR<GitHubPullRequestCreateWithoutIssueInput, GitHubPullRequestUncheckedCreateWithoutIssueInput> | GitHubPullRequestCreateWithoutIssueInput[] | GitHubPullRequestUncheckedCreateWithoutIssueInput[]
+    connectOrCreate?: GitHubPullRequestCreateOrConnectWithoutIssueInput | GitHubPullRequestCreateOrConnectWithoutIssueInput[]
+    createMany?: GitHubPullRequestCreateManyIssueInputEnvelope
+    connect?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
+  }
+
   export type IssueLabelUncheckedCreateNestedManyWithoutIssueInput = {
     create?: XOR<IssueLabelCreateWithoutIssueInput, IssueLabelUncheckedCreateWithoutIssueInput> | IssueLabelCreateWithoutIssueInput[] | IssueLabelUncheckedCreateWithoutIssueInput[]
     connectOrCreate?: IssueLabelCreateOrConnectWithoutIssueInput | IssueLabelCreateOrConnectWithoutIssueInput[]
@@ -33249,6 +35076,13 @@ export namespace Prisma {
     connectOrCreate?: NotificationCreateOrConnectWithoutIssueInput | NotificationCreateOrConnectWithoutIssueInput[]
     createMany?: NotificationCreateManyIssueInputEnvelope
     connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput = {
+    create?: XOR<GitHubPullRequestCreateWithoutIssueInput, GitHubPullRequestUncheckedCreateWithoutIssueInput> | GitHubPullRequestCreateWithoutIssueInput[] | GitHubPullRequestUncheckedCreateWithoutIssueInput[]
+    connectOrCreate?: GitHubPullRequestCreateOrConnectWithoutIssueInput | GitHubPullRequestCreateOrConnectWithoutIssueInput[]
+    createMany?: GitHubPullRequestCreateManyIssueInputEnvelope
+    connect?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -33377,6 +35211,20 @@ export namespace Prisma {
     deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
+  export type GitHubPullRequestUpdateManyWithoutIssueNestedInput = {
+    create?: XOR<GitHubPullRequestCreateWithoutIssueInput, GitHubPullRequestUncheckedCreateWithoutIssueInput> | GitHubPullRequestCreateWithoutIssueInput[] | GitHubPullRequestUncheckedCreateWithoutIssueInput[]
+    connectOrCreate?: GitHubPullRequestCreateOrConnectWithoutIssueInput | GitHubPullRequestCreateOrConnectWithoutIssueInput[]
+    upsert?: GitHubPullRequestUpsertWithWhereUniqueWithoutIssueInput | GitHubPullRequestUpsertWithWhereUniqueWithoutIssueInput[]
+    createMany?: GitHubPullRequestCreateManyIssueInputEnvelope
+    set?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
+    disconnect?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
+    delete?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
+    connect?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
+    update?: GitHubPullRequestUpdateWithWhereUniqueWithoutIssueInput | GitHubPullRequestUpdateWithWhereUniqueWithoutIssueInput[]
+    updateMany?: GitHubPullRequestUpdateManyWithWhereWithoutIssueInput | GitHubPullRequestUpdateManyWithWhereWithoutIssueInput[]
+    deleteMany?: GitHubPullRequestScalarWhereInput | GitHubPullRequestScalarWhereInput[]
+  }
+
   export type IssueLabelUncheckedUpdateManyWithoutIssueNestedInput = {
     create?: XOR<IssueLabelCreateWithoutIssueInput, IssueLabelUncheckedCreateWithoutIssueInput> | IssueLabelCreateWithoutIssueInput[] | IssueLabelUncheckedCreateWithoutIssueInput[]
     connectOrCreate?: IssueLabelCreateOrConnectWithoutIssueInput | IssueLabelCreateOrConnectWithoutIssueInput[]
@@ -33431,6 +35279,20 @@ export namespace Prisma {
     update?: NotificationUpdateWithWhereUniqueWithoutIssueInput | NotificationUpdateWithWhereUniqueWithoutIssueInput[]
     updateMany?: NotificationUpdateManyWithWhereWithoutIssueInput | NotificationUpdateManyWithWhereWithoutIssueInput[]
     deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
+  export type GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput = {
+    create?: XOR<GitHubPullRequestCreateWithoutIssueInput, GitHubPullRequestUncheckedCreateWithoutIssueInput> | GitHubPullRequestCreateWithoutIssueInput[] | GitHubPullRequestUncheckedCreateWithoutIssueInput[]
+    connectOrCreate?: GitHubPullRequestCreateOrConnectWithoutIssueInput | GitHubPullRequestCreateOrConnectWithoutIssueInput[]
+    upsert?: GitHubPullRequestUpsertWithWhereUniqueWithoutIssueInput | GitHubPullRequestUpsertWithWhereUniqueWithoutIssueInput[]
+    createMany?: GitHubPullRequestCreateManyIssueInputEnvelope
+    set?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
+    disconnect?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
+    delete?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
+    connect?: GitHubPullRequestWhereUniqueInput | GitHubPullRequestWhereUniqueInput[]
+    update?: GitHubPullRequestUpdateWithWhereUniqueWithoutIssueInput | GitHubPullRequestUpdateWithWhereUniqueWithoutIssueInput[]
+    updateMany?: GitHubPullRequestUpdateManyWithWhereWithoutIssueInput | GitHubPullRequestUpdateManyWithWhereWithoutIssueInput[]
+    deleteMany?: GitHubPullRequestScalarWhereInput | GitHubPullRequestScalarWhereInput[]
   }
 
   export type IssueCreateNestedOneWithoutLabelsInput = {
@@ -33747,6 +35609,38 @@ export namespace Prisma {
     update?: XOR<XOR<WorkspaceUpdateToOneWithWhereWithoutAutomationLogsInput, WorkspaceUpdateWithoutAutomationLogsInput>, WorkspaceUncheckedUpdateWithoutAutomationLogsInput>
   }
 
+  export type IssueCreateNestedOneWithoutPullRequestsInput = {
+    create?: XOR<IssueCreateWithoutPullRequestsInput, IssueUncheckedCreateWithoutPullRequestsInput>
+    connectOrCreate?: IssueCreateOrConnectWithoutPullRequestsInput
+    connect?: IssueWhereUniqueInput
+  }
+
+  export type WorkspaceCreateNestedOneWithoutPullRequestsInput = {
+    create?: XOR<WorkspaceCreateWithoutPullRequestsInput, WorkspaceUncheckedCreateWithoutPullRequestsInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutPullRequestsInput
+    connect?: WorkspaceWhereUniqueInput
+  }
+
+  export type EnumPullRequestStatusFieldUpdateOperationsInput = {
+    set?: $Enums.PullRequestStatus
+  }
+
+  export type IssueUpdateOneRequiredWithoutPullRequestsNestedInput = {
+    create?: XOR<IssueCreateWithoutPullRequestsInput, IssueUncheckedCreateWithoutPullRequestsInput>
+    connectOrCreate?: IssueCreateOrConnectWithoutPullRequestsInput
+    upsert?: IssueUpsertWithoutPullRequestsInput
+    connect?: IssueWhereUniqueInput
+    update?: XOR<XOR<IssueUpdateToOneWithWhereWithoutPullRequestsInput, IssueUpdateWithoutPullRequestsInput>, IssueUncheckedUpdateWithoutPullRequestsInput>
+  }
+
+  export type WorkspaceUpdateOneRequiredWithoutPullRequestsNestedInput = {
+    create?: XOR<WorkspaceCreateWithoutPullRequestsInput, WorkspaceUncheckedCreateWithoutPullRequestsInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutPullRequestsInput
+    upsert?: WorkspaceUpsertWithoutPullRequestsInput
+    connect?: WorkspaceWhereUniqueInput
+    update?: XOR<XOR<WorkspaceUpdateToOneWithWhereWithoutPullRequestsInput, WorkspaceUpdateWithoutPullRequestsInput>, WorkspaceUncheckedUpdateWithoutPullRequestsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -34057,6 +35951,23 @@ export namespace Prisma {
     _max?: NestedEnumAutomationLogStatusFilter<$PrismaModel>
   }
 
+  export type NestedEnumPullRequestStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.PullRequestStatus | EnumPullRequestStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PullRequestStatus[]
+    notIn?: $Enums.PullRequestStatus[]
+    not?: NestedEnumPullRequestStatusFilter<$PrismaModel> | $Enums.PullRequestStatus
+  }
+
+  export type NestedEnumPullRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PullRequestStatus | EnumPullRequestStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PullRequestStatus[]
+    notIn?: $Enums.PullRequestStatus[]
+    not?: NestedEnumPullRequestStatusWithAggregatesFilter<$PrismaModel> | $Enums.PullRequestStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPullRequestStatusFilter<$PrismaModel>
+    _max?: NestedEnumPullRequestStatusFilter<$PrismaModel>
+  }
+
   export type UserCreateWithoutPostsInput = {
     id: string
     name: string
@@ -34332,6 +36243,7 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutIssueInput
     history?: IssueHistoryCreateNestedManyWithoutIssueInput
     notifications?: NotificationCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateWithoutAssigneeInput = {
@@ -34354,6 +36266,7 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutIssueInput
     history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueCreateOrConnectWithoutAssigneeInput = {
@@ -34385,6 +36298,7 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutIssueInput
     history?: IssueHistoryCreateNestedManyWithoutIssueInput
     notifications?: NotificationCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateWithoutCreatorInput = {
@@ -34407,6 +36321,7 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutIssueInput
     history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueCreateOrConnectWithoutCreatorInput = {
@@ -35245,6 +37160,7 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutIssueInput
     history?: IssueHistoryCreateNestedManyWithoutIssueInput
     notifications?: NotificationCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateWithoutWorkspaceInput = {
@@ -35267,6 +37183,7 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutIssueInput
     history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueCreateOrConnectWithoutWorkspaceInput = {
@@ -35515,6 +37432,49 @@ export namespace Prisma {
 
   export type AutomationLogCreateManyWorkspaceInputEnvelope = {
     data: AutomationLogCreateManyWorkspaceInput | AutomationLogCreateManyWorkspaceInput[]
+  }
+
+  export type GitHubPullRequestCreateWithoutWorkspaceInput = {
+    id?: string
+    githubId: string
+    number: number
+    title: string
+    url: string
+    status?: $Enums.PullRequestStatus
+    branch: string
+    baseBranch: string
+    author: string
+    repository: string
+    mergedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    issue: IssueCreateNestedOneWithoutPullRequestsInput
+  }
+
+  export type GitHubPullRequestUncheckedCreateWithoutWorkspaceInput = {
+    id?: string
+    githubId: string
+    number: number
+    title: string
+    url: string
+    status?: $Enums.PullRequestStatus
+    branch: string
+    baseBranch: string
+    author: string
+    repository: string
+    mergedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    issueId: string
+  }
+
+  export type GitHubPullRequestCreateOrConnectWithoutWorkspaceInput = {
+    where: GitHubPullRequestWhereUniqueInput
+    create: XOR<GitHubPullRequestCreateWithoutWorkspaceInput, GitHubPullRequestUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type GitHubPullRequestCreateManyWorkspaceInputEnvelope = {
+    data: GitHubPullRequestCreateManyWorkspaceInput | GitHubPullRequestCreateManyWorkspaceInput[]
   }
 
   export type WorkspaceMemberUpsertWithWhereUniqueWithoutWorkspaceInput = {
@@ -35784,6 +37744,43 @@ export namespace Prisma {
     issueId?: StringNullableFilter<"AutomationLog"> | string | null
   }
 
+  export type GitHubPullRequestUpsertWithWhereUniqueWithoutWorkspaceInput = {
+    where: GitHubPullRequestWhereUniqueInput
+    update: XOR<GitHubPullRequestUpdateWithoutWorkspaceInput, GitHubPullRequestUncheckedUpdateWithoutWorkspaceInput>
+    create: XOR<GitHubPullRequestCreateWithoutWorkspaceInput, GitHubPullRequestUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type GitHubPullRequestUpdateWithWhereUniqueWithoutWorkspaceInput = {
+    where: GitHubPullRequestWhereUniqueInput
+    data: XOR<GitHubPullRequestUpdateWithoutWorkspaceInput, GitHubPullRequestUncheckedUpdateWithoutWorkspaceInput>
+  }
+
+  export type GitHubPullRequestUpdateManyWithWhereWithoutWorkspaceInput = {
+    where: GitHubPullRequestScalarWhereInput
+    data: XOR<GitHubPullRequestUpdateManyMutationInput, GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceInput>
+  }
+
+  export type GitHubPullRequestScalarWhereInput = {
+    AND?: GitHubPullRequestScalarWhereInput | GitHubPullRequestScalarWhereInput[]
+    OR?: GitHubPullRequestScalarWhereInput[]
+    NOT?: GitHubPullRequestScalarWhereInput | GitHubPullRequestScalarWhereInput[]
+    id?: StringFilter<"GitHubPullRequest"> | string
+    githubId?: StringFilter<"GitHubPullRequest"> | string
+    number?: IntFilter<"GitHubPullRequest"> | number
+    title?: StringFilter<"GitHubPullRequest"> | string
+    url?: StringFilter<"GitHubPullRequest"> | string
+    status?: EnumPullRequestStatusFilter<"GitHubPullRequest"> | $Enums.PullRequestStatus
+    branch?: StringFilter<"GitHubPullRequest"> | string
+    baseBranch?: StringFilter<"GitHubPullRequest"> | string
+    author?: StringFilter<"GitHubPullRequest"> | string
+    repository?: StringFilter<"GitHubPullRequest"> | string
+    mergedAt?: DateTimeNullableFilter<"GitHubPullRequest"> | Date | string | null
+    createdAt?: DateTimeFilter<"GitHubPullRequest"> | Date | string
+    updatedAt?: DateTimeFilter<"GitHubPullRequest"> | Date | string
+    issueId?: StringFilter<"GitHubPullRequest"> | string
+    workspaceId?: StringFilter<"GitHubPullRequest"> | string
+  }
+
   export type WorkspaceCreateWithoutMembersInput = {
     id?: string
     name: string
@@ -35801,6 +37798,7 @@ export namespace Prisma {
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutMembersInput = {
@@ -35820,6 +37818,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutMembersInput = {
@@ -35904,6 +37903,7 @@ export namespace Prisma {
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutMembersInput = {
@@ -35923,6 +37923,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type UserUpsertWithoutMembershipsInput = {
@@ -35997,6 +37998,7 @@ export namespace Prisma {
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutTeamsInput = {
@@ -36016,6 +38018,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutTeamsInput = {
@@ -36080,6 +38083,7 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutIssueInput
     history?: IssueHistoryCreateNestedManyWithoutIssueInput
     notifications?: NotificationCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateWithoutTeamInput = {
@@ -36102,6 +38106,7 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutIssueInput
     history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueCreateOrConnectWithoutTeamInput = {
@@ -36279,6 +38284,7 @@ export namespace Prisma {
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutTeamsInput = {
@@ -36298,6 +38304,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type ProjectUpsertWithWhereUniqueWithoutTeamInput = {
@@ -36413,6 +38420,7 @@ export namespace Prisma {
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutProjectsInput = {
@@ -36432,6 +38440,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutProjectsInput = {
@@ -36541,6 +38550,7 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutIssueInput
     history?: IssueHistoryCreateNestedManyWithoutIssueInput
     notifications?: NotificationCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateWithoutProjectInput = {
@@ -36563,6 +38573,7 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutIssueInput
     history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueCreateOrConnectWithoutProjectInput = {
@@ -36602,6 +38613,7 @@ export namespace Prisma {
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutProjectsInput = {
@@ -36621,6 +38633,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TeamUpsertWithoutProjectsInput = {
@@ -36750,6 +38763,7 @@ export namespace Prisma {
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutCyclesInput = {
@@ -36769,6 +38783,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutCyclesInput = {
@@ -36829,6 +38844,7 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutIssueInput
     history?: IssueHistoryCreateNestedManyWithoutIssueInput
     notifications?: NotificationCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateWithoutCycleInput = {
@@ -36851,6 +38867,7 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutIssueInput
     history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueCreateOrConnectWithoutCycleInput = {
@@ -36890,6 +38907,7 @@ export namespace Prisma {
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutCyclesInput = {
@@ -36909,6 +38927,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TeamUpsertWithoutCyclesInput = {
@@ -36983,6 +39002,7 @@ export namespace Prisma {
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutLabelsInput = {
@@ -37002,6 +39022,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutLabelsInput = {
@@ -37089,6 +39110,7 @@ export namespace Prisma {
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutLabelsInput = {
@@ -37108,6 +39130,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TeamUpsertWithoutLabelsInput = {
@@ -37191,6 +39214,7 @@ export namespace Prisma {
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutIssuesInput = {
@@ -37210,6 +39234,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutIssuesInput = {
@@ -37516,6 +39541,49 @@ export namespace Prisma {
     data: NotificationCreateManyIssueInput | NotificationCreateManyIssueInput[]
   }
 
+  export type GitHubPullRequestCreateWithoutIssueInput = {
+    id?: string
+    githubId: string
+    number: number
+    title: string
+    url: string
+    status?: $Enums.PullRequestStatus
+    branch: string
+    baseBranch: string
+    author: string
+    repository: string
+    mergedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutPullRequestsInput
+  }
+
+  export type GitHubPullRequestUncheckedCreateWithoutIssueInput = {
+    id?: string
+    githubId: string
+    number: number
+    title: string
+    url: string
+    status?: $Enums.PullRequestStatus
+    branch: string
+    baseBranch: string
+    author: string
+    repository: string
+    mergedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspaceId: string
+  }
+
+  export type GitHubPullRequestCreateOrConnectWithoutIssueInput = {
+    where: GitHubPullRequestWhereUniqueInput
+    create: XOR<GitHubPullRequestCreateWithoutIssueInput, GitHubPullRequestUncheckedCreateWithoutIssueInput>
+  }
+
+  export type GitHubPullRequestCreateManyIssueInputEnvelope = {
+    data: GitHubPullRequestCreateManyIssueInput | GitHubPullRequestCreateManyIssueInput[]
+  }
+
   export type WorkspaceUpsertWithoutIssuesInput = {
     update: XOR<WorkspaceUpdateWithoutIssuesInput, WorkspaceUncheckedUpdateWithoutIssuesInput>
     create: XOR<WorkspaceCreateWithoutIssuesInput, WorkspaceUncheckedCreateWithoutIssuesInput>
@@ -37544,6 +39612,7 @@ export namespace Prisma {
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutIssuesInput = {
@@ -37563,6 +39632,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TeamUpsertWithoutIssuesInput = {
@@ -37852,6 +39922,22 @@ export namespace Prisma {
     data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutIssueInput>
   }
 
+  export type GitHubPullRequestUpsertWithWhereUniqueWithoutIssueInput = {
+    where: GitHubPullRequestWhereUniqueInput
+    update: XOR<GitHubPullRequestUpdateWithoutIssueInput, GitHubPullRequestUncheckedUpdateWithoutIssueInput>
+    create: XOR<GitHubPullRequestCreateWithoutIssueInput, GitHubPullRequestUncheckedCreateWithoutIssueInput>
+  }
+
+  export type GitHubPullRequestUpdateWithWhereUniqueWithoutIssueInput = {
+    where: GitHubPullRequestWhereUniqueInput
+    data: XOR<GitHubPullRequestUpdateWithoutIssueInput, GitHubPullRequestUncheckedUpdateWithoutIssueInput>
+  }
+
+  export type GitHubPullRequestUpdateManyWithWhereWithoutIssueInput = {
+    where: GitHubPullRequestScalarWhereInput
+    data: XOR<GitHubPullRequestUpdateManyMutationInput, GitHubPullRequestUncheckedUpdateManyWithoutIssueInput>
+  }
+
   export type IssueCreateWithoutLabelsInput = {
     id?: string
     identifier: string
@@ -37872,6 +39958,7 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutIssueInput
     history?: IssueHistoryCreateNestedManyWithoutIssueInput
     notifications?: NotificationCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateWithoutLabelsInput = {
@@ -37894,6 +39981,7 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutIssueInput
     history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueCreateOrConnectWithoutLabelsInput = {
@@ -37955,6 +40043,7 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateWithoutLabelsInput = {
@@ -37977,6 +40066,7 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type LabelUpsertWithoutIssueLabelsInput = {
@@ -38028,6 +40118,7 @@ export namespace Prisma {
     labels?: IssueLabelCreateNestedManyWithoutIssueInput
     history?: IssueHistoryCreateNestedManyWithoutIssueInput
     notifications?: NotificationCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateWithoutCommentsInput = {
@@ -38050,6 +40141,7 @@ export namespace Prisma {
     labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput
     history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueCreateOrConnectWithoutCommentsInput = {
@@ -38137,6 +40229,7 @@ export namespace Prisma {
     labels?: IssueLabelUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateWithoutCommentsInput = {
@@ -38159,6 +40252,7 @@ export namespace Prisma {
     labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type UserUpsertWithoutCommentsInput = {
@@ -38236,6 +40330,7 @@ export namespace Prisma {
     labels?: IssueLabelCreateNestedManyWithoutIssueInput
     comments?: CommentCreateNestedManyWithoutIssueInput
     notifications?: NotificationCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateWithoutHistoryInput = {
@@ -38258,6 +40353,7 @@ export namespace Prisma {
     labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput
     comments?: CommentUncheckedCreateNestedManyWithoutIssueInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueCreateOrConnectWithoutHistoryInput = {
@@ -38345,6 +40441,7 @@ export namespace Prisma {
     labels?: IssueLabelUpdateManyWithoutIssueNestedInput
     comments?: CommentUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateWithoutHistoryInput = {
@@ -38367,6 +40464,7 @@ export namespace Prisma {
     labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput
     comments?: CommentUncheckedUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type UserUpsertWithoutIssueHistoryInput = {
@@ -38490,6 +40588,7 @@ export namespace Prisma {
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutNotificationsInput = {
@@ -38509,6 +40608,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutNotificationsInput = {
@@ -38536,6 +40636,7 @@ export namespace Prisma {
     labels?: IssueLabelCreateNestedManyWithoutIssueInput
     comments?: CommentCreateNestedManyWithoutIssueInput
     history?: IssueHistoryCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutIssueInput
   }
 
   export type IssueUncheckedCreateWithoutNotificationsInput = {
@@ -38558,6 +40659,7 @@ export namespace Prisma {
     labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput
     comments?: CommentUncheckedCreateNestedManyWithoutIssueInput
     history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutIssueInput
   }
 
   export type IssueCreateOrConnectWithoutNotificationsInput = {
@@ -38697,6 +40799,7 @@ export namespace Prisma {
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutNotificationsInput = {
@@ -38716,6 +40819,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type IssueUpsertWithoutNotificationsInput = {
@@ -38749,6 +40853,7 @@ export namespace Prisma {
     labels?: IssueLabelUpdateManyWithoutIssueNestedInput
     comments?: CommentUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateWithoutNotificationsInput = {
@@ -38771,6 +40876,7 @@ export namespace Prisma {
     labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput
     comments?: CommentUncheckedUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type UserUpsertWithoutNotificationsTriggeredInput = {
@@ -38894,6 +41000,7 @@ export namespace Prisma {
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutNotificationPreferencesInput = {
@@ -38913,6 +41020,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutNotificationPreferencesInput = {
@@ -39003,6 +41111,7 @@ export namespace Prisma {
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutNotificationPreferencesInput = {
@@ -39022,6 +41131,7 @@ export namespace Prisma {
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceCreateWithoutTemplatesInput = {
@@ -39041,6 +41151,7 @@ export namespace Prisma {
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutTemplatesInput = {
@@ -39060,6 +41171,7 @@ export namespace Prisma {
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutTemplatesInput = {
@@ -39128,6 +41240,7 @@ export namespace Prisma {
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutTemplatesInput = {
@@ -39147,6 +41260,7 @@ export namespace Prisma {
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TeamUpsertWithoutTemplatesInput = {
@@ -39205,6 +41319,7 @@ export namespace Prisma {
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutAutomationRulesInput = {
@@ -39224,6 +41339,7 @@ export namespace Prisma {
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
     automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutAutomationRulesInput = {
@@ -39323,6 +41439,7 @@ export namespace Prisma {
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutAutomationRulesInput = {
@@ -39342,6 +41459,7 @@ export namespace Prisma {
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TeamUpsertWithoutAutomationRulesInput = {
@@ -39451,6 +41569,7 @@ export namespace Prisma {
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutAutomationLogsInput = {
@@ -39470,6 +41589,7 @@ export namespace Prisma {
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
     automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
+    pullRequests?: GitHubPullRequestUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutAutomationLogsInput = {
@@ -39546,6 +41666,7 @@ export namespace Prisma {
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutAutomationLogsInput = {
@@ -39565,6 +41686,211 @@ export namespace Prisma {
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
     automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type IssueCreateWithoutPullRequestsInput = {
+    id?: string
+    identifier: string
+    number: number
+    title: string
+    description?: string | null
+    status?: $Enums.IssueStatus
+    priority?: $Enums.Priority
+    dueDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutIssuesInput
+    team: TeamCreateNestedOneWithoutIssuesInput
+    project?: ProjectCreateNestedOneWithoutIssuesInput
+    cycle?: CycleCreateNestedOneWithoutIssuesInput
+    assignee?: UserCreateNestedOneWithoutAssignedIssuesInput
+    creator: UserCreateNestedOneWithoutCreatedIssuesInput
+    labels?: IssueLabelCreateNestedManyWithoutIssueInput
+    comments?: CommentCreateNestedManyWithoutIssueInput
+    history?: IssueHistoryCreateNestedManyWithoutIssueInput
+    notifications?: NotificationCreateNestedManyWithoutIssueInput
+  }
+
+  export type IssueUncheckedCreateWithoutPullRequestsInput = {
+    id?: string
+    identifier: string
+    number: number
+    title: string
+    description?: string | null
+    status?: $Enums.IssueStatus
+    priority?: $Enums.Priority
+    dueDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspaceId: string
+    teamId: string
+    projectId?: string | null
+    cycleId?: string | null
+    assigneeId?: string | null
+    creatorId: string
+    labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput
+    comments?: CommentUncheckedCreateNestedManyWithoutIssueInput
+    history?: IssueHistoryUncheckedCreateNestedManyWithoutIssueInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutIssueInput
+  }
+
+  export type IssueCreateOrConnectWithoutPullRequestsInput = {
+    where: IssueWhereUniqueInput
+    create: XOR<IssueCreateWithoutPullRequestsInput, IssueUncheckedCreateWithoutPullRequestsInput>
+  }
+
+  export type WorkspaceCreateWithoutPullRequestsInput = {
+    id?: string
+    name: string
+    slug: string
+    settings?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: WorkspaceMemberCreateNestedManyWithoutWorkspaceInput
+    teams?: TeamCreateNestedManyWithoutWorkspaceInput
+    projects?: ProjectCreateNestedManyWithoutWorkspaceInput
+    issues?: IssueCreateNestedManyWithoutWorkspaceInput
+    cycles?: CycleCreateNestedManyWithoutWorkspaceInput
+    labels?: LabelCreateNestedManyWithoutWorkspaceInput
+    notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
+    notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceUncheckedCreateWithoutPullRequestsInput = {
+    id?: string
+    name: string
+    slug: string
+    settings?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput
+    teams?: TeamUncheckedCreateNestedManyWithoutWorkspaceInput
+    projects?: ProjectUncheckedCreateNestedManyWithoutWorkspaceInput
+    issues?: IssueUncheckedCreateNestedManyWithoutWorkspaceInput
+    cycles?: CycleUncheckedCreateNestedManyWithoutWorkspaceInput
+    labels?: LabelUncheckedCreateNestedManyWithoutWorkspaceInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
+    notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceCreateOrConnectWithoutPullRequestsInput = {
+    where: WorkspaceWhereUniqueInput
+    create: XOR<WorkspaceCreateWithoutPullRequestsInput, WorkspaceUncheckedCreateWithoutPullRequestsInput>
+  }
+
+  export type IssueUpsertWithoutPullRequestsInput = {
+    update: XOR<IssueUpdateWithoutPullRequestsInput, IssueUncheckedUpdateWithoutPullRequestsInput>
+    create: XOR<IssueCreateWithoutPullRequestsInput, IssueUncheckedCreateWithoutPullRequestsInput>
+    where?: IssueWhereInput
+  }
+
+  export type IssueUpdateToOneWithWhereWithoutPullRequestsInput = {
+    where?: IssueWhereInput
+    data: XOR<IssueUpdateWithoutPullRequestsInput, IssueUncheckedUpdateWithoutPullRequestsInput>
+  }
+
+  export type IssueUpdateWithoutPullRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    identifier?: StringFieldUpdateOperationsInput | string
+    number?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutIssuesNestedInput
+    team?: TeamUpdateOneRequiredWithoutIssuesNestedInput
+    project?: ProjectUpdateOneWithoutIssuesNestedInput
+    cycle?: CycleUpdateOneWithoutIssuesNestedInput
+    assignee?: UserUpdateOneWithoutAssignedIssuesNestedInput
+    creator?: UserUpdateOneRequiredWithoutCreatedIssuesNestedInput
+    labels?: IssueLabelUpdateManyWithoutIssueNestedInput
+    comments?: CommentUpdateManyWithoutIssueNestedInput
+    history?: IssueHistoryUpdateManyWithoutIssueNestedInput
+    notifications?: NotificationUpdateManyWithoutIssueNestedInput
+  }
+
+  export type IssueUncheckedUpdateWithoutPullRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    identifier?: StringFieldUpdateOperationsInput | string
+    number?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    teamId?: StringFieldUpdateOperationsInput | string
+    projectId?: NullableStringFieldUpdateOperationsInput | string | null
+    cycleId?: NullableStringFieldUpdateOperationsInput | string | null
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    creatorId?: StringFieldUpdateOperationsInput | string
+    labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutIssueNestedInput
+    history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
+  }
+
+  export type WorkspaceUpsertWithoutPullRequestsInput = {
+    update: XOR<WorkspaceUpdateWithoutPullRequestsInput, WorkspaceUncheckedUpdateWithoutPullRequestsInput>
+    create: XOR<WorkspaceCreateWithoutPullRequestsInput, WorkspaceUncheckedCreateWithoutPullRequestsInput>
+    where?: WorkspaceWhereInput
+  }
+
+  export type WorkspaceUpdateToOneWithWhereWithoutPullRequestsInput = {
+    where?: WorkspaceWhereInput
+    data: XOR<WorkspaceUpdateWithoutPullRequestsInput, WorkspaceUncheckedUpdateWithoutPullRequestsInput>
+  }
+
+  export type WorkspaceUpdateWithoutPullRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput
+    teams?: TeamUpdateManyWithoutWorkspaceNestedInput
+    projects?: ProjectUpdateManyWithoutWorkspaceNestedInput
+    issues?: IssueUpdateManyWithoutWorkspaceNestedInput
+    cycles?: CycleUpdateManyWithoutWorkspaceNestedInput
+    labels?: LabelUpdateManyWithoutWorkspaceNestedInput
+    notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
+    notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type WorkspaceUncheckedUpdateWithoutPullRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput
+    teams?: TeamUncheckedUpdateManyWithoutWorkspaceNestedInput
+    projects?: ProjectUncheckedUpdateManyWithoutWorkspaceNestedInput
+    issues?: IssueUncheckedUpdateManyWithoutWorkspaceNestedInput
+    cycles?: CycleUncheckedUpdateManyWithoutWorkspaceNestedInput
+    labels?: LabelUncheckedUpdateManyWithoutWorkspaceNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
+    notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type SessionCreateManyUserInput = {
@@ -39889,6 +42215,7 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateWithoutAssigneeInput = {
@@ -39911,6 +42238,7 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateManyWithoutAssigneeInput = {
@@ -39951,6 +42279,7 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateWithoutCreatorInput = {
@@ -39973,6 +42302,7 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateManyWithoutCreatorInput = {
@@ -40292,6 +42622,23 @@ export namespace Prisma {
     issueId?: string | null
   }
 
+  export type GitHubPullRequestCreateManyWorkspaceInput = {
+    id?: string
+    githubId: string
+    number: number
+    title: string
+    url: string
+    status?: $Enums.PullRequestStatus
+    branch: string
+    baseBranch: string
+    author: string
+    repository: string
+    mergedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    issueId: string
+  }
+
   export type WorkspaceMemberUpdateWithoutWorkspaceInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole
@@ -40410,6 +42757,7 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateWithoutWorkspaceInput = {
@@ -40432,6 +42780,7 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateManyWithoutWorkspaceInput = {
@@ -40713,6 +43062,57 @@ export namespace Prisma {
     issueId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type GitHubPullRequestUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    githubId?: StringFieldUpdateOperationsInput | string
+    number?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    status?: EnumPullRequestStatusFieldUpdateOperationsInput | $Enums.PullRequestStatus
+    branch?: StringFieldUpdateOperationsInput | string
+    baseBranch?: StringFieldUpdateOperationsInput | string
+    author?: StringFieldUpdateOperationsInput | string
+    repository?: StringFieldUpdateOperationsInput | string
+    mergedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    issue?: IssueUpdateOneRequiredWithoutPullRequestsNestedInput
+  }
+
+  export type GitHubPullRequestUncheckedUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    githubId?: StringFieldUpdateOperationsInput | string
+    number?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    status?: EnumPullRequestStatusFieldUpdateOperationsInput | $Enums.PullRequestStatus
+    branch?: StringFieldUpdateOperationsInput | string
+    baseBranch?: StringFieldUpdateOperationsInput | string
+    author?: StringFieldUpdateOperationsInput | string
+    repository?: StringFieldUpdateOperationsInput | string
+    mergedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    issueId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GitHubPullRequestUncheckedUpdateManyWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    githubId?: StringFieldUpdateOperationsInput | string
+    number?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    status?: EnumPullRequestStatusFieldUpdateOperationsInput | $Enums.PullRequestStatus
+    branch?: StringFieldUpdateOperationsInput | string
+    baseBranch?: StringFieldUpdateOperationsInput | string
+    author?: StringFieldUpdateOperationsInput | string
+    repository?: StringFieldUpdateOperationsInput | string
+    mergedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    issueId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type ProjectCreateManyTeamInput = {
     id?: string
     name: string
@@ -40853,6 +43253,7 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateWithoutTeamInput = {
@@ -40875,6 +43276,7 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateManyWithoutTeamInput = {
@@ -41083,6 +43485,7 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateWithoutProjectInput = {
@@ -41105,6 +43508,7 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateManyWithoutProjectInput = {
@@ -41163,6 +43567,7 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateWithoutCycleInput = {
@@ -41185,6 +43590,7 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutIssueNestedInput
     history?: IssueHistoryUncheckedUpdateManyWithoutIssueNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutIssueNestedInput
+    pullRequests?: GitHubPullRequestUncheckedUpdateManyWithoutIssueNestedInput
   }
 
   export type IssueUncheckedUpdateManyWithoutCycleInput = {
@@ -41258,6 +43664,23 @@ export namespace Prisma {
     workspaceId: string
     actorId?: string | null
     mentionedInComment?: boolean
+  }
+
+  export type GitHubPullRequestCreateManyIssueInput = {
+    id?: string
+    githubId: string
+    number: number
+    title: string
+    url: string
+    status?: $Enums.PullRequestStatus
+    branch: string
+    baseBranch: string
+    author: string
+    repository: string
+    mergedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspaceId: string
   }
 
   export type IssueLabelUpdateWithoutIssueInput = {
@@ -41363,6 +43786,57 @@ export namespace Prisma {
     workspaceId?: StringFieldUpdateOperationsInput | string
     actorId?: NullableStringFieldUpdateOperationsInput | string | null
     mentionedInComment?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type GitHubPullRequestUpdateWithoutIssueInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    githubId?: StringFieldUpdateOperationsInput | string
+    number?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    status?: EnumPullRequestStatusFieldUpdateOperationsInput | $Enums.PullRequestStatus
+    branch?: StringFieldUpdateOperationsInput | string
+    baseBranch?: StringFieldUpdateOperationsInput | string
+    author?: StringFieldUpdateOperationsInput | string
+    repository?: StringFieldUpdateOperationsInput | string
+    mergedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutPullRequestsNestedInput
+  }
+
+  export type GitHubPullRequestUncheckedUpdateWithoutIssueInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    githubId?: StringFieldUpdateOperationsInput | string
+    number?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    status?: EnumPullRequestStatusFieldUpdateOperationsInput | $Enums.PullRequestStatus
+    branch?: StringFieldUpdateOperationsInput | string
+    baseBranch?: StringFieldUpdateOperationsInput | string
+    author?: StringFieldUpdateOperationsInput | string
+    repository?: StringFieldUpdateOperationsInput | string
+    mergedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GitHubPullRequestUncheckedUpdateManyWithoutIssueInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    githubId?: StringFieldUpdateOperationsInput | string
+    number?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    status?: EnumPullRequestStatusFieldUpdateOperationsInput | $Enums.PullRequestStatus
+    branch?: StringFieldUpdateOperationsInput | string
+    baseBranch?: StringFieldUpdateOperationsInput | string
+    author?: StringFieldUpdateOperationsInput | string
+    repository?: StringFieldUpdateOperationsInput | string
+    mergedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
   }
 
   export type AutomationLogCreateManyRuleInput = {

@@ -349,6 +349,24 @@ exports.Prisma.AutomationLogScalarFieldEnum = {
   issueId: 'issueId'
 };
 
+exports.Prisma.GitHubPullRequestScalarFieldEnum = {
+  id: 'id',
+  githubId: 'githubId',
+  number: 'number',
+  title: 'title',
+  url: 'url',
+  status: 'status',
+  branch: 'branch',
+  baseBranch: 'baseBranch',
+  author: 'author',
+  repository: 'repository',
+  mergedAt: 'mergedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  issueId: 'issueId',
+  workspaceId: 'workspaceId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -416,6 +434,13 @@ exports.AutomationLogStatus = exports.$Enums.AutomationLogStatus = {
   SKIPPED: 'SKIPPED'
 };
 
+exports.PullRequestStatus = exports.$Enums.PullRequestStatus = {
+  OPEN: 'OPEN',
+  MERGED: 'MERGED',
+  CLOSED: 'CLOSED',
+  DRAFT: 'DRAFT'
+};
+
 exports.Prisma.ModelName = {
   Post: 'Post',
   User: 'User',
@@ -436,7 +461,8 @@ exports.Prisma.ModelName = {
   NotificationPreferences: 'NotificationPreferences',
   Template: 'Template',
   AutomationRule: 'AutomationRule',
-  AutomationLog: 'AutomationLog'
+  AutomationLog: 'AutomationLog',
+  GitHubPullRequest: 'GitHubPullRequest'
 };
 
 /**

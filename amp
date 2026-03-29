@@ -1,0 +1,516 @@
+$ biome check .
+$ biome check .
+src/app/(app)/cyclessrc/app/(app)/cycles/[id]/analytics/page.tsx:/[id]/analytics/page.tsx:88:44 88:44 lint/suspicious/noExlint/suspicious/noExplicitAny plicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━
+
+  !   ! Unexpected anyUnexpected any. Specify a di. Specify a different type.
+fferent type.
+  
+  
+    8    87 │ 7 │ 	cons	const { cycle, st { cycle, summary, issuummary, issuesByStatus }esByStatus } = cycleData = cycleData;
+  > 88 │;
+  > 88 │ 	co 	const pieData nst pieData = issuesBySt= issuesByStatus.filter(atus.filter((d: any) => (d: any) => d.value > 0)d.value > 0);
+       │ ;
+       │ 	    	                                                                     ^           ^^^
+    89 │ ^^
+    89 │ 	const velo	const velocityChcityChartDatartData = velocitya = velocityData?.cyclesData?.cycles.slice(0, 6).slice(0, 6) ?? [];
+     ?? [];
+    90 │ 	const 90 │ 	const avgCycleTimeavgCycleTime = cycleData = cycleData.avgCycleTi.avgCycleTime;
+  
+me;
+  
+  i a  i any disables mny disables many type checany type checking rules. Iking rules. Its use shouldts use should be avoided.
+ be avoided.
+  
+
+src/ap  
+
+src/app/(app)/cyclep/(app)/cycles/[id]/analytis/[id]/analytics/page.tsxcs/page.tsx:213::213:32 lint/suspic32 lint/suspicious/noExplicious/noExplicitAny ━itAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━
+
+  ! Une  ! Unexpected any. xpected any. Specify a difSpecify a differenferent type.
+  
+t type.
+  
+    2    211 │ 								11 │ 										paddingAng		paddingAngle={5}
+    2le={5}
+    212 │ 						12 │ 									>
+  > 213			>
+  > 213 │ 									 │ 										{pieData.ma	{pieData.map((entry: ap((entry: any) => (
+   ny) => (
+        │ 					     │ 															                                          ^^^
+    214 ^^^
+    214 │ 				│ 											<Cell							<Cell
+    215 │ 	
+    215 │ 												f											fill={entry.cill={entry.color}
+  
+  iolor}
+  
+  i any disables any disables many type ch many type checking rules. Its use secking rules. Its use should be avoidehould be avoided.
+  
+
+src/d.
+  
+
+src/app/(app)/setapp/(app)/settings/api-keytings/api-keys/page.tsxs/page.tsx:2:8 li:2:8 lint/correctnesnt/correctness/noUnusedImps/noUnusedImports  FIXABLEorts  FIXABLE  ━━━━━━  ━━━━━━━━━━━━
+
+━━━━━━
+
+  ! T  ! This import is uhis import is unused.
+  
+nused.
+  
+    1 │     1 │ import { Keyimport { Key, Lock } fro, Lock } from "lucide-rem "lucide-react";
+  > 2 │ imporact";
+  > 2 │ import { Button }t { Button } from "@/com from "@/components/ui/bponents/ui/button";
+    utton";
+      │        ^  │        ^^^^^^^^^^
+  ^^^^^^^^^
+    3 │ 
+    4 │ exp  3 │ 
+    4 │ export default fort default function ApiKunction ApiKeysPage() {
+eysPage() {
+  
+  i Unuse  
+  i Unused imports migd imports might be the resht be the result of an incult of an incomplete refacomplete refactoring.
+  
+  toring.
+  
+  i Unsafe fixi Unsafe fix: Remove the : Remove the unused importunused imports.
+  
+s.
+  
+     1     1  1 │   imp  1 │   import { Key, Lort { Key, Lock } from "ock } from "lucide-reactlucide-react";";
+     2 
+     2    │ - imp   │ - importort·{·Button··{·Button·}·from·"@/co}·from·"@/components/ui/mponents/ui/button";
+     3  2 button";
+     3  2 │   │   
+     4  3 │
+     4  3 │   export de   export default functfault function Apion ApiKeysPage() iKeysPage() {
+  
+
+sr{
+  
+
+src/app/(app)/sc/app/(app)/settings/layouettings/layout.tsxt.tsx:2:8 lint/c:2:8 lint/correctness/noorrectness/noUnusedImportsUnusedImports  FIXABLE    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! T━━━
+
+  ! This import ihis import is unused.
+  
+s unused.
+  
+        1 │ import 1 │ import { Bell, Brus{ Bell, Brush, Key, Palh, Key, Palette, Settinette, Settings, User } gs, User } from "lucidefrom "lucide-react";
+  >-react";
+  > 2 │ import { headers } from  2 │ import { headers } from "next/head"next/headers";
+  ers";
+      │          │        ^^^^^^^  ^^^^^^^^^^^
+    ^^^^
+    3 │ impo3 │ import Link frt Link from "nexrom "next/link";
+t/link";
+    4 │ i    4 │ import { rmport { redirect edirect } from "n} from "next/naviext/navigation";
+gation";
+  
+  i U  
+  i Unused impnused imports mightorts might be the re be the result of ansult of an incomplete refacto incomplete refactoring.
+  
+ ring.
+  
+   i Unsafe fix: Remoi Unsafe fix: Remove the unuve the unussed importsed imports.
+  
+.
+  
+          1  1 │   1  1 │   import { import { Bell, BrBell, Brush, Key,ush, Key, Palette Palette, Setting, Settings, User s, User } from "l} from "lucide-reaucide-react";
+    ct";
+     2    │  2    │ - import·- import·{·header{·headers·}·froms·}·from·"next/he·"next/headers";
+aders";
+     3  2     3  2 │   impo │   import Link rt Link from "nfrom "next/link"ext/link";
+     4 ;
+     4  3 │   im 3 │   import { report { redirect }direct } from "ne from "next/navigxt/navigation";
+ation";
+  
+
+s  
+
+src/app/(arc/app/(app)/settinpp)/settings/layout.gs/layout.tsxtsx:28:8 :28:8 llint/correcint/correctness/noUtness/noUnusenusedVariabledVariables  FIXABLs  FIXABLE  ━E  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━
+
+    ! This va! This variable woriable workspace is unused.rkspace is unused.
+  
+
+  
+    26 │ 	});
+    26 │ 	});
+    27 │     27 │ 
+  > 28 │
+  > 28 │ 	const  	const workspaceworkspace = membe = membership?.worship?.workspace;rkspace;
+       │
+       │ 	      ^ 	      ^^^^^^^^^^^^^^^^^
+
+    29 │     29 │ 	const is	const isAdmin = Admin = membershimembership?.role p?.role ====== "ADMIN"; "ADMIN";
+    30 │
+    30 │ 
+  
+  i  
+  
+  i Unused vaUnused variables arriables are often the often the result oe result of typos, incompletef typos, incomplete refactors refactors, or othe, or other r sources ofsources of bugs.
+   bugs.
+  
+  i Unsa
+  i Unsafe fix: Ife fix: If this is f this is intentionintentional, prepenal, prepend workspad workspace with ace with an underscn underscoreore.
+  
+.
+  
+        26 26 │  26 26 │      });
+    });
+    27 27 │  27 27 │   
+    2   
+    28    │ - 8    │ - → const·→ const·workspacworkspace·=·membe·=·membership?.wership?.workspaceorkspace;
+       ;
+       28 │ + → 28 │ + → const·_wconst·_workspace·orkspace·=·member=·membershiship?.workspp?.workspace;
+    ace;
+    29 29 │  29 29 │     const   const isAdmin isAdmin = member = membership?.rolship?.role === "Ae === "ADMIN";
+  DMIN";
+    30 30 │   30 30 │   
+  
+  
+  
+
+src/app
+src/app/(app)/set/(app)/settings/proftings/profile/page.tsxile/page.tsx:3:1:3:100 lint/corr lint/correctness/noectness/noUnusedImpUnusedImportorts  s  FIXABLE  FIXABLE  ━━━━━━━━━━━━━━━━━
+
+━━━━━━━
+
+  ! Sev  ! Several of theral of these imporese imports are unts are unuseused.
+  
+d.
+  
+    1 │ "    1 │ "use clienuse client";
+    2t";
+    2 │ 
+  > 3 │ 
+  > 3 │ import │ import { Camer { Camera, User }a, User } from "l from "lucide-reaucide-react";
+   ct";
+        │        │          ^^^^^^   ^^^^^^
+    4 │ 
+    4 │ import {import { useStat useState } froe } from "react"m "react";
+    5 │;
+    5 │ import  import { { Avatar, Avatar, AvatarFalAvatarFallback, Alback, AvatarImagvatarImage } frome } from "@/compo "@/components/ui/nents/ui/avatar";avatar";
+  
+  i 
+  
+  i Unused impUnused imports mighorts might bt be the resue the result of an ilt of an incomplete ncomplete refactorirefactoring.
+  
+  ng.
+  
+  i Unsafe i Unsafe fix: Remofix: Remove ve the unusedthe unused imports. imports.
+  
+
+  
+    3     3 │ import·│ import·{·Camera{·Camera,·User·},·User·}·from·"lu·from·"lucide-reacide-react";
+   ct";
+      │       │          ---      --------   -----                                               
+    
+
+src
+src/app/(app/app/(app)/settings)/settings/workspace/workspace/page.tsx/page.tsx:3:36 lin:3:36 lint/correctnet/correctness/noUnusess/noUnusedImports  dImports  FIXABLE  FIXABLE  ━━━━━━━━━━━━━━━
+
+━━━━━
+
+  ! Se  ! Several of tveral of these impohese imporrts are unts are unused.
+  
+used.
+  
+    1     1 │ "use cl│ "use client";
+  ient";
+    2 │ 
+    2 │ 
+  > 3 │ imp> 3 │ import { Alort { AlertTriangertTriangle, Buildle, Building2, Ching2, CheckCircleeckCircle2, Trash2, Trash2 } fro2 } from "lucidem "lucide-react";
+-react";
+      │        │                                                               ^^       ^^^^^^^^^^^^^^^^^^^^^
+    4 │^
+    4 │ import  import {{ useRout useRouter } fromer } from "next/n "next/navigationavigation";
+    5 ";
+    5 │ import │ import { useSta{ useState } frote } from "react"m "react";
+  
+  i ;
+  
+  i Unused iUnused imports migmports might be theht be the resul result ot of an incomf an incomplete refplete refactoring.
+  actoring.
+  
+  i
+  i Unsafe f Unsafe fix: Removeix: Remove the unus the unused ed imports.
+imports.
+  
+  
+    3     3 │ import·│ import·{·AlertTr{·AlertTriangle,·iangle,·Building2Building2,·CheckC,·CheckCircle2,·ircle2,·Trash2·}·Trash2·}·from·"lucfrom·"lucide-reacide-react";
+     t";
+      │        │                                                               -------  --------------  -------                                                        
+
+
+
+src/compsrc/components/noonents/notificationtifications/notificas/notification-dropdtion-dropdown.tsxown.tsx:6:2 l:6:2 lint/correint/correctness/noctness/noUnusedImpoUnusedImports  FIXrts  FIXABLE  ABLE  ━━━━━━━━━━━━━━━━━
+
+━━━
+
+  ! Severa  ! Several of thesel of these imports  imports are unusare unused.
+  
+ed.
+  
+    4     4 │ 	AlertC│ 	AlertCircle,
+  ircle,
+    5 │ 	Be  5 │ 	Bell,
+  > ll,
+  > 6 │ 	Chec6 │ 	Check,
+      k,
+      │ 	^^^^^│ 	^^^^^
+    7 
+    7 │ 	CheckC│ 	CheckCheck,
+   heck,
+    8 │ 	Inb 8 │ 	Inbox,
+  
+ ox,
+  
+  i  i UnUnused impoused importrts might bs might be the resue the result of an lt of an incincompomplete refaclete refactoring.
+ toring.
+  
+  i  
+  i Unsafe fiUnsafe fix: Rx: Remove the unused imemove the unused imports.
+  
+ports.
+  
+      4       4   4 │      4 │     AlertCi AlertCircle,
+      5   5 │     Bell,
+      6     │rcle,
+      5   5 │     Bell,
+      6     │ - → Chec - → Check,
+     k,
+      7   6 │  7   6 │     Chec    CheckCheck,
+ kCheck,
+      8        8   7 │     I7 │     Inbox,
+nbox,
+  
+
+  
+
+src/composrc/components/notnents/notificatioifications/notificns/notification-dropation-dropdown.tsxdown.tsx:14:10 :14:10 lint/correlint/correctness/noUctness/noUnusedImpornusedImports  FIXABts  FIXABLE  ━LE  ━━━━━━━━━━━━━━━━━━━
+
+  ! S
+
+  ! Several of everal of these impthese imports are uorts are unused.
+  nused.
+  
+
+    12 │     12 │ } from "l} from "lucide-reucide-react";
+   act";
+    13 │ imp 13 │ import { usort { useRouter }eRouter } from "n from "next/navigext/navigation";
+ation";
+  > 14 │   > 14 │ import { import { useEffecuseEffectt, useSta, useState te } from "} from "react";
+ react";
+       │        │          ^        ^^^^^^^^^^^^^^^^^
+    15 │
+    15 │ import { import { Avatar, Avatar, Ava AvatarFallbatarFallback, Avatck, AvatarIarImage } fmage } from "@/corom "@/componentsmponents/ui/avata/ui/avatar";
+    r";
+    16 │ impo16 │ import { Butrt { Button } froton } from "@/comm "@/components/uponents/ui/buttoni/button";
+  
+  i";
+  
+  i  UnusUnused imported imports might s might be the resbe the result of an ult of an incompletincomplete e refactorinrefactoring.
+  
+  ig.
+  
+  i  Unsafe fix: ReUnsafe fix: Remove the umove the unused imponused imports.
+  
+rts.
+  
+    14    14 │ import │ import·{·useEf·{·useEffefect,·useSct,·useStattate·}·frome·}·from·"·"react";
+react";
+          │        │          ---      ----------- --------                                          
+     
+
+src
+src/c/componentsomponents/realtime//realtime/active-editors.tsxactive-editors.tsx:22:4:22:4 lint/st lint/styleyle/noN/noNonNullAsseonNullAssertion  FIrtion  FIXABLXABLE  ━━E  ━━━━━━━━━━━━
+
+  ! ━━━━━━━━━━
+
+  ! Forbidden Forbidden non-null anon-null assertion.ssertion.
+  
+ 
+  
+    20 │ 	   20 │ 				acc[e			acc[editor.fieditor.field] = []ld] = [];
+    21 ;
+    21 │ 			}
+  │ 			}
+  > 22 │ 		> 22 │ 			acc[edi	acc[editotor.field]!r.field]!.push(ed.push(editor);
+  itor);
+       │ 		     │ 			^^^^^^^	^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    23^^
+    23 │ 			ret │ 			return acc;urn acc;
+    24 │
+    24 │ 		},
+   		},
+  
+  
+  i i UnsUnsafe fix: afe fix: RepReplace with lace with optional coptional chain operhain operator ?. Tator ?. This operahis operator inclutor includes runtimdes runtime checks,e checks, so so it is saf it is safer than ter than the he compile-oncompile-only non-nuly non-null assertion operatll assertion operator
+  
+or
+  
+    20 20     20 20 │       │           acc[e    acc[editor.fiditor.field] = [eld] = [];];
+    21 2
+    21 21 │     1 │         }
+       }
+    22    │  22    │ - → → → a- → → → acc[editorcc[editor.field]!.field]!.push(edi.push(editor);
+   tor);
+       22 │     22 │ + → → → a+ → → → acc[editorcc[editor.field]?.field]?.push(edi.push(editor);
+    23 23 tor);
+    23 23 │        │         return  return acc;
+    acc;
+    24 24 │  24 24 │       },
+      },
+  
+
+src 
+
+src/component/components/realtims/realtime/reale/realtime-providtime-provider.tsxer.tsx::46:2 lin46:2 lint/corrt/correctness/noectness/noUnusedFuncUnusedFunctionParametionParameters ters ━━━━━━━━━━━━━━━━━━━
+
+━
+
+    ! This pa! This parameter irameter is unused.
+s unused.
+  
+  
+        44 │ 	wor44 │ 	workspaceIdkspaceId,
+,
+    45 │     45 │ 	userId,	userId,
+  > 46 │
+  > 46 │ 	userNa 	userName,
+     me,
+       │ 	^^^^  │ 	^^^^^^^^
+    ^^^^
+    47 │ }: R47 │ }: RealtimePealtimeProvroviderPropsiderProps) {
+    4) {
+    48 │ 	cons8 │ 	const [activt [activeEditors,eEditors, setActiv setActiveEditorseEditors] = useSt] = useState<
+  
+ ate<
+  
+  i  i UnUnused paramused parameters migeters might be the ht be the result of result of an incomplete refaan incomplete refactoring.
+ ctoring.
+  
+
+src/h 
+
+src/hooks/use-realtimooks/use-realtime.tse.ts:8:6 :8:6 lint/correlint/correctness/noUnusedVctness/noUnusedVariables ariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━
+
+
+  !  ! This typ This type alias Re alias RealtimeEveealtimeEvent is ununt is unused.
+  
+sed.
+  
+     6 │ t     6 │ type Conneype ConnectionStatctionStatus = "cous = "connecting"nnecting" | "conn | "connected" | ected" | "disconn"disconnected" | ected" | "error";"error";
+     7 │
+     7 │ 
+   > 8  
+   > 8 │ type Re│ type RealtimeEvaltimeEvent =
+   ent =
+       │        │      ^^^^^^^^^^^^  ^^^^^^^^^^^^^
+     9 │^
+     9 │ 	| { ty 	| { type: "connpe: "connected"; ected"; data: { data: { connectedconnected: boolea: boolean; userIdn; userId: string: string } }
+     } }
+    10 │ 	| {10 │ 	| { type: " type: "ping"; daping"; data: Recota: Record<stringrd<string, never>, never> }
+  
+  i }
+  
+  i Unused v Unused variables ariables are often are often the resulthe result t of typos, of typos, incomplete refactincomplete refactors, or otors, or other sourceher sources of bugss of bugs.
+  
+
+sr.
+  
+
+src/server/gc/server/github/clieithub/client.tsnt.ts:20:6:20:6  lint/compllint/complexity/useOptionalexity/useOptionalChain  FIXChain  FIXABLE  ABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━
+
+  ! Chan  ! Change to an ge to an opoptional chational chain.
+  
+in.
+  
+    18    18 │ ): { o │ ): { owner: strwner: string; reping; repo:o: string; string; number:  number: number } number } | null {
+    19 │ 	const match = url.match| null {
+    19 │ 	const match = url.match(/gi(/github\.comthub\.com\/([^/]+)\/([^/]+)\/pull\/([^/]+)\/([^/]+)\/pull\/(\\/(\d+)/);
+  d+)/);
+  > 20 │ 	> 20 │ 	iif (!matcf (!match |h || !match| !match[1] || !m[1] || !match[2] atch[2] || || !match[3!match[3]) return]) return null;
+   null;
+       │ 	      │ 	    ^^^^^   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    2^^^
+    21 │ 	retu1 │ 	return {
+    rn {
+    22 │ 		ow22 │ 		owner: matner: match[1],
+  ch[1],
+  
+  i Unsa
+  i Unsafe fix: Chfe fix: Change to aange to an optionaln optional chain.
+  chain.
+  
+ 
+          18 18  18 │   ): { own 18 │   ): { ownerer: string: string; r; repo: striepo: string; numbng; number: numbeer: number } | nur } | null {
+    ll {
+     19  19 │ 19  19 │     con     const match st match = url.ma= url.match(/githtch(/github\.com\ub\.com\/([^/]+)\/([^/]+)\/([^/]+)/([^/]+)\/pull\/(\/pull\/(\d+)/);
+\d+)/);
+     20       20     │ -   │ - → if·(!m → if·(!match·||·atch·||·!match[1!match[1]·||·!ma]·||·!matctch[2]·||·h[2]·||·!ma!match[3])·rtch[3])·return·nueturn·null;
+     ll;
+         20 │     20 │ + → if·(!match?.+ → if·(!match?.[1]·||·!m[1]·||·!match[2]·|atch[2]·||·!match|·!match[3])·retu[3])·return·null;rn·null;
+     21 
+     21  21 │     21 │     return  return {
+     22{
+     22  22 │     22 │       owne    owner: match[r: match[1],
+  
+1],
+  
+
+src
+src/server/gi/server/github/cliethub/client.tsnt.ts:187:10 :187:10 lint/suspilint/suspicious/noAscious/noAssignInExpsignInExpressionressions ━━━s ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━
+
+   × The a × The assssignment signment should not hould not be in an be in an expressionexpression.
+  
+.
+  
+    18    185 │ 	let 5 │ 	let match: Rmatch: RegExpExecegExpExecArray | Array | nunull;
+    ll;
+    186 │ 
+  186 │ 
+  > 187 │ 	> 187 │ 	while ((while ((match = match = regregex.exec(mex.exec(message))essage)) !== null !== null) {
+     ) {
+        │ 	      │ 	        ^^^^     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    188^
+    188 │ 		if ( │ 		if (match[1]match[1]) {) {
+    189 
+    189 │ 			matc│ 			matches.push(hes.push(match[1]match[1].toUpperC.toUpperCase());
+ase());
+    
+  i Th
+  i The use of assignments in expresse use of assignments in expressions is coions is confusing.
+ nfusing.
+    Expres   Expressions are sions are often consoften considered asidered as side-effe side-effect free.
+ct free.
+  
+
+  
+
+check ━━━━━━check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━
+
+  × Some  × Some e errors wererrors were emitted w emitted while runnihile running checks.ng checks.
+  
+
+
+  
+
+error: script "check" exited with code 1
+error: script "check" exited with code 1
