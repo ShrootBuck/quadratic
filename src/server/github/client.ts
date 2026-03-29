@@ -182,12 +182,13 @@ export function extractIssueReferences(message: string): string[] {
 	// Match patterns like "fixes ENG-123", "closes ENG-123", "ENG-123"
 	const regex = /(?:fixes|closes|resolves|fix|close|resolve)?\s*([A-Z]+-\d+)/gi;
 	const matches: string[] = [];
-	let match: RegExpExecArray | null;
 
-	while ((match = regex.exec(message)) !== null) {
+	let match = regex.exec(message);
+	while (match !== null) {
 		if (match[1]) {
 			matches.push(match[1].toUpperCase());
 		}
+		match = regex.exec(message);
 	}
 
 	return [...new Set(matches)]; // Remove duplicates

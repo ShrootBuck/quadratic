@@ -379,7 +379,7 @@
 				"Branch name generation from issue (feature/ENG-123-fix-login)",
 				"API rate limiting and caching for GitHub requests"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "time-tracking",
