@@ -22,6 +22,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useCurrentWorkspace } from "@/hooks/use-current-workspace";
 import { cn } from "@/lib/utils";
 import { api } from "~/trpc/react";
 
@@ -45,8 +46,7 @@ export default function CyclesPage() {
 		teamId: "",
 	});
 
-	// For now, we'll use a mock workspace ID since we're in single-workspace mode
-	const workspaceId = "clz1234567890";
+	const { workspaceId } = useCurrentWorkspace();
 
 	const { data: cyclesData, isLoading } = api.cycle.list.useQuery({
 		workspaceId,

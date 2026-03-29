@@ -18,6 +18,7 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useCurrentWorkspace } from "@/hooks/use-current-workspace";
 import { api } from "~/trpc/react";
 
 type IssueStatus = "BACKLOG" | "TODO" | "IN_PROGRESS" | "DONE" | "CANCELLED";
@@ -47,8 +48,7 @@ export default function IssuesPage() {
 	const [showFilters, setShowFilters] = useState(true);
 	const [createModalOpen, setCreateModalOpen] = useState(false);
 
-	// For now, we'll use a mock workspace ID since we're in single-workspace mode
-	const workspaceId = "clz1234567890";
+	const { workspaceId } = useCurrentWorkspace();
 
 	const { data, isLoading } = api.issue.list.useQuery({
 		workspaceId,

@@ -35,6 +35,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useCurrentWorkspace } from "@/hooks/use-current-workspace";
 import { api } from "~/trpc/react";
 
 type IssueStatus = "BACKLOG" | "TODO" | "IN_PROGRESS" | "DONE" | "CANCELLED";
@@ -377,7 +378,7 @@ export default function TemplatesPage() {
 		isDefault?: boolean;
 	} | null>(null);
 
-	const workspaceId = "clz1234567890";
+	const { workspaceId } = useCurrentWorkspace();
 	const { data: templates, isLoading } = api.template.list.useQuery({
 		workspaceId,
 	});

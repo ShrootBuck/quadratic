@@ -31,6 +31,7 @@ import { api } from "~/trpc/react";
 
 interface SidebarProps {
 	className?: string;
+	workspaceId: string;
 }
 
 const mainNavItems = [
@@ -94,16 +95,26 @@ const mockTeams = [
 	{ id: "2", name: "Design", key: "DES", color: "#F87171" },
 ];
 
-function ProjectsList({ collapsed }: { collapsed: boolean }) {
-	const workspaceId = "clz1234567890";
-	const { data: projectsData } = api.project.list.useQuery({
-		workspaceId,
-		limit: 20,
-	});
+function ProjectsList({
+	collapsed,
+	workspaceId,
+}: {
+	collapsed: boolean;
+	workspaceId: string;
+}) {
+	const { data: projectsData } = api.project.list.useQuery(
+		{
+			workspaceId,
+			limit: 20,
+		},
+		{
+			enabled: !!workspaceId,
+		},
+	);
 
 	const pathname = usePathname();
 
-	if (collapsed) return null;
+	if (collapsed || !workspaceId) return null;
 
 	const activeProjects =
 		projectsData?.projects.filter(
@@ -158,17 +169,27 @@ function ProjectsList({ collapsed }: { collapsed: boolean }) {
 	);
 }
 
-function CurrentCycleIndicator({ collapsed }: { collapsed: boolean }) {
-	const workspaceId = "clz1234567890";
-	const { data: cycles } = api.cycle.list.useQuery({
-		workspaceId,
-		status: "CURRENT",
-		limit: 1,
-	});
+function CurrentCycleIndicator({
+	collapsed,
+	workspaceId,
+}: {
+	collapsed: boolean;
+	workspaceId: string;
+}) {
+	const { data: cycles } = api.cycle.list.useQuery(
+		{
+			workspaceId,
+			status: "CURRENT",
+			limit: 1,
+		},
+		{
+			enabled: !!workspaceId,
+		},
+	);
 
 	const currentCycle = cycles?.cycles[0];
 
-	if (!currentCycle) return null;
+	if (!currentCycle || !workspaceId) return null;
 
 	const progress =
 		currentCycle.issues.length > 0
@@ -222,7 +243,7 @@ function CurrentCycleIndicator({ collapsed }: { collapsed: boolean }) {
 	);
 }
 
-export function Sidebar({ className }: SidebarProps) {
+export function Sidebar({ className, workspaceId }: SidebarProps) {
 	const pathname = usePathname();
 	const [collapsed, setCollapsed] = useState(false);
 
@@ -288,7 +309,10 @@ export function Sidebar({ className }: SidebarProps) {
 				{/* Navigation */}
 				<ScrollArea className="flex-1 px-3 py-4">
 					{/* Current Cycle Indicator */}
-					<CurrentCycleIndicator collapsed={collapsed} />
+					<CurrentCycleIndicator
+						collapsed={collapsed}
+						workspaceId={workspaceId}
+					/>
 
 					<div className="space-y-1">
 						{mainNavItems.map((item) => {
@@ -389,7 +413,7 @@ export function Sidebar({ className }: SidebarProps) {
 					{collapsed && <div className="my-4 h-px bg-[#2A2F35]" />}
 
 					{/* Projects Section */}
-					<ProjectsList collapsed={collapsed} />
+					<ProjectsList collapsed={collapsed} workspaceId={workspaceId} />
 
 					{/* Secondary Navigation */}
 					<div className="space-y-1">

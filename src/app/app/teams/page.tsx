@@ -37,6 +37,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useCurrentWorkspace } from "@/hooks/use-current-workspace";
 import { cn } from "@/lib/utils";
 import { api } from "~/trpc/react";
 
@@ -66,8 +67,7 @@ export default function TeamsPage() {
 		color: "#5E6AD2",
 	});
 
-	// For now, we'll use a mock workspace ID since we're in single-workspace mode
-	const workspaceId = "clz1234567890";
+	const { workspaceId } = useCurrentWorkspace();
 
 	const { data: teams, isLoading } = api.team.list.useQuery({
 		workspaceId,

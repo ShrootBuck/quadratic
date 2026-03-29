@@ -33,6 +33,7 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useCurrentWorkspace } from "@/hooks/use-current-workspace";
 import { cn } from "@/lib/utils";
 import { api } from "~/trpc/react";
 
@@ -381,7 +382,7 @@ export default function LabelsPage() {
 		name: string;
 	} | null>(null);
 
-	const workspaceId = "clz1234567890";
+	const { workspaceId } = useCurrentWorkspace();
 	const { data: labels, isLoading } = api.label.list.useQuery({
 		workspaceId,
 	});

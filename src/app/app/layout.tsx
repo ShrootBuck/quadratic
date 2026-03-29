@@ -55,7 +55,10 @@ export default async function AppLayout({
 
 					<div className="flex h-screen overflow-hidden bg-[#0F1115]">
 						{/* Sidebar */}
-						<Sidebar className="hidden md:flex" />
+						<Sidebar
+							className="hidden md:flex"
+							workspaceId={workspace?.id ?? ""}
+						/>
 
 						{/* Main content area */}
 						<div className="flex flex-1 flex-col overflow-hidden">
