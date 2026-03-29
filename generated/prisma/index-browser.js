@@ -203,6 +203,7 @@ exports.Prisma.ProjectScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
+  color: 'color',
   status: 'status',
   startDate: 'startDate',
   targetDate: 'targetDate',

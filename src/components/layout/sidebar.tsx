@@ -82,6 +82,70 @@ const mockTeams = [
 	{ id: "2", name: "Design", key: "DES", color: "#F87171" },
 ];
 
+function ProjectsList({ collapsed }: { collapsed: boolean }) {
+	const workspaceId = "clz1234567890";
+	const { data: projectsData } = api.project.list.useQuery({
+		workspaceId,
+		limit: 20,
+	});
+
+	const pathname = usePathname();
+
+	if (collapsed) return null;
+
+	const activeProjects =
+		projectsData?.projects.filter(
+			(p) => p.status === "PLANNED" || p.status === "IN_PROGRESS",
+		) ?? [];
+
+	if (activeProjects.length === 0) return null;
+
+	return (
+		<div className="mb-4">
+			<div className="mb-2 flex items-center justify-between px-3">
+				<span className="font-medium text-[#8A8F98] text-xs">Projects</span>
+				<Link href="/app/projects">
+					<Button
+						className="h-5 w-5 text-[#8A8F98] hover:text-[#F7F8F8]"
+						size="icon"
+						variant="ghost"
+					>
+						<Plus className="h-3 w-3" />
+					</Button>
+				</Link>
+			</div>
+			<div className="space-y-1">
+				{activeProjects.slice(0, 5).map((project) => (
+					<Link
+						className={cn(
+							"flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
+							pathname === `/app/projects/${project.id}`
+								? "bg-[#2A2F35] text-[#F7F8F8]"
+								: "text-[#8A8F98] hover:bg-[#2A2F35] hover:text-[#F7F8F8]",
+						)}
+						href={`/app/projects/${project.id}`}
+						key={project.id}
+					>
+						<FolderKanban
+							className="h-3.5 w-3.5"
+							style={{ color: project.color }}
+						/>
+						<span className="flex-1 truncate">{project.name}</span>
+					</Link>
+				))}
+				{activeProjects.length > 5 && (
+					<Link
+						className="flex items-center gap-3 rounded-md px-3 py-2 text-[#8A8F98] text-sm transition-colors hover:bg-[#2A2F35] hover:text-[#F7F8F8]"
+						href="/app/projects"
+					>
+						<span className="flex-1">View all projects</span>
+					</Link>
+				)}
+			</div>
+		</div>
+	);
+}
+
 function CurrentCycleIndicator({ collapsed }: { collapsed: boolean }) {
 	const workspaceId = "clz1234567890";
 	const { data: cycles } = api.cycle.list.useQuery({
@@ -299,6 +363,9 @@ export function Sidebar({ className }: SidebarProps) {
 
 					{!collapsed && <Separator className="my-4 bg-[#2A2F35]" />}
 					{collapsed && <div className="my-4 h-px bg-[#2A2F35]" />}
+
+					{/* Projects Section */}
+					<ProjectsList collapsed={collapsed} />
 
 					{/* Secondary Navigation */}
 					<div className="space-y-1">

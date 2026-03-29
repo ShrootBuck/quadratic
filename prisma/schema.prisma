@@ -155,6 +155,7 @@ model Project {
   id          String        @id @default(cuid())
   name        String
   description String?
+  color       String        @default("#5E6AD2")
   status      ProjectStatus @default(PLANNED)
   startDate   DateTime?
   targetDate  DateTime?

@@ -11717,6 +11717,7 @@ export namespace Prisma {
     id: string | null
     name: string | null
     description: string | null
+    color: string | null
     status: $Enums.ProjectStatus | null
     startDate: Date | null
     targetDate: Date | null
@@ -11730,6 +11731,7 @@ export namespace Prisma {
     id: string | null
     name: string | null
     description: string | null
+    color: string | null
     status: $Enums.ProjectStatus | null
     startDate: Date | null
     targetDate: Date | null
@@ -11743,6 +11745,7 @@ export namespace Prisma {
     id: number
     name: number
     description: number
+    color: number
     status: number
     startDate: number
     targetDate: number
@@ -11758,6 +11761,7 @@ export namespace Prisma {
     id?: true
     name?: true
     description?: true
+    color?: true
     status?: true
     startDate?: true
     targetDate?: true
@@ -11771,6 +11775,7 @@ export namespace Prisma {
     id?: true
     name?: true
     description?: true
+    color?: true
     status?: true
     startDate?: true
     targetDate?: true
@@ -11784,6 +11789,7 @@ export namespace Prisma {
     id?: true
     name?: true
     description?: true
+    color?: true
     status?: true
     startDate?: true
     targetDate?: true
@@ -11870,6 +11876,7 @@ export namespace Prisma {
     id: string
     name: string
     description: string | null
+    color: string
     status: $Enums.ProjectStatus
     startDate: Date | null
     targetDate: Date | null
@@ -11900,6 +11907,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
+    color?: boolean
     status?: boolean
     startDate?: boolean
     targetDate?: boolean
@@ -11918,6 +11926,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
+    color?: boolean
     status?: boolean
     startDate?: boolean
     targetDate?: boolean
@@ -11934,6 +11943,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
+    color?: boolean
     status?: boolean
     startDate?: boolean
     targetDate?: boolean
@@ -11950,6 +11960,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
+    color?: boolean
     status?: boolean
     startDate?: boolean
     targetDate?: boolean
@@ -11959,7 +11970,7 @@ export namespace Prisma {
     leadId?: boolean
   }
 
-  export type ProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "status" | "startDate" | "targetDate" | "createdAt" | "workspaceId" | "teamId" | "leadId", ExtArgs["result"]["project"]>
+  export type ProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "color" | "status" | "startDate" | "targetDate" | "createdAt" | "workspaceId" | "teamId" | "leadId", ExtArgs["result"]["project"]>
   export type ProjectInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
     team?: boolean | TeamDefaultArgs<ExtArgs>
@@ -11990,6 +12001,7 @@ export namespace Prisma {
       id: string
       name: string
       description: string | null
+      color: string
       status: $Enums.ProjectStatus
       startDate: Date | null
       targetDate: Date | null
@@ -12427,6 +12439,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Project", 'String'>
     readonly name: FieldRef<"Project", 'String'>
     readonly description: FieldRef<"Project", 'String'>
+    readonly color: FieldRef<"Project", 'String'>
     readonly status: FieldRef<"Project", 'ProjectStatus'>
     readonly startDate: FieldRef<"Project", 'DateTime'>
     readonly targetDate: FieldRef<"Project", 'DateTime'>
@@ -19902,6 +19915,7 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     description: 'description',
+    color: 'color',
     status: 'status',
     startDate: 'startDate',
     targetDate: 'targetDate',
@@ -20676,6 +20690,7 @@ export namespace Prisma {
     id?: StringFilter<"Project"> | string
     name?: StringFilter<"Project"> | string
     description?: StringNullableFilter<"Project"> | string | null
+    color?: StringFilter<"Project"> | string
     status?: EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
     startDate?: DateTimeNullableFilter<"Project"> | Date | string | null
     targetDate?: DateTimeNullableFilter<"Project"> | Date | string | null
@@ -20693,6 +20708,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrderInput | SortOrder
+    color?: SortOrder
     status?: SortOrder
     startDate?: SortOrderInput | SortOrder
     targetDate?: SortOrderInput | SortOrder
@@ -20713,6 +20729,7 @@ export namespace Prisma {
     NOT?: ProjectWhereInput | ProjectWhereInput[]
     name?: StringFilter<"Project"> | string
     description?: StringNullableFilter<"Project"> | string | null
+    color?: StringFilter<"Project"> | string
     status?: EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
     startDate?: DateTimeNullableFilter<"Project"> | Date | string | null
     targetDate?: DateTimeNullableFilter<"Project"> | Date | string | null
@@ -20730,6 +20747,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrderInput | SortOrder
+    color?: SortOrder
     status?: SortOrder
     startDate?: SortOrderInput | SortOrder
     targetDate?: SortOrderInput | SortOrder
@@ -20749,6 +20767,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Project"> | string
     name?: StringWithAggregatesFilter<"Project"> | string
     description?: StringNullableWithAggregatesFilter<"Project"> | string | null
+    color?: StringWithAggregatesFilter<"Project"> | string
     status?: EnumProjectStatusWithAggregatesFilter<"Project"> | $Enums.ProjectStatus
     startDate?: DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
     targetDate?: DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
@@ -21864,6 +21883,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    color?: string
     status?: $Enums.ProjectStatus
     startDate?: Date | string | null
     targetDate?: Date | string | null
@@ -21878,6 +21898,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    color?: string
     status?: $Enums.ProjectStatus
     startDate?: Date | string | null
     targetDate?: Date | string | null
@@ -21892,6 +21913,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21906,6 +21928,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21920,6 +21943,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    color?: string
     status?: $Enums.ProjectStatus
     startDate?: Date | string | null
     targetDate?: Date | string | null
@@ -21933,6 +21957,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21943,6 +21968,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -22952,6 +22978,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
+    color?: SortOrder
     status?: SortOrder
     startDate?: SortOrder
     targetDate?: SortOrder
@@ -22965,6 +22992,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
+    color?: SortOrder
     status?: SortOrder
     startDate?: SortOrder
     targetDate?: SortOrder
@@ -22978,6 +23006,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
+    color?: SortOrder
     status?: SortOrder
     startDate?: SortOrder
     targetDate?: SortOrder
@@ -25255,6 +25284,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    color?: string
     status?: $Enums.ProjectStatus
     startDate?: Date | string | null
     targetDate?: Date | string | null
@@ -25268,6 +25298,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    color?: string
     status?: $Enums.ProjectStatus
     startDate?: Date | string | null
     targetDate?: Date | string | null
@@ -25582,6 +25613,7 @@ export namespace Prisma {
     id?: StringFilter<"Project"> | string
     name?: StringFilter<"Project"> | string
     description?: StringNullableFilter<"Project"> | string | null
+    color?: StringFilter<"Project"> | string
     status?: EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
     startDate?: DateTimeNullableFilter<"Project"> | Date | string | null
     targetDate?: DateTimeNullableFilter<"Project"> | Date | string | null
@@ -25946,6 +25978,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    color?: string
     status?: $Enums.ProjectStatus
     startDate?: Date | string | null
     targetDate?: Date | string | null
@@ -25959,6 +25992,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    color?: string
     status?: $Enums.ProjectStatus
     startDate?: Date | string | null
     targetDate?: Date | string | null
@@ -26424,6 +26458,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    color?: string
     status?: $Enums.ProjectStatus
     startDate?: Date | string | null
     targetDate?: Date | string | null
@@ -26437,6 +26472,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    color?: string
     status?: $Enums.ProjectStatus
     startDate?: Date | string | null
     targetDate?: Date | string | null
@@ -27413,6 +27449,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    color?: string
     status?: $Enums.ProjectStatus
     startDate?: Date | string | null
     targetDate?: Date | string | null
@@ -27426,6 +27463,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    color?: string
     status?: $Enums.ProjectStatus
     startDate?: Date | string | null
     targetDate?: Date | string | null
@@ -27715,6 +27753,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -27728,6 +27767,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -28497,6 +28537,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    color?: string
     status?: $Enums.ProjectStatus
     startDate?: Date | string | null
     targetDate?: Date | string | null
@@ -28679,6 +28720,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -28692,6 +28734,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -28705,6 +28748,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -28903,6 +28947,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    color?: string
     status?: $Enums.ProjectStatus
     startDate?: Date | string | null
     targetDate?: Date | string | null
@@ -29005,6 +29050,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -29018,6 +29064,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -29031,6 +29078,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -29164,6 +29212,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    color?: string
     status?: $Enums.ProjectStatus
     startDate?: Date | string | null
     targetDate?: Date | string | null
@@ -29213,6 +29262,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -29226,6 +29276,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -29239,6 +29290,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

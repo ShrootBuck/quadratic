@@ -1,29 +1,57 @@
-# Create T3 App
+# Quadratic
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+> A Linear-inspired project management tool.
 
-## What's next? How do I make an app with this?
+## The Name
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+**Linear** -> **Quadratic**
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+Get it?
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## What Is This?
 
-## Learn More
+Quadratic is a project management tool heavily inspired by [Linear](https://linear.app) - issue tracking, cycles (sprints), projects, teams, and whatever else the agents decide to add. It looks like Linear, it smells like Linear, but it's built by an army of (one) agent working in a loop.
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## The Experiment
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+**This is not production software.** This is an experiment in **self-recursive agent loops** (also known as Ralph loops, named after the [Ralph Wiggum technique](https://ghuntley.com/ralph)).
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+This entire application is being built by an AI agent (OpenCode) running in an autonomous loop. The agent:
 
-## How do I deploy this?
+1. Reads the feature requirements from `features.json`
+2. Implements one feature at a time
+3. Commits the work to git
+4. Signals completion
+5. **The loop restarts the agent with fresh context**
+6. The new agent instance picks up where the last one left off
+7. Repeat until all features are done
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+### Why?
+
+Kimi Code plan gave me a monstrous amount of inference that I need to burn. This is surely not the last time I will try this.
+
+## The Build Process
+
+This README was written by a human (kind of). Everything else? Agent-built in iterations.
+
+Check the git history to see the madness unfold:
+
+```bash
+git log --oneline
+```
+
+Each commit represents one feature being completed by a fresh agent instance with no memory of the previous one. It's like Groundhog Day, but for software development.
+
+## Current Status
+
+See `features.json` for the roadmap and what's been built so far. Or just use the app - if it works, the agents did their job.
+
+## Warning
+
+**Do not use this in production.** Seriously. This is an AI experiment. While the individual features might work fine, the overall architecture decisions were made by an agent with no long-term memory. Use [Plane](https://plane.so) if you need something good.
+
+But hey, it's a cool demo of what autonomous agents can build when you let them run wild.
+
+---
+
+_Built with ❤️ (and a concerning amount of compute) by self-recursive AI agents._

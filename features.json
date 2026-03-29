@@ -162,7 +162,7 @@
 				"Project lead assignment",
 				"Start/target date fields"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "teams",
