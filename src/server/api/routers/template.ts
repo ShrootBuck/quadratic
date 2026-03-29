@@ -1,5 +1,13 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import {
+	DEFAULT_ISSUE_STATUS,
+	DEFAULT_TEMPLATE_PRIORITY,
+	TEMPLATE_DESC_MAX,
+	TEMPLATE_NAME_MAX,
+	TEMPLATE_NAME_MIN,
+	TEMPLATE_TITLE_MAX,
+} from "~/constants";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 // Enums for validation
@@ -14,12 +22,12 @@ const Priority = z.enum(["NO_PRIORITY", "LOW", "MEDIUM", "HIGH", "URGENT"]);
 
 // Schemas
 const createTemplateInput = z.object({
-	name: z.string().min(1).max(100),
-	description: z.string().max(500).optional(),
-	title: z.string().max(500),
+	name: z.string().min(TEMPLATE_NAME_MIN).max(TEMPLATE_NAME_MAX),
+	description: z.string().max(TEMPLATE_DESC_MAX).optional(),
+	title: z.string().max(TEMPLATE_TITLE_MAX),
 	content: z.string().optional(),
-	priority: Priority.default("NO_PRIORITY"),
-	status: IssueStatus.default("BACKLOG"),
+	priority: Priority.default(DEFAULT_TEMPLATE_PRIORITY),
+	status: IssueStatus.default(DEFAULT_ISSUE_STATUS),
 	workspaceId: z.string(),
 	teamId: z.string().optional(),
 	labelIds: z.array(z.string()).default([]),
@@ -27,9 +35,9 @@ const createTemplateInput = z.object({
 
 const updateTemplateInput = z.object({
 	id: z.string(),
-	name: z.string().min(1).max(100).optional(),
-	description: z.string().max(500).optional(),
-	title: z.string().max(500).optional(),
+	name: z.string().min(TEMPLATE_NAME_MIN).max(TEMPLATE_NAME_MAX).optional(),
+	description: z.string().max(TEMPLATE_DESC_MAX).optional(),
+	title: z.string().max(TEMPLATE_TITLE_MAX).optional(),
 	content: z.string().optional(),
 	priority: Priority.optional(),
 	status: IssueStatus.optional(),
@@ -149,8 +157,8 @@ const defaultTemplates = [
 				},
 			],
 		}),
-		priority: "MEDIUM",
-		status: "BACKLOG",
+		priority: DEFAULT_TEMPLATE_PRIORITY,
+		status: DEFAULT_ISSUE_STATUS,
 		labelIds: JSON.stringify([]),
 	},
 	{

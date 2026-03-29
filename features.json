@@ -1,532 +1,274 @@
 {
 	"features": [
 		{
-			"id": "db-schema",
-			"category": "foundation",
-			"title": "Database Schema",
-			"description": "Set up Prisma schema with all core models for Quadratic",
+			"id": "hardcoded-removal",
+			"category": "refactor",
+			"title": "Remove All Hardcoded Values",
+			"description": "Find and eliminate hardcoded strings, magic numbers, URLs, and configuration values throughout the codebase",
 			"acceptanceCriteria": [
-				"Workspace model with name, slug, settings",
-				"User model with email, name, avatar, preferences",
-				"Team model with name, key, color, workspace relation",
-				"Project model with name, description, status, team relation",
-				"Issue model with title, description, status, priority, assignee, creator, project, team, cycle, labels",
-				"Cycle model with name, startDate, endDate, team relation",
-				"Label model with name, color, team relation",
-				"Comment model with content, author, issue relation",
-				"IssueHistory model for tracking changes",
-				"All relations properly defined with foreign keys",
-				"SQLite database initialized with migrations"
+				"Replace hardcoded API endpoints with config constants",
+				"Move hardcoded colors to theme/color constants",
+				"Extract hardcoded status/priority values to enums",
+				"Replace hardcoded pagination limits with config",
+				"Move hardcoded date formats to constants",
+				"Extract hardcoded validation rules (min/max lengths) to schemas",
+				"Replace hardcoded default values with configuration",
+				"No magic numbers - all numeric constants named",
+				"All hardcoded strings in constants files, not inline"
 			],
 			"passes": true
 		},
 		{
-			"id": "auth-setup",
-			"category": "foundation",
-			"title": "Authentication System",
-			"description": "Configure Better Auth with credentials provider and workspace creation flow",
+			"id": "todo-cleanup",
+			"category": "refactor",
+			"title": "Fix All TODO/FIXME Comments",
+			"description": "Address every TODO, FIXME, HACK, and XXX comment in the codebase - either implement or remove",
 			"acceptanceCriteria": [
-				"Verify Better Auth is properly configured in src/server/better-auth/",
-				"Create login page with email/password using shadcn/ui",
-				"Create registration page with workspace creation",
-				"Set up Better Auth client for frontend authentication",
-				"Create auth middleware for protected routes",
-				"Redirect to onboarding for new users",
-				"Logout functionality",
-				"Test authentication flow end-to-end"
+				"Search entire codebase for TODO comments",
+				"Search entire codebase for FIXME comments",
+				"Search entire codebase for HACK comments",
+				"Search entire codebase for XXX comments",
+				"Implement legitimate TODOs that are still needed",
+				"Remove TODOs for features that won't be implemented",
+				"Replace temporary/hacky solutions with proper implementations",
+				"Document why remaining TODOs can't be fixed yet (if any)",
+				"Zero TODO/FIXME comments remain in production code"
 			],
-			"passes": true
+			"passes": false
 		},
 		{
-			"id": "layout-shell",
-			"category": "ui",
-			"title": "Application Layout Shell",
-			"description": "Create the main app layout with sidebar navigation",
+			"id": "type-safety",
+			"category": "quality",
+			"title": "TypeScript Strict Mode Compliance",
+			"description": "Ensure full TypeScript strict mode compliance with no any types or type assertions",
 			"acceptanceCriteria": [
-				"Collapsible left sidebar with team/project navigation",
-				"Top header with workspace switcher and search button",
-				"Command palette trigger (Cmd+K)",
-				"User avatar menu with settings/logout",
-				"Keyboard shortcut hints in UI",
-				"Dark mode support",
-				"Responsive design (sidebar collapses on mobile)",
-				"Smooth animations and transitions"
+				"Remove all `any` types from codebase",
+				"Remove unnecessary `as` type assertions",
+				"Fix all implicit any warnings",
+				"Add proper return types to all functions",
+				"Ensure all API responses are properly typed",
+				"Type all event handlers properly",
+				"Type all refs and forwardRefs properly",
+				"Fix strict null check violations",
+				"Enable strictest TypeScript config and verify no errors"
 			],
-			"passes": true
+			"passes": false
 		},
 		{
-			"id": "issue-crud",
-			"category": "core",
-			"title": "Issue CRUD Operations",
-			"description": "Build tRPC procedures for creating, reading, updating, deleting issues",
+			"id": "error-handling",
+			"category": "quality",
+			"title": "Robust Error Handling",
+			"description": "Implement comprehensive error handling with proper user feedback and logging",
 			"acceptanceCriteria": [
-				"Create issue procedure with title, description, team, project, assignee, priority, labels",
-				"Get issue by ID procedure with all relations",
-				"Update issue procedure for all fields",
-				"Delete/archive issue procedure",
-				"List issues with filtering (status, assignee, project, label)",
-				"Zod validation for all inputs",
-				"Proper error handling and authorization"
+				"Replace all console.log with proper logger or remove",
+				"Handle all Promise rejections with catch blocks",
+				"Add error boundaries around all async components",
+				"Ensure API errors show user-friendly messages",
+				"Handle network failures gracefully with retry options",
+				"Add loading states for all async operations",
+				"Handle edge cases (empty arrays, null values, etc.)",
+				"Add proper error logging for debugging",
+				"No unhandled promise rejections in production code"
 			],
-			"passes": true
+			"passes": false
 		},
 		{
-			"id": "issue-list-view",
-			"category": "ui",
-			"title": "Issue List View",
-			"description": "Create the main issues list with filtering and grouping",
+			"id": "dead-code-removal",
+			"category": "refactor",
+			"title": "Remove Dead Code and Unused Files",
+			"description": "Delete unused components, functions, imports, and files throughout the project",
 			"acceptanceCriteria": [
-				"Table view of issues showing identifier, title, status, priority, assignee, labels",
-				"Sortable columns",
-				"Filter sidebar with status, assignee, priority, label filters",
-				"Group by dropdown (status, assignee, priority, project, none)",
-				"Quick actions (change status, assign, set priority)",
-				"Create issue button with modal",
-				"Bulk selection and actions",
-				"Virtual scrolling for performance with 1000+ issues",
-				"Keyboard navigation (j/k for up/down, enter to open)"
+				"Remove unused imports from all files",
+				"Delete unused components (check imports/exports)",
+				"Remove unused utility functions",
+				"Delete unused API routes and procedures",
+				"Remove unused constants and config values",
+				"Delete unused CSS/Tailwind classes",
+				"Remove unused dependencies from package.json",
+				"Remove commented-out code blocks",
+				"Verify build still works after cleanup"
 			],
-			"passes": true
+			"passes": false
 		},
 		{
-			"id": "issue-board-view",
-			"category": "ui",
-			"title": "Issue Board View (Kanban)",
-			"description": "Build drag-and-drop Kanban board for issue management",
+			"id": "component-refactor",
+			"category": "refactor",
+			"title": "Component Code Quality",
+			"description": "Refactor components for consistency, reusability, and clean code patterns",
 			"acceptanceCriteria": [
-				"Kanban columns for each status (Backlog, Todo, In Progress, Done, Cancelled)",
-				"Drag and drop to change status (using @dnd-kit)",
-				"Issue cards showing title, identifier, priority, assignee avatar",
-				"Collapsible columns",
-				"Create issue button in each column",
-				"Quick filters (assignee, label)",
-				"Column headers showing issue count",
-				"Smooth drag animations"
+				"Consistent prop naming across components",
+				"Extract inline styles to className with cn() utility",
+				"Refactor large components (>200 lines) into smaller ones",
+				"Ensure all components have proper TypeScript interfaces",
+				"Standardize event handler naming (onXxx)",
+				"Remove inline function definitions from JSX props",
+				"Extract complex logic to custom hooks",
+				"Ensure consistent file naming conventions",
+				"All components follow single responsibility principle"
 			],
-			"passes": true
+			"passes": false
 		},
 		{
-			"id": "issue-detail",
-			"category": "ui",
-			"title": "Issue Detail Page",
-			"description": "Full-page issue view with editing and comments",
+			"id": "state-management",
+			"category": "refactor",
+			"title": "State Management Cleanup",
+			"description": "Clean up state management - remove redundant state, fix prop drilling, optimize re-renders",
 			"acceptanceCriteria": [
-				"Issue title as editable input (auto-save)",
-				"Rich text description editor (use TipTap or similar)",
-				"Status dropdown with state icons",
-				"Priority selector (No Priority, Low, Medium, High, Urgent)",
-				"Assignee selector with search",
-				"Project selector",
-				"Label multi-select with color indicators",
-				"Due date picker",
-				"Comment section with threaded discussions",
-				"Issue activity/history timeline",
-				"Related issues section",
-				"Sub-issues list with create button",
-				"Keyboard shortcut: 'c' to close issue",
-				"Copy issue link button"
+				"Remove redundant state that can be derived from props",
+				"Replace prop drilling with context or store where appropriate",
+				"Optimize unnecessary re-renders with memo/useMemo",
+				"Ensure proper cleanup in useEffect hooks",
+				"Remove unused state variables",
+				"Standardize store naming conventions",
+				"Fix race conditions in async state updates",
+				"Ensure proper state initialization",
+				"All state updates follow immutable patterns"
 			],
-			"passes": true
+			"passes": false
 		},
 		{
-			"id": "cycles",
-			"category": "core",
-			"title": "Cycles (Sprints)",
-			"description": "Implement sprint/cycle management (Linear-style)",
+			"id": "api-cleanup",
+			"category": "refactor",
+			"title": "API Layer Refactoring",
+			"description": "Clean up tRPC procedures, fix validation, standardize responses",
 			"acceptanceCriteria": [
-				"Create cycle modal with name, start date, end date",
-				"Current cycle indicator in sidebar",
-				"Cycle detail page showing assigned issues",
-				"Cycle board view (Kanban filtered by cycle)",
-				"Cycle list view",
-				"Add/remove issues from cycle",
-				"Cycle progress bar (percentage complete)",
-				"Upcoming cycles list",
-				"Completed cycles archive"
+				"Standardize all API response formats",
+				"Add missing Zod validation schemas",
+				"Fix inconsistent error handling in procedures",
+				"Remove duplicate query logic",
+				"Optimize database queries (N+1 issues)",
+				"Add proper authorization checks to all procedures",
+				"Standardize procedure naming conventions",
+				"Fix pagination cursor implementation",
+				"All procedures have proper input/output types"
 			],
-			"passes": true
+			"passes": false
 		},
 		{
-			"id": "projects",
-			"category": "core",
-			"title": "Project Management",
-			"description": "Build project pages with roadmap and issue organization",
+			"id": "bug-fixes",
+			"category": "bugfix",
+			"title": "Critical Bug Fixes",
+			"description": "Fix all known bugs and issues discovered during development",
 			"acceptanceCriteria": [
-				"Create project modal with name, description, team, color",
-				"Project list view in sidebar",
-				"Project detail page with overview tab",
-				"Project board view (issues filtered by project)",
-				"Project list view",
-				"Project roadmap view (Gantt-style timeline)",
-				"Project settings (rename, archive, delete)",
-				"Project lead assignment",
-				"Start/target date fields"
+				"Fix any race conditions in async operations",
+				"Fix memory leaks in useEffect hooks",
+				"Fix broken keyboard shortcuts",
+				"Fix drag and drop issues",
+				"Fix form validation edge cases",
+				"Fix real-time sync conflicts",
+				"Fix auth session expiration handling",
+				"Fix mobile responsive issues",
+				"Test all features and log/fix any discovered bugs"
 			],
-			"passes": true
+			"passes": false
 		},
 		{
-			"id": "teams",
-			"category": "core",
-			"title": "Team Management",
-			"description": "Team creation and member management",
+			"id": "console-errors",
+			"category": "bugfix",
+			"title": "Eliminate Console Errors and Warnings",
+			"description": "Fix all console errors, warnings, and React strict mode warnings",
 			"acceptanceCriteria": [
-				"Create team with name, key (e.g., ENG), color",
-				"Team settings page",
-				"Invite members to team (by email)",
-				"Member list with roles (Admin, Member)",
-				"Remove members from team",
-				"Team issues view (all issues assigned to team)",
-				"Team cycle view",
-				"Default team selection"
+				"Fix all React key prop warnings",
+				"Fix all hydration mismatch errors",
+				"Fix all unique 'id' attribute warnings",
+				"Fix all invalid prop warnings",
+				"Fix all accessibility warnings",
+				"Remove all console.error in production",
+				"Fix all 404 errors for static assets",
+				"Fix all CORS-related console warnings",
+				"Clean console on app load and navigation"
 			],
-			"passes": true
+			"passes": false
 		},
 		{
-			"id": "labels",
-			"category": "core",
-			"title": "Label System",
-			"description": "Color-coded labels for issue categorization",
+			"id": "security-audit",
+			"category": "security",
+			"title": "Security Hardening",
+			"description": "Audit and fix security vulnerabilities and best practices",
 			"acceptanceCriteria": [
-				"Create label modal with name and color picker",
-				"Label management page listing all labels",
-				"Edit and delete labels",
-				"Apply multiple labels to issues",
-				"Filter by label in list/board views",
-				"Label display in issue cards",
-				"Quick label add/remove from issue detail"
+				"Sanitize all user input before rendering",
+				"Validate all file uploads",
+				"Add rate limiting to API routes",
+				"Ensure proper auth checks on all sensitive operations",
+				"Remove any hardcoded secrets or tokens",
+				"Add CSRF protection where needed",
+				"Validate all query parameters",
+				"Secure all cookie settings",
+				"Run security audit with npm audit or similar"
 			],
-			"passes": true
+			"passes": false
 		},
 		{
-			"id": "command-palette",
-			"category": "ux",
-			"title": "Command Palette",
-			"description": "Cmd+K command palette for navigation and actions",
+			"id": "performance-optimization",
+			"category": "performance",
+			"title": "Performance Optimization",
+			"description": "Optimize performance - bundle size, render performance, data fetching",
 			"acceptanceCriteria": [
-				"Cmd+K shortcut opens command palette",
-				"Search for issues by title/identifier",
-				"Quick navigation to pages (Issues, Projects, Cycles, Teams)",
-				"Actions: Create issue, Create project, Start cycle",
-				"Recent items section",
-				"Keyboard navigation (arrow keys + enter)",
-				"Fuzzy search matching",
-				"Close with Escape key"
+				"Implement code splitting for routes",
+				"Optimize bundle size (analyze with @next/bundle-analyzer)",
+				"Add proper image optimization",
+				"Implement virtual scrolling for long lists",
+				"Optimize re-renders with React.memo",
+				"Add proper caching headers",
+				"Optimize database query performance",
+				"Implement proper prefetching strategies",
+				"Lighthouse performance score > 90"
 			],
-			"passes": true
+			"passes": false
 		},
 		{
-			"id": "keyboard-shortcuts",
-			"category": "ux",
-			"title": "Keyboard Shortcuts",
-			"description": "Keyboard navigation throughout app (Linear-style)",
+			"id": "test-coverage",
+			"category": "quality",
+			"title": "Test Implementation",
+			"description": "Add unit tests, integration tests, and E2E tests for critical paths",
 			"acceptanceCriteria": [
-				"? shortcut opens keyboard shortcuts help modal",
-				"c - Create new issue",
-				"j/k - Navigate up/down in lists",
-				"x - Select/deselect issue",
-				"Cmd+Enter - Save/Submit",
-				"Esc - Close modals/go back",
-				"/ - Focus search",
-				"g then i - Go to Issues",
-				"g then p - Go to Projects",
-				"g then c - Go to Cycles",
-				"Cmd+Shift+C - Copy issue URL",
-				"All shortcuts shown in UI tooltips"
+				"Add unit tests for utility functions",
+				"Add tests for critical tRPC procedures",
+				"Add component tests for key UI components",
+				"Add E2E tests for auth flow",
+				"Add E2E tests for issue CRUD operations",
+				"Set up test database with fixtures",
+				"Achieve >70% code coverage",
+				"Add CI/CD pipeline for automated testing",
+				"All tests pass in CI environment"
 			],
-			"passes": true
+			"passes": false
 		},
 		{
-			"id": "search",
-			"category": "core",
-			"title": "Global Search",
-			"description": "Full-text search across all entities",
-			"acceptanceCriteria": [
-				"Search issues by title, description, identifier",
-				"Search projects by name",
-				"Search cycles by name",
-				"Search users by name/email",
-				"Filter search by entity type",
-				"Recent searches",
-				"Click result to navigate",
-				"Fast search with debouncing"
-			],
-			"passes": true
-		},
-		{
-			"id": "notifications",
-			"category": "core",
-			"title": "Notification System",
-			"description": "In-app notifications for issue updates",
-			"acceptanceCriteria": [
-				"Notification bell icon in header with badge",
-				"Dropdown showing recent notifications",
-				"Notification types: assigned, mentioned, status changed, commented",
-				"Mark all as read",
-				"Click notification to navigate to issue",
-				"Real-time updates via polling or SSE",
-				"Notification preferences (which events to notify)"
-			],
-			"passes": true
-		},
-		{
-			"id": "analytics",
-			"category": "analytics",
-			"title": "Cycle Analytics",
-			"description": "Velocity and burndown charts for cycles",
-			"acceptanceCriteria": [
-				"Cycle analytics page",
-				"Issues completed chart (by day)",
-				"Story points/estimates if implemented",
-				"Team velocity calculation",
-				"Average cycle time",
-				"Issues by state pie chart",
-				"Compare current vs previous cycle"
-			],
-			"passes": true
-		},
-		{
-			"id": "templates",
-			"category": "ux",
-			"title": "Issue Templates",
-			"description": "Template system for common issue types",
-			"acceptanceCriteria": [
-				"Create template modal with title/description defaults",
-				"Template management page",
-				"Apply template when creating issue",
-				"Default templates: Bug Report, Feature Request, Task",
-				"Team-specific templates"
-			],
-			"passes": true
-		},
-		{
-			"id": "settings",
-			"category": "ui",
-			"title": "Settings Pages",
-			"description": "User and workspace settings",
-			"acceptanceCriteria": [
-				"User profile settings (name, avatar, email)",
-				"Workspace settings (name, slug, icon)",
-				"Appearance settings (theme, density)",
-				"Notification preferences",
-				"Team management in settings",
-				"Label management in settings",
-				"API keys section (placeholder for future)",
-				"Danger zone (delete workspace)"
-			],
-			"passes": true
-		},
-		{
-			"id": "rich-text-editor",
-			"category": "core",
-			"title": "Rich Text Editor (TipTap)",
-			"description": "Integrate TipTap editor for issue descriptions with collaborative-style editing",
-			"acceptanceCriteria": [
-				"Install and configure TipTap with StarterKit extensions",
-				"Custom toolbar with bold, italic, code, headings, lists, links, code blocks",
-				"Auto-save descriptions on blur or after 2s debounce",
-				"Read-only mode for viewing descriptions",
-				"Code block syntax highlighting",
-				"Support for @mentions (team members)",
-				"Keyboard shortcuts within editor (Cmd+B for bold, etc.)",
-				"Stash/undo stack on blur"
-			],
-			"passes": true
-		},
-		{
-			"id": "realtime-updates",
-			"category": "core",
-			"title": "Real-time Updates",
-			"description": "Implement real-time synchronization using Server-Sent Events or polling",
-			"acceptanceCriteria": [
-				"Set up SSE endpoint for real-time issue updates",
-				"Invalidate tRPC cache when issues are updated remotely",
-				"Show 'someone is editing' indicator when conflict detected",
-				"Optimistic updates with conflict resolution",
-				"Real-time notification count updates",
-				"Connection status indicator in UI (connected, reconnecting, offline)",
-				"Automatic reconnection on disconnect",
-				"Batch rapid updates (don't spam the API)"
-			],
-			"passes": true
-		},
-		{
-			"id": "workflow-automations",
-			"category": "core",
-			"title": "Workflow Automations",
-			"description": "Simple automation rules for issue lifecycle events",
-			"acceptanceCriteria": [
-				"Create automation rule editor (if-then style)",
-				"Trigger types: issue created, status changed, assignee changed, priority changed",
-				"Action types: change status, change assignee, add label, send notification, update priority",
-				"Condition filters: team, project, label, priority level",
-				"Rule enable/disable toggle",
-				"Execution log showing automation history",
-				"Built-in templates: 'Auto-assign to creator', 'Move to backlog when unassigned'"
-			],
-			"passes": true
-		},
-		{
-			"id": "github-integration",
-			"category": "integration",
-			"title": "GitHub Integration",
-			"description": "Connect issues to GitHub PRs and commits",
-			"acceptanceCriteria": [
-				"Link issue to GitHub PR by URL",
-				"Display linked PRs in issue detail page",
-				"PR status badges (open, merged, closed)",
-				"Extract commit messages that reference issues (fixes ENG-123)",
-				"Auto-close issues when PR is merged (optional automation)",
-				"Branch name generation from issue (feature/ENG-123-fix-login)",
-				"API rate limiting and caching for GitHub requests"
-			],
-			"passes": true
-		},
-		{
-			"id": "time-tracking",
-			"category": "core",
-			"title": "Time Tracking",
-			"description": "Track time spent on issues with estimates and actuals",
-			"acceptanceCriteria": [
-				"Add estimated time field to issues (hours)",
-				"Log time entries (manual entry with description)",
-				"Start/stop timer on issues",
-				"Time tracking tab in issue detail",
-				"Total time spent per issue",
-				"Time tracking reports per cycle/project",
-				"Export time logs to CSV"
-			],
-			"passes": true
-		},
-		{
-			"id": "api-keys",
-			"category": "integration",
-			"title": "API Keys & Webhooks",
-			"description": "External API access for integrations and automation",
-			"acceptanceCriteria": [
-				"Generate API keys with scopes (read, write, admin)",
-				"API key management page (create, revoke, copy)",
-				"Rate limiting per API key",
-				"Webhook endpoint creation",
-				"Webhook events: issue.created, issue.updated, issue.deleted",
-				"Webhook delivery log with retry",
-				"API documentation page"
-			],
-			"passes": true
-		},
-		{
-			"id": "accessibility",
-			"category": "ux",
-			"title": "Accessibility Audit",
-			"description": "Ensure WCAG 2.1 AA compliance throughout the application",
-			"acceptanceCriteria": [
-				"All interactive elements have aria-labels",
-				"Keyboard navigation works for all features",
-				"Screen reader friendly (test with VoiceOver/NVDA)",
-				"Color contrast ratios meet AA standards",
-				"Focus management for modals and dialogs",
-				"Skip navigation links",
-				"ARIA live regions for dynamic updates",
-				"Accessible error messages and form validation",
-				"High contrast mode option"
-			],
-			"passes": true
-		},
-		{
-			"id": "import-export",
-			"category": "core",
-			"title": "Data Import & Export",
-			"description": "Import issues from other tools and export for backup/analysis",
-			"acceptanceCriteria": [
-				"Export issues to CSV (with filters)",
-				"Export issues to JSON",
-				"Import from CSV (with field mapping)",
-				"Import from Linear JSON format",
-				"Import from GitHub Issues",
-				"Bulk operations from imported data",
-				"Import validation and preview before committing",
-				"Export includes all metadata (labels, comments, history)"
-			],
-			"passes": true
-		},
-		{
-			"id": "custom-fields",
-			"category": "core",
-			"title": "Custom Fields",
-			"description": "Allow teams to define custom fields for issues",
-			"acceptanceCriteria": [
-				"Custom field types: text, number, select, multi-select, date, URL",
-				"Create custom field at workspace or team level",
-				"Custom field values on issues",
-				"Filter issues by custom field values",
-				"Custom field display in issue list and detail views",
-				"Custom field ordering",
-				"Delete custom field (with confirmation)"
-			],
-			"passes": true
-		},
-		{
-			"id": "polish",
-			"category": "ux",
-			"title": "UI Polish & Performance",
-			"description": "Final polish, animations, and performance optimization",
-			"acceptanceCriteria": [
-				"All loading states with skeletons",
-				"Error boundaries for crash recovery",
-				"Optimistic updates for issue mutations",
-				"Smooth page transitions",
-				"Toast notifications for actions",
-				"Confirmation dialogs for destructive actions",
-				"Empty states for all views",
-				"Tooltip explanations throughout",
-				"Performance: First load under 2s",
-				"Performance: Issue list scrolls smoothly with 500+ items",
-				"Clean, minimal UI design (Vercel/Linear aesthetic)",
-				"Refined spacing and typography hierarchy",
-				"Subtle shadows and borders (no heavy visual noise)",
-				"Consistent color palette throughout",
-				"Micro-interactions on buttons and interactive elements",
-				"Hover states for all interactive components",
-				"Focus rings and accessibility indicators",
-				"Remove any unnecessary visual clutter",
-				"Polished dropdown menus and modals",
-				"Refined sidebar styling and navigation",
-				"Icon consistency (use same icon set throughout)"
-			],
-			"passes": true
-		},
-		{
-			"id": "cleanup",
-			"category": "maintenance",
-			"title": "Code Cleanup & Quality Assurance",
-			"description": "Final pass to clean up lint errors, type issues, and technical debt before feature completion",
-			"acceptanceCriteria": [
-				"Run `bun run check` and fix ALL Biome lint errors",
-				"Run `bun run typecheck` and fix ALL TypeScript errors",
-				"No TypeScript `any` types - use proper types or `unknown`",
-				"No `@ts-ignore` or `@ts-expect-error` without justification",
-				"Remove dead code, unused imports, and commented-out code",
-				"Refactor messy code encountered during this feature",
-				"Ensure clean, maintainable code that the next dev can understand",
-				"All builds pass with zero errors or warnings"
-			],
-			"passes": true
-		},
-		{
-			"id": "deployment-docs",
+			"id": "documentation",
 			"category": "docs",
-			"title": "Deployment Documentation",
-			"description": "Create comprehensive deployment guide with environment variables and platform-specific instructions",
+			"title": "Code Documentation",
+			"description": "Add comprehensive documentation - README, inline comments, API docs",
 			"acceptanceCriteria": [
-				"Create DEPLOYMENT.md file with complete setup instructions",
-				"List all required environment variables with descriptions",
-				"Document Vercel deployment steps (including adapter config)",
-				"Document self-hosted deployment options",
-				"Explain database setup (SQLite for simple, PostgreSQL for production)",
-				"Document Better Auth environment variables (BETTER_AUTH_SECRET, etc.)",
-				"Add environment variable examples for .env.production",
-				"Include troubleshooting section for common deployment issues"
+				"Update README with setup instructions",
+				"Document all environment variables",
+				"Add JSDoc comments to complex functions",
+				"Document all tRPC procedures",
+				"Create component documentation",
+				"Add architecture decision records (ADRs)",
+				"Document database schema",
+				"Add troubleshooting guide",
+				"All public APIs documented"
 			],
-			"passes": true
+			"passes": false
+		},
+		{
+			"id": "final-pass",
+			"category": "maintenance",
+			"title": "Final Quality Pass",
+			"description": "Final verification that everything is production-ready",
+			"acceptanceCriteria": [
+				"Run full test suite - all tests pass",
+				"Run `bun run build` with zero warnings",
+				"Run `bun run check` with zero errors",
+				"Run `bun run typecheck` with zero errors",
+				"Manual QA test of all critical user flows",
+				"Verify dark mode works correctly everywhere",
+				"Verify mobile responsive design",
+				"Check for any console errors in production build",
+				"Verify all environment variables documented"
+			],
+			"passes": false
 		}
 	]
 }

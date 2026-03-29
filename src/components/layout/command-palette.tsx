@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/command";
 import { useDebouncedValue } from "@/hooks/use-debounced-value";
 import { useCommandPaletteStore } from "@/stores/command-palette";
+import { COMMAND_PALETTE_LIMIT } from "~/constants";
 import { api } from "~/trpc/react";
 
 // Types for recent items
@@ -111,7 +112,7 @@ export function CommandPalette({ workspaceId }: CommandPaletteProps) {
 	const addRecentItem = useCallback((item: RecentItem) => {
 		setRecentItems((prev) => {
 			const filtered = prev.filter((i) => i.id !== item.id);
-			const updated = [item, ...filtered].slice(0, 10);
+			const updated = [item, ...filtered].slice(0, COMMAND_PALETTE_LIMIT);
 			localStorage.setItem("quadratic:recent-items", JSON.stringify(updated));
 			return updated;
 		});
@@ -123,7 +124,7 @@ export function CommandPalette({ workspaceId }: CommandPaletteProps) {
 			{
 				workspaceId,
 				query: debouncedQuery,
-				limit: 8,
+				limit: COMMAND_PALETTE_LIMIT,
 			},
 			{
 				enabled: debouncedQuery.length > 0 && isOpen,

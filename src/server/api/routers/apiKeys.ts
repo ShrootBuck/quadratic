@@ -1,6 +1,13 @@
 import { createHash, randomBytes } from "node:crypto";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import {
+	API_KEY_EXPIRY_MAX,
+	API_KEY_EXPIRY_MIN,
+	API_KEY_NAME_MAX,
+	API_KEY_NAME_MIN,
+	PAGINATION_MAX_LIMIT,
+} from "~/constants";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 // API Key scope enum
@@ -33,9 +40,14 @@ function generateWebhookSecret(): string {
 
 // Create API key input
 const createApiKeyInput = z.object({
-	name: z.string().min(1).max(100),
+	name: z.string().min(API_KEY_NAME_MIN).max(API_KEY_NAME_MAX),
 	scope: ApiKeyScope.default("READ"),
-	expiresInDays: z.number().int().min(1).max(365).optional(),
+	expiresInDays: z
+		.number()
+		.int()
+		.min(API_KEY_EXPIRY_MIN)
+		.max(API_KEY_EXPIRY_MAX)
+		.optional(),
 });
 
 // Revoke API key input
@@ -50,7 +62,7 @@ const listApiKeysInput = z.object({
 
 // Create webhook input
 const createWebhookInput = z.object({
-	name: z.string().min(1).max(100),
+	name: z.string().min(API_KEY_NAME_MIN).max(API_KEY_NAME_MAX),
 	url: z.string().url(),
 	events: z.array(WebhookEvent).min(1),
 });
@@ -58,7 +70,7 @@ const createWebhookInput = z.object({
 // Update webhook input
 const updateWebhookInput = z.object({
 	id: z.string(),
-	name: z.string().min(1).max(100).optional(),
+	name: z.string().min(API_KEY_NAME_MIN).max(API_KEY_NAME_MAX).optional(),
 	url: z.string().url().optional(),
 	events: z.array(WebhookEvent).min(1).optional(),
 	status: WebhookStatus.optional(),
@@ -72,7 +84,7 @@ const listWebhooksInput = z.object({
 // Webhook deliveries input
 const webhookDeliveriesInput = z.object({
 	webhookId: z.string(),
-	limit: z.number().min(1).max(100).default(50),
+	limit: z.number().min(1).max(PAGINATION_MAX_LIMIT).default(50),
 });
 
 export const apiKeysRouter = createTRPCRouter({

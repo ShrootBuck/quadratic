@@ -48,7 +48,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-
+import { AUTOMATIONS_LIMIT } from "~/constants";
 import { api } from "~/trpc/react";
 
 // Types
@@ -809,7 +809,7 @@ function AutomationLogs({
 		{
 			workspaceId,
 			automationId: automationId ?? undefined,
-			limit: 50,
+			limit: AUTOMATIONS_LIMIT,
 		},
 		{ enabled: !!workspaceId },
 	);

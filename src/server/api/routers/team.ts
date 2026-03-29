@@ -1,18 +1,24 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import {
+	TEAM_KEY_MAX,
+	TEAM_KEY_MIN,
+	TEAM_NAME_MAX,
+	TEAM_NAME_MIN,
+} from "~/constants";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 const createTeamInput = z.object({
-	name: z.string().min(1).max(100),
-	key: z.string().min(1).max(10).toUpperCase(),
+	name: z.string().min(TEAM_NAME_MIN).max(TEAM_NAME_MAX),
+	key: z.string().min(TEAM_KEY_MIN).max(TEAM_KEY_MAX).toUpperCase(),
 	color: z.string().default("#5E6AD2"),
 	workspaceId: z.string(),
 });
 
 const updateTeamInput = z.object({
 	id: z.string(),
-	name: z.string().min(1).max(100).optional(),
-	key: z.string().min(1).max(10).toUpperCase().optional(),
+	name: z.string().min(TEAM_NAME_MIN).max(TEAM_NAME_MAX).optional(),
+	key: z.string().min(TEAM_KEY_MIN).max(TEAM_KEY_MAX).toUpperCase().optional(),
 	color: z.string().optional(),
 });
 

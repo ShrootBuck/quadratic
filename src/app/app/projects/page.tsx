@@ -38,6 +38,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useCurrentWorkspace } from "@/hooks/use-current-workspace";
 import { cn } from "@/lib/utils";
+import { PROJECT_LIST_LIMIT } from "~/constants";
 import { api } from "~/trpc/react";
 
 type ProjectStatus = "PLANNED" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
@@ -78,7 +79,7 @@ export default function ProjectsPage() {
 
 	const { data: projectsData, isLoading } = api.project.list.useQuery({
 		workspaceId,
-		limit: 50,
+		limit: PROJECT_LIST_LIMIT,
 	});
 
 	const { data: teamsData } = api.workspace.getTeams.useQuery({

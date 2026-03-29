@@ -1,5 +1,14 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import {
+	DEFAULT_ISSUE_PRIORITY,
+	DEFAULT_ISSUE_STATUS,
+	ISSUE_DESCRIPTION_MAX,
+	ISSUE_TITLE_MAX,
+	ISSUE_TITLE_MIN,
+	PAGINATION_MAX_LIMIT,
+	PAGINATION_MIN_LIMIT,
+} from "~/constants";
 import { executeAutomations } from "~/server/api/routers/automation";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { realtimeManager } from "~/server/realtime/manager";
@@ -35,22 +44,22 @@ const issueIdSchema = z.object({
 });
 
 const createIssueInput = z.object({
-	title: z.string().min(1).max(500),
-	description: z.string().optional(),
+	title: z.string().min(ISSUE_TITLE_MIN).max(ISSUE_TITLE_MAX),
+	description: z.string().max(ISSUE_DESCRIPTION_MAX).optional(),
 	teamId: z.string(),
 	projectId: z.string().optional(),
 	cycleId: z.string().optional(),
 	assigneeId: z.string().optional(),
-	priority: Priority.default("NO_PRIORITY"),
+	priority: Priority.default(DEFAULT_ISSUE_PRIORITY),
 	labelIds: z.array(z.string()).default([]),
-	status: IssueStatus.default("BACKLOG"),
+	status: IssueStatus.default(DEFAULT_ISSUE_STATUS),
 	dueDate: z.date().optional(),
 });
 
 const updateIssueInput = z.object({
 	id: z.string(),
-	title: z.string().min(1).max(500).optional(),
-	description: z.string().optional(),
+	title: z.string().min(ISSUE_TITLE_MIN).max(ISSUE_TITLE_MAX).optional(),
+	description: z.string().max(ISSUE_DESCRIPTION_MAX).optional(),
 	projectId: z.string().optional().nullable(),
 	cycleId: z.string().optional().nullable(),
 	assigneeId: z.string().optional().nullable(),
@@ -70,7 +79,11 @@ const listIssuesInput = z.object({
 	priority: Priority.optional(),
 	labelIds: z.array(z.string()).optional(),
 	search: z.string().optional(),
-	limit: z.number().min(1).max(100).default(50),
+	limit: z
+		.number()
+		.min(PAGINATION_MIN_LIMIT)
+		.max(PAGINATION_MAX_LIMIT)
+		.default(50),
 	offset: z.number().min(0).default(0),
 	customFieldFilters: z.record(z.unknown()).optional(), // { customFieldId: value }
 });

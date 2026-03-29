@@ -1,4 +1,10 @@
 import { z } from "zod";
+import {
+	WORKSPACE_NAME_MAX,
+	WORKSPACE_NAME_MIN,
+	WORKSPACE_SLUG_MAX,
+	WORKSPACE_SLUG_MIN,
+} from "~/constants";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 // Fuzzy match function for search
@@ -37,7 +43,7 @@ export const workspaceRouter = createTRPCRouter({
 	create: protectedProcedure
 		.input(
 			z.object({
-				name: z.string().min(1).max(100),
+				name: z.string().min(WORKSPACE_NAME_MIN).max(WORKSPACE_NAME_MAX),
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
@@ -404,8 +410,16 @@ export const workspaceRouter = createTRPCRouter({
 		.input(
 			z.object({
 				id: z.string(),
-				name: z.string().min(1).max(100).optional(),
-				slug: z.string().min(1).max(50).optional(),
+				name: z
+					.string()
+					.min(WORKSPACE_NAME_MIN)
+					.max(WORKSPACE_NAME_MAX)
+					.optional(),
+				slug: z
+					.string()
+					.min(WORKSPACE_SLUG_MIN)
+					.max(WORKSPACE_SLUG_MAX)
+					.optional(),
 				settings: z.string().optional(),
 			}),
 		)

@@ -1,11 +1,17 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import {
+	CYCLE_NAME_MAX,
+	CYCLE_NAME_MIN,
+	PAGINATION_MAX_LIMIT,
+	PAGINATION_MIN_LIMIT,
+} from "~/constants";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 const CycleStatus = z.enum(["UPCOMING", "CURRENT", "COMPLETED"]);
 
 const createCycleInput = z.object({
-	name: z.string().min(1).max(100),
+	name: z.string().min(CYCLE_NAME_MIN).max(CYCLE_NAME_MAX),
 	description: z.string().optional(),
 	startDate: z.date(),
 	endDate: z.date(),
@@ -15,7 +21,7 @@ const createCycleInput = z.object({
 
 const updateCycleInput = z.object({
 	id: z.string(),
-	name: z.string().min(1).max(100).optional(),
+	name: z.string().min(CYCLE_NAME_MIN).max(CYCLE_NAME_MAX).optional(),
 	description: z.string().optional(),
 	startDate: z.date().optional(),
 	endDate: z.date().optional(),
@@ -30,7 +36,11 @@ const listCyclesInput = z.object({
 	workspaceId: z.string(),
 	teamId: z.string().optional(),
 	status: CycleStatus.optional(),
-	limit: z.number().min(1).max(100).default(50),
+	limit: z
+		.number()
+		.min(PAGINATION_MIN_LIMIT)
+		.max(PAGINATION_MAX_LIMIT)
+		.default(50),
 	offset: z.number().min(0).default(0),
 });
 

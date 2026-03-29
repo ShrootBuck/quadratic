@@ -1,14 +1,19 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import {
+	CUSTOM_FIELD_DESC_MAX,
+	CUSTOM_FIELD_NAME_MAX,
+	CUSTOM_FIELD_NAME_MIN,
+} from "~/constants";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { CustomFieldType } from "../../../../generated/prisma";
 
 const customFieldTypeSchema = z.nativeEnum(CustomFieldType);
 
 const createCustomFieldInput = z.object({
-	name: z.string().min(1).max(50),
+	name: z.string().min(CUSTOM_FIELD_NAME_MIN).max(CUSTOM_FIELD_NAME_MAX),
 	type: customFieldTypeSchema,
-	description: z.string().max(200).optional(),
+	description: z.string().max(CUSTOM_FIELD_DESC_MAX).optional(),
 	options: z.array(z.string()).optional(), // For SELECT and MULTI_SELECT types
 	workspaceId: z.string(),
 	teamId: z.string().optional(),
@@ -16,8 +21,12 @@ const createCustomFieldInput = z.object({
 
 const updateCustomFieldInput = z.object({
 	id: z.string(),
-	name: z.string().min(1).max(50).optional(),
-	description: z.string().max(200).optional(),
+	name: z
+		.string()
+		.min(CUSTOM_FIELD_NAME_MIN)
+		.max(CUSTOM_FIELD_NAME_MAX)
+		.optional(),
+	description: z.string().max(CUSTOM_FIELD_DESC_MAX).optional(),
 	options: z.array(z.string()).optional(),
 	order: z.number().int().optional(),
 });

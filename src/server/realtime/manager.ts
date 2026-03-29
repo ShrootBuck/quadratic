@@ -1,3 +1,8 @@
+import {
+	SESSION_CLEANUP_INTERVAL_MS,
+	STALE_SESSION_THRESHOLD_MS,
+} from "~/constants/timeouts";
+
 // Server-side real-time update manager
 // Manages SSE connections and broadcasts updates to clients
 
@@ -25,7 +30,7 @@ class RealtimeManager {
 
 	constructor() {
 		// Clean up stale editing sessions every 30 seconds
-		setInterval(() => this.cleanupStaleSessions(), 30000);
+		setInterval(() => this.cleanupStaleSessions(), SESSION_CLEANUP_INTERVAL_MS);
 	}
 
 	addClient(
@@ -179,7 +184,7 @@ class RealtimeManager {
 
 	private cleanupStaleSessions(): void {
 		const now = Date.now();
-		const staleThreshold = 60000; // 1 minute
+		const staleThreshold = STALE_SESSION_THRESHOLD_MS;
 
 		for (const [key, session] of this.editingSessions.entries()) {
 			if (now - session.timestamp > staleThreshold) {

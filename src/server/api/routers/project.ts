@@ -1,5 +1,11 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import {
+	PAGINATION_MAX_LIMIT,
+	PAGINATION_MIN_LIMIT,
+	PROJECT_NAME_MAX,
+	PROJECT_NAME_MIN,
+} from "~/constants";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 const ProjectStatus = z.enum([
@@ -10,7 +16,7 @@ const ProjectStatus = z.enum([
 ]);
 
 const createProjectInput = z.object({
-	name: z.string().min(1).max(100),
+	name: z.string().min(PROJECT_NAME_MIN).max(PROJECT_NAME_MAX),
 	description: z.string().optional(),
 	teamId: z.string(),
 	workspaceId: z.string(),
@@ -22,7 +28,7 @@ const createProjectInput = z.object({
 
 const updateProjectInput = z.object({
 	id: z.string(),
-	name: z.string().min(1).max(100).optional(),
+	name: z.string().min(PROJECT_NAME_MIN).max(PROJECT_NAME_MAX).optional(),
 	description: z.string().optional(),
 	status: ProjectStatus.optional(),
 	leadId: z.string().optional().nullable(),
@@ -39,7 +45,11 @@ const listProjectsInput = z.object({
 	workspaceId: z.string(),
 	teamId: z.string().optional(),
 	status: ProjectStatus.optional(),
-	limit: z.number().min(1).max(100).default(50),
+	limit: z
+		.number()
+		.min(PAGINATION_MIN_LIMIT)
+		.max(PAGINATION_MAX_LIMIT)
+		.default(50),
 	offset: z.number().min(0).default(0),
 });
 

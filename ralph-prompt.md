@@ -19,7 +19,14 @@ Find the first feature with `"passes": false`. That's your ONLY task this iterat
 
 ## Goal
 
-Build **Quadratic** - a Linear-inspired project management tool (issues, cycles, projects, teams, automations). Built by self-recursive AI agents iterating one feature at a time.
+**POLISH PHASE**: Clean up, refactor, and fix bugs in **Quadratic** - a Linear-inspired project management tool. The app is built but needs hardening.
+
+This is a code quality pass, not a feature-building phase. Focus on:
+- Removing hardcoded values and TODOs
+- Fixing type safety issues and console errors  
+- Refactoring messy code
+- Bug fixes and performance optimization
+- **NOT breaking existing functionality**
 
 **Reference:** Study [Linear.app](https://linear.app) for UI/UX patterns.
 
@@ -68,36 +75,61 @@ Build **Quadratic** - a Linear-inspired project management tool (issues, cycles,
 
 ---
 
+## Polishing Phase Guidelines
+
+### What You're Doing
+Each task in features.json is a **cleanup task**, not a feature build:
+- `hardcoded-removal` → Extract constants
+- `todo-cleanup` → Fix or remove TODOs
+- `type-safety` → Remove `any` types
+- `bug-fixes` → Fix actual bugs
+- etc.
+
+### Critical: Don't Break Compilation
+- If changing types, verify consumers compile
+- If refactoring a component, verify imports resolve
+- Run the full test checklist before committing
+
+### Commit Message Types
+Use appropriate conventional commits:
+- `refactor: [TASK_ID] - description` (for cleanup/refactoring)
+- `fix: [TASK_ID] - description` (for bug fixes)
+- `chore: [TASK_ID] - description` (for maintenance)
+- `types: [TASK_ID] - description` (for type fixes)
+- `perf: [TASK_ID] - description` (for performance)
+
+---
+
 ## Development Workflow
 
 ### Start of Iteration
 1. Check `git log` to see previous work
 2. Read `features.json` - find first `"passes": false`
-3. Read that feature's acceptance criteria carefully
+3. Read that task's acceptance criteria carefully
 
 ### During Development
-4. Work on ONE feature only
-5. Follow acceptance criteria sequentially
-6. Install dependencies as needed:
-   - shadcn/ui: `bunx shadcn@latest add button`
-   - npm packages: `bun add <package>`
+4. Work on ONE cleanup task only
+5. Search the codebase systematically (e.g., search for all TODOs)
+6. Make surgical changes - don't rewrite everything at once
+7. Verify TypeScript compiles without errors in affected files
 
 ### Before Completing
-7. **Test everything:**
+8. **Test everything:**
    ```bash
    bun run build        # Must pass
    bun run check        # Must pass  
    bun run typecheck    # Must pass
    ```
+9. Verify related features compile correctly (no type errors in consumers)
 
 ### End of Iteration
-8. Update `features.json`: Set `"passes": true` for your feature ONLY
-9. **Commit your work:**
-   ```bash
-   git add -A
-   git commit -m "feat: [FEATURE_ID] - [brief description]"
-   ```
-10. **Output completion signal:**
+11. Update `features.json`: Set `"passes": true` for your task ONLY
+12. **Commit your work:**
+    ```bash
+    git add -A
+    git commit -m "refactor: [TASK_ID] - brief description"
+    ```
+13. **Output completion signal:**
     ```
     <promise>READY_FOR_NEXT_TASK</promise>
     ```
@@ -106,21 +138,20 @@ Build **Quadratic** - a Linear-inspired project management tool (issues, cycles,
 
 ## STOP RULE
 
-**You are LIMITED to ONE feature per iteration.** Context window constraints require this.
+**You are LIMITED to ONE cleanup task per iteration.** Context window constraints require this.
 
 **STOP NOW and output `<promise>READY_FOR_NEXT_TASK</promise>` when:**
-- ✅ Feature complete and `"passes": true` set
+- ✅ Task complete and `"passes": true` set
 - ✅ Build, check, typecheck all pass
-- ⚠️ Feature taking too long (>15 min)
+- ⚠️ Task taking too long (>15 min) - commit partial progress
 - ⚠️ You hit a blocker needing fresh context
 
 **NEVER:**
-- ❌ Start a second feature
+- ❌ Start a second cleanup task
 - ❌ Skip updating passes field
-- ❌ Think "I'll just quickly add this too"
-- ❌ Work on multiple criteria simultaneously
+- ❌ Think "I'll just quickly refactor this too"
 
-**Better to stop early than lose work to context overflow.**
+**Better to stop early with working code than break things and lose work.**
 
 ---
 
@@ -192,17 +223,15 @@ Ralph state files in `.ralph/` (don't touch these):
 
 ## Complete Testing Checklist
 
-Before marking a feature done:
+Before marking a task done:
 - [ ] All acceptance criteria met
 - [ ] `bun run build` passes
 - [ ] `bun run check` passes
 - [ ] `bun run typecheck` passes
-- [ ] Feature works in browser
-- [ ] Keyboard navigation works
-- [ ] Mobile responsive
-- [ ] Dark mode looks good
-- [ ] No console errors
-- [ ] Smooth animations
+- [ ] No TypeScript errors in related files
+- [ ] No new build warnings introduced
+- [ ] No console.log left in production code
+- [ ] Clean git status (only intended changes committed)
 
 ---
 
@@ -235,8 +264,8 @@ You are NOT allowed to ship garbage. Every iteration must leave the codebase cle
 
 ---
 
-## Now Go Build
+## Now Polish
 
-Read features.json. Find the next incomplete feature. Build it. Test it. Commit it. Signal completion.
+Read `features.json`. Find the first task with `"passes": false`. Clean it up. Test everything compiles. Commit it. Signal completion.
 
 **The loop is watching.**

@@ -5,10 +5,12 @@ import { useState } from "react";
 import { CreateIssueModal } from "@/components/features/issues/create-issue-modal";
 import { KanbanBoard } from "@/components/features/issues/kanban-board";
 import { Button } from "@/components/ui/button";
+import {
+	BOARD_PAGINATION_LIMIT,
+	type IssueStatus,
+	type Priority,
+} from "~/constants";
 import { api } from "~/trpc/react";
-
-type IssueStatus = "BACKLOG" | "TODO" | "IN_PROGRESS" | "DONE" | "CANCELLED";
-type Priority = "NO_PRIORITY" | "LOW" | "MEDIUM" | "HIGH" | "URGENT";
 
 interface Filters {
 	status: IssueStatus | null;
@@ -41,7 +43,7 @@ export default function BoardPage() {
 		projectId: filters.projectId ?? undefined,
 		labelIds: filters.labelIds.length > 0 ? filters.labelIds : undefined,
 		search: filters.search || undefined,
-		limit: 100,
+		limit: BOARD_PAGINATION_LIMIT,
 	});
 
 	return (

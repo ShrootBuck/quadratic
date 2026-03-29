@@ -27,6 +27,7 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import { SIDEBAR_DISPLAY_LIMIT, SIDEBAR_ITEMS_LIMIT } from "~/constants";
 import { api } from "~/trpc/react";
 
 interface SidebarProps {
@@ -105,7 +106,7 @@ function ProjectsList({
 	const { data: projectsData } = api.project.list.useQuery(
 		{
 			workspaceId,
-			limit: 20,
+			limit: SIDEBAR_ITEMS_LIMIT,
 		},
 		{
 			enabled: !!workspaceId,
@@ -138,7 +139,7 @@ function ProjectsList({
 				</Link>
 			</div>
 			<div className="space-y-1">
-				{activeProjects.slice(0, 5).map((project) => (
+				{activeProjects.slice(0, SIDEBAR_DISPLAY_LIMIT).map((project) => (
 					<Link
 						className={cn(
 							"flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
@@ -156,7 +157,7 @@ function ProjectsList({
 						<span className="flex-1 truncate">{project.name}</span>
 					</Link>
 				))}
-				{activeProjects.length > 5 && (
+				{activeProjects.length > SIDEBAR_DISPLAY_LIMIT && (
 					<Link
 						className="flex items-center gap-3 rounded-md px-3 py-2 text-[#8A8F98] text-sm transition-colors hover:bg-[#2A2F35] hover:text-[#F7F8F8]"
 						href="/app/projects"

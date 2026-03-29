@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
+import { NOTIFICATIONS_LIMIT, SESSION_CLEANUP_INTERVAL_MS } from "~/constants";
 import { api } from "~/trpc/react";
 import type { NotificationType } from "../../../generated/prisma";
 
@@ -60,13 +61,13 @@ export function NotificationDropdown({
 	const { data: unreadCount = 0, refetch: refetchUnreadCount } =
 		api.notification.getUnreadCount.useQuery(
 			{ workspaceId },
-			{ refetchInterval: 30000 }, // Poll every 30 seconds
+			{ refetchInterval: SESSION_CLEANUP_INTERVAL_MS }, // Poll every 30 seconds
 		);
 
 	// Get notifications list
 	const { data: notificationsData, refetch: refetchNotifications } =
 		api.notification.list.useQuery(
-			{ workspaceId, limit: 10, unreadOnly: false },
+			{ workspaceId, limit: NOTIFICATIONS_LIMIT, unreadOnly: false },
 			{ enabled: isOpen },
 		);
 

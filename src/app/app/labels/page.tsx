@@ -35,29 +35,11 @@ import {
 } from "@/components/ui/tooltip";
 import { useCurrentWorkspace } from "@/hooks/use-current-workspace";
 import { cn } from "@/lib/utils";
+import { DEFAULT_LABEL_COLOR_INDEX, LABEL_COLOR_OPTIONS } from "~/constants";
 import { api } from "~/trpc/react";
 
-// Predefined color palette (Linear-style)
-const COLOR_OPTIONS = [
-	"#EF4444", // Red
-	"#F97316", // Orange
-	"#F59E0B", // Amber
-	"#84CC16", // Lime
-	"#22C55E", // Green
-	"#10B981", // Emerald
-	"#14B8A6", // Teal
-	"#06B6D4", // Cyan
-	"#0EA5E9", // Sky
-	"#3B82F6", // Blue
-	"#6366F1", // Indigo
-	"#8B5CF6", // Violet
-	"#A855F7", // Purple
-	"#D946EF", // Fuchsia
-	"#EC4899", // Pink
-	"#F43F5E", // Rose
-	"#6B7280", // Gray
-	"#1F2937", // Dark Gray
-];
+// Extract hex colors from LABEL_COLOR_OPTIONS
+const COLOR_OPTIONS = LABEL_COLOR_OPTIONS.map((option) => option.hex);
 
 interface CreateLabelModalProps {
 	isOpen: boolean;
@@ -72,7 +54,9 @@ function CreateLabelModal({
 }: CreateLabelModalProps) {
 	const [name, setName] = useState("");
 	const [selectedColor, setSelectedColor] = useState<string>(
-		COLOR_OPTIONS[10] ?? "#6366F1",
+		COLOR_OPTIONS[DEFAULT_LABEL_COLOR_INDEX] ??
+			LABEL_COLOR_OPTIONS[DEFAULT_LABEL_COLOR_INDEX]?.hex ??
+			"#6366F1",
 	); // Default to Indigo
 	const utils = api.useUtils();
 

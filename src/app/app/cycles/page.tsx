@@ -24,6 +24,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useCurrentWorkspace } from "@/hooks/use-current-workspace";
 import { cn } from "@/lib/utils";
+import { CYCLE_LIST_LIMIT } from "~/constants";
 import { api } from "~/trpc/react";
 
 type CycleStatus = "UPCOMING" | "CURRENT" | "COMPLETED";
@@ -50,7 +51,7 @@ export default function CyclesPage() {
 
 	const { data: cyclesData, isLoading } = api.cycle.list.useQuery({
 		workspaceId,
-		limit: 50,
+		limit: CYCLE_LIST_LIMIT,
 	});
 
 	const { data: teamsData } = api.workspace.getTeams.useQuery({

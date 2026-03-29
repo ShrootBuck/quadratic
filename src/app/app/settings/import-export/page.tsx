@@ -42,20 +42,34 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import {
+	PRIORITY_COLORS,
+	STATUS_COLORS,
+	SUCCESS_MESSAGE_TIMEOUT_MS,
+} from "~/constants";
 import { api } from "~/trpc/react";
 
 // Status badge component
 function StatusBadge({ status }: { status: string }) {
-	const colors: Record<string, string> = {
-		BACKLOG: "bg-[#8A8F98]/10 text-[#8A8F98]",
-		TODO: "bg-[#8A8F98]/10 text-[#8A8F98]",
-		IN_PROGRESS: "bg-[#5E6AD2]/10 text-[#5E6AD2]",
-		DONE: "bg-[#4EC9B0]/10 text-[#4EC9B0]",
-		CANCELLED: "bg-[#F87171]/10 text-[#F87171]",
+	const getStatusClasses = (s: string) => {
+		switch (s) {
+			case "BACKLOG":
+				return `${STATUS_COLORS.BACKLOG.bg} ${STATUS_COLORS.BACKLOG.text}`;
+			case "TODO":
+				return `${STATUS_COLORS.TODO.bg} ${STATUS_COLORS.TODO.text}`;
+			case "IN_PROGRESS":
+				return `${STATUS_COLORS.IN_PROGRESS.bg} ${STATUS_COLORS.IN_PROGRESS.text}`;
+			case "DONE":
+				return `${STATUS_COLORS.DONE.bg} ${STATUS_COLORS.DONE.text}`;
+			case "CANCELLED":
+				return `${STATUS_COLORS.CANCELLED.bg} ${STATUS_COLORS.CANCELLED.text}`;
+			default:
+				return `${STATUS_COLORS.BACKLOG.bg} ${STATUS_COLORS.BACKLOG.text}`;
+		}
 	};
 
 	return (
-		<Badge className={`${colors[status] ?? colors.BACKLOG} border-0`}>
+		<Badge className={`${getStatusClasses(status)} border-0`}>
 			{status.replace(/_/g, " ")}
 		</Badge>
 	);
@@ -63,16 +77,25 @@ function StatusBadge({ status }: { status: string }) {
 
 // Priority badge component
 function PriorityBadge({ priority }: { priority: string }) {
-	const colors: Record<string, string> = {
-		NO_PRIORITY: "bg-[#8A8F98]/10 text-[#8A8F98]",
-		LOW: "bg-[#8A8F98]/10 text-[#8A8F98]",
-		MEDIUM: "bg-[#5E6AD2]/10 text-[#5E6AD2]",
-		HIGH: "bg-[#F87171]/10 text-[#F87171]",
-		URGENT: "bg-[#F87171]/10 text-[#F87171] font-semibold",
+	const getPriorityClasses = (p: string) => {
+		switch (p) {
+			case "NO_PRIORITY":
+				return `${PRIORITY_COLORS.NO_PRIORITY.bg} ${PRIORITY_COLORS.NO_PRIORITY.text}`;
+			case "LOW":
+				return `${PRIORITY_COLORS.LOW.bg} ${PRIORITY_COLORS.LOW.text}`;
+			case "MEDIUM":
+				return `${PRIORITY_COLORS.MEDIUM.bg} ${PRIORITY_COLORS.MEDIUM.text}`;
+			case "HIGH":
+				return `${PRIORITY_COLORS.HIGH.bg} ${PRIORITY_COLORS.HIGH.text}`;
+			case "URGENT":
+				return `${PRIORITY_COLORS.URGENT.bg} ${PRIORITY_COLORS.URGENT.text} font-semibold`;
+			default:
+				return `${PRIORITY_COLORS.NO_PRIORITY.bg} ${PRIORITY_COLORS.NO_PRIORITY.text}`;
+		}
 	};
 
 	return (
-		<Badge className={`${colors[priority] ?? colors.NO_PRIORITY} border-0`}>
+		<Badge className={`${getPriorityClasses(priority)} border-0`}>
 			{priority.replace(/_/g, " ")}
 		</Badge>
 	);
@@ -561,7 +584,7 @@ export default function ImportExportPage() {
 			setShowPreview(false);
 			setShowSuccess(true);
 			setImportData("");
-			setTimeout(() => setShowSuccess(false), 3000);
+			setTimeout(() => setShowSuccess(false), SUCCESS_MESSAGE_TIMEOUT_MS);
 		},
 	});
 
@@ -570,7 +593,7 @@ export default function ImportExportPage() {
 			setShowPreview(false);
 			setShowSuccess(true);
 			setImportData("");
-			setTimeout(() => setShowSuccess(false), 3000);
+			setTimeout(() => setShowSuccess(false), SUCCESS_MESSAGE_TIMEOUT_MS);
 		},
 	});
 
@@ -579,7 +602,7 @@ export default function ImportExportPage() {
 			setShowPreview(false);
 			setShowSuccess(true);
 			setImportData("");
-			setTimeout(() => setShowSuccess(false), 3000);
+			setTimeout(() => setShowSuccess(false), SUCCESS_MESSAGE_TIMEOUT_MS);
 		},
 	});
 

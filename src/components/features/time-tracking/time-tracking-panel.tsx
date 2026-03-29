@@ -14,6 +14,7 @@ import {
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Textarea } from "~/components/ui/textarea";
+import { TIME_ENTRIES_LIMIT } from "~/constants";
 import { formatDuration, formatTimeAgo } from "~/lib/time";
 import { cn } from "~/lib/utils";
 import { api } from "~/trpc/react";
@@ -45,7 +46,7 @@ export function TimeTrackingPanel({
 		api.timeTracking.list.useQuery({
 			issueId,
 			workspaceId,
-			limit: 50,
+			limit: TIME_ENTRIES_LIMIT,
 		});
 
 	// Get running timer

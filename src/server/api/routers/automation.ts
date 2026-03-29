@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { AUTOMATION_NAME_MAX, AUTOMATION_NAME_MIN } from "~/constants";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { db } from "~/server/db";
 
@@ -43,7 +44,7 @@ const actionSchema = z.object({
 
 // Create automation input
 const createAutomationInput = z.object({
-	name: z.string().min(1).max(100),
+	name: z.string().min(AUTOMATION_NAME_MIN).max(AUTOMATION_NAME_MAX),
 	description: z.string().optional(),
 	trigger: AutomationTrigger,
 	conditions: z.array(conditionSchema).default([]),
@@ -55,7 +56,7 @@ const createAutomationInput = z.object({
 // Update automation input
 const updateAutomationInput = z.object({
 	id: z.string(),
-	name: z.string().min(1).max(100).optional(),
+	name: z.string().min(AUTOMATION_NAME_MIN).max(AUTOMATION_NAME_MAX).optional(),
 	description: z.string().optional(),
 	trigger: AutomationTrigger.optional(),
 	conditions: z.array(conditionSchema).optional(),

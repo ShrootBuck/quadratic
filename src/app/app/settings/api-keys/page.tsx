@@ -50,6 +50,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { COPIED_STATE_TIMEOUT_MS } from "~/constants";
 import { api } from "~/trpc/react";
 
 // API Key Scope Badge
@@ -129,7 +130,7 @@ function CreateApiKeyModal({
 		if (createdKey) {
 			void navigator.clipboard.writeText(createdKey);
 			setCopied(true);
-			setTimeout(() => setCopied(false), 2000);
+			setTimeout(() => setCopied(false), COPIED_STATE_TIMEOUT_MS);
 		}
 	};
 

@@ -18,16 +18,11 @@ import {
 	XAxis,
 	YAxis,
 } from "recharts";
+import { ANALYTICS_ITEMS_LIMIT } from "~/constants";
 import { api } from "~/trpc/react";
 
-const _STATUS_COLORS: Record<string, string> = {
-	Done: "#4EC9B0",
-	"In Progress": "#5E6AD2",
-	Todo: "#8A8F98",
-	Cancelled: "#F87171",
-};
-
-const PRIORITY_COLORS: Record<string, string> = {
+// Priority colors for analytics charts
+const ANALYTICS_PRIORITY_COLORS: Record<string, string> = {
 	urgent: "#EF4444",
 	high: "#F97316",
 	medium: "#EAB308",
@@ -44,7 +39,7 @@ export default function CycleAnalyticsPage() {
 
 	const { data: velocityData } = api.analytics.getVelocityAnalytics.useQuery({
 		workspaceId: "clz1234567890",
-		limit: 10,
+		limit: ANALYTICS_ITEMS_LIMIT,
 	});
 
 	api.analytics.getIssueDistribution.useQuery({ cycleId });
@@ -319,7 +314,9 @@ export default function CycleAnalyticsPage() {
 							{Object.entries(cycleData.priorityDistribution).map(
 								([priority, count]) => {
 									const color =
-										PRIORITY_COLORS[priority as keyof typeof PRIORITY_COLORS];
+										ANALYTICS_PRIORITY_COLORS[
+											priority as keyof typeof ANALYTICS_PRIORITY_COLORS
+										];
 									return (
 										<div key={priority}>
 											<div className="flex items-center justify-between">

@@ -1,9 +1,10 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { LABEL_NAME_MAX, LABEL_NAME_MIN } from "~/constants";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 const createLabelInput = z.object({
-	name: z.string().min(1).max(50),
+	name: z.string().min(LABEL_NAME_MIN).max(LABEL_NAME_MAX),
 	color: z.string().regex(/^#[0-9A-Fa-f]{6}$/, "Must be a valid hex color"),
 	workspaceId: z.string(),
 	teamId: z.string().optional(),
@@ -11,7 +12,7 @@ const createLabelInput = z.object({
 
 const updateLabelInput = z.object({
 	id: z.string(),
-	name: z.string().min(1).max(50).optional(),
+	name: z.string().min(LABEL_NAME_MIN).max(LABEL_NAME_MAX).optional(),
 	color: z
 		.string()
 		.regex(/^#[0-9A-Fa-f]{6}$/)

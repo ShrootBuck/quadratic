@@ -19,10 +19,12 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useCurrentWorkspace } from "@/hooks/use-current-workspace";
+import {
+	DEFAULT_PAGINATION_LIMIT,
+	type IssueStatus,
+	type Priority,
+} from "~/constants";
 import { api } from "~/trpc/react";
-
-type IssueStatus = "BACKLOG" | "TODO" | "IN_PROGRESS" | "DONE" | "CANCELLED";
-type Priority = "NO_PRIORITY" | "LOW" | "MEDIUM" | "HIGH" | "URGENT";
 
 interface Filters {
 	status: IssueStatus | null;
@@ -58,7 +60,7 @@ export default function IssuesPage() {
 		projectId: filters.projectId ?? undefined,
 		labelIds: filters.labelIds.length > 0 ? filters.labelIds : undefined,
 		search: filters.search || undefined,
-		limit: 50,
+		limit: DEFAULT_PAGINATION_LIMIT,
 	});
 
 	const handleFilterChange = <K extends keyof Filters>(
