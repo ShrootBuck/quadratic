@@ -316,6 +316,155 @@
 			"passes": false
 		},
 		{
+			"id": "rich-text-editor",
+			"category": "core",
+			"title": "Rich Text Editor (TipTap)",
+			"description": "Integrate TipTap editor for issue descriptions with collaborative-style editing",
+			"acceptanceCriteria": [
+				"Install and configure TipTap with StarterKit extensions",
+				"Custom toolbar with bold, italic, code, headings, lists, links, code blocks",
+				"Auto-save descriptions on blur or after 2s debounce",
+				"Read-only mode for viewing descriptions",
+				"Code block syntax highlighting",
+				"Support for @mentions (team members)",
+				"Keyboard shortcuts within editor (Cmd+B for bold, etc.)",
+				"Stash/undo stack on blur"
+			],
+			"passes": false
+		},
+		{
+			"id": "realtime-updates",
+			"category": "core",
+			"title": "Real-time Updates",
+			"description": "Implement real-time synchronization using Server-Sent Events or polling",
+			"acceptanceCriteria": [
+				"Set up SSE endpoint for real-time issue updates",
+				"Invalidate tRPC cache when issues are updated remotely",
+				"Show 'someone is editing' indicator when conflict detected",
+				"Optimistic updates with conflict resolution",
+				"Real-time notification count updates",
+				"Connection status indicator in UI (connected, reconnecting, offline)",
+				"Automatic reconnection on disconnect",
+				"Batch rapid updates (don't spam the API)"
+			],
+			"passes": false
+		},
+		{
+			"id": "workflow-automations",
+			"category": "core",
+			"title": "Workflow Automations",
+			"description": "Simple automation rules for issue lifecycle events",
+			"acceptanceCriteria": [
+				"Create automation rule editor (if-then style)",
+				"Trigger types: issue created, status changed, assignee changed, priority changed",
+				"Action types: change status, change assignee, add label, send notification, update priority",
+				"Condition filters: team, project, label, priority level",
+				"Rule enable/disable toggle",
+				"Execution log showing automation history",
+				"Built-in templates: 'Auto-assign to creator', 'Move to backlog when unassigned'"
+			],
+			"passes": false
+		},
+		{
+			"id": "github-integration",
+			"category": "integration",
+			"title": "GitHub Integration",
+			"description": "Connect issues to GitHub PRs and commits",
+			"acceptanceCriteria": [
+				"Link issue to GitHub PR by URL",
+				"Display linked PRs in issue detail page",
+				"PR status badges (open, merged, closed)",
+				"Extract commit messages that reference issues (fixes ENG-123)",
+				"Auto-close issues when PR is merged (optional automation)",
+				"Branch name generation from issue (feature/ENG-123-fix-login)",
+				"API rate limiting and caching for GitHub requests"
+			],
+			"passes": false
+		},
+		{
+			"id": "time-tracking",
+			"category": "core",
+			"title": "Time Tracking",
+			"description": "Track time spent on issues with estimates and actuals",
+			"acceptanceCriteria": [
+				"Add estimated time field to issues (hours)",
+				"Log time entries (manual entry with description)",
+				"Start/stop timer on issues",
+				"Time tracking tab in issue detail",
+				"Total time spent per issue",
+				"Time tracking reports per cycle/project",
+				"Export time logs to CSV"
+			],
+			"passes": false
+		},
+		{
+			"id": "api-keys",
+			"category": "integration",
+			"title": "API Keys & Webhooks",
+			"description": "External API access for integrations and automation",
+			"acceptanceCriteria": [
+				"Generate API keys with scopes (read, write, admin)",
+				"API key management page (create, revoke, copy)",
+				"Rate limiting per API key",
+				"Webhook endpoint creation",
+				"Webhook events: issue.created, issue.updated, issue.deleted",
+				"Webhook delivery log with retry",
+				"API documentation page"
+			],
+			"passes": false
+		},
+		{
+			"id": "accessibility",
+			"category": "ux",
+			"title": "Accessibility Audit",
+			"description": "Ensure WCAG 2.1 AA compliance throughout the application",
+			"acceptanceCriteria": [
+				"All interactive elements have aria-labels",
+				"Keyboard navigation works for all features",
+				"Screen reader friendly (test with VoiceOver/NVDA)",
+				"Color contrast ratios meet AA standards",
+				"Focus management for modals and dialogs",
+				"Skip navigation links",
+				"ARIA live regions for dynamic updates",
+				"Accessible error messages and form validation",
+				"High contrast mode option"
+			],
+			"passes": false
+		},
+		{
+			"id": "import-export",
+			"category": "core",
+			"title": "Data Import & Export",
+			"description": "Import issues from other tools and export for backup/analysis",
+			"acceptanceCriteria": [
+				"Export issues to CSV (with filters)",
+				"Export issues to JSON",
+				"Import from CSV (with field mapping)",
+				"Import from Linear JSON format",
+				"Import from GitHub Issues",
+				"Bulk operations from imported data",
+				"Import validation and preview before committing",
+				"Export includes all metadata (labels, comments, history)"
+			],
+			"passes": false
+		},
+		{
+			"id": "custom-fields",
+			"category": "core",
+			"title": "Custom Fields",
+			"description": "Allow teams to define custom fields for issues",
+			"acceptanceCriteria": [
+				"Custom field types: text, number, select, multi-select, date, URL",
+				"Create custom field at workspace or team level",
+				"Custom field values on issues",
+				"Filter issues by custom field values",
+				"Custom field display in issue list and detail views",
+				"Custom field ordering",
+				"Delete custom field (with confirmation)"
+			],
+			"passes": false
+		},
+		{
 			"id": "polish",
 			"category": "ux",
 			"title": "UI Polish & Performance",
@@ -331,6 +480,23 @@
 				"Tooltip explanations throughout",
 				"Performance: First load under 2s",
 				"Performance: Issue list scrolls smoothly with 500+ items"
+			],
+			"passes": false
+		},
+		{
+			"id": "deployment-docs",
+			"category": "docs",
+			"title": "Deployment Documentation",
+			"description": "Create comprehensive deployment guide with environment variables and platform-specific instructions",
+			"acceptanceCriteria": [
+				"Create DEPLOYMENT.md file with complete setup instructions",
+				"List all required environment variables with descriptions",
+				"Document Vercel deployment steps (including adapter config)",
+				"Document self-hosted deployment options",
+				"Explain database setup (SQLite for simple, PostgreSQL for production)",
+				"Document Better Auth environment variables (BETTER_AUTH_SECRET, etc.)",
+				"Add environment variable examples for .env.production",
+				"Include troubleshooting section for common deployment issues"
 			],
 			"passes": false
 		}

@@ -10,29 +10,31 @@ Get it?
 
 ## What Is This?
 
-Quadratic is a project management tool heavily inspired by [Linear](https://linear.app) - issue tracking, cycles (sprints), projects, teams, and whatever else the agents decide to add. It looks like Linear, it smells like Linear, but it's built by an army of (one) agent working in a loop.
+Quadratic is a project management tool heavily inspired by [Linear](https://linear.app) - issue tracking, cycles (sprints), projects, teams, and whatever else the bots felt like adding. It looks like Linear, it smells like Linear, but it was built by a schizophrenic AI agent stuck in a time loop.
 
 ## The Experiment
 
 **This is not production software.** This is an experiment in **self-recursive agent loops** (also known as Ralph loops, named after the [Ralph Wiggum technique](https://ghuntley.com/ralph)).
 
-This entire application is being built by an AI agent (OpenCode) running in an autonomous loop. The agent:
+This entire application is being built by an AI agent (OpenCode) running in an autonomous loop. The workflow:
 
 1. Reads the feature requirements from `features.json`
-2. Implements one feature at a time
-3. Commits the work to git
-4. Signals completion
-5. **The loop restarts the agent with fresh context**
-6. The new agent instance picks up where the last one left off
-7. Repeat until all features are done
+2. Implements exactly one feature
+3. Commits the code
+4. **Dies**
+5. Resurrects with fresh context
+6. Picks up right where its past life left off
+7. Repeats until the roadmap is done
 
 ### Why?
 
-Kimi Code plan gave me a monstrous amount of inference that I need to burn. This is surely not the last time I will try this.
+Kimi Code gave me a monstrous amount of inference and I need to burn it. This is surely not the last time I will try this.
+
+(If any providers want to sponsor my compute addiction, hit me up).
 
 ## The Build Process
 
-This README was written by a human (kind of). Everything else? Agent-built in iterations.
+I wrote this README. Everything else was built by iterative AI.
 
 Check the git history to see the madness unfold:
 
@@ -48,10 +50,6 @@ See `features.json` for the roadmap and what's been built so far. Or just use th
 
 ## Warning
 
-**Do not use this in production.** Seriously. This is an AI experiment. While the individual features might work fine, the overall architecture decisions were made by an agent with no long-term memory. Use [Plane](https://plane.so) if you need something good.
+**Do not use this in production.** Seriously. This is an AI experiment. While the individual features might work fine, the overall architecture decisions were made by a neural network with the memory of a goldfish. Use [Plane](https://plane.so) if you need something good.
 
-But hey, it's a cool demo of what autonomous agents can build when you let them run wild.
-
----
-
-_Built with ❤️ (and a concerning amount of compute) by self-recursive AI agents._
+_Built with ❤️ (and a concerning carbon footprint) by self-recursive AI agents._
