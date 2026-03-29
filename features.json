@@ -86,7 +86,7 @@
 				"Virtual scrolling for performance with 1000+ issues",
 				"Keyboard navigation (j/k for up/down, enter to open)"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "issue-board-view",

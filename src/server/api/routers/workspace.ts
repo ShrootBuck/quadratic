@@ -65,4 +65,97 @@ export const workspaceRouter = createTRPCRouter({
 
 		return memberships.map((m) => m.workspace);
 	}),
+
+	getTeams: protectedProcedure
+		.input(z.object({ workspaceId: z.string() }))
+		.query(async ({ ctx, input }) => {
+			// Check membership
+			const membership = await ctx.db.workspaceMember.findFirst({
+				where: {
+					workspaceId: input.workspaceId,
+					userId: ctx.session.user.id,
+				},
+			});
+
+			if (!membership) {
+				throw new Error("Access denied");
+			}
+
+			return ctx.db.team.findMany({
+				where: { workspaceId: input.workspaceId },
+				orderBy: { name: "asc" },
+			});
+		}),
+
+	getProjects: protectedProcedure
+		.input(
+			z.object({
+				workspaceId: z.string(),
+				teamId: z.string().optional(),
+			}),
+		)
+		.query(async ({ ctx, input }) => {
+			// Check membership
+			const membership = await ctx.db.workspaceMember.findFirst({
+				where: {
+					workspaceId: input.workspaceId,
+					userId: ctx.session.user.id,
+				},
+			});
+
+			if (!membership) {
+				throw new Error("Access denied");
+			}
+
+			return ctx.db.project.findMany({
+				where: {
+					workspaceId: input.workspaceId,
+					...(input.teamId && { teamId: input.teamId }),
+				},
+				orderBy: { name: "asc" },
+			});
+		}),
+
+	getMembers: protectedProcedure
+		.input(z.object({ workspaceId: z.string() }))
+		.query(async ({ ctx, input }) => {
+			// Check membership
+			const membership = await ctx.db.workspaceMember.findFirst({
+				where: {
+					workspaceId: input.workspaceId,
+					userId: ctx.session.user.id,
+				},
+			});
+
+			if (!membership) {
+				throw new Error("Access denied");
+			}
+
+			return ctx.db.workspaceMember.findMany({
+				where: { workspaceId: input.workspaceId },
+				include: { user: true },
+				orderBy: { joinedAt: "asc" },
+			});
+		}),
+
+	getLabels: protectedProcedure
+		.input(z.object({ workspaceId: z.string() }))
+		.query(async ({ ctx, input }) => {
+			// Check membership
+			const membership = await ctx.db.workspaceMember.findFirst({
+				where: {
+					workspaceId: input.workspaceId,
+					userId: ctx.session.user.id,
+				},
+			});
+
+			if (!membership) {
+				throw new Error("Access denied");
+			}
+
+			return ctx.db.label.findMany({
+				where: { workspaceId: input.workspaceId },
+				orderBy: { name: "asc" },
+			});
+		}),
 });
