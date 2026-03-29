@@ -144,7 +144,7 @@
 				"Upcoming cycles list",
 				"Completed cycles archive"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "projects",

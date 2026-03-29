@@ -1,3 +1,4 @@
+import { cycleRouter } from "~/server/api/routers/cycle";
 import { issueRouter } from "~/server/api/routers/issue";
 import { postRouter } from "~/server/api/routers/post";
 import { workspaceRouter } from "~/server/api/routers/workspace";
@@ -12,6 +13,7 @@ export const appRouter = createTRPCRouter({
 	post: postRouter,
 	workspace: workspaceRouter,
 	issue: issueRouter,
+	cycle: cycleRouter,
 });
 
 // export type definition of API
