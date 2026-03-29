@@ -228,10 +228,10 @@ export default function IssuesPage() {
 				{/* Issue List */}
 				<div className="flex-1 overflow-auto">
 					<IssueListTable
+						_workspaceId={workspaceId}
 						groupBy={groupBy}
 						isLoading={isLoading}
 						issues={data?.issues ?? []}
-						_workspaceId={workspaceId}
 					/>
 				</div>
 			</div>

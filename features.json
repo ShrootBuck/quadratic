@@ -250,7 +250,7 @@
 				"Click result to navigate",
 				"Fast search with debouncing"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "notifications",

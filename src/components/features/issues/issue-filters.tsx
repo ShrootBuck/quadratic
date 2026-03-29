@@ -80,13 +80,17 @@ export function IssueFilters({
 			<div className="p-4">
 				{/* Search */}
 				<div className="mb-6">
-					<label className="mb-2 block font-medium text-[#8A8F98] text-xs uppercase">
+					<label
+						className="mb-2 block font-medium text-[#8A8F98] text-xs uppercase"
+						htmlFor="issue-search"
+					>
 						Search
 					</label>
 					<div className="relative">
 						<Search className="absolute top-2.5 left-3 h-4 w-4 text-[#8A8F98]" />
 						<Input
 							className="border-[#2A2F35] bg-transparent pl-9 text-[#F7F8F8] placeholder:text-[#8A8F98]"
+							id="issue-search"
 							onChange={(e) => onChange("search", e.target.value)}
 							placeholder="Search issues..."
 							value={filters.search}
@@ -96,9 +100,9 @@ export function IssueFilters({
 
 				{/* Status Filter */}
 				<div className="mb-6">
-					<label className="mb-2 block font-medium text-[#8A8F98] text-xs uppercase">
+					<div className="mb-2 block font-medium text-[#8A8F98] text-xs uppercase">
 						Status
-					</label>
+					</div>
 					<div className="space-y-1">
 						{statusOptions.map((option) => (
 							<button
@@ -129,9 +133,9 @@ export function IssueFilters({
 
 				{/* Priority Filter */}
 				<div className="mb-6">
-					<label className="mb-2 block font-medium text-[#8A8F98] text-xs uppercase">
+					<div className="mb-2 block font-medium text-[#8A8F98] text-xs uppercase">
 						Priority
-					</label>
+					</div>
 					<div className="space-y-1">
 						{priorityOptions.map((option) => (
 							<button
@@ -162,9 +166,9 @@ export function IssueFilters({
 
 				{/* Assignee Filter */}
 				<div className="mb-6">
-					<label className="mb-2 block font-medium text-[#8A8F98] text-xs uppercase">
+					<div className="mb-2 block font-medium text-[#8A8F98] text-xs uppercase">
 						Assignee
-					</label>
+					</div>
 					<div className="space-y-1">
 						<button
 							className={cn(
@@ -221,9 +225,9 @@ export function IssueFilters({
 				{/* Project Filter */}
 				{projects && projects.length > 0 && (
 					<div className="mb-6">
-						<label className="mb-2 block font-medium text-[#8A8F98] text-xs uppercase">
+						<div className="mb-2 block font-medium text-[#8A8F98] text-xs uppercase">
 							Project
-						</label>
+						</div>
 						<div className="space-y-1">
 							{projects.map((project) => (
 								<button
@@ -256,9 +260,9 @@ export function IssueFilters({
 				{/* Label Filter */}
 				{labels && labels.length > 0 && (
 					<div className="mb-6">
-						<label className="mb-2 block font-medium text-[#8A8F98] text-xs uppercase">
+						<div className="mb-2 block font-medium text-[#8A8F98] text-xs uppercase">
 							Labels
-						</label>
+						</div>
 						<div className="space-y-1">
 							{labels.map((label) => (
 								<button
