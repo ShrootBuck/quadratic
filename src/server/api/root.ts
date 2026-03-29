@@ -6,6 +6,7 @@ import { notificationRouter } from "~/server/api/routers/notification";
 import { postRouter } from "~/server/api/routers/post";
 import { projectRouter } from "~/server/api/routers/project";
 import { teamRouter } from "~/server/api/routers/team";
+import { templateRouter } from "~/server/api/routers/template";
 import { workspaceRouter } from "~/server/api/routers/workspace";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 
@@ -24,6 +25,7 @@ export const appRouter = createTRPCRouter({
 	label: labelRouter,
 	notification: notificationRouter,
 	analytics: analyticsRouter,
+	template: templateRouter,
 });
 
 // export type definition of API

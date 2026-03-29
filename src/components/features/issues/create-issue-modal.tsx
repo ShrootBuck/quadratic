@@ -6,7 +6,7 @@ import { api } from "~/trpc/react";
 type IssueStatus = "BACKLOG" | "TODO" | "IN_PROGRESS" | "DONE" | "CANCELLED";
 type Priority = "NO_PRIORITY" | "LOW" | "MEDIUM" | "HIGH" | "URGENT";
 
-import { X } from "lucide-react";
+import { FileText, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +16,12 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -33,6 +39,7 @@ interface CreateIssueModalProps {
 	workspaceId: string;
 	defaultTeamId?: string;
 	defaultProjectId?: string;
+	defaultTemplateId?: string;
 }
 
 const priorityOptions: { value: Priority; label: string; color: string }[] = [
@@ -57,6 +64,7 @@ export function CreateIssueModal({
 	workspaceId,
 	defaultTeamId,
 	defaultProjectId,
+	defaultTemplateId,
 }: CreateIssueModalProps) {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
@@ -66,6 +74,9 @@ export function CreateIssueModal({
 	const [priority, setPriority] = useState<Priority>("NO_PRIORITY");
 	const [status, setStatus] = useState<IssueStatus>("BACKLOG");
 	const [selectedLabelIds, setSelectedLabelIds] = useState<string[]>([]);
+	const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(
+		defaultTemplateId || null,
+	);
 
 	const utils = api.useUtils();
 
@@ -76,6 +87,10 @@ export function CreateIssueModal({
 	});
 	const { data: members } = api.workspace.getMembers.useQuery({ workspaceId });
 	const { data: labels } = api.workspace.getLabels.useQuery({ workspaceId });
+	const { data: templates } = api.template.list.useQuery({
+		workspaceId,
+		teamId: teamId || undefined,
+	});
 
 	const createMutation = api.issue.create.useMutation({
 		onSuccess: () => {
@@ -94,6 +109,41 @@ export function CreateIssueModal({
 		setPriority("NO_PRIORITY");
 		setStatus("BACKLOG");
 		setSelectedLabelIds([]);
+		setSelectedTemplateId(null);
+	};
+
+	const applyTemplate = (templateId: string) => {
+		const template = templates?.find((t) => t.id === templateId);
+		if (!template) return;
+
+		setSelectedTemplateId(templateId);
+		if (template.title) {
+			setTitle(template.title);
+		}
+		if (template.content) {
+			try {
+				// Try to parse as JSON (TipTap content), otherwise use as plain text
+				JSON.parse(template.content);
+				// For now, just use a placeholder if it's structured content
+				setDescription("");
+			} catch {
+				setDescription(template.content);
+			}
+		}
+		if ("priority" in template) {
+			setPriority(template.priority as Priority);
+		}
+		if ("status" in template) {
+			setStatus(template.status as IssueStatus);
+		}
+		if ("labelIds" in template && template.labelIds) {
+			try {
+				const labelIds = JSON.parse(template.labelIds as string);
+				setSelectedLabelIds(labelIds);
+			} catch {
+				setSelectedLabelIds([]);
+			}
+		}
 	};
 
 	const handleSubmit = (e: React.FormEvent) => {
@@ -133,6 +183,62 @@ export function CreateIssueModal({
 				</DialogHeader>
 
 				<form className="space-y-6 py-4" onSubmit={handleSubmit}>
+					{/* Template Selector */}
+					{templates && templates.length > 0 && (
+						<div className="space-y-2">
+							<Label className="text-[#F7F8F8]">Template</Label>
+							<div className="flex items-center gap-2">
+								<DropdownMenu>
+									<DropdownMenuTrigger asChild>
+										<Button
+											className="flex items-center gap-2 border-[#2A2F35] bg-transparent text-[#F7F8F8] hover:bg-[#2A2F35]"
+											type="button"
+											variant="outline"
+										>
+											<FileText className="h-4 w-4" />
+											{selectedTemplateId
+												? templates.find((t) => t.id === selectedTemplateId)
+														?.name
+												: "Apply template"}
+										</Button>
+									</DropdownMenuTrigger>
+									<DropdownMenuContent
+										align="start"
+										className="max-h-[300px] overflow-auto border-[#2A2F35] bg-[#16181D]"
+									>
+										{templates.map((template) => (
+											<DropdownMenuItem
+												className="cursor-pointer text-[#F7F8F8] focus:bg-[#2A2F35] focus:text-[#F7F8F8]"
+												key={template.id}
+												onClick={() => applyTemplate(template.id)}
+											>
+												<div className="flex flex-col">
+													<span className="font-medium">{template.name}</span>
+													{template.description && (
+														<span className="text-[#8A8F98] text-xs">
+															{template.description}
+														</span>
+													)}
+												</div>
+											</DropdownMenuItem>
+										))}
+									</DropdownMenuContent>
+								</DropdownMenu>
+								{selectedTemplateId && (
+									<Button
+										className="h-8 px-2 text-[#8A8F98] hover:text-[#F7F8F8]"
+										onClick={() => setSelectedTemplateId(null)}
+										size="sm"
+										type="button"
+										variant="ghost"
+									>
+										<X className="h-4 w-4" />
+									</Button>
+								)}
+							</div>
+						</div>
+					)}
+
 					{/* Title */}
 					<div className="space-y-2">
 						<Label className="text-[#F7F8F8]" htmlFor="title">

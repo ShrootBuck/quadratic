@@ -98,6 +98,11 @@ export type Notification = $Result.DefaultSelection<Prisma.$NotificationPayload>
  * 
  */
 export type NotificationPreferences = $Result.DefaultSelection<Prisma.$NotificationPreferencesPayload>
+/**
+ * Model Template
+ * 
+ */
+export type Template = $Result.DefaultSelection<Prisma.$TemplatePayload>
 
 /**
  * Enums
@@ -477,6 +482,16 @@ export class PrismaClient<
     * ```
     */
   get notificationPreferences(): Prisma.NotificationPreferencesDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.template`: Exposes CRUD operations for the **Template** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Templates
+    * const templates = await prisma.template.findMany()
+    * ```
+    */
+  get template(): Prisma.TemplateDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -934,7 +949,8 @@ export namespace Prisma {
     Comment: 'Comment',
     IssueHistory: 'IssueHistory',
     Notification: 'Notification',
-    NotificationPreferences: 'NotificationPreferences'
+    NotificationPreferences: 'NotificationPreferences',
+    Template: 'Template'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -953,7 +969,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "post" | "user" | "session" | "account" | "verification" | "workspace" | "workspaceMember" | "team" | "project" | "cycle" | "label" | "issue" | "issueLabel" | "comment" | "issueHistory" | "notification" | "notificationPreferences"
+      modelProps: "post" | "user" | "session" | "account" | "verification" | "workspace" | "workspaceMember" | "team" | "project" | "cycle" | "label" | "issue" | "issueLabel" | "comment" | "issueHistory" | "notification" | "notificationPreferences" | "template"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2215,6 +2231,80 @@ export namespace Prisma {
           }
         }
       }
+      Template: {
+        payload: Prisma.$TemplatePayload<ExtArgs>
+        fields: Prisma.TemplateFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TemplateFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplatePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TemplateFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplatePayload>
+          }
+          findFirst: {
+            args: Prisma.TemplateFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplatePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TemplateFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplatePayload>
+          }
+          findMany: {
+            args: Prisma.TemplateFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplatePayload>[]
+          }
+          create: {
+            args: Prisma.TemplateCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplatePayload>
+          }
+          createMany: {
+            args: Prisma.TemplateCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TemplateCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplatePayload>[]
+          }
+          delete: {
+            args: Prisma.TemplateDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplatePayload>
+          }
+          update: {
+            args: Prisma.TemplateUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplatePayload>
+          }
+          deleteMany: {
+            args: Prisma.TemplateDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TemplateUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TemplateUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplatePayload>[]
+          }
+          upsert: {
+            args: Prisma.TemplateUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplatePayload>
+          }
+          aggregate: {
+            args: Prisma.TemplateAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTemplate>
+          }
+          groupBy: {
+            args: Prisma.TemplateGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TemplateGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TemplateCountArgs<ExtArgs>
+            result: $Utils.Optional<TemplateCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2328,6 +2418,7 @@ export namespace Prisma {
     issueHistory?: IssueHistoryOmit
     notification?: NotificationOmit
     notificationPreferences?: NotificationPreferencesOmit
+    template?: TemplateOmit
   }
 
   /* Types for Logging */
@@ -2546,6 +2637,7 @@ export namespace Prisma {
     labels: number
     notifications: number
     notificationPreferences: number
+    templates: number
   }
 
   export type WorkspaceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2557,6 +2649,7 @@ export namespace Prisma {
     labels?: boolean | WorkspaceCountOutputTypeCountLabelsArgs
     notifications?: boolean | WorkspaceCountOutputTypeCountNotificationsArgs
     notificationPreferences?: boolean | WorkspaceCountOutputTypeCountNotificationPreferencesArgs
+    templates?: boolean | WorkspaceCountOutputTypeCountTemplatesArgs
   }
 
   // Custom InputTypes
@@ -2626,6 +2719,13 @@ export namespace Prisma {
     where?: NotificationPreferencesWhereInput
   }
 
+  /**
+   * WorkspaceCountOutputType without action
+   */
+  export type WorkspaceCountOutputTypeCountTemplatesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TemplateWhereInput
+  }
+
 
   /**
    * Count Type TeamCountOutputType
@@ -2636,6 +2736,7 @@ export namespace Prisma {
     issues: number
     cycles: number
     labels: number
+    templates: number
   }
 
   export type TeamCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2643,6 +2744,7 @@ export namespace Prisma {
     issues?: boolean | TeamCountOutputTypeCountIssuesArgs
     cycles?: boolean | TeamCountOutputTypeCountCyclesArgs
     labels?: boolean | TeamCountOutputTypeCountLabelsArgs
+    templates?: boolean | TeamCountOutputTypeCountTemplatesArgs
   }
 
   // Custom InputTypes
@@ -2682,6 +2784,13 @@ export namespace Prisma {
    */
   export type TeamCountOutputTypeCountLabelsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: LabelWhereInput
+  }
+
+  /**
+   * TeamCountOutputType without action
+   */
+  export type TeamCountOutputTypeCountTemplatesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TemplateWhereInput
   }
 
 
@@ -8752,6 +8861,7 @@ export namespace Prisma {
     labels?: boolean | Workspace$labelsArgs<ExtArgs>
     notifications?: boolean | Workspace$notificationsArgs<ExtArgs>
     notificationPreferences?: boolean | Workspace$notificationPreferencesArgs<ExtArgs>
+    templates?: boolean | Workspace$templatesArgs<ExtArgs>
     _count?: boolean | WorkspaceCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["workspace"]>
 
@@ -8792,6 +8902,7 @@ export namespace Prisma {
     labels?: boolean | Workspace$labelsArgs<ExtArgs>
     notifications?: boolean | Workspace$notificationsArgs<ExtArgs>
     notificationPreferences?: boolean | Workspace$notificationPreferencesArgs<ExtArgs>
+    templates?: boolean | Workspace$templatesArgs<ExtArgs>
     _count?: boolean | WorkspaceCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type WorkspaceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -8808,6 +8919,7 @@ export namespace Prisma {
       labels: Prisma.$LabelPayload<ExtArgs>[]
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
       notificationPreferences: Prisma.$NotificationPreferencesPayload<ExtArgs>[]
+      templates: Prisma.$TemplatePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -9218,6 +9330,7 @@ export namespace Prisma {
     labels<T extends Workspace$labelsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$labelsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LabelPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notifications<T extends Workspace$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notificationPreferences<T extends Workspace$notificationPreferencesArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$notificationPreferencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPreferencesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    templates<T extends Workspace$templatesArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$templatesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9828,6 +9941,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: NotificationPreferencesScalarFieldEnum | NotificationPreferencesScalarFieldEnum[]
+  }
+
+  /**
+   * Workspace.templates
+   */
+  export type Workspace$templatesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Template
+     */
+    select?: TemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Template
+     */
+    omit?: TemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateInclude<ExtArgs> | null
+    where?: TemplateWhereInput
+    orderBy?: TemplateOrderByWithRelationInput | TemplateOrderByWithRelationInput[]
+    cursor?: TemplateWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TemplateScalarFieldEnum | TemplateScalarFieldEnum[]
   }
 
   /**
@@ -11090,6 +11227,7 @@ export namespace Prisma {
     issues?: boolean | Team$issuesArgs<ExtArgs>
     cycles?: boolean | Team$cyclesArgs<ExtArgs>
     labels?: boolean | Team$labelsArgs<ExtArgs>
+    templates?: boolean | Team$templatesArgs<ExtArgs>
     _count?: boolean | TeamCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["team"]>
 
@@ -11129,6 +11267,7 @@ export namespace Prisma {
     issues?: boolean | Team$issuesArgs<ExtArgs>
     cycles?: boolean | Team$cyclesArgs<ExtArgs>
     labels?: boolean | Team$labelsArgs<ExtArgs>
+    templates?: boolean | Team$templatesArgs<ExtArgs>
     _count?: boolean | TeamCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TeamIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11146,6 +11285,7 @@ export namespace Prisma {
       issues: Prisma.$IssuePayload<ExtArgs>[]
       cycles: Prisma.$CyclePayload<ExtArgs>[]
       labels: Prisma.$LabelPayload<ExtArgs>[]
+      templates: Prisma.$TemplatePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -11553,6 +11693,7 @@ export namespace Prisma {
     issues<T extends Team$issuesArgs<ExtArgs> = {}>(args?: Subset<T, Team$issuesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IssuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     cycles<T extends Team$cyclesArgs<ExtArgs> = {}>(args?: Subset<T, Team$cyclesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CyclePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     labels<T extends Team$labelsArgs<ExtArgs> = {}>(args?: Subset<T, Team$labelsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LabelPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    templates<T extends Team$templatesArgs<ExtArgs> = {}>(args?: Subset<T, Team$templatesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12075,6 +12216,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: LabelScalarFieldEnum | LabelScalarFieldEnum[]
+  }
+
+  /**
+   * Team.templates
+   */
+  export type Team$templatesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Template
+     */
+    select?: TemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Template
+     */
+    omit?: TemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateInclude<ExtArgs> | null
+    where?: TemplateWhereInput
+    orderBy?: TemplateOrderByWithRelationInput | TemplateOrderByWithRelationInput[]
+    cursor?: TemplateWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TemplateScalarFieldEnum | TemplateScalarFieldEnum[]
   }
 
   /**
@@ -22555,6 +22720,1193 @@ export namespace Prisma {
 
 
   /**
+   * Model Template
+   */
+
+  export type AggregateTemplate = {
+    _count: TemplateCountAggregateOutputType | null
+    _min: TemplateMinAggregateOutputType | null
+    _max: TemplateMaxAggregateOutputType | null
+  }
+
+  export type TemplateMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    title: string | null
+    content: string | null
+    priority: $Enums.Priority | null
+    status: $Enums.IssueStatus | null
+    isDefault: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    workspaceId: string | null
+    teamId: string | null
+    labelIds: string | null
+  }
+
+  export type TemplateMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    title: string | null
+    content: string | null
+    priority: $Enums.Priority | null
+    status: $Enums.IssueStatus | null
+    isDefault: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    workspaceId: string | null
+    teamId: string | null
+    labelIds: string | null
+  }
+
+  export type TemplateCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    title: number
+    content: number
+    priority: number
+    status: number
+    isDefault: number
+    createdAt: number
+    updatedAt: number
+    workspaceId: number
+    teamId: number
+    labelIds: number
+    _all: number
+  }
+
+
+  export type TemplateMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    title?: true
+    content?: true
+    priority?: true
+    status?: true
+    isDefault?: true
+    createdAt?: true
+    updatedAt?: true
+    workspaceId?: true
+    teamId?: true
+    labelIds?: true
+  }
+
+  export type TemplateMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    title?: true
+    content?: true
+    priority?: true
+    status?: true
+    isDefault?: true
+    createdAt?: true
+    updatedAt?: true
+    workspaceId?: true
+    teamId?: true
+    labelIds?: true
+  }
+
+  export type TemplateCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    title?: true
+    content?: true
+    priority?: true
+    status?: true
+    isDefault?: true
+    createdAt?: true
+    updatedAt?: true
+    workspaceId?: true
+    teamId?: true
+    labelIds?: true
+    _all?: true
+  }
+
+  export type TemplateAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Template to aggregate.
+     */
+    where?: TemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Templates to fetch.
+     */
+    orderBy?: TemplateOrderByWithRelationInput | TemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Templates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Templates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Templates
+    **/
+    _count?: true | TemplateCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TemplateMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TemplateMaxAggregateInputType
+  }
+
+  export type GetTemplateAggregateType<T extends TemplateAggregateArgs> = {
+        [P in keyof T & keyof AggregateTemplate]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTemplate[P]>
+      : GetScalarType<T[P], AggregateTemplate[P]>
+  }
+
+
+
+
+  export type TemplateGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TemplateWhereInput
+    orderBy?: TemplateOrderByWithAggregationInput | TemplateOrderByWithAggregationInput[]
+    by: TemplateScalarFieldEnum[] | TemplateScalarFieldEnum
+    having?: TemplateScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TemplateCountAggregateInputType | true
+    _min?: TemplateMinAggregateInputType
+    _max?: TemplateMaxAggregateInputType
+  }
+
+  export type TemplateGroupByOutputType = {
+    id: string
+    name: string
+    description: string | null
+    title: string
+    content: string | null
+    priority: $Enums.Priority
+    status: $Enums.IssueStatus
+    isDefault: boolean
+    createdAt: Date
+    updatedAt: Date
+    workspaceId: string
+    teamId: string | null
+    labelIds: string
+    _count: TemplateCountAggregateOutputType | null
+    _min: TemplateMinAggregateOutputType | null
+    _max: TemplateMaxAggregateOutputType | null
+  }
+
+  type GetTemplateGroupByPayload<T extends TemplateGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TemplateGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TemplateGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TemplateGroupByOutputType[P]>
+            : GetScalarType<T[P], TemplateGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TemplateSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    title?: boolean
+    content?: boolean
+    priority?: boolean
+    status?: boolean
+    isDefault?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workspaceId?: boolean
+    teamId?: boolean
+    labelIds?: boolean
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    team?: boolean | Template$teamArgs<ExtArgs>
+  }, ExtArgs["result"]["template"]>
+
+  export type TemplateSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    title?: boolean
+    content?: boolean
+    priority?: boolean
+    status?: boolean
+    isDefault?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workspaceId?: boolean
+    teamId?: boolean
+    labelIds?: boolean
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    team?: boolean | Template$teamArgs<ExtArgs>
+  }, ExtArgs["result"]["template"]>
+
+  export type TemplateSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    title?: boolean
+    content?: boolean
+    priority?: boolean
+    status?: boolean
+    isDefault?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workspaceId?: boolean
+    teamId?: boolean
+    labelIds?: boolean
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    team?: boolean | Template$teamArgs<ExtArgs>
+  }, ExtArgs["result"]["template"]>
+
+  export type TemplateSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    title?: boolean
+    content?: boolean
+    priority?: boolean
+    status?: boolean
+    isDefault?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workspaceId?: boolean
+    teamId?: boolean
+    labelIds?: boolean
+  }
+
+  export type TemplateOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "title" | "content" | "priority" | "status" | "isDefault" | "createdAt" | "updatedAt" | "workspaceId" | "teamId" | "labelIds", ExtArgs["result"]["template"]>
+  export type TemplateInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    team?: boolean | Template$teamArgs<ExtArgs>
+  }
+  export type TemplateIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    team?: boolean | Template$teamArgs<ExtArgs>
+  }
+  export type TemplateIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    team?: boolean | Template$teamArgs<ExtArgs>
+  }
+
+  export type $TemplatePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Template"
+    objects: {
+      workspace: Prisma.$WorkspacePayload<ExtArgs>
+      team: Prisma.$TeamPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      description: string | null
+      title: string
+      content: string | null
+      priority: $Enums.Priority
+      status: $Enums.IssueStatus
+      isDefault: boolean
+      createdAt: Date
+      updatedAt: Date
+      workspaceId: string
+      teamId: string | null
+      labelIds: string
+    }, ExtArgs["result"]["template"]>
+    composites: {}
+  }
+
+  type TemplateGetPayload<S extends boolean | null | undefined | TemplateDefaultArgs> = $Result.GetResult<Prisma.$TemplatePayload, S>
+
+  type TemplateCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TemplateFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TemplateCountAggregateInputType | true
+    }
+
+  export interface TemplateDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Template'], meta: { name: 'Template' } }
+    /**
+     * Find zero or one Template that matches the filter.
+     * @param {TemplateFindUniqueArgs} args - Arguments to find a Template
+     * @example
+     * // Get one Template
+     * const template = await prisma.template.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TemplateFindUniqueArgs>(args: SelectSubset<T, TemplateFindUniqueArgs<ExtArgs>>): Prisma__TemplateClient<$Result.GetResult<Prisma.$TemplatePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Template that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TemplateFindUniqueOrThrowArgs} args - Arguments to find a Template
+     * @example
+     * // Get one Template
+     * const template = await prisma.template.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TemplateFindUniqueOrThrowArgs>(args: SelectSubset<T, TemplateFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TemplateClient<$Result.GetResult<Prisma.$TemplatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Template that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TemplateFindFirstArgs} args - Arguments to find a Template
+     * @example
+     * // Get one Template
+     * const template = await prisma.template.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TemplateFindFirstArgs>(args?: SelectSubset<T, TemplateFindFirstArgs<ExtArgs>>): Prisma__TemplateClient<$Result.GetResult<Prisma.$TemplatePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Template that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TemplateFindFirstOrThrowArgs} args - Arguments to find a Template
+     * @example
+     * // Get one Template
+     * const template = await prisma.template.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TemplateFindFirstOrThrowArgs>(args?: SelectSubset<T, TemplateFindFirstOrThrowArgs<ExtArgs>>): Prisma__TemplateClient<$Result.GetResult<Prisma.$TemplatePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Templates that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TemplateFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Templates
+     * const templates = await prisma.template.findMany()
+     * 
+     * // Get first 10 Templates
+     * const templates = await prisma.template.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const templateWithIdOnly = await prisma.template.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TemplateFindManyArgs>(args?: SelectSubset<T, TemplateFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Template.
+     * @param {TemplateCreateArgs} args - Arguments to create a Template.
+     * @example
+     * // Create one Template
+     * const Template = await prisma.template.create({
+     *   data: {
+     *     // ... data to create a Template
+     *   }
+     * })
+     * 
+     */
+    create<T extends TemplateCreateArgs>(args: SelectSubset<T, TemplateCreateArgs<ExtArgs>>): Prisma__TemplateClient<$Result.GetResult<Prisma.$TemplatePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Templates.
+     * @param {TemplateCreateManyArgs} args - Arguments to create many Templates.
+     * @example
+     * // Create many Templates
+     * const template = await prisma.template.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TemplateCreateManyArgs>(args?: SelectSubset<T, TemplateCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Templates and returns the data saved in the database.
+     * @param {TemplateCreateManyAndReturnArgs} args - Arguments to create many Templates.
+     * @example
+     * // Create many Templates
+     * const template = await prisma.template.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Templates and only return the `id`
+     * const templateWithIdOnly = await prisma.template.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TemplateCreateManyAndReturnArgs>(args?: SelectSubset<T, TemplateCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TemplatePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Template.
+     * @param {TemplateDeleteArgs} args - Arguments to delete one Template.
+     * @example
+     * // Delete one Template
+     * const Template = await prisma.template.delete({
+     *   where: {
+     *     // ... filter to delete one Template
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TemplateDeleteArgs>(args: SelectSubset<T, TemplateDeleteArgs<ExtArgs>>): Prisma__TemplateClient<$Result.GetResult<Prisma.$TemplatePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Template.
+     * @param {TemplateUpdateArgs} args - Arguments to update one Template.
+     * @example
+     * // Update one Template
+     * const template = await prisma.template.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TemplateUpdateArgs>(args: SelectSubset<T, TemplateUpdateArgs<ExtArgs>>): Prisma__TemplateClient<$Result.GetResult<Prisma.$TemplatePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Templates.
+     * @param {TemplateDeleteManyArgs} args - Arguments to filter Templates to delete.
+     * @example
+     * // Delete a few Templates
+     * const { count } = await prisma.template.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TemplateDeleteManyArgs>(args?: SelectSubset<T, TemplateDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Templates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TemplateUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Templates
+     * const template = await prisma.template.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TemplateUpdateManyArgs>(args: SelectSubset<T, TemplateUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Templates and returns the data updated in the database.
+     * @param {TemplateUpdateManyAndReturnArgs} args - Arguments to update many Templates.
+     * @example
+     * // Update many Templates
+     * const template = await prisma.template.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Templates and only return the `id`
+     * const templateWithIdOnly = await prisma.template.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TemplateUpdateManyAndReturnArgs>(args: SelectSubset<T, TemplateUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TemplatePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Template.
+     * @param {TemplateUpsertArgs} args - Arguments to update or create a Template.
+     * @example
+     * // Update or create a Template
+     * const template = await prisma.template.upsert({
+     *   create: {
+     *     // ... data to create a Template
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Template we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TemplateUpsertArgs>(args: SelectSubset<T, TemplateUpsertArgs<ExtArgs>>): Prisma__TemplateClient<$Result.GetResult<Prisma.$TemplatePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Templates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TemplateCountArgs} args - Arguments to filter Templates to count.
+     * @example
+     * // Count the number of Templates
+     * const count = await prisma.template.count({
+     *   where: {
+     *     // ... the filter for the Templates we want to count
+     *   }
+     * })
+    **/
+    count<T extends TemplateCountArgs>(
+      args?: Subset<T, TemplateCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TemplateCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Template.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TemplateAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TemplateAggregateArgs>(args: Subset<T, TemplateAggregateArgs>): Prisma.PrismaPromise<GetTemplateAggregateType<T>>
+
+    /**
+     * Group by Template.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TemplateGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TemplateGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TemplateGroupByArgs['orderBy'] }
+        : { orderBy?: TemplateGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TemplateGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTemplateGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Template model
+   */
+  readonly fields: TemplateFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Template.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TemplateClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    workspace<T extends WorkspaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkspaceDefaultArgs<ExtArgs>>): Prisma__WorkspaceClient<$Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    team<T extends Template$teamArgs<ExtArgs> = {}>(args?: Subset<T, Template$teamArgs<ExtArgs>>): Prisma__TeamClient<$Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Template model
+   */
+  interface TemplateFieldRefs {
+    readonly id: FieldRef<"Template", 'String'>
+    readonly name: FieldRef<"Template", 'String'>
+    readonly description: FieldRef<"Template", 'String'>
+    readonly title: FieldRef<"Template", 'String'>
+    readonly content: FieldRef<"Template", 'String'>
+    readonly priority: FieldRef<"Template", 'Priority'>
+    readonly status: FieldRef<"Template", 'IssueStatus'>
+    readonly isDefault: FieldRef<"Template", 'Boolean'>
+    readonly createdAt: FieldRef<"Template", 'DateTime'>
+    readonly updatedAt: FieldRef<"Template", 'DateTime'>
+    readonly workspaceId: FieldRef<"Template", 'String'>
+    readonly teamId: FieldRef<"Template", 'String'>
+    readonly labelIds: FieldRef<"Template", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Template findUnique
+   */
+  export type TemplateFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Template
+     */
+    select?: TemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Template
+     */
+    omit?: TemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateInclude<ExtArgs> | null
+    /**
+     * Filter, which Template to fetch.
+     */
+    where: TemplateWhereUniqueInput
+  }
+
+  /**
+   * Template findUniqueOrThrow
+   */
+  export type TemplateFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Template
+     */
+    select?: TemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Template
+     */
+    omit?: TemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateInclude<ExtArgs> | null
+    /**
+     * Filter, which Template to fetch.
+     */
+    where: TemplateWhereUniqueInput
+  }
+
+  /**
+   * Template findFirst
+   */
+  export type TemplateFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Template
+     */
+    select?: TemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Template
+     */
+    omit?: TemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateInclude<ExtArgs> | null
+    /**
+     * Filter, which Template to fetch.
+     */
+    where?: TemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Templates to fetch.
+     */
+    orderBy?: TemplateOrderByWithRelationInput | TemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Templates.
+     */
+    cursor?: TemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Templates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Templates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Templates.
+     */
+    distinct?: TemplateScalarFieldEnum | TemplateScalarFieldEnum[]
+  }
+
+  /**
+   * Template findFirstOrThrow
+   */
+  export type TemplateFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Template
+     */
+    select?: TemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Template
+     */
+    omit?: TemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateInclude<ExtArgs> | null
+    /**
+     * Filter, which Template to fetch.
+     */
+    where?: TemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Templates to fetch.
+     */
+    orderBy?: TemplateOrderByWithRelationInput | TemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Templates.
+     */
+    cursor?: TemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Templates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Templates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Templates.
+     */
+    distinct?: TemplateScalarFieldEnum | TemplateScalarFieldEnum[]
+  }
+
+  /**
+   * Template findMany
+   */
+  export type TemplateFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Template
+     */
+    select?: TemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Template
+     */
+    omit?: TemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateInclude<ExtArgs> | null
+    /**
+     * Filter, which Templates to fetch.
+     */
+    where?: TemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Templates to fetch.
+     */
+    orderBy?: TemplateOrderByWithRelationInput | TemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Templates.
+     */
+    cursor?: TemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Templates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Templates.
+     */
+    skip?: number
+    distinct?: TemplateScalarFieldEnum | TemplateScalarFieldEnum[]
+  }
+
+  /**
+   * Template create
+   */
+  export type TemplateCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Template
+     */
+    select?: TemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Template
+     */
+    omit?: TemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Template.
+     */
+    data: XOR<TemplateCreateInput, TemplateUncheckedCreateInput>
+  }
+
+  /**
+   * Template createMany
+   */
+  export type TemplateCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Templates.
+     */
+    data: TemplateCreateManyInput | TemplateCreateManyInput[]
+  }
+
+  /**
+   * Template createManyAndReturn
+   */
+  export type TemplateCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Template
+     */
+    select?: TemplateSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Template
+     */
+    omit?: TemplateOmit<ExtArgs> | null
+    /**
+     * The data used to create many Templates.
+     */
+    data: TemplateCreateManyInput | TemplateCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Template update
+   */
+  export type TemplateUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Template
+     */
+    select?: TemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Template
+     */
+    omit?: TemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Template.
+     */
+    data: XOR<TemplateUpdateInput, TemplateUncheckedUpdateInput>
+    /**
+     * Choose, which Template to update.
+     */
+    where: TemplateWhereUniqueInput
+  }
+
+  /**
+   * Template updateMany
+   */
+  export type TemplateUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Templates.
+     */
+    data: XOR<TemplateUpdateManyMutationInput, TemplateUncheckedUpdateManyInput>
+    /**
+     * Filter which Templates to update
+     */
+    where?: TemplateWhereInput
+    /**
+     * Limit how many Templates to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Template updateManyAndReturn
+   */
+  export type TemplateUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Template
+     */
+    select?: TemplateSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Template
+     */
+    omit?: TemplateOmit<ExtArgs> | null
+    /**
+     * The data used to update Templates.
+     */
+    data: XOR<TemplateUpdateManyMutationInput, TemplateUncheckedUpdateManyInput>
+    /**
+     * Filter which Templates to update
+     */
+    where?: TemplateWhereInput
+    /**
+     * Limit how many Templates to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Template upsert
+   */
+  export type TemplateUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Template
+     */
+    select?: TemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Template
+     */
+    omit?: TemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Template to update in case it exists.
+     */
+    where: TemplateWhereUniqueInput
+    /**
+     * In case the Template found by the `where` argument doesn't exist, create a new Template with this data.
+     */
+    create: XOR<TemplateCreateInput, TemplateUncheckedCreateInput>
+    /**
+     * In case the Template was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TemplateUpdateInput, TemplateUncheckedUpdateInput>
+  }
+
+  /**
+   * Template delete
+   */
+  export type TemplateDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Template
+     */
+    select?: TemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Template
+     */
+    omit?: TemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateInclude<ExtArgs> | null
+    /**
+     * Filter which Template to delete.
+     */
+    where: TemplateWhereUniqueInput
+  }
+
+  /**
+   * Template deleteMany
+   */
+  export type TemplateDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Templates to delete
+     */
+    where?: TemplateWhereInput
+    /**
+     * Limit how many Templates to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Template.team
+   */
+  export type Template$teamArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Team
+     */
+    select?: TeamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Team
+     */
+    omit?: TeamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TeamInclude<ExtArgs> | null
+    where?: TeamWhereInput
+  }
+
+  /**
+   * Template without action
+   */
+  export type TemplateDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Template
+     */
+    select?: TemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Template
+     */
+    omit?: TemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -22802,6 +24154,25 @@ export namespace Prisma {
   };
 
   export type NotificationPreferencesScalarFieldEnum = (typeof NotificationPreferencesScalarFieldEnum)[keyof typeof NotificationPreferencesScalarFieldEnum]
+
+
+  export const TemplateScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    title: 'title',
+    content: 'content',
+    priority: 'priority',
+    status: 'status',
+    isDefault: 'isDefault',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    workspaceId: 'workspaceId',
+    teamId: 'teamId',
+    labelIds: 'labelIds'
+  };
+
+  export type TemplateScalarFieldEnum = (typeof TemplateScalarFieldEnum)[keyof typeof TemplateScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -23303,6 +24674,7 @@ export namespace Prisma {
     labels?: LabelListRelationFilter
     notifications?: NotificationListRelationFilter
     notificationPreferences?: NotificationPreferencesListRelationFilter
+    templates?: TemplateListRelationFilter
   }
 
   export type WorkspaceOrderByWithRelationInput = {
@@ -23320,6 +24692,7 @@ export namespace Prisma {
     labels?: LabelOrderByRelationAggregateInput
     notifications?: NotificationOrderByRelationAggregateInput
     notificationPreferences?: NotificationPreferencesOrderByRelationAggregateInput
+    templates?: TemplateOrderByRelationAggregateInput
   }
 
   export type WorkspaceWhereUniqueInput = Prisma.AtLeast<{
@@ -23340,6 +24713,7 @@ export namespace Prisma {
     labels?: LabelListRelationFilter
     notifications?: NotificationListRelationFilter
     notificationPreferences?: NotificationPreferencesListRelationFilter
+    templates?: TemplateListRelationFilter
   }, "id" | "slug">
 
   export type WorkspaceOrderByWithAggregationInput = {
@@ -23440,6 +24814,7 @@ export namespace Prisma {
     issues?: IssueListRelationFilter
     cycles?: CycleListRelationFilter
     labels?: LabelListRelationFilter
+    templates?: TemplateListRelationFilter
   }
 
   export type TeamOrderByWithRelationInput = {
@@ -23454,6 +24829,7 @@ export namespace Prisma {
     issues?: IssueOrderByRelationAggregateInput
     cycles?: CycleOrderByRelationAggregateInput
     labels?: LabelOrderByRelationAggregateInput
+    templates?: TemplateOrderByRelationAggregateInput
   }
 
   export type TeamWhereUniqueInput = Prisma.AtLeast<{
@@ -23472,6 +24848,7 @@ export namespace Prisma {
     issues?: IssueListRelationFilter
     cycles?: CycleListRelationFilter
     labels?: LabelListRelationFilter
+    templates?: TemplateListRelationFilter
   }, "id" | "workspaceId_key">
 
   export type TeamOrderByWithAggregationInput = {
@@ -24243,6 +25620,104 @@ export namespace Prisma {
     workspaceId?: StringWithAggregatesFilter<"NotificationPreferences"> | string
   }
 
+  export type TemplateWhereInput = {
+    AND?: TemplateWhereInput | TemplateWhereInput[]
+    OR?: TemplateWhereInput[]
+    NOT?: TemplateWhereInput | TemplateWhereInput[]
+    id?: StringFilter<"Template"> | string
+    name?: StringFilter<"Template"> | string
+    description?: StringNullableFilter<"Template"> | string | null
+    title?: StringFilter<"Template"> | string
+    content?: StringNullableFilter<"Template"> | string | null
+    priority?: EnumPriorityFilter<"Template"> | $Enums.Priority
+    status?: EnumIssueStatusFilter<"Template"> | $Enums.IssueStatus
+    isDefault?: BoolFilter<"Template"> | boolean
+    createdAt?: DateTimeFilter<"Template"> | Date | string
+    updatedAt?: DateTimeFilter<"Template"> | Date | string
+    workspaceId?: StringFilter<"Template"> | string
+    teamId?: StringNullableFilter<"Template"> | string | null
+    labelIds?: StringFilter<"Template"> | string
+    workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
+    team?: XOR<TeamNullableScalarRelationFilter, TeamWhereInput> | null
+  }
+
+  export type TemplateOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    title?: SortOrder
+    content?: SortOrderInput | SortOrder
+    priority?: SortOrder
+    status?: SortOrder
+    isDefault?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    workspaceId?: SortOrder
+    teamId?: SortOrderInput | SortOrder
+    labelIds?: SortOrder
+    workspace?: WorkspaceOrderByWithRelationInput
+    team?: TeamOrderByWithRelationInput
+  }
+
+  export type TemplateWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: TemplateWhereInput | TemplateWhereInput[]
+    OR?: TemplateWhereInput[]
+    NOT?: TemplateWhereInput | TemplateWhereInput[]
+    name?: StringFilter<"Template"> | string
+    description?: StringNullableFilter<"Template"> | string | null
+    title?: StringFilter<"Template"> | string
+    content?: StringNullableFilter<"Template"> | string | null
+    priority?: EnumPriorityFilter<"Template"> | $Enums.Priority
+    status?: EnumIssueStatusFilter<"Template"> | $Enums.IssueStatus
+    isDefault?: BoolFilter<"Template"> | boolean
+    createdAt?: DateTimeFilter<"Template"> | Date | string
+    updatedAt?: DateTimeFilter<"Template"> | Date | string
+    workspaceId?: StringFilter<"Template"> | string
+    teamId?: StringNullableFilter<"Template"> | string | null
+    labelIds?: StringFilter<"Template"> | string
+    workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
+    team?: XOR<TeamNullableScalarRelationFilter, TeamWhereInput> | null
+  }, "id">
+
+  export type TemplateOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    title?: SortOrder
+    content?: SortOrderInput | SortOrder
+    priority?: SortOrder
+    status?: SortOrder
+    isDefault?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    workspaceId?: SortOrder
+    teamId?: SortOrderInput | SortOrder
+    labelIds?: SortOrder
+    _count?: TemplateCountOrderByAggregateInput
+    _max?: TemplateMaxOrderByAggregateInput
+    _min?: TemplateMinOrderByAggregateInput
+  }
+
+  export type TemplateScalarWhereWithAggregatesInput = {
+    AND?: TemplateScalarWhereWithAggregatesInput | TemplateScalarWhereWithAggregatesInput[]
+    OR?: TemplateScalarWhereWithAggregatesInput[]
+    NOT?: TemplateScalarWhereWithAggregatesInput | TemplateScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Template"> | string
+    name?: StringWithAggregatesFilter<"Template"> | string
+    description?: StringNullableWithAggregatesFilter<"Template"> | string | null
+    title?: StringWithAggregatesFilter<"Template"> | string
+    content?: StringNullableWithAggregatesFilter<"Template"> | string | null
+    priority?: EnumPriorityWithAggregatesFilter<"Template"> | $Enums.Priority
+    status?: EnumIssueStatusWithAggregatesFilter<"Template"> | $Enums.IssueStatus
+    isDefault?: BoolWithAggregatesFilter<"Template"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"Template"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Template"> | Date | string
+    workspaceId?: StringWithAggregatesFilter<"Template"> | string
+    teamId?: StringNullableWithAggregatesFilter<"Template"> | string | null
+    labelIds?: StringWithAggregatesFilter<"Template"> | string
+  }
+
   export type PostCreateInput = {
     id?: string
     name: string
@@ -24688,6 +26163,7 @@ export namespace Prisma {
     labels?: LabelCreateNestedManyWithoutWorkspaceInput
     notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateInput = {
@@ -24705,6 +26181,7 @@ export namespace Prisma {
     labels?: LabelUncheckedCreateNestedManyWithoutWorkspaceInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUpdateInput = {
@@ -24722,6 +26199,7 @@ export namespace Prisma {
     labels?: LabelUpdateManyWithoutWorkspaceNestedInput
     notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateInput = {
@@ -24739,6 +26217,7 @@ export namespace Prisma {
     labels?: LabelUncheckedUpdateManyWithoutWorkspaceNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceCreateManyInput = {
@@ -24833,6 +26312,7 @@ export namespace Prisma {
     issues?: IssueCreateNestedManyWithoutTeamInput
     cycles?: CycleCreateNestedManyWithoutTeamInput
     labels?: LabelCreateNestedManyWithoutTeamInput
+    templates?: TemplateCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateInput = {
@@ -24846,6 +26326,7 @@ export namespace Prisma {
     issues?: IssueUncheckedCreateNestedManyWithoutTeamInput
     cycles?: CycleUncheckedCreateNestedManyWithoutTeamInput
     labels?: LabelUncheckedCreateNestedManyWithoutTeamInput
+    templates?: TemplateUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUpdateInput = {
@@ -24859,6 +26340,7 @@ export namespace Prisma {
     issues?: IssueUpdateManyWithoutTeamNestedInput
     cycles?: CycleUpdateManyWithoutTeamNestedInput
     labels?: LabelUpdateManyWithoutTeamNestedInput
+    templates?: TemplateUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateInput = {
@@ -24872,6 +26354,7 @@ export namespace Prisma {
     issues?: IssueUncheckedUpdateManyWithoutTeamNestedInput
     cycles?: CycleUncheckedUpdateManyWithoutTeamNestedInput
     labels?: LabelUncheckedUpdateManyWithoutTeamNestedInput
+    templates?: TemplateUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamCreateManyInput = {
@@ -25652,6 +27135,116 @@ export namespace Prisma {
     workspaceId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type TemplateCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    title: string
+    content?: string | null
+    priority?: $Enums.Priority
+    status?: $Enums.IssueStatus
+    isDefault?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    labelIds: string
+    workspace: WorkspaceCreateNestedOneWithoutTemplatesInput
+    team?: TeamCreateNestedOneWithoutTemplatesInput
+  }
+
+  export type TemplateUncheckedCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    title: string
+    content?: string | null
+    priority?: $Enums.Priority
+    status?: $Enums.IssueStatus
+    isDefault?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspaceId: string
+    teamId?: string | null
+    labelIds: string
+  }
+
+  export type TemplateUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    labelIds?: StringFieldUpdateOperationsInput | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutTemplatesNestedInput
+    team?: TeamUpdateOneWithoutTemplatesNestedInput
+  }
+
+  export type TemplateUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    teamId?: NullableStringFieldUpdateOperationsInput | string | null
+    labelIds?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TemplateCreateManyInput = {
+    id?: string
+    name: string
+    description?: string | null
+    title: string
+    content?: string | null
+    priority?: $Enums.Priority
+    status?: $Enums.IssueStatus
+    isDefault?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspaceId: string
+    teamId?: string | null
+    labelIds: string
+  }
+
+  export type TemplateUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    labelIds?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TemplateUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    teamId?: NullableStringFieldUpdateOperationsInput | string | null
+    labelIds?: StringFieldUpdateOperationsInput | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -26070,6 +27663,12 @@ export namespace Prisma {
     none?: LabelWhereInput
   }
 
+  export type TemplateListRelationFilter = {
+    every?: TemplateWhereInput
+    some?: TemplateWhereInput
+    none?: TemplateWhereInput
+  }
+
   export type TeamOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -26079,6 +27678,10 @@ export namespace Prisma {
   }
 
   export type LabelOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TemplateOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -26703,6 +28306,54 @@ export namespace Prisma {
     workspaceId?: SortOrder
   }
 
+  export type TemplateCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    priority?: SortOrder
+    status?: SortOrder
+    isDefault?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    workspaceId?: SortOrder
+    teamId?: SortOrder
+    labelIds?: SortOrder
+  }
+
+  export type TemplateMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    priority?: SortOrder
+    status?: SortOrder
+    isDefault?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    workspaceId?: SortOrder
+    teamId?: SortOrder
+    labelIds?: SortOrder
+  }
+
+  export type TemplateMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    priority?: SortOrder
+    status?: SortOrder
+    isDefault?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    workspaceId?: SortOrder
+    teamId?: SortOrder
+    labelIds?: SortOrder
+  }
+
   export type UserCreateNestedOneWithoutPostsInput = {
     create?: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
     connectOrCreate?: UserCreateOrConnectWithoutPostsInput
@@ -27325,6 +28976,13 @@ export namespace Prisma {
     connect?: NotificationPreferencesWhereUniqueInput | NotificationPreferencesWhereUniqueInput[]
   }
 
+  export type TemplateCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<TemplateCreateWithoutWorkspaceInput, TemplateUncheckedCreateWithoutWorkspaceInput> | TemplateCreateWithoutWorkspaceInput[] | TemplateUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: TemplateCreateOrConnectWithoutWorkspaceInput | TemplateCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: TemplateCreateManyWorkspaceInputEnvelope
+    connect?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
+  }
+
   export type WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput = {
     create?: XOR<WorkspaceMemberCreateWithoutWorkspaceInput, WorkspaceMemberUncheckedCreateWithoutWorkspaceInput> | WorkspaceMemberCreateWithoutWorkspaceInput[] | WorkspaceMemberUncheckedCreateWithoutWorkspaceInput[]
     connectOrCreate?: WorkspaceMemberCreateOrConnectWithoutWorkspaceInput | WorkspaceMemberCreateOrConnectWithoutWorkspaceInput[]
@@ -27379,6 +29037,13 @@ export namespace Prisma {
     connectOrCreate?: NotificationPreferencesCreateOrConnectWithoutWorkspaceInput | NotificationPreferencesCreateOrConnectWithoutWorkspaceInput[]
     createMany?: NotificationPreferencesCreateManyWorkspaceInputEnvelope
     connect?: NotificationPreferencesWhereUniqueInput | NotificationPreferencesWhereUniqueInput[]
+  }
+
+  export type TemplateUncheckedCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<TemplateCreateWithoutWorkspaceInput, TemplateUncheckedCreateWithoutWorkspaceInput> | TemplateCreateWithoutWorkspaceInput[] | TemplateUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: TemplateCreateOrConnectWithoutWorkspaceInput | TemplateCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: TemplateCreateManyWorkspaceInputEnvelope
+    connect?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
   }
 
   export type WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput = {
@@ -27493,6 +29158,20 @@ export namespace Prisma {
     deleteMany?: NotificationPreferencesScalarWhereInput | NotificationPreferencesScalarWhereInput[]
   }
 
+  export type TemplateUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<TemplateCreateWithoutWorkspaceInput, TemplateUncheckedCreateWithoutWorkspaceInput> | TemplateCreateWithoutWorkspaceInput[] | TemplateUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: TemplateCreateOrConnectWithoutWorkspaceInput | TemplateCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: TemplateUpsertWithWhereUniqueWithoutWorkspaceInput | TemplateUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: TemplateCreateManyWorkspaceInputEnvelope
+    set?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
+    disconnect?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
+    delete?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
+    connect?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
+    update?: TemplateUpdateWithWhereUniqueWithoutWorkspaceInput | TemplateUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: TemplateUpdateManyWithWhereWithoutWorkspaceInput | TemplateUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: TemplateScalarWhereInput | TemplateScalarWhereInput[]
+  }
+
   export type WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput = {
     create?: XOR<WorkspaceMemberCreateWithoutWorkspaceInput, WorkspaceMemberUncheckedCreateWithoutWorkspaceInput> | WorkspaceMemberCreateWithoutWorkspaceInput[] | WorkspaceMemberUncheckedCreateWithoutWorkspaceInput[]
     connectOrCreate?: WorkspaceMemberCreateOrConnectWithoutWorkspaceInput | WorkspaceMemberCreateOrConnectWithoutWorkspaceInput[]
@@ -27605,6 +29284,20 @@ export namespace Prisma {
     deleteMany?: NotificationPreferencesScalarWhereInput | NotificationPreferencesScalarWhereInput[]
   }
 
+  export type TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<TemplateCreateWithoutWorkspaceInput, TemplateUncheckedCreateWithoutWorkspaceInput> | TemplateCreateWithoutWorkspaceInput[] | TemplateUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: TemplateCreateOrConnectWithoutWorkspaceInput | TemplateCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: TemplateUpsertWithWhereUniqueWithoutWorkspaceInput | TemplateUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: TemplateCreateManyWorkspaceInputEnvelope
+    set?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
+    disconnect?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
+    delete?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
+    connect?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
+    update?: TemplateUpdateWithWhereUniqueWithoutWorkspaceInput | TemplateUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: TemplateUpdateManyWithWhereWithoutWorkspaceInput | TemplateUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: TemplateScalarWhereInput | TemplateScalarWhereInput[]
+  }
+
   export type WorkspaceCreateNestedOneWithoutMembersInput = {
     create?: XOR<WorkspaceCreateWithoutMembersInput, WorkspaceUncheckedCreateWithoutMembersInput>
     connectOrCreate?: WorkspaceCreateOrConnectWithoutMembersInput
@@ -27671,6 +29364,13 @@ export namespace Prisma {
     connect?: LabelWhereUniqueInput | LabelWhereUniqueInput[]
   }
 
+  export type TemplateCreateNestedManyWithoutTeamInput = {
+    create?: XOR<TemplateCreateWithoutTeamInput, TemplateUncheckedCreateWithoutTeamInput> | TemplateCreateWithoutTeamInput[] | TemplateUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: TemplateCreateOrConnectWithoutTeamInput | TemplateCreateOrConnectWithoutTeamInput[]
+    createMany?: TemplateCreateManyTeamInputEnvelope
+    connect?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
+  }
+
   export type ProjectUncheckedCreateNestedManyWithoutTeamInput = {
     create?: XOR<ProjectCreateWithoutTeamInput, ProjectUncheckedCreateWithoutTeamInput> | ProjectCreateWithoutTeamInput[] | ProjectUncheckedCreateWithoutTeamInput[]
     connectOrCreate?: ProjectCreateOrConnectWithoutTeamInput | ProjectCreateOrConnectWithoutTeamInput[]
@@ -27697,6 +29397,13 @@ export namespace Prisma {
     connectOrCreate?: LabelCreateOrConnectWithoutTeamInput | LabelCreateOrConnectWithoutTeamInput[]
     createMany?: LabelCreateManyTeamInputEnvelope
     connect?: LabelWhereUniqueInput | LabelWhereUniqueInput[]
+  }
+
+  export type TemplateUncheckedCreateNestedManyWithoutTeamInput = {
+    create?: XOR<TemplateCreateWithoutTeamInput, TemplateUncheckedCreateWithoutTeamInput> | TemplateCreateWithoutTeamInput[] | TemplateUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: TemplateCreateOrConnectWithoutTeamInput | TemplateCreateOrConnectWithoutTeamInput[]
+    createMany?: TemplateCreateManyTeamInputEnvelope
+    connect?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
   }
 
   export type WorkspaceUpdateOneRequiredWithoutTeamsNestedInput = {
@@ -27763,6 +29470,20 @@ export namespace Prisma {
     deleteMany?: LabelScalarWhereInput | LabelScalarWhereInput[]
   }
 
+  export type TemplateUpdateManyWithoutTeamNestedInput = {
+    create?: XOR<TemplateCreateWithoutTeamInput, TemplateUncheckedCreateWithoutTeamInput> | TemplateCreateWithoutTeamInput[] | TemplateUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: TemplateCreateOrConnectWithoutTeamInput | TemplateCreateOrConnectWithoutTeamInput[]
+    upsert?: TemplateUpsertWithWhereUniqueWithoutTeamInput | TemplateUpsertWithWhereUniqueWithoutTeamInput[]
+    createMany?: TemplateCreateManyTeamInputEnvelope
+    set?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
+    disconnect?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
+    delete?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
+    connect?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
+    update?: TemplateUpdateWithWhereUniqueWithoutTeamInput | TemplateUpdateWithWhereUniqueWithoutTeamInput[]
+    updateMany?: TemplateUpdateManyWithWhereWithoutTeamInput | TemplateUpdateManyWithWhereWithoutTeamInput[]
+    deleteMany?: TemplateScalarWhereInput | TemplateScalarWhereInput[]
+  }
+
   export type ProjectUncheckedUpdateManyWithoutTeamNestedInput = {
     create?: XOR<ProjectCreateWithoutTeamInput, ProjectUncheckedCreateWithoutTeamInput> | ProjectCreateWithoutTeamInput[] | ProjectUncheckedCreateWithoutTeamInput[]
     connectOrCreate?: ProjectCreateOrConnectWithoutTeamInput | ProjectCreateOrConnectWithoutTeamInput[]
@@ -27817,6 +29538,20 @@ export namespace Prisma {
     update?: LabelUpdateWithWhereUniqueWithoutTeamInput | LabelUpdateWithWhereUniqueWithoutTeamInput[]
     updateMany?: LabelUpdateManyWithWhereWithoutTeamInput | LabelUpdateManyWithWhereWithoutTeamInput[]
     deleteMany?: LabelScalarWhereInput | LabelScalarWhereInput[]
+  }
+
+  export type TemplateUncheckedUpdateManyWithoutTeamNestedInput = {
+    create?: XOR<TemplateCreateWithoutTeamInput, TemplateUncheckedCreateWithoutTeamInput> | TemplateCreateWithoutTeamInput[] | TemplateUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: TemplateCreateOrConnectWithoutTeamInput | TemplateCreateOrConnectWithoutTeamInput[]
+    upsert?: TemplateUpsertWithWhereUniqueWithoutTeamInput | TemplateUpsertWithWhereUniqueWithoutTeamInput[]
+    createMany?: TemplateCreateManyTeamInputEnvelope
+    set?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
+    disconnect?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
+    delete?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
+    connect?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
+    update?: TemplateUpdateWithWhereUniqueWithoutTeamInput | TemplateUpdateWithWhereUniqueWithoutTeamInput[]
+    updateMany?: TemplateUpdateManyWithWhereWithoutTeamInput | TemplateUpdateManyWithWhereWithoutTeamInput[]
+    deleteMany?: TemplateScalarWhereInput | TemplateScalarWhereInput[]
   }
 
   export type WorkspaceCreateNestedOneWithoutProjectsInput = {
@@ -28503,6 +30238,36 @@ export namespace Prisma {
     upsert?: WorkspaceUpsertWithoutNotificationPreferencesInput
     connect?: WorkspaceWhereUniqueInput
     update?: XOR<XOR<WorkspaceUpdateToOneWithWhereWithoutNotificationPreferencesInput, WorkspaceUpdateWithoutNotificationPreferencesInput>, WorkspaceUncheckedUpdateWithoutNotificationPreferencesInput>
+  }
+
+  export type WorkspaceCreateNestedOneWithoutTemplatesInput = {
+    create?: XOR<WorkspaceCreateWithoutTemplatesInput, WorkspaceUncheckedCreateWithoutTemplatesInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutTemplatesInput
+    connect?: WorkspaceWhereUniqueInput
+  }
+
+  export type TeamCreateNestedOneWithoutTemplatesInput = {
+    create?: XOR<TeamCreateWithoutTemplatesInput, TeamUncheckedCreateWithoutTemplatesInput>
+    connectOrCreate?: TeamCreateOrConnectWithoutTemplatesInput
+    connect?: TeamWhereUniqueInput
+  }
+
+  export type WorkspaceUpdateOneRequiredWithoutTemplatesNestedInput = {
+    create?: XOR<WorkspaceCreateWithoutTemplatesInput, WorkspaceUncheckedCreateWithoutTemplatesInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutTemplatesInput
+    upsert?: WorkspaceUpsertWithoutTemplatesInput
+    connect?: WorkspaceWhereUniqueInput
+    update?: XOR<XOR<WorkspaceUpdateToOneWithWhereWithoutTemplatesInput, WorkspaceUpdateWithoutTemplatesInput>, WorkspaceUncheckedUpdateWithoutTemplatesInput>
+  }
+
+  export type TeamUpdateOneWithoutTemplatesNestedInput = {
+    create?: XOR<TeamCreateWithoutTemplatesInput, TeamUncheckedCreateWithoutTemplatesInput>
+    connectOrCreate?: TeamCreateOrConnectWithoutTemplatesInput
+    upsert?: TeamUpsertWithoutTemplatesInput
+    disconnect?: TeamWhereInput | boolean
+    delete?: TeamWhereInput | boolean
+    connect?: TeamWhereUniqueInput
+    update?: XOR<XOR<TeamUpdateToOneWithWhereWithoutTemplatesInput, TeamUpdateWithoutTemplatesInput>, TeamUncheckedUpdateWithoutTemplatesInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -29885,6 +31650,7 @@ export namespace Prisma {
     issues?: IssueCreateNestedManyWithoutTeamInput
     cycles?: CycleCreateNestedManyWithoutTeamInput
     labels?: LabelCreateNestedManyWithoutTeamInput
+    templates?: TemplateCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateWithoutWorkspaceInput = {
@@ -29897,6 +31663,7 @@ export namespace Prisma {
     issues?: IssueUncheckedCreateNestedManyWithoutTeamInput
     cycles?: CycleUncheckedCreateNestedManyWithoutTeamInput
     labels?: LabelUncheckedCreateNestedManyWithoutTeamInput
+    templates?: TemplateUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamCreateOrConnectWithoutWorkspaceInput = {
@@ -30128,6 +31895,45 @@ export namespace Prisma {
     data: NotificationPreferencesCreateManyWorkspaceInput | NotificationPreferencesCreateManyWorkspaceInput[]
   }
 
+  export type TemplateCreateWithoutWorkspaceInput = {
+    id?: string
+    name: string
+    description?: string | null
+    title: string
+    content?: string | null
+    priority?: $Enums.Priority
+    status?: $Enums.IssueStatus
+    isDefault?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    labelIds: string
+    team?: TeamCreateNestedOneWithoutTemplatesInput
+  }
+
+  export type TemplateUncheckedCreateWithoutWorkspaceInput = {
+    id?: string
+    name: string
+    description?: string | null
+    title: string
+    content?: string | null
+    priority?: $Enums.Priority
+    status?: $Enums.IssueStatus
+    isDefault?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    teamId?: string | null
+    labelIds: string
+  }
+
+  export type TemplateCreateOrConnectWithoutWorkspaceInput = {
+    where: TemplateWhereUniqueInput
+    create: XOR<TemplateCreateWithoutWorkspaceInput, TemplateUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type TemplateCreateManyWorkspaceInputEnvelope = {
+    data: TemplateCreateManyWorkspaceInput | TemplateCreateManyWorkspaceInput[]
+  }
+
   export type WorkspaceMemberUpsertWithWhereUniqueWithoutWorkspaceInput = {
     where: WorkspaceMemberWhereUniqueInput
     update: XOR<WorkspaceMemberUpdateWithoutWorkspaceInput, WorkspaceMemberUncheckedUpdateWithoutWorkspaceInput>
@@ -30295,6 +32101,41 @@ export namespace Prisma {
     data: XOR<NotificationPreferencesUpdateManyMutationInput, NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceInput>
   }
 
+  export type TemplateUpsertWithWhereUniqueWithoutWorkspaceInput = {
+    where: TemplateWhereUniqueInput
+    update: XOR<TemplateUpdateWithoutWorkspaceInput, TemplateUncheckedUpdateWithoutWorkspaceInput>
+    create: XOR<TemplateCreateWithoutWorkspaceInput, TemplateUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type TemplateUpdateWithWhereUniqueWithoutWorkspaceInput = {
+    where: TemplateWhereUniqueInput
+    data: XOR<TemplateUpdateWithoutWorkspaceInput, TemplateUncheckedUpdateWithoutWorkspaceInput>
+  }
+
+  export type TemplateUpdateManyWithWhereWithoutWorkspaceInput = {
+    where: TemplateScalarWhereInput
+    data: XOR<TemplateUpdateManyMutationInput, TemplateUncheckedUpdateManyWithoutWorkspaceInput>
+  }
+
+  export type TemplateScalarWhereInput = {
+    AND?: TemplateScalarWhereInput | TemplateScalarWhereInput[]
+    OR?: TemplateScalarWhereInput[]
+    NOT?: TemplateScalarWhereInput | TemplateScalarWhereInput[]
+    id?: StringFilter<"Template"> | string
+    name?: StringFilter<"Template"> | string
+    description?: StringNullableFilter<"Template"> | string | null
+    title?: StringFilter<"Template"> | string
+    content?: StringNullableFilter<"Template"> | string | null
+    priority?: EnumPriorityFilter<"Template"> | $Enums.Priority
+    status?: EnumIssueStatusFilter<"Template"> | $Enums.IssueStatus
+    isDefault?: BoolFilter<"Template"> | boolean
+    createdAt?: DateTimeFilter<"Template"> | Date | string
+    updatedAt?: DateTimeFilter<"Template"> | Date | string
+    workspaceId?: StringFilter<"Template"> | string
+    teamId?: StringNullableFilter<"Template"> | string | null
+    labelIds?: StringFilter<"Template"> | string
+  }
+
   export type WorkspaceCreateWithoutMembersInput = {
     id?: string
     name: string
@@ -30309,6 +32150,7 @@ export namespace Prisma {
     labels?: LabelCreateNestedManyWithoutWorkspaceInput
     notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutMembersInput = {
@@ -30325,6 +32167,7 @@ export namespace Prisma {
     labels?: LabelUncheckedCreateNestedManyWithoutWorkspaceInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutMembersInput = {
@@ -30406,6 +32249,7 @@ export namespace Prisma {
     labels?: LabelUpdateManyWithoutWorkspaceNestedInput
     notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutMembersInput = {
@@ -30422,6 +32266,7 @@ export namespace Prisma {
     labels?: LabelUncheckedUpdateManyWithoutWorkspaceNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type UserUpsertWithoutMembershipsInput = {
@@ -30493,6 +32338,7 @@ export namespace Prisma {
     labels?: LabelCreateNestedManyWithoutWorkspaceInput
     notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutTeamsInput = {
@@ -30509,6 +32355,7 @@ export namespace Prisma {
     labels?: LabelUncheckedCreateNestedManyWithoutWorkspaceInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutTeamsInput = {
@@ -30666,6 +32513,45 @@ export namespace Prisma {
     data: LabelCreateManyTeamInput | LabelCreateManyTeamInput[]
   }
 
+  export type TemplateCreateWithoutTeamInput = {
+    id?: string
+    name: string
+    description?: string | null
+    title: string
+    content?: string | null
+    priority?: $Enums.Priority
+    status?: $Enums.IssueStatus
+    isDefault?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    labelIds: string
+    workspace: WorkspaceCreateNestedOneWithoutTemplatesInput
+  }
+
+  export type TemplateUncheckedCreateWithoutTeamInput = {
+    id?: string
+    name: string
+    description?: string | null
+    title: string
+    content?: string | null
+    priority?: $Enums.Priority
+    status?: $Enums.IssueStatus
+    isDefault?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspaceId: string
+    labelIds: string
+  }
+
+  export type TemplateCreateOrConnectWithoutTeamInput = {
+    where: TemplateWhereUniqueInput
+    create: XOR<TemplateCreateWithoutTeamInput, TemplateUncheckedCreateWithoutTeamInput>
+  }
+
+  export type TemplateCreateManyTeamInputEnvelope = {
+    data: TemplateCreateManyTeamInput | TemplateCreateManyTeamInput[]
+  }
+
   export type WorkspaceUpsertWithoutTeamsInput = {
     update: XOR<WorkspaceUpdateWithoutTeamsInput, WorkspaceUncheckedUpdateWithoutTeamsInput>
     create: XOR<WorkspaceCreateWithoutTeamsInput, WorkspaceUncheckedCreateWithoutTeamsInput>
@@ -30691,6 +32577,7 @@ export namespace Prisma {
     labels?: LabelUpdateManyWithoutWorkspaceNestedInput
     notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutTeamsInput = {
@@ -30707,6 +32594,7 @@ export namespace Prisma {
     labels?: LabelUncheckedUpdateManyWithoutWorkspaceNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type ProjectUpsertWithWhereUniqueWithoutTeamInput = {
@@ -30773,6 +32661,22 @@ export namespace Prisma {
     data: XOR<LabelUpdateManyMutationInput, LabelUncheckedUpdateManyWithoutTeamInput>
   }
 
+  export type TemplateUpsertWithWhereUniqueWithoutTeamInput = {
+    where: TemplateWhereUniqueInput
+    update: XOR<TemplateUpdateWithoutTeamInput, TemplateUncheckedUpdateWithoutTeamInput>
+    create: XOR<TemplateCreateWithoutTeamInput, TemplateUncheckedCreateWithoutTeamInput>
+  }
+
+  export type TemplateUpdateWithWhereUniqueWithoutTeamInput = {
+    where: TemplateWhereUniqueInput
+    data: XOR<TemplateUpdateWithoutTeamInput, TemplateUncheckedUpdateWithoutTeamInput>
+  }
+
+  export type TemplateUpdateManyWithWhereWithoutTeamInput = {
+    where: TemplateScalarWhereInput
+    data: XOR<TemplateUpdateManyMutationInput, TemplateUncheckedUpdateManyWithoutTeamInput>
+  }
+
   export type WorkspaceCreateWithoutProjectsInput = {
     id?: string
     name: string
@@ -30787,6 +32691,7 @@ export namespace Prisma {
     labels?: LabelCreateNestedManyWithoutWorkspaceInput
     notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutProjectsInput = {
@@ -30803,6 +32708,7 @@ export namespace Prisma {
     labels?: LabelUncheckedCreateNestedManyWithoutWorkspaceInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutProjectsInput = {
@@ -30820,6 +32726,7 @@ export namespace Prisma {
     issues?: IssueCreateNestedManyWithoutTeamInput
     cycles?: CycleCreateNestedManyWithoutTeamInput
     labels?: LabelCreateNestedManyWithoutTeamInput
+    templates?: TemplateCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateWithoutProjectsInput = {
@@ -30832,6 +32739,7 @@ export namespace Prisma {
     issues?: IssueUncheckedCreateNestedManyWithoutTeamInput
     cycles?: CycleUncheckedCreateNestedManyWithoutTeamInput
     labels?: LabelUncheckedCreateNestedManyWithoutTeamInput
+    templates?: TemplateUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamCreateOrConnectWithoutProjectsInput = {
@@ -30966,6 +32874,7 @@ export namespace Prisma {
     labels?: LabelUpdateManyWithoutWorkspaceNestedInput
     notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutProjectsInput = {
@@ -30982,6 +32891,7 @@ export namespace Prisma {
     labels?: LabelUncheckedUpdateManyWithoutWorkspaceNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TeamUpsertWithoutProjectsInput = {
@@ -31005,6 +32915,7 @@ export namespace Prisma {
     issues?: IssueUpdateManyWithoutTeamNestedInput
     cycles?: CycleUpdateManyWithoutTeamNestedInput
     labels?: LabelUpdateManyWithoutTeamNestedInput
+    templates?: TemplateUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateWithoutProjectsInput = {
@@ -31017,6 +32928,7 @@ export namespace Prisma {
     issues?: IssueUncheckedUpdateManyWithoutTeamNestedInput
     cycles?: CycleUncheckedUpdateManyWithoutTeamNestedInput
     labels?: LabelUncheckedUpdateManyWithoutTeamNestedInput
+    templates?: TemplateUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type UserUpsertWithoutProjectsLeadInput = {
@@ -31104,6 +33016,7 @@ export namespace Prisma {
     labels?: LabelCreateNestedManyWithoutWorkspaceInput
     notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutCyclesInput = {
@@ -31120,6 +33033,7 @@ export namespace Prisma {
     labels?: LabelUncheckedCreateNestedManyWithoutWorkspaceInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutCyclesInput = {
@@ -31137,6 +33051,7 @@ export namespace Prisma {
     projects?: ProjectCreateNestedManyWithoutTeamInput
     issues?: IssueCreateNestedManyWithoutTeamInput
     labels?: LabelCreateNestedManyWithoutTeamInput
+    templates?: TemplateCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateWithoutCyclesInput = {
@@ -31149,6 +33064,7 @@ export namespace Prisma {
     projects?: ProjectUncheckedCreateNestedManyWithoutTeamInput
     issues?: IssueUncheckedCreateNestedManyWithoutTeamInput
     labels?: LabelUncheckedCreateNestedManyWithoutTeamInput
+    templates?: TemplateUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamCreateOrConnectWithoutCyclesInput = {
@@ -31234,6 +33150,7 @@ export namespace Prisma {
     labels?: LabelUpdateManyWithoutWorkspaceNestedInput
     notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutCyclesInput = {
@@ -31250,6 +33167,7 @@ export namespace Prisma {
     labels?: LabelUncheckedUpdateManyWithoutWorkspaceNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TeamUpsertWithoutCyclesInput = {
@@ -31273,6 +33191,7 @@ export namespace Prisma {
     projects?: ProjectUpdateManyWithoutTeamNestedInput
     issues?: IssueUpdateManyWithoutTeamNestedInput
     labels?: LabelUpdateManyWithoutTeamNestedInput
+    templates?: TemplateUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateWithoutCyclesInput = {
@@ -31285,6 +33204,7 @@ export namespace Prisma {
     projects?: ProjectUncheckedUpdateManyWithoutTeamNestedInput
     issues?: IssueUncheckedUpdateManyWithoutTeamNestedInput
     labels?: LabelUncheckedUpdateManyWithoutTeamNestedInput
+    templates?: TemplateUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type IssueUpsertWithWhereUniqueWithoutCycleInput = {
@@ -31317,6 +33237,7 @@ export namespace Prisma {
     cycles?: CycleCreateNestedManyWithoutWorkspaceInput
     notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutLabelsInput = {
@@ -31333,6 +33254,7 @@ export namespace Prisma {
     cycles?: CycleUncheckedCreateNestedManyWithoutWorkspaceInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutLabelsInput = {
@@ -31350,6 +33272,7 @@ export namespace Prisma {
     projects?: ProjectCreateNestedManyWithoutTeamInput
     issues?: IssueCreateNestedManyWithoutTeamInput
     cycles?: CycleCreateNestedManyWithoutTeamInput
+    templates?: TemplateCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateWithoutLabelsInput = {
@@ -31362,6 +33285,7 @@ export namespace Prisma {
     projects?: ProjectUncheckedCreateNestedManyWithoutTeamInput
     issues?: IssueUncheckedCreateNestedManyWithoutTeamInput
     cycles?: CycleUncheckedCreateNestedManyWithoutTeamInput
+    templates?: TemplateUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamCreateOrConnectWithoutLabelsInput = {
@@ -31413,6 +33337,7 @@ export namespace Prisma {
     cycles?: CycleUpdateManyWithoutWorkspaceNestedInput
     notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutLabelsInput = {
@@ -31429,6 +33354,7 @@ export namespace Prisma {
     cycles?: CycleUncheckedUpdateManyWithoutWorkspaceNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TeamUpsertWithoutLabelsInput = {
@@ -31452,6 +33378,7 @@ export namespace Prisma {
     projects?: ProjectUpdateManyWithoutTeamNestedInput
     issues?: IssueUpdateManyWithoutTeamNestedInput
     cycles?: CycleUpdateManyWithoutTeamNestedInput
+    templates?: TemplateUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateWithoutLabelsInput = {
@@ -31464,6 +33391,7 @@ export namespace Prisma {
     projects?: ProjectUncheckedUpdateManyWithoutTeamNestedInput
     issues?: IssueUncheckedUpdateManyWithoutTeamNestedInput
     cycles?: CycleUncheckedUpdateManyWithoutTeamNestedInput
+    templates?: TemplateUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type IssueLabelUpsertWithWhereUniqueWithoutLabelInput = {
@@ -31505,6 +33433,7 @@ export namespace Prisma {
     labels?: LabelCreateNestedManyWithoutWorkspaceInput
     notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutIssuesInput = {
@@ -31521,6 +33450,7 @@ export namespace Prisma {
     labels?: LabelUncheckedCreateNestedManyWithoutWorkspaceInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutIssuesInput = {
@@ -31538,6 +33468,7 @@ export namespace Prisma {
     projects?: ProjectCreateNestedManyWithoutTeamInput
     cycles?: CycleCreateNestedManyWithoutTeamInput
     labels?: LabelCreateNestedManyWithoutTeamInput
+    templates?: TemplateCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateWithoutIssuesInput = {
@@ -31550,6 +33481,7 @@ export namespace Prisma {
     projects?: ProjectUncheckedCreateNestedManyWithoutTeamInput
     cycles?: CycleUncheckedCreateNestedManyWithoutTeamInput
     labels?: LabelUncheckedCreateNestedManyWithoutTeamInput
+    templates?: TemplateUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamCreateOrConnectWithoutIssuesInput = {
@@ -31848,6 +33780,7 @@ export namespace Prisma {
     labels?: LabelUpdateManyWithoutWorkspaceNestedInput
     notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutIssuesInput = {
@@ -31864,6 +33797,7 @@ export namespace Prisma {
     labels?: LabelUncheckedUpdateManyWithoutWorkspaceNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TeamUpsertWithoutIssuesInput = {
@@ -31887,6 +33821,7 @@ export namespace Prisma {
     projects?: ProjectUpdateManyWithoutTeamNestedInput
     cycles?: CycleUpdateManyWithoutTeamNestedInput
     labels?: LabelUpdateManyWithoutTeamNestedInput
+    templates?: TemplateUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateWithoutIssuesInput = {
@@ -31899,6 +33834,7 @@ export namespace Prisma {
     projects?: ProjectUncheckedUpdateManyWithoutTeamNestedInput
     cycles?: CycleUncheckedUpdateManyWithoutTeamNestedInput
     labels?: LabelUncheckedUpdateManyWithoutTeamNestedInput
+    templates?: TemplateUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type ProjectUpsertWithoutIssuesInput = {
@@ -32784,6 +34720,7 @@ export namespace Prisma {
     cycles?: CycleCreateNestedManyWithoutWorkspaceInput
     labels?: LabelCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutNotificationsInput = {
@@ -32800,6 +34737,7 @@ export namespace Prisma {
     cycles?: CycleUncheckedCreateNestedManyWithoutWorkspaceInput
     labels?: LabelUncheckedCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutNotificationsInput = {
@@ -32985,6 +34923,7 @@ export namespace Prisma {
     cycles?: CycleUpdateManyWithoutWorkspaceNestedInput
     labels?: LabelUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutNotificationsInput = {
@@ -33001,6 +34940,7 @@ export namespace Prisma {
     cycles?: CycleUncheckedUpdateManyWithoutWorkspaceNestedInput
     labels?: LabelUncheckedUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type IssueUpsertWithoutNotificationsInput = {
@@ -33176,6 +35116,7 @@ export namespace Prisma {
     cycles?: CycleCreateNestedManyWithoutWorkspaceInput
     labels?: LabelCreateNestedManyWithoutWorkspaceInput
     notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutNotificationPreferencesInput = {
@@ -33192,6 +35133,7 @@ export namespace Prisma {
     cycles?: CycleUncheckedCreateNestedManyWithoutWorkspaceInput
     labels?: LabelUncheckedCreateNestedManyWithoutWorkspaceInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutNotificationPreferencesInput = {
@@ -33279,6 +35221,7 @@ export namespace Prisma {
     cycles?: CycleUpdateManyWithoutWorkspaceNestedInput
     labels?: LabelUpdateManyWithoutWorkspaceNestedInput
     notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutNotificationPreferencesInput = {
@@ -33295,6 +35238,159 @@ export namespace Prisma {
     cycles?: CycleUncheckedUpdateManyWithoutWorkspaceNestedInput
     labels?: LabelUncheckedUpdateManyWithoutWorkspaceNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type WorkspaceCreateWithoutTemplatesInput = {
+    id?: string
+    name: string
+    slug: string
+    settings?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: WorkspaceMemberCreateNestedManyWithoutWorkspaceInput
+    teams?: TeamCreateNestedManyWithoutWorkspaceInput
+    projects?: ProjectCreateNestedManyWithoutWorkspaceInput
+    issues?: IssueCreateNestedManyWithoutWorkspaceInput
+    cycles?: CycleCreateNestedManyWithoutWorkspaceInput
+    labels?: LabelCreateNestedManyWithoutWorkspaceInput
+    notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
+    notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceUncheckedCreateWithoutTemplatesInput = {
+    id?: string
+    name: string
+    slug: string
+    settings?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput
+    teams?: TeamUncheckedCreateNestedManyWithoutWorkspaceInput
+    projects?: ProjectUncheckedCreateNestedManyWithoutWorkspaceInput
+    issues?: IssueUncheckedCreateNestedManyWithoutWorkspaceInput
+    cycles?: CycleUncheckedCreateNestedManyWithoutWorkspaceInput
+    labels?: LabelUncheckedCreateNestedManyWithoutWorkspaceInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
+    notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceCreateOrConnectWithoutTemplatesInput = {
+    where: WorkspaceWhereUniqueInput
+    create: XOR<WorkspaceCreateWithoutTemplatesInput, WorkspaceUncheckedCreateWithoutTemplatesInput>
+  }
+
+  export type TeamCreateWithoutTemplatesInput = {
+    id?: string
+    name: string
+    key: string
+    color: string
+    createdAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutTeamsInput
+    projects?: ProjectCreateNestedManyWithoutTeamInput
+    issues?: IssueCreateNestedManyWithoutTeamInput
+    cycles?: CycleCreateNestedManyWithoutTeamInput
+    labels?: LabelCreateNestedManyWithoutTeamInput
+  }
+
+  export type TeamUncheckedCreateWithoutTemplatesInput = {
+    id?: string
+    name: string
+    key: string
+    color: string
+    createdAt?: Date | string
+    workspaceId: string
+    projects?: ProjectUncheckedCreateNestedManyWithoutTeamInput
+    issues?: IssueUncheckedCreateNestedManyWithoutTeamInput
+    cycles?: CycleUncheckedCreateNestedManyWithoutTeamInput
+    labels?: LabelUncheckedCreateNestedManyWithoutTeamInput
+  }
+
+  export type TeamCreateOrConnectWithoutTemplatesInput = {
+    where: TeamWhereUniqueInput
+    create: XOR<TeamCreateWithoutTemplatesInput, TeamUncheckedCreateWithoutTemplatesInput>
+  }
+
+  export type WorkspaceUpsertWithoutTemplatesInput = {
+    update: XOR<WorkspaceUpdateWithoutTemplatesInput, WorkspaceUncheckedUpdateWithoutTemplatesInput>
+    create: XOR<WorkspaceCreateWithoutTemplatesInput, WorkspaceUncheckedCreateWithoutTemplatesInput>
+    where?: WorkspaceWhereInput
+  }
+
+  export type WorkspaceUpdateToOneWithWhereWithoutTemplatesInput = {
+    where?: WorkspaceWhereInput
+    data: XOR<WorkspaceUpdateWithoutTemplatesInput, WorkspaceUncheckedUpdateWithoutTemplatesInput>
+  }
+
+  export type WorkspaceUpdateWithoutTemplatesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput
+    teams?: TeamUpdateManyWithoutWorkspaceNestedInput
+    projects?: ProjectUpdateManyWithoutWorkspaceNestedInput
+    issues?: IssueUpdateManyWithoutWorkspaceNestedInput
+    cycles?: CycleUpdateManyWithoutWorkspaceNestedInput
+    labels?: LabelUpdateManyWithoutWorkspaceNestedInput
+    notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
+    notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type WorkspaceUncheckedUpdateWithoutTemplatesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput
+    teams?: TeamUncheckedUpdateManyWithoutWorkspaceNestedInput
+    projects?: ProjectUncheckedUpdateManyWithoutWorkspaceNestedInput
+    issues?: IssueUncheckedUpdateManyWithoutWorkspaceNestedInput
+    cycles?: CycleUncheckedUpdateManyWithoutWorkspaceNestedInput
+    labels?: LabelUncheckedUpdateManyWithoutWorkspaceNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
+    notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type TeamUpsertWithoutTemplatesInput = {
+    update: XOR<TeamUpdateWithoutTemplatesInput, TeamUncheckedUpdateWithoutTemplatesInput>
+    create: XOR<TeamCreateWithoutTemplatesInput, TeamUncheckedCreateWithoutTemplatesInput>
+    where?: TeamWhereInput
+  }
+
+  export type TeamUpdateToOneWithWhereWithoutTemplatesInput = {
+    where?: TeamWhereInput
+    data: XOR<TeamUpdateWithoutTemplatesInput, TeamUncheckedUpdateWithoutTemplatesInput>
+  }
+
+  export type TeamUpdateWithoutTemplatesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutTeamsNestedInput
+    projects?: ProjectUpdateManyWithoutTeamNestedInput
+    issues?: IssueUpdateManyWithoutTeamNestedInput
+    cycles?: CycleUpdateManyWithoutTeamNestedInput
+    labels?: LabelUpdateManyWithoutTeamNestedInput
+  }
+
+  export type TeamUncheckedUpdateWithoutTemplatesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    projects?: ProjectUncheckedUpdateManyWithoutTeamNestedInput
+    issues?: IssueUncheckedUpdateManyWithoutTeamNestedInput
+    cycles?: CycleUncheckedUpdateManyWithoutTeamNestedInput
+    labels?: LabelUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type SessionCreateManyUserInput = {
@@ -33982,6 +36078,21 @@ export namespace Prisma {
     userId: string
   }
 
+  export type TemplateCreateManyWorkspaceInput = {
+    id?: string
+    name: string
+    description?: string | null
+    title: string
+    content?: string | null
+    priority?: $Enums.Priority
+    status?: $Enums.IssueStatus
+    isDefault?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    teamId?: string | null
+    labelIds: string
+  }
+
   export type WorkspaceMemberUpdateWithoutWorkspaceInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole
@@ -34013,6 +36124,7 @@ export namespace Prisma {
     issues?: IssueUpdateManyWithoutTeamNestedInput
     cycles?: CycleUpdateManyWithoutTeamNestedInput
     labels?: LabelUpdateManyWithoutTeamNestedInput
+    templates?: TemplateUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateWithoutWorkspaceInput = {
@@ -34025,6 +36137,7 @@ export namespace Prisma {
     issues?: IssueUncheckedUpdateManyWithoutTeamNestedInput
     cycles?: CycleUncheckedUpdateManyWithoutTeamNestedInput
     labels?: LabelUncheckedUpdateManyWithoutTeamNestedInput
+    templates?: TemplateUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateManyWithoutWorkspaceInput = {
@@ -34277,6 +36390,51 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type TemplateUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    labelIds?: StringFieldUpdateOperationsInput | string
+    team?: TeamUpdateOneWithoutTemplatesNestedInput
+  }
+
+  export type TemplateUncheckedUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    teamId?: NullableStringFieldUpdateOperationsInput | string | null
+    labelIds?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TemplateUncheckedUpdateManyWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    teamId?: NullableStringFieldUpdateOperationsInput | string | null
+    labelIds?: StringFieldUpdateOperationsInput | string
+  }
+
   export type ProjectCreateManyTeamInput = {
     id?: string
     name: string
@@ -34325,6 +36483,21 @@ export namespace Prisma {
     color: string
     createdAt?: Date | string
     workspaceId: string
+  }
+
+  export type TemplateCreateManyTeamInput = {
+    id?: string
+    name: string
+    description?: string | null
+    title: string
+    content?: string | null
+    priority?: $Enums.Priority
+    status?: $Enums.IssueStatus
+    isDefault?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspaceId: string
+    labelIds: string
   }
 
   export type ProjectUpdateWithoutTeamInput = {
@@ -34489,6 +36662,51 @@ export namespace Prisma {
     color?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspaceId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TemplateUpdateWithoutTeamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    labelIds?: StringFieldUpdateOperationsInput | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutTemplatesNestedInput
+  }
+
+  export type TemplateUncheckedUpdateWithoutTeamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    labelIds?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TemplateUncheckedUpdateManyWithoutTeamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    status?: EnumIssueStatusFieldUpdateOperationsInput | $Enums.IssueStatus
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    labelIds?: StringFieldUpdateOperationsInput | string
   }
 
   export type IssueCreateManyProjectInput = {

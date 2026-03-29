@@ -118,6 +118,7 @@ model Workspace {
   labels                  Label[]
   notifications           Notification[]
   notificationPreferences NotificationPreferences[]
+  templates               Template[]
 
   @@map("workspace")
 }
@@ -150,6 +151,7 @@ model Team {
   issues      Issue[]
   cycles      Cycle[]
   labels      Label[]
+  templates   Template[]
 
   @@unique([workspaceId, key])
   @@index([workspaceId])
@@ -353,6 +355,30 @@ model NotificationPreferences {
   @@index([userId])
   @@index([workspaceId])
   @@map("notification_preferences")
+}
+
+model Template {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  title       String   // Default title for issues created from this template
+  content     String?  // Default description/content (JSON for TipTap)
+  priority    Priority @default(NO_PRIORITY)
+  status      IssueStatus @default(BACKLOG)
+  isDefault   Boolean  @default(false) // System default templates
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  teamId      String?
+  team        Team?     @relation(fields: [teamId], references: [id], onDelete: SetNull)
+  labelIds    String   // JSON array of label IDs to apply
+
+  @@index([workspaceId])
+  @@index([teamId])
+  @@index([isDefault])
+  @@map("template")
 }
 
 // Enums

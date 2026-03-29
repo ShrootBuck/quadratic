@@ -3,6 +3,7 @@
 import {
 	ChevronLeft,
 	ChevronRight,
+	FileText,
 	FolderKanban,
 	LayoutGrid,
 	ListTodo,
@@ -68,6 +69,11 @@ const secondaryNavItems = [
 		name: "Labels",
 		href: "/app/labels",
 		icon: Tag,
+	},
+	{
+		name: "Templates",
+		href: "/app/templates",
+		icon: FileText,
 	},
 	{
 		name: "Settings",

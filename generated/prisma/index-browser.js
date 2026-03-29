@@ -306,6 +306,22 @@ exports.Prisma.NotificationPreferencesScalarFieldEnum = {
   workspaceId: 'workspaceId'
 };
 
+exports.Prisma.TemplateScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  title: 'title',
+  content: 'content',
+  priority: 'priority',
+  status: 'status',
+  isDefault: 'isDefault',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  workspaceId: 'workspaceId',
+  teamId: 'teamId',
+  labelIds: 'labelIds'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -376,7 +392,8 @@ exports.Prisma.ModelName = {
   Comment: 'Comment',
   IssueHistory: 'IssueHistory',
   Notification: 'Notification',
-  NotificationPreferences: 'NotificationPreferences'
+  NotificationPreferences: 'NotificationPreferences',
+  Template: 'Template'
 };
 
 /**

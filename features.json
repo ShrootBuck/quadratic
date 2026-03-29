@@ -296,7 +296,7 @@
 				"Default templates: Bug Report, Feature Request, Task",
 				"Team-specific templates"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "settings",
