@@ -91,7 +91,7 @@ interface IssueListTableProps {
 	issues: IssueWithRelations[];
 	isLoading: boolean;
 	groupBy: GroupBy;
-	workspaceId: string;
+	_workspaceId: string;
 }
 
 const statusIcons = {
@@ -146,7 +146,7 @@ export function IssueListTable({
 	issues,
 	isLoading,
 	groupBy,
-	workspaceId,
+	_workspaceId,
 }: IssueListTableProps) {
 	const [sortField, setSortField] = useState<SortField>("createdAt");
 	const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
@@ -209,15 +209,17 @@ export function IssueListTable({
 		return sortDirection === "asc" ? comparison : -comparison;
 	});
 
-	const toggleSelection = (id: string) => {
-		const newSelected = new Set(selectedIds);
-		if (newSelected.has(id)) {
-			newSelected.delete(id);
-		} else {
-			newSelected.add(id);
-		}
-		setSelectedIds(newSelected);
-	};
+	const toggleSelection = useCallback((id: string) => {
+		setSelectedIds((prev) => {
+			const newSelected = new Set(prev);
+			if (newSelected.has(id)) {
+				newSelected.delete(id);
+			} else {
+				newSelected.add(id);
+			}
+			return newSelected;
+		});
+	}, []);
 
 	const toggleAll = () => {
 		if (selectedIds.size === sortedIssues.length) {
@@ -233,6 +235,19 @@ export function IssueListTable({
 				e.target instanceof HTMLInputElement ||
 				e.target instanceof HTMLTextAreaElement
 			) {
+				return;
+			}
+
+			// Handle Cmd+Shift+C to copy issue URL
+			if (e.key === "C" && e.shiftKey && (e.metaKey || e.ctrlKey)) {
+				e.preventDefault();
+				if (focusedIndex >= 0 && focusedIndex < sortedIssues.length) {
+					const issue = sortedIssues[focusedIndex];
+					if (issue) {
+						const url = `${window.location.origin}/issues/${issue.id}`;
+						navigator.clipboard.writeText(url);
+					}
+				}
 				return;
 			}
 
@@ -336,7 +351,11 @@ export function IssueListTable({
 			<div className="p-4">
 				<div className="space-y-2">
 					{Array.from({ length: 10 }).map((_, i) => (
-						<Skeleton className="h-12 w-full bg-[#2A2F35]" key={i} />
+						<Skeleton
+							className="h-12 w-full bg-[#2A2F35]"
+							// biome-ignore lint/suspicious/noArrayIndexKey: loading skeletons don't need stable keys
+							key={`skeleton-${i}`}
+						/>
 					))}
 				</div>
 			</div>
@@ -443,6 +462,8 @@ export function IssueListTable({
 							const StatusIcon = statusIcons[issue.status];
 
 							return (
+								// biome-ignore lint/a11y/useKeyWithClickEvents: handled by global keyboard shortcuts
+								// biome-ignore lint/a11y/useSemanticElements: div needed for grid layout with internal interactive elements
 								<div
 									className={cn(
 										"grid grid-cols-[auto_auto_1fr_120px_120px_120px_40px] items-center border-[#2A2F35] border-b px-4 py-2 transition-colors",
@@ -455,6 +476,8 @@ export function IssueListTable({
 									onDoubleClick={() => {
 										window.location.href = `/issues/${issue.id}`;
 									}}
+									role="button"
+									tabIndex={0}
 								>
 									<Checkbox
 										checked={isSelected}

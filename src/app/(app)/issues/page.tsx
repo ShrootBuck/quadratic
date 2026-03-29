@@ -12,6 +12,12 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { api } from "~/trpc/react";
 
 type IssueStatus = "BACKLOG" | "TODO" | "IN_PROGRESS" | "DONE" | "CANCELLED";
@@ -164,14 +170,23 @@ export default function IssuesPage() {
 						</DropdownMenuContent>
 					</DropdownMenu>
 
-					<Button
-						className="bg-[#5E6AD2] text-white hover:bg-[#4F57B3]"
-						onClick={() => setCreateModalOpen(true)}
-						size="sm"
-					>
-						<Plus className="mr-2 h-4 w-4" />
-						New Issue
-					</Button>
+					<TooltipProvider delayDuration={300}>
+						<Tooltip>
+							<TooltipTrigger asChild>
+								<Button
+									className="bg-[#5E6AD2] text-white hover:bg-[#4F57B3]"
+									onClick={() => setCreateModalOpen(true)}
+									size="sm"
+								>
+									<Plus className="mr-2 h-4 w-4" />
+									New Issue
+								</Button>
+							</TooltipTrigger>
+							<TooltipContent>
+								<p>Create new issue (C)</p>
+							</TooltipContent>
+						</Tooltip>
+					</TooltipProvider>
 				</div>
 			</div>
 
@@ -216,7 +231,7 @@ export default function IssuesPage() {
 						groupBy={groupBy}
 						isLoading={isLoading}
 						issues={data?.issues ?? []}
-						workspaceId={workspaceId}
+						_workspaceId={workspaceId}
 					/>
 				</div>
 			</div>

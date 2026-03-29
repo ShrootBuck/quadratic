@@ -233,7 +233,7 @@
 				"Cmd+Shift+C - Copy issue URL",
 				"All shortcuts shown in UI tooltips"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "search",
