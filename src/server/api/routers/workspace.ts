@@ -378,4 +378,102 @@ export const workspaceRouter = createTRPCRouter({
 				users: scoredUsers.sort((a, b) => b.relevance - a.relevance),
 			};
 		}),
+
+	// Get workspace by ID
+	getById: protectedProcedure
+		.input(z.object({ id: z.string() }))
+		.query(async ({ ctx, input }) => {
+			const membership = await ctx.db.workspaceMember.findFirst({
+				where: {
+					workspaceId: input.id,
+					userId: ctx.session.user.id,
+				},
+			});
+
+			if (!membership) {
+				throw new Error("Access denied");
+			}
+
+			return ctx.db.workspace.findUnique({
+				where: { id: input.id },
+			});
+		}),
+
+	// Update workspace
+	update: protectedProcedure
+		.input(
+			z.object({
+				id: z.string(),
+				name: z.string().min(1).max(100).optional(),
+				slug: z.string().min(1).max(50).optional(),
+				settings: z.string().optional(),
+			}),
+		)
+		.mutation(async ({ ctx, input }) => {
+			const { id, ...data } = input;
+
+			// Check if user is admin
+			const membership = await ctx.db.workspaceMember.findFirst({
+				where: {
+					workspaceId: id,
+					userId: ctx.session.user.id,
+					role: "ADMIN",
+				},
+			});
+
+			if (!membership) {
+				throw new Error("Only workspace admins can update workspace settings");
+			}
+
+			// If slug is being updated, check for uniqueness
+			if (data.slug) {
+				const existing = await ctx.db.workspace.findUnique({
+					where: { slug: data.slug },
+				});
+				if (existing && existing.id !== id) {
+					throw new Error("Slug is already taken");
+				}
+			}
+
+			return ctx.db.workspace.update({
+				where: { id },
+				data,
+			});
+		}),
+
+	// Delete workspace
+	delete: protectedProcedure
+		.input(z.object({ id: z.string() }))
+		.mutation(async ({ ctx, input }) => {
+			// Check if user is admin
+			const membership = await ctx.db.workspaceMember.findFirst({
+				where: {
+					workspaceId: input.id,
+					userId: ctx.session.user.id,
+					role: "ADMIN",
+				},
+			});
+
+			if (!membership) {
+				throw new Error("Only workspace admins can delete the workspace");
+			}
+
+			// Check if there are other admins
+			const adminCount = await ctx.db.workspaceMember.count({
+				where: {
+					workspaceId: input.id,
+					role: "ADMIN",
+				},
+			});
+
+			if (adminCount < 1) {
+				throw new Error("Workspace must have at least one admin");
+			}
+
+			await ctx.db.workspace.delete({
+				where: { id: input.id },
+			});
+
+			return { success: true };
+		}),
 });

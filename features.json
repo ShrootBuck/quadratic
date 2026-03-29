@@ -313,7 +313,7 @@
 				"API keys section (placeholder for future)",
 				"Danger zone (delete workspace)"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "rich-text-editor",
