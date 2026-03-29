@@ -282,7 +282,7 @@
 				"Issues by state pie chart",
 				"Compare current vs previous cycle"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "templates",

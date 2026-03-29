@@ -1,3 +1,4 @@
+import { analyticsRouter } from "~/server/api/routers/analytics";
 import { cycleRouter } from "~/server/api/routers/cycle";
 import { issueRouter } from "~/server/api/routers/issue";
 import { labelRouter } from "~/server/api/routers/label";
@@ -22,6 +23,7 @@ export const appRouter = createTRPCRouter({
 	team: teamRouter,
 	label: labelRouter,
 	notification: notificationRouter,
+	analytics: analyticsRouter,
 });
 
 // export type definition of API

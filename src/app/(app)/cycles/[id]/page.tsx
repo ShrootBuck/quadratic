@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import {
 	ArrowLeft,
 	Calendar,
+	ChartBar,
 	CheckCircle2,
 	Circle,
 	Edit,
@@ -210,6 +211,13 @@ export default function CycleDetailPage() {
 					</div>
 
 					<div className="flex items-center gap-2">
+						<Link href={`/app/cycles/${cycleId}/analytics`}>
+							<Button className="border-[#2A2F35] bg-transparent text-[#8A8F98] hover:bg-[#2A2F35] hover:text-[#F7F8F8]">
+								<ChartBar className="mr-2 h-4 w-4" />
+								Analytics
+							</Button>
+						</Link>
+
 						<Button
 							className="bg-[#5E6AD2] text-white hover:bg-[#4F57B3]"
 							onClick={() => setAddIssueModalOpen(true)}
