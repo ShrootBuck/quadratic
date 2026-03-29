@@ -178,7 +178,7 @@ export default function AutomationsPage() {
 								Create Automation
 							</Button>
 						</DialogTrigger>
-						<DialogContent className="max-w-2xl">
+						<DialogContent className="max-w-2xl" trapFocus={false}>
 							<CreateAutomationDialog
 								initialTemplate={selectedTemplate}
 								onSuccess={() => {

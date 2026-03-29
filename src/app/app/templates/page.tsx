@@ -116,7 +116,10 @@ function CreateTemplateModal({
 
 	return (
 		<Dialog onOpenChange={onClose} open={isOpen}>
-			<DialogContent className="border-[#2A2F35] bg-[#0F1115] sm:max-w-lg">
+			<DialogContent
+				className="border-[#2A2F35] bg-[#0F1115] sm:max-w-lg"
+				trapFocus={false}
+			>
 				<DialogHeader>
 					<DialogTitle className="text-[#F7F8F8]">Create Template</DialogTitle>
 					<DialogDescription className="text-[#8A8F98]">

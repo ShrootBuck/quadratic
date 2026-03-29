@@ -120,7 +120,10 @@ function CreateCustomFieldModal({
 
 	return (
 		<Dialog onOpenChange={onClose} open={isOpen}>
-			<DialogContent className="border-[#2A2F35] bg-[#0F1115] sm:max-w-md">
+			<DialogContent
+				className="border-[#2A2F35] bg-[#0F1115] sm:max-w-md"
+				trapFocus={false}
+			>
 				<DialogHeader>
 					<DialogTitle className="text-[#F7F8F8]">
 						Create Custom Field

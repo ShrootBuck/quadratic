@@ -130,7 +130,10 @@ export default function CyclesPage() {
 							New Cycle
 						</Button>
 					</DialogTrigger>
-					<DialogContent className="border-[#2A2F35] bg-[#16181D] sm:max-w-[500px]">
+					<DialogContent
+						className="border-[#2A2F35] bg-[#16181D] sm:max-w-[500px]"
+						trapFocus={false}
+					>
 						<DialogHeader>
 							<DialogTitle className="text-[#F7F8F8]">
 								Create New Cycle

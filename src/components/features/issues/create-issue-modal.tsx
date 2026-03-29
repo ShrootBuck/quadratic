@@ -174,7 +174,10 @@ export function CreateIssueModal({
 
 	return (
 		<Dialog onOpenChange={onOpenChange} open={open}>
-			<DialogContent className="border-[#2A2F35] bg-[#16181D] sm:max-w-[600px]">
+			<DialogContent
+				className="border-[#2A2F35] bg-[#16181D] sm:max-w-[600px]"
+				trapFocus={false}
+			>
 				<DialogHeader>
 					<DialogTitle className="text-[#F7F8F8]">Create New Issue</DialogTitle>
 					<DialogDescription className="text-[#8A8F98]">
