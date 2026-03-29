@@ -134,6 +134,7 @@ export function AppShell({
 				onSearchClick={() => setIsOpen(true)}
 				onSignOut={onSignOut}
 				user={user}
+				workspaceId={workspaceId}
 			/>
 			<CommandPalette workspaceId={workspaceId} />
 			<KeyboardShortcutsHelp onOpenChange={setHelpOpen} open={helpOpen} />

@@ -266,7 +266,7 @@
 				"Real-time updates via polling or SSE",
 				"Notification preferences (which events to notify)"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "analytics",

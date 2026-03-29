@@ -1,7 +1,8 @@
 "use client";
 
-import { Bell, Command, LogOut, Search, Settings, User } from "lucide-react";
+import { Command, LogOut, Search, Settings, User } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { NotificationDropdown } from "@/components/notifications";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,11 +26,17 @@ interface HeaderProps {
 		email?: string | null;
 		image?: string | null;
 	};
+	workspaceId: string;
 	onSearchClick?: () => void;
 	onSignOut?: () => void;
 }
 
-export function Header({ user, onSearchClick, onSignOut }: HeaderProps) {
+export function Header({
+	user,
+	workspaceId,
+	onSearchClick,
+	onSignOut,
+}: HeaderProps) {
 	const router = useRouter();
 
 	return (
@@ -70,22 +77,7 @@ export function Header({ user, onSearchClick, onSignOut }: HeaderProps) {
 					</Tooltip>
 
 					{/* Notifications */}
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<Button
-								className="relative h-9 w-9 text-[#8A8F98] hover:bg-[#2A2F35] hover:text-[#F7F8F8]"
-								size="icon"
-								variant="ghost"
-							>
-								<Bell className="h-4 w-4" />
-								{/* Notification badge - placeholder */}
-								<span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-[#5E6AD2]" />
-							</Button>
-						</TooltipTrigger>
-						<TooltipContent>
-							<p>Notifications</p>
-						</TooltipContent>
-					</Tooltip>
+					<NotificationDropdown workspaceId={workspaceId} />
 
 					{/* User Menu */}
 					<DropdownMenu>

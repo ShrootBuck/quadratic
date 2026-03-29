@@ -278,6 +278,34 @@ exports.Prisma.IssueHistoryScalarFieldEnum = {
   actorId: 'actorId'
 };
 
+exports.Prisma.NotificationScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  title: 'title',
+  content: 'content',
+  read: 'read',
+  createdAt: 'createdAt',
+  userId: 'userId',
+  workspaceId: 'workspaceId',
+  issueId: 'issueId',
+  actorId: 'actorId',
+  mentionedInComment: 'mentionedInComment'
+};
+
+exports.Prisma.NotificationPreferencesScalarFieldEnum = {
+  id: 'id',
+  notifyOnAssign: 'notifyOnAssign',
+  notifyOnMention: 'notifyOnMention',
+  notifyOnStatusChange: 'notifyOnStatusChange',
+  notifyOnComment: 'notifyOnComment',
+  notifyOnIssueCreated: 'notifyOnIssueCreated',
+  notifyOnCycleStart: 'notifyOnCycleStart',
+  notifyOnCycleEnd: 'notifyOnCycleEnd',
+  updatedAt: 'updatedAt',
+  userId: 'userId',
+  workspaceId: 'workspaceId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -321,6 +349,16 @@ exports.Priority = exports.$Enums.Priority = {
   URGENT: 'URGENT'
 };
 
+exports.NotificationType = exports.$Enums.NotificationType = {
+  ASSIGNED: 'ASSIGNED',
+  MENTIONED: 'MENTIONED',
+  STATUS_CHANGED: 'STATUS_CHANGED',
+  COMMENTED: 'COMMENTED',
+  ISSUE_CREATED: 'ISSUE_CREATED',
+  CYCLE_STARTED: 'CYCLE_STARTED',
+  CYCLE_ENDED: 'CYCLE_ENDED'
+};
+
 exports.Prisma.ModelName = {
   Post: 'Post',
   User: 'User',
@@ -336,7 +374,9 @@ exports.Prisma.ModelName = {
   Issue: 'Issue',
   IssueLabel: 'IssueLabel',
   Comment: 'Comment',
-  IssueHistory: 'IssueHistory'
+  IssueHistory: 'IssueHistory',
+  Notification: 'Notification',
+  NotificationPreferences: 'NotificationPreferences'
 };
 
 /**

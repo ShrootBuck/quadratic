@@ -204,6 +204,21 @@ export const issueRouter = createTRPCRouter({
 				return newIssue;
 			});
 
+			// Send notification if issue is assigned to someone
+			if (issue.assigneeId && issue.assigneeId !== ctx.session.user.id) {
+				await ctx.db.notification.create({
+					data: {
+						type: "ASSIGNED",
+						title: `assigned you to ${issue.identifier}`,
+						content: issue.title,
+						workspaceId: issue.workspaceId,
+						userId: issue.assigneeId,
+						issueId: issue.id,
+						actorId: ctx.session.user.id,
+					},
+				});
+			}
+
 			return issue;
 		}),
 
@@ -298,81 +313,81 @@ export const issueRouter = createTRPCRouter({
 				});
 			}
 
+			// Track changes for history and notifications
+			const changes: {
+				field: string;
+				oldValue: string | null;
+				newValue: string;
+			}[] = [];
+
+			if (
+				updateData.title !== undefined &&
+				updateData.title !== existingIssue.title
+			) {
+				changes.push({
+					field: "title",
+					oldValue: existingIssue.title,
+					newValue: updateData.title,
+				});
+			}
+
+			if (
+				updateData.status !== undefined &&
+				updateData.status !== existingIssue.status
+			) {
+				changes.push({
+					field: "status",
+					oldValue: String(existingIssue.status),
+					newValue: String(updateData.status),
+				});
+			}
+
+			if (
+				updateData.priority !== undefined &&
+				updateData.priority !== existingIssue.priority
+			) {
+				changes.push({
+					field: "priority",
+					oldValue: String(existingIssue.priority),
+					newValue: String(updateData.priority),
+				});
+			}
+
+			if (
+				updateData.assigneeId !== undefined &&
+				updateData.assigneeId !== existingIssue.assigneeId
+			) {
+				changes.push({
+					field: "assigneeId",
+					oldValue: existingIssue.assigneeId,
+					newValue: updateData.assigneeId ?? "null",
+				});
+			}
+
+			if (
+				updateData.projectId !== undefined &&
+				updateData.projectId !== existingIssue.projectId
+			) {
+				changes.push({
+					field: "projectId",
+					oldValue: existingIssue.projectId,
+					newValue: updateData.projectId ?? "null",
+				});
+			}
+
+			if (
+				updateData.cycleId !== undefined &&
+				updateData.cycleId !== existingIssue.cycleId
+			) {
+				changes.push({
+					field: "cycleId",
+					oldValue: existingIssue.cycleId,
+					newValue: updateData.cycleId ?? "null",
+				});
+			}
+
 			// Update in transaction with history tracking
 			const updatedIssue = await ctx.db.$transaction(async (tx) => {
-				// Track changes for history
-				const changes: {
-					field: string;
-					oldValue: string | null;
-					newValue: string;
-				}[] = [];
-
-				if (
-					updateData.title !== undefined &&
-					updateData.title !== existingIssue.title
-				) {
-					changes.push({
-						field: "title",
-						oldValue: existingIssue.title,
-						newValue: updateData.title,
-					});
-				}
-
-				if (
-					updateData.status !== undefined &&
-					updateData.status !== existingIssue.status
-				) {
-					changes.push({
-						field: "status",
-						oldValue: String(existingIssue.status),
-						newValue: String(updateData.status),
-					});
-				}
-
-				if (
-					updateData.priority !== undefined &&
-					updateData.priority !== existingIssue.priority
-				) {
-					changes.push({
-						field: "priority",
-						oldValue: String(existingIssue.priority),
-						newValue: String(updateData.priority),
-					});
-				}
-
-				if (
-					updateData.assigneeId !== undefined &&
-					updateData.assigneeId !== existingIssue.assigneeId
-				) {
-					changes.push({
-						field: "assigneeId",
-						oldValue: existingIssue.assigneeId,
-						newValue: updateData.assigneeId ?? "null",
-					});
-				}
-
-				if (
-					updateData.projectId !== undefined &&
-					updateData.projectId !== existingIssue.projectId
-				) {
-					changes.push({
-						field: "projectId",
-						oldValue: existingIssue.projectId,
-						newValue: updateData.projectId ?? "null",
-					});
-				}
-
-				if (
-					updateData.cycleId !== undefined &&
-					updateData.cycleId !== existingIssue.cycleId
-				) {
-					changes.push({
-						field: "cycleId",
-						oldValue: existingIssue.cycleId,
-						newValue: updateData.cycleId ?? "null",
-					});
-				}
-
 				// Update the issue
 				const issue = await tx.issue.update({
 					where: { id },
@@ -431,6 +446,44 @@ export const issueRouter = createTRPCRouter({
 
 				return issue;
 			});
+
+			// Send notifications for relevant changes
+			for (const change of changes) {
+				// Notify on assignee change
+				if (change.field === "assigneeId" && updateData.assigneeId) {
+					// Don't notify if assigning to self
+					if (updateData.assigneeId !== ctx.session.user.id) {
+						await ctx.db.notification.create({
+							data: {
+								type: "ASSIGNED",
+								title: `assigned you to ${updatedIssue.identifier}`,
+								content: updatedIssue.title,
+								workspaceId: updatedIssue.workspaceId,
+								userId: updateData.assigneeId,
+								issueId: updatedIssue.id,
+								actorId: ctx.session.user.id,
+							},
+						});
+					}
+				}
+
+				// Notify creator on status change
+				if (change.field === "status" && updateData.status) {
+					if (existingIssue.creatorId !== ctx.session.user.id) {
+						await ctx.db.notification.create({
+							data: {
+								type: "STATUS_CHANGED",
+								title: `changed status to ${updateData.status}`,
+								content: updatedIssue.title,
+								workspaceId: updatedIssue.workspaceId,
+								userId: existingIssue.creatorId,
+								issueId: updatedIssue.id,
+								actorId: ctx.session.user.id,
+							},
+						});
+					}
+				}
+			}
 
 			return updatedIssue;
 		}),
@@ -641,6 +694,40 @@ export const issueRouter = createTRPCRouter({
 
 				return [newComment];
 			});
+
+			// Notify issue creator if it's not the commenter
+			if (issue.creatorId !== ctx.session.user.id) {
+				await ctx.db.notification.create({
+					data: {
+						type: "COMMENTED",
+						title: `commented on ${issue.identifier}`,
+						content: issue.title,
+						workspaceId: issue.workspaceId,
+						userId: issue.creatorId,
+						issueId: issue.id,
+						actorId: ctx.session.user.id,
+					},
+				});
+			}
+
+			// Notify assignee if different from creator and commenter
+			if (
+				issue.assigneeId &&
+				issue.assigneeId !== issue.creatorId &&
+				issue.assigneeId !== ctx.session.user.id
+			) {
+				await ctx.db.notification.create({
+					data: {
+						type: "COMMENTED",
+						title: `commented on ${issue.identifier}`,
+						content: issue.title,
+						workspaceId: issue.workspaceId,
+						userId: issue.assigneeId,
+						issueId: issue.id,
+						actorId: ctx.session.user.id,
+					},
+				});
+			}
 
 			return comment;
 		}),
