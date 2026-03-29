@@ -103,12 +103,42 @@ export type NotificationPreferences = $Result.DefaultSelection<Prisma.$Notificat
  * 
  */
 export type Template = $Result.DefaultSelection<Prisma.$TemplatePayload>
+/**
+ * Model AutomationRule
+ * 
+ */
+export type AutomationRule = $Result.DefaultSelection<Prisma.$AutomationRulePayload>
+/**
+ * Model AutomationLog
+ * 
+ */
+export type AutomationLog = $Result.DefaultSelection<Prisma.$AutomationLogPayload>
 
 /**
  * Enums
  */
 export namespace $Enums {
-  export const WorkspaceRole: {
+  export const AutomationTrigger: {
+  ISSUE_CREATED: 'ISSUE_CREATED',
+  ISSUE_UPDATED: 'ISSUE_UPDATED',
+  STATUS_CHANGED: 'STATUS_CHANGED',
+  ASSIGNEE_CHANGED: 'ASSIGNEE_CHANGED',
+  PRIORITY_CHANGED: 'PRIORITY_CHANGED'
+};
+
+export type AutomationTrigger = (typeof AutomationTrigger)[keyof typeof AutomationTrigger]
+
+
+export const AutomationLogStatus: {
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED',
+  SKIPPED: 'SKIPPED'
+};
+
+export type AutomationLogStatus = (typeof AutomationLogStatus)[keyof typeof AutomationLogStatus]
+
+
+export const WorkspaceRole: {
   ADMIN: 'ADMIN',
   MEMBER: 'MEMBER'
 };
@@ -170,6 +200,14 @@ export const NotificationType: {
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
 
 }
+
+export type AutomationTrigger = $Enums.AutomationTrigger
+
+export const AutomationTrigger: typeof $Enums.AutomationTrigger
+
+export type AutomationLogStatus = $Enums.AutomationLogStatus
+
+export const AutomationLogStatus: typeof $Enums.AutomationLogStatus
 
 export type WorkspaceRole = $Enums.WorkspaceRole
 
@@ -492,6 +530,26 @@ export class PrismaClient<
     * ```
     */
   get template(): Prisma.TemplateDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.automationRule`: Exposes CRUD operations for the **AutomationRule** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AutomationRules
+    * const automationRules = await prisma.automationRule.findMany()
+    * ```
+    */
+  get automationRule(): Prisma.AutomationRuleDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.automationLog`: Exposes CRUD operations for the **AutomationLog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AutomationLogs
+    * const automationLogs = await prisma.automationLog.findMany()
+    * ```
+    */
+  get automationLog(): Prisma.AutomationLogDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -950,7 +1008,9 @@ export namespace Prisma {
     IssueHistory: 'IssueHistory',
     Notification: 'Notification',
     NotificationPreferences: 'NotificationPreferences',
-    Template: 'Template'
+    Template: 'Template',
+    AutomationRule: 'AutomationRule',
+    AutomationLog: 'AutomationLog'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -969,7 +1029,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "post" | "user" | "session" | "account" | "verification" | "workspace" | "workspaceMember" | "team" | "project" | "cycle" | "label" | "issue" | "issueLabel" | "comment" | "issueHistory" | "notification" | "notificationPreferences" | "template"
+      modelProps: "post" | "user" | "session" | "account" | "verification" | "workspace" | "workspaceMember" | "team" | "project" | "cycle" | "label" | "issue" | "issueLabel" | "comment" | "issueHistory" | "notification" | "notificationPreferences" | "template" | "automationRule" | "automationLog"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2305,6 +2365,154 @@ export namespace Prisma {
           }
         }
       }
+      AutomationRule: {
+        payload: Prisma.$AutomationRulePayload<ExtArgs>
+        fields: Prisma.AutomationRuleFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AutomationRuleFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRulePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AutomationRuleFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRulePayload>
+          }
+          findFirst: {
+            args: Prisma.AutomationRuleFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRulePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AutomationRuleFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRulePayload>
+          }
+          findMany: {
+            args: Prisma.AutomationRuleFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRulePayload>[]
+          }
+          create: {
+            args: Prisma.AutomationRuleCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRulePayload>
+          }
+          createMany: {
+            args: Prisma.AutomationRuleCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AutomationRuleCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRulePayload>[]
+          }
+          delete: {
+            args: Prisma.AutomationRuleDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRulePayload>
+          }
+          update: {
+            args: Prisma.AutomationRuleUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRulePayload>
+          }
+          deleteMany: {
+            args: Prisma.AutomationRuleDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AutomationRuleUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AutomationRuleUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRulePayload>[]
+          }
+          upsert: {
+            args: Prisma.AutomationRuleUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRulePayload>
+          }
+          aggregate: {
+            args: Prisma.AutomationRuleAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAutomationRule>
+          }
+          groupBy: {
+            args: Prisma.AutomationRuleGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AutomationRuleGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AutomationRuleCountArgs<ExtArgs>
+            result: $Utils.Optional<AutomationRuleCountAggregateOutputType> | number
+          }
+        }
+      }
+      AutomationLog: {
+        payload: Prisma.$AutomationLogPayload<ExtArgs>
+        fields: Prisma.AutomationLogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AutomationLogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationLogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AutomationLogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationLogPayload>
+          }
+          findFirst: {
+            args: Prisma.AutomationLogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationLogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AutomationLogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationLogPayload>
+          }
+          findMany: {
+            args: Prisma.AutomationLogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationLogPayload>[]
+          }
+          create: {
+            args: Prisma.AutomationLogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationLogPayload>
+          }
+          createMany: {
+            args: Prisma.AutomationLogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AutomationLogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationLogPayload>[]
+          }
+          delete: {
+            args: Prisma.AutomationLogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationLogPayload>
+          }
+          update: {
+            args: Prisma.AutomationLogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationLogPayload>
+          }
+          deleteMany: {
+            args: Prisma.AutomationLogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AutomationLogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AutomationLogUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationLogPayload>[]
+          }
+          upsert: {
+            args: Prisma.AutomationLogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationLogPayload>
+          }
+          aggregate: {
+            args: Prisma.AutomationLogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAutomationLog>
+          }
+          groupBy: {
+            args: Prisma.AutomationLogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AutomationLogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AutomationLogCountArgs<ExtArgs>
+            result: $Utils.Optional<AutomationLogCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2419,6 +2627,8 @@ export namespace Prisma {
     notification?: NotificationOmit
     notificationPreferences?: NotificationPreferencesOmit
     template?: TemplateOmit
+    automationRule?: AutomationRuleOmit
+    automationLog?: AutomationLogOmit
   }
 
   /* Types for Logging */
@@ -2638,6 +2848,8 @@ export namespace Prisma {
     notifications: number
     notificationPreferences: number
     templates: number
+    automationRules: number
+    automationLogs: number
   }
 
   export type WorkspaceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2650,6 +2862,8 @@ export namespace Prisma {
     notifications?: boolean | WorkspaceCountOutputTypeCountNotificationsArgs
     notificationPreferences?: boolean | WorkspaceCountOutputTypeCountNotificationPreferencesArgs
     templates?: boolean | WorkspaceCountOutputTypeCountTemplatesArgs
+    automationRules?: boolean | WorkspaceCountOutputTypeCountAutomationRulesArgs
+    automationLogs?: boolean | WorkspaceCountOutputTypeCountAutomationLogsArgs
   }
 
   // Custom InputTypes
@@ -2726,6 +2940,20 @@ export namespace Prisma {
     where?: TemplateWhereInput
   }
 
+  /**
+   * WorkspaceCountOutputType without action
+   */
+  export type WorkspaceCountOutputTypeCountAutomationRulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AutomationRuleWhereInput
+  }
+
+  /**
+   * WorkspaceCountOutputType without action
+   */
+  export type WorkspaceCountOutputTypeCountAutomationLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AutomationLogWhereInput
+  }
+
 
   /**
    * Count Type TeamCountOutputType
@@ -2737,6 +2965,7 @@ export namespace Prisma {
     cycles: number
     labels: number
     templates: number
+    automationRules: number
   }
 
   export type TeamCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2745,6 +2974,7 @@ export namespace Prisma {
     cycles?: boolean | TeamCountOutputTypeCountCyclesArgs
     labels?: boolean | TeamCountOutputTypeCountLabelsArgs
     templates?: boolean | TeamCountOutputTypeCountTemplatesArgs
+    automationRules?: boolean | TeamCountOutputTypeCountAutomationRulesArgs
   }
 
   // Custom InputTypes
@@ -2791,6 +3021,13 @@ export namespace Prisma {
    */
   export type TeamCountOutputTypeCountTemplatesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TemplateWhereInput
+  }
+
+  /**
+   * TeamCountOutputType without action
+   */
+  export type TeamCountOutputTypeCountAutomationRulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AutomationRuleWhereInput
   }
 
 
@@ -2942,6 +3179,37 @@ export namespace Prisma {
    */
   export type IssueCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: NotificationWhereInput
+  }
+
+
+  /**
+   * Count Type AutomationRuleCountOutputType
+   */
+
+  export type AutomationRuleCountOutputType = {
+    logs: number
+  }
+
+  export type AutomationRuleCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    logs?: boolean | AutomationRuleCountOutputTypeCountLogsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AutomationRuleCountOutputType without action
+   */
+  export type AutomationRuleCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRuleCountOutputType
+     */
+    select?: AutomationRuleCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AutomationRuleCountOutputType without action
+   */
+  export type AutomationRuleCountOutputTypeCountLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AutomationLogWhereInput
   }
 
 
@@ -8862,6 +9130,8 @@ export namespace Prisma {
     notifications?: boolean | Workspace$notificationsArgs<ExtArgs>
     notificationPreferences?: boolean | Workspace$notificationPreferencesArgs<ExtArgs>
     templates?: boolean | Workspace$templatesArgs<ExtArgs>
+    automationRules?: boolean | Workspace$automationRulesArgs<ExtArgs>
+    automationLogs?: boolean | Workspace$automationLogsArgs<ExtArgs>
     _count?: boolean | WorkspaceCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["workspace"]>
 
@@ -8903,6 +9173,8 @@ export namespace Prisma {
     notifications?: boolean | Workspace$notificationsArgs<ExtArgs>
     notificationPreferences?: boolean | Workspace$notificationPreferencesArgs<ExtArgs>
     templates?: boolean | Workspace$templatesArgs<ExtArgs>
+    automationRules?: boolean | Workspace$automationRulesArgs<ExtArgs>
+    automationLogs?: boolean | Workspace$automationLogsArgs<ExtArgs>
     _count?: boolean | WorkspaceCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type WorkspaceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -8920,6 +9192,8 @@ export namespace Prisma {
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
       notificationPreferences: Prisma.$NotificationPreferencesPayload<ExtArgs>[]
       templates: Prisma.$TemplatePayload<ExtArgs>[]
+      automationRules: Prisma.$AutomationRulePayload<ExtArgs>[]
+      automationLogs: Prisma.$AutomationLogPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -9331,6 +9605,8 @@ export namespace Prisma {
     notifications<T extends Workspace$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notificationPreferences<T extends Workspace$notificationPreferencesArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$notificationPreferencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPreferencesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     templates<T extends Workspace$templatesArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$templatesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    automationRules<T extends Workspace$automationRulesArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$automationRulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    automationLogs<T extends Workspace$automationLogsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$automationLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9965,6 +10241,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TemplateScalarFieldEnum | TemplateScalarFieldEnum[]
+  }
+
+  /**
+   * Workspace.automationRules
+   */
+  export type Workspace$automationRulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRule
+     */
+    select?: AutomationRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRule
+     */
+    omit?: AutomationRuleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRuleInclude<ExtArgs> | null
+    where?: AutomationRuleWhereInput
+    orderBy?: AutomationRuleOrderByWithRelationInput | AutomationRuleOrderByWithRelationInput[]
+    cursor?: AutomationRuleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AutomationRuleScalarFieldEnum | AutomationRuleScalarFieldEnum[]
+  }
+
+  /**
+   * Workspace.automationLogs
+   */
+  export type Workspace$automationLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationLog
+     */
+    select?: AutomationLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationLog
+     */
+    omit?: AutomationLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationLogInclude<ExtArgs> | null
+    where?: AutomationLogWhereInput
+    orderBy?: AutomationLogOrderByWithRelationInput | AutomationLogOrderByWithRelationInput[]
+    cursor?: AutomationLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AutomationLogScalarFieldEnum | AutomationLogScalarFieldEnum[]
   }
 
   /**
@@ -11228,6 +11552,7 @@ export namespace Prisma {
     cycles?: boolean | Team$cyclesArgs<ExtArgs>
     labels?: boolean | Team$labelsArgs<ExtArgs>
     templates?: boolean | Team$templatesArgs<ExtArgs>
+    automationRules?: boolean | Team$automationRulesArgs<ExtArgs>
     _count?: boolean | TeamCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["team"]>
 
@@ -11268,6 +11593,7 @@ export namespace Prisma {
     cycles?: boolean | Team$cyclesArgs<ExtArgs>
     labels?: boolean | Team$labelsArgs<ExtArgs>
     templates?: boolean | Team$templatesArgs<ExtArgs>
+    automationRules?: boolean | Team$automationRulesArgs<ExtArgs>
     _count?: boolean | TeamCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TeamIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11286,6 +11612,7 @@ export namespace Prisma {
       cycles: Prisma.$CyclePayload<ExtArgs>[]
       labels: Prisma.$LabelPayload<ExtArgs>[]
       templates: Prisma.$TemplatePayload<ExtArgs>[]
+      automationRules: Prisma.$AutomationRulePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -11694,6 +12021,7 @@ export namespace Prisma {
     cycles<T extends Team$cyclesArgs<ExtArgs> = {}>(args?: Subset<T, Team$cyclesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CyclePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     labels<T extends Team$labelsArgs<ExtArgs> = {}>(args?: Subset<T, Team$labelsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LabelPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     templates<T extends Team$templatesArgs<ExtArgs> = {}>(args?: Subset<T, Team$templatesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    automationRules<T extends Team$automationRulesArgs<ExtArgs> = {}>(args?: Subset<T, Team$automationRulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12240,6 +12568,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TemplateScalarFieldEnum | TemplateScalarFieldEnum[]
+  }
+
+  /**
+   * Team.automationRules
+   */
+  export type Team$automationRulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRule
+     */
+    select?: AutomationRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRule
+     */
+    omit?: AutomationRuleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRuleInclude<ExtArgs> | null
+    where?: AutomationRuleWhereInput
+    orderBy?: AutomationRuleOrderByWithRelationInput | AutomationRuleOrderByWithRelationInput[]
+    cursor?: AutomationRuleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AutomationRuleScalarFieldEnum | AutomationRuleScalarFieldEnum[]
   }
 
   /**
@@ -23907,6 +24259,2326 @@ export namespace Prisma {
 
 
   /**
+   * Model AutomationRule
+   */
+
+  export type AggregateAutomationRule = {
+    _count: AutomationRuleCountAggregateOutputType | null
+    _min: AutomationRuleMinAggregateOutputType | null
+    _max: AutomationRuleMaxAggregateOutputType | null
+  }
+
+  export type AutomationRuleMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    trigger: $Enums.AutomationTrigger | null
+    conditions: string | null
+    actions: string | null
+    enabled: boolean | null
+    isTemplate: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    workspaceId: string | null
+    teamId: string | null
+  }
+
+  export type AutomationRuleMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    trigger: $Enums.AutomationTrigger | null
+    conditions: string | null
+    actions: string | null
+    enabled: boolean | null
+    isTemplate: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    workspaceId: string | null
+    teamId: string | null
+  }
+
+  export type AutomationRuleCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    trigger: number
+    conditions: number
+    actions: number
+    enabled: number
+    isTemplate: number
+    createdAt: number
+    updatedAt: number
+    workspaceId: number
+    teamId: number
+    _all: number
+  }
+
+
+  export type AutomationRuleMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    trigger?: true
+    conditions?: true
+    actions?: true
+    enabled?: true
+    isTemplate?: true
+    createdAt?: true
+    updatedAt?: true
+    workspaceId?: true
+    teamId?: true
+  }
+
+  export type AutomationRuleMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    trigger?: true
+    conditions?: true
+    actions?: true
+    enabled?: true
+    isTemplate?: true
+    createdAt?: true
+    updatedAt?: true
+    workspaceId?: true
+    teamId?: true
+  }
+
+  export type AutomationRuleCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    trigger?: true
+    conditions?: true
+    actions?: true
+    enabled?: true
+    isTemplate?: true
+    createdAt?: true
+    updatedAt?: true
+    workspaceId?: true
+    teamId?: true
+    _all?: true
+  }
+
+  export type AutomationRuleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationRule to aggregate.
+     */
+    where?: AutomationRuleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationRules to fetch.
+     */
+    orderBy?: AutomationRuleOrderByWithRelationInput | AutomationRuleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AutomationRuleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationRules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationRules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AutomationRules
+    **/
+    _count?: true | AutomationRuleCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AutomationRuleMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AutomationRuleMaxAggregateInputType
+  }
+
+  export type GetAutomationRuleAggregateType<T extends AutomationRuleAggregateArgs> = {
+        [P in keyof T & keyof AggregateAutomationRule]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAutomationRule[P]>
+      : GetScalarType<T[P], AggregateAutomationRule[P]>
+  }
+
+
+
+
+  export type AutomationRuleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AutomationRuleWhereInput
+    orderBy?: AutomationRuleOrderByWithAggregationInput | AutomationRuleOrderByWithAggregationInput[]
+    by: AutomationRuleScalarFieldEnum[] | AutomationRuleScalarFieldEnum
+    having?: AutomationRuleScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AutomationRuleCountAggregateInputType | true
+    _min?: AutomationRuleMinAggregateInputType
+    _max?: AutomationRuleMaxAggregateInputType
+  }
+
+  export type AutomationRuleGroupByOutputType = {
+    id: string
+    name: string
+    description: string | null
+    trigger: $Enums.AutomationTrigger
+    conditions: string
+    actions: string
+    enabled: boolean
+    isTemplate: boolean
+    createdAt: Date
+    updatedAt: Date
+    workspaceId: string
+    teamId: string | null
+    _count: AutomationRuleCountAggregateOutputType | null
+    _min: AutomationRuleMinAggregateOutputType | null
+    _max: AutomationRuleMaxAggregateOutputType | null
+  }
+
+  type GetAutomationRuleGroupByPayload<T extends AutomationRuleGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AutomationRuleGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AutomationRuleGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AutomationRuleGroupByOutputType[P]>
+            : GetScalarType<T[P], AutomationRuleGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AutomationRuleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    trigger?: boolean
+    conditions?: boolean
+    actions?: boolean
+    enabled?: boolean
+    isTemplate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workspaceId?: boolean
+    teamId?: boolean
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    team?: boolean | AutomationRule$teamArgs<ExtArgs>
+    logs?: boolean | AutomationRule$logsArgs<ExtArgs>
+    _count?: boolean | AutomationRuleCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["automationRule"]>
+
+  export type AutomationRuleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    trigger?: boolean
+    conditions?: boolean
+    actions?: boolean
+    enabled?: boolean
+    isTemplate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workspaceId?: boolean
+    teamId?: boolean
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    team?: boolean | AutomationRule$teamArgs<ExtArgs>
+  }, ExtArgs["result"]["automationRule"]>
+
+  export type AutomationRuleSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    trigger?: boolean
+    conditions?: boolean
+    actions?: boolean
+    enabled?: boolean
+    isTemplate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workspaceId?: boolean
+    teamId?: boolean
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    team?: boolean | AutomationRule$teamArgs<ExtArgs>
+  }, ExtArgs["result"]["automationRule"]>
+
+  export type AutomationRuleSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    trigger?: boolean
+    conditions?: boolean
+    actions?: boolean
+    enabled?: boolean
+    isTemplate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workspaceId?: boolean
+    teamId?: boolean
+  }
+
+  export type AutomationRuleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "trigger" | "conditions" | "actions" | "enabled" | "isTemplate" | "createdAt" | "updatedAt" | "workspaceId" | "teamId", ExtArgs["result"]["automationRule"]>
+  export type AutomationRuleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    team?: boolean | AutomationRule$teamArgs<ExtArgs>
+    logs?: boolean | AutomationRule$logsArgs<ExtArgs>
+    _count?: boolean | AutomationRuleCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type AutomationRuleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    team?: boolean | AutomationRule$teamArgs<ExtArgs>
+  }
+  export type AutomationRuleIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    team?: boolean | AutomationRule$teamArgs<ExtArgs>
+  }
+
+  export type $AutomationRulePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AutomationRule"
+    objects: {
+      workspace: Prisma.$WorkspacePayload<ExtArgs>
+      team: Prisma.$TeamPayload<ExtArgs> | null
+      logs: Prisma.$AutomationLogPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      description: string | null
+      trigger: $Enums.AutomationTrigger
+      conditions: string
+      actions: string
+      enabled: boolean
+      isTemplate: boolean
+      createdAt: Date
+      updatedAt: Date
+      workspaceId: string
+      teamId: string | null
+    }, ExtArgs["result"]["automationRule"]>
+    composites: {}
+  }
+
+  type AutomationRuleGetPayload<S extends boolean | null | undefined | AutomationRuleDefaultArgs> = $Result.GetResult<Prisma.$AutomationRulePayload, S>
+
+  type AutomationRuleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AutomationRuleFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AutomationRuleCountAggregateInputType | true
+    }
+
+  export interface AutomationRuleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AutomationRule'], meta: { name: 'AutomationRule' } }
+    /**
+     * Find zero or one AutomationRule that matches the filter.
+     * @param {AutomationRuleFindUniqueArgs} args - Arguments to find a AutomationRule
+     * @example
+     * // Get one AutomationRule
+     * const automationRule = await prisma.automationRule.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AutomationRuleFindUniqueArgs>(args: SelectSubset<T, AutomationRuleFindUniqueArgs<ExtArgs>>): Prisma__AutomationRuleClient<$Result.GetResult<Prisma.$AutomationRulePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AutomationRule that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AutomationRuleFindUniqueOrThrowArgs} args - Arguments to find a AutomationRule
+     * @example
+     * // Get one AutomationRule
+     * const automationRule = await prisma.automationRule.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AutomationRuleFindUniqueOrThrowArgs>(args: SelectSubset<T, AutomationRuleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AutomationRuleClient<$Result.GetResult<Prisma.$AutomationRulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationRule that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationRuleFindFirstArgs} args - Arguments to find a AutomationRule
+     * @example
+     * // Get one AutomationRule
+     * const automationRule = await prisma.automationRule.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AutomationRuleFindFirstArgs>(args?: SelectSubset<T, AutomationRuleFindFirstArgs<ExtArgs>>): Prisma__AutomationRuleClient<$Result.GetResult<Prisma.$AutomationRulePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationRule that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationRuleFindFirstOrThrowArgs} args - Arguments to find a AutomationRule
+     * @example
+     * // Get one AutomationRule
+     * const automationRule = await prisma.automationRule.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AutomationRuleFindFirstOrThrowArgs>(args?: SelectSubset<T, AutomationRuleFindFirstOrThrowArgs<ExtArgs>>): Prisma__AutomationRuleClient<$Result.GetResult<Prisma.$AutomationRulePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AutomationRules that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationRuleFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AutomationRules
+     * const automationRules = await prisma.automationRule.findMany()
+     * 
+     * // Get first 10 AutomationRules
+     * const automationRules = await prisma.automationRule.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const automationRuleWithIdOnly = await prisma.automationRule.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AutomationRuleFindManyArgs>(args?: SelectSubset<T, AutomationRuleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AutomationRule.
+     * @param {AutomationRuleCreateArgs} args - Arguments to create a AutomationRule.
+     * @example
+     * // Create one AutomationRule
+     * const AutomationRule = await prisma.automationRule.create({
+     *   data: {
+     *     // ... data to create a AutomationRule
+     *   }
+     * })
+     * 
+     */
+    create<T extends AutomationRuleCreateArgs>(args: SelectSubset<T, AutomationRuleCreateArgs<ExtArgs>>): Prisma__AutomationRuleClient<$Result.GetResult<Prisma.$AutomationRulePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AutomationRules.
+     * @param {AutomationRuleCreateManyArgs} args - Arguments to create many AutomationRules.
+     * @example
+     * // Create many AutomationRules
+     * const automationRule = await prisma.automationRule.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AutomationRuleCreateManyArgs>(args?: SelectSubset<T, AutomationRuleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AutomationRules and returns the data saved in the database.
+     * @param {AutomationRuleCreateManyAndReturnArgs} args - Arguments to create many AutomationRules.
+     * @example
+     * // Create many AutomationRules
+     * const automationRule = await prisma.automationRule.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AutomationRules and only return the `id`
+     * const automationRuleWithIdOnly = await prisma.automationRule.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AutomationRuleCreateManyAndReturnArgs>(args?: SelectSubset<T, AutomationRuleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationRulePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AutomationRule.
+     * @param {AutomationRuleDeleteArgs} args - Arguments to delete one AutomationRule.
+     * @example
+     * // Delete one AutomationRule
+     * const AutomationRule = await prisma.automationRule.delete({
+     *   where: {
+     *     // ... filter to delete one AutomationRule
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AutomationRuleDeleteArgs>(args: SelectSubset<T, AutomationRuleDeleteArgs<ExtArgs>>): Prisma__AutomationRuleClient<$Result.GetResult<Prisma.$AutomationRulePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AutomationRule.
+     * @param {AutomationRuleUpdateArgs} args - Arguments to update one AutomationRule.
+     * @example
+     * // Update one AutomationRule
+     * const automationRule = await prisma.automationRule.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AutomationRuleUpdateArgs>(args: SelectSubset<T, AutomationRuleUpdateArgs<ExtArgs>>): Prisma__AutomationRuleClient<$Result.GetResult<Prisma.$AutomationRulePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AutomationRules.
+     * @param {AutomationRuleDeleteManyArgs} args - Arguments to filter AutomationRules to delete.
+     * @example
+     * // Delete a few AutomationRules
+     * const { count } = await prisma.automationRule.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AutomationRuleDeleteManyArgs>(args?: SelectSubset<T, AutomationRuleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationRules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationRuleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AutomationRules
+     * const automationRule = await prisma.automationRule.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AutomationRuleUpdateManyArgs>(args: SelectSubset<T, AutomationRuleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationRules and returns the data updated in the database.
+     * @param {AutomationRuleUpdateManyAndReturnArgs} args - Arguments to update many AutomationRules.
+     * @example
+     * // Update many AutomationRules
+     * const automationRule = await prisma.automationRule.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AutomationRules and only return the `id`
+     * const automationRuleWithIdOnly = await prisma.automationRule.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AutomationRuleUpdateManyAndReturnArgs>(args: SelectSubset<T, AutomationRuleUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationRulePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AutomationRule.
+     * @param {AutomationRuleUpsertArgs} args - Arguments to update or create a AutomationRule.
+     * @example
+     * // Update or create a AutomationRule
+     * const automationRule = await prisma.automationRule.upsert({
+     *   create: {
+     *     // ... data to create a AutomationRule
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AutomationRule we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AutomationRuleUpsertArgs>(args: SelectSubset<T, AutomationRuleUpsertArgs<ExtArgs>>): Prisma__AutomationRuleClient<$Result.GetResult<Prisma.$AutomationRulePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AutomationRules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationRuleCountArgs} args - Arguments to filter AutomationRules to count.
+     * @example
+     * // Count the number of AutomationRules
+     * const count = await prisma.automationRule.count({
+     *   where: {
+     *     // ... the filter for the AutomationRules we want to count
+     *   }
+     * })
+    **/
+    count<T extends AutomationRuleCountArgs>(
+      args?: Subset<T, AutomationRuleCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AutomationRuleCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AutomationRule.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationRuleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AutomationRuleAggregateArgs>(args: Subset<T, AutomationRuleAggregateArgs>): Prisma.PrismaPromise<GetAutomationRuleAggregateType<T>>
+
+    /**
+     * Group by AutomationRule.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationRuleGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AutomationRuleGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AutomationRuleGroupByArgs['orderBy'] }
+        : { orderBy?: AutomationRuleGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AutomationRuleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAutomationRuleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AutomationRule model
+   */
+  readonly fields: AutomationRuleFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AutomationRule.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AutomationRuleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    workspace<T extends WorkspaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkspaceDefaultArgs<ExtArgs>>): Prisma__WorkspaceClient<$Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    team<T extends AutomationRule$teamArgs<ExtArgs> = {}>(args?: Subset<T, AutomationRule$teamArgs<ExtArgs>>): Prisma__TeamClient<$Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    logs<T extends AutomationRule$logsArgs<ExtArgs> = {}>(args?: Subset<T, AutomationRule$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AutomationRule model
+   */
+  interface AutomationRuleFieldRefs {
+    readonly id: FieldRef<"AutomationRule", 'String'>
+    readonly name: FieldRef<"AutomationRule", 'String'>
+    readonly description: FieldRef<"AutomationRule", 'String'>
+    readonly trigger: FieldRef<"AutomationRule", 'AutomationTrigger'>
+    readonly conditions: FieldRef<"AutomationRule", 'String'>
+    readonly actions: FieldRef<"AutomationRule", 'String'>
+    readonly enabled: FieldRef<"AutomationRule", 'Boolean'>
+    readonly isTemplate: FieldRef<"AutomationRule", 'Boolean'>
+    readonly createdAt: FieldRef<"AutomationRule", 'DateTime'>
+    readonly updatedAt: FieldRef<"AutomationRule", 'DateTime'>
+    readonly workspaceId: FieldRef<"AutomationRule", 'String'>
+    readonly teamId: FieldRef<"AutomationRule", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AutomationRule findUnique
+   */
+  export type AutomationRuleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRule
+     */
+    select?: AutomationRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRule
+     */
+    omit?: AutomationRuleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRuleInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationRule to fetch.
+     */
+    where: AutomationRuleWhereUniqueInput
+  }
+
+  /**
+   * AutomationRule findUniqueOrThrow
+   */
+  export type AutomationRuleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRule
+     */
+    select?: AutomationRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRule
+     */
+    omit?: AutomationRuleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRuleInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationRule to fetch.
+     */
+    where: AutomationRuleWhereUniqueInput
+  }
+
+  /**
+   * AutomationRule findFirst
+   */
+  export type AutomationRuleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRule
+     */
+    select?: AutomationRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRule
+     */
+    omit?: AutomationRuleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRuleInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationRule to fetch.
+     */
+    where?: AutomationRuleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationRules to fetch.
+     */
+    orderBy?: AutomationRuleOrderByWithRelationInput | AutomationRuleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationRules.
+     */
+    cursor?: AutomationRuleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationRules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationRules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationRules.
+     */
+    distinct?: AutomationRuleScalarFieldEnum | AutomationRuleScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationRule findFirstOrThrow
+   */
+  export type AutomationRuleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRule
+     */
+    select?: AutomationRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRule
+     */
+    omit?: AutomationRuleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRuleInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationRule to fetch.
+     */
+    where?: AutomationRuleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationRules to fetch.
+     */
+    orderBy?: AutomationRuleOrderByWithRelationInput | AutomationRuleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationRules.
+     */
+    cursor?: AutomationRuleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationRules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationRules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationRules.
+     */
+    distinct?: AutomationRuleScalarFieldEnum | AutomationRuleScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationRule findMany
+   */
+  export type AutomationRuleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRule
+     */
+    select?: AutomationRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRule
+     */
+    omit?: AutomationRuleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRuleInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationRules to fetch.
+     */
+    where?: AutomationRuleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationRules to fetch.
+     */
+    orderBy?: AutomationRuleOrderByWithRelationInput | AutomationRuleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AutomationRules.
+     */
+    cursor?: AutomationRuleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationRules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationRules.
+     */
+    skip?: number
+    distinct?: AutomationRuleScalarFieldEnum | AutomationRuleScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationRule create
+   */
+  export type AutomationRuleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRule
+     */
+    select?: AutomationRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRule
+     */
+    omit?: AutomationRuleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRuleInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AutomationRule.
+     */
+    data: XOR<AutomationRuleCreateInput, AutomationRuleUncheckedCreateInput>
+  }
+
+  /**
+   * AutomationRule createMany
+   */
+  export type AutomationRuleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AutomationRules.
+     */
+    data: AutomationRuleCreateManyInput | AutomationRuleCreateManyInput[]
+  }
+
+  /**
+   * AutomationRule createManyAndReturn
+   */
+  export type AutomationRuleCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRule
+     */
+    select?: AutomationRuleSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRule
+     */
+    omit?: AutomationRuleOmit<ExtArgs> | null
+    /**
+     * The data used to create many AutomationRules.
+     */
+    data: AutomationRuleCreateManyInput | AutomationRuleCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRuleIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AutomationRule update
+   */
+  export type AutomationRuleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRule
+     */
+    select?: AutomationRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRule
+     */
+    omit?: AutomationRuleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRuleInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AutomationRule.
+     */
+    data: XOR<AutomationRuleUpdateInput, AutomationRuleUncheckedUpdateInput>
+    /**
+     * Choose, which AutomationRule to update.
+     */
+    where: AutomationRuleWhereUniqueInput
+  }
+
+  /**
+   * AutomationRule updateMany
+   */
+  export type AutomationRuleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AutomationRules.
+     */
+    data: XOR<AutomationRuleUpdateManyMutationInput, AutomationRuleUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationRules to update
+     */
+    where?: AutomationRuleWhereInput
+    /**
+     * Limit how many AutomationRules to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationRule updateManyAndReturn
+   */
+  export type AutomationRuleUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRule
+     */
+    select?: AutomationRuleSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRule
+     */
+    omit?: AutomationRuleOmit<ExtArgs> | null
+    /**
+     * The data used to update AutomationRules.
+     */
+    data: XOR<AutomationRuleUpdateManyMutationInput, AutomationRuleUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationRules to update
+     */
+    where?: AutomationRuleWhereInput
+    /**
+     * Limit how many AutomationRules to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRuleIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AutomationRule upsert
+   */
+  export type AutomationRuleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRule
+     */
+    select?: AutomationRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRule
+     */
+    omit?: AutomationRuleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRuleInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AutomationRule to update in case it exists.
+     */
+    where: AutomationRuleWhereUniqueInput
+    /**
+     * In case the AutomationRule found by the `where` argument doesn't exist, create a new AutomationRule with this data.
+     */
+    create: XOR<AutomationRuleCreateInput, AutomationRuleUncheckedCreateInput>
+    /**
+     * In case the AutomationRule was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AutomationRuleUpdateInput, AutomationRuleUncheckedUpdateInput>
+  }
+
+  /**
+   * AutomationRule delete
+   */
+  export type AutomationRuleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRule
+     */
+    select?: AutomationRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRule
+     */
+    omit?: AutomationRuleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRuleInclude<ExtArgs> | null
+    /**
+     * Filter which AutomationRule to delete.
+     */
+    where: AutomationRuleWhereUniqueInput
+  }
+
+  /**
+   * AutomationRule deleteMany
+   */
+  export type AutomationRuleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationRules to delete
+     */
+    where?: AutomationRuleWhereInput
+    /**
+     * Limit how many AutomationRules to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationRule.team
+   */
+  export type AutomationRule$teamArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Team
+     */
+    select?: TeamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Team
+     */
+    omit?: TeamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TeamInclude<ExtArgs> | null
+    where?: TeamWhereInput
+  }
+
+  /**
+   * AutomationRule.logs
+   */
+  export type AutomationRule$logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationLog
+     */
+    select?: AutomationLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationLog
+     */
+    omit?: AutomationLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationLogInclude<ExtArgs> | null
+    where?: AutomationLogWhereInput
+    orderBy?: AutomationLogOrderByWithRelationInput | AutomationLogOrderByWithRelationInput[]
+    cursor?: AutomationLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AutomationLogScalarFieldEnum | AutomationLogScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationRule without action
+   */
+  export type AutomationRuleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRule
+     */
+    select?: AutomationRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRule
+     */
+    omit?: AutomationRuleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRuleInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AutomationLog
+   */
+
+  export type AggregateAutomationLog = {
+    _count: AutomationLogCountAggregateOutputType | null
+    _min: AutomationLogMinAggregateOutputType | null
+    _max: AutomationLogMaxAggregateOutputType | null
+  }
+
+  export type AutomationLogMinAggregateOutputType = {
+    id: string | null
+    status: $Enums.AutomationLogStatus | null
+    error: string | null
+    inputData: string | null
+    outputData: string | null
+    executedAt: Date | null
+    ruleId: string | null
+    workspaceId: string | null
+    issueId: string | null
+  }
+
+  export type AutomationLogMaxAggregateOutputType = {
+    id: string | null
+    status: $Enums.AutomationLogStatus | null
+    error: string | null
+    inputData: string | null
+    outputData: string | null
+    executedAt: Date | null
+    ruleId: string | null
+    workspaceId: string | null
+    issueId: string | null
+  }
+
+  export type AutomationLogCountAggregateOutputType = {
+    id: number
+    status: number
+    error: number
+    inputData: number
+    outputData: number
+    executedAt: number
+    ruleId: number
+    workspaceId: number
+    issueId: number
+    _all: number
+  }
+
+
+  export type AutomationLogMinAggregateInputType = {
+    id?: true
+    status?: true
+    error?: true
+    inputData?: true
+    outputData?: true
+    executedAt?: true
+    ruleId?: true
+    workspaceId?: true
+    issueId?: true
+  }
+
+  export type AutomationLogMaxAggregateInputType = {
+    id?: true
+    status?: true
+    error?: true
+    inputData?: true
+    outputData?: true
+    executedAt?: true
+    ruleId?: true
+    workspaceId?: true
+    issueId?: true
+  }
+
+  export type AutomationLogCountAggregateInputType = {
+    id?: true
+    status?: true
+    error?: true
+    inputData?: true
+    outputData?: true
+    executedAt?: true
+    ruleId?: true
+    workspaceId?: true
+    issueId?: true
+    _all?: true
+  }
+
+  export type AutomationLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationLog to aggregate.
+     */
+    where?: AutomationLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationLogs to fetch.
+     */
+    orderBy?: AutomationLogOrderByWithRelationInput | AutomationLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AutomationLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AutomationLogs
+    **/
+    _count?: true | AutomationLogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AutomationLogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AutomationLogMaxAggregateInputType
+  }
+
+  export type GetAutomationLogAggregateType<T extends AutomationLogAggregateArgs> = {
+        [P in keyof T & keyof AggregateAutomationLog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAutomationLog[P]>
+      : GetScalarType<T[P], AggregateAutomationLog[P]>
+  }
+
+
+
+
+  export type AutomationLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AutomationLogWhereInput
+    orderBy?: AutomationLogOrderByWithAggregationInput | AutomationLogOrderByWithAggregationInput[]
+    by: AutomationLogScalarFieldEnum[] | AutomationLogScalarFieldEnum
+    having?: AutomationLogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AutomationLogCountAggregateInputType | true
+    _min?: AutomationLogMinAggregateInputType
+    _max?: AutomationLogMaxAggregateInputType
+  }
+
+  export type AutomationLogGroupByOutputType = {
+    id: string
+    status: $Enums.AutomationLogStatus
+    error: string | null
+    inputData: string
+    outputData: string | null
+    executedAt: Date
+    ruleId: string
+    workspaceId: string
+    issueId: string | null
+    _count: AutomationLogCountAggregateOutputType | null
+    _min: AutomationLogMinAggregateOutputType | null
+    _max: AutomationLogMaxAggregateOutputType | null
+  }
+
+  type GetAutomationLogGroupByPayload<T extends AutomationLogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AutomationLogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AutomationLogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AutomationLogGroupByOutputType[P]>
+            : GetScalarType<T[P], AutomationLogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AutomationLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    status?: boolean
+    error?: boolean
+    inputData?: boolean
+    outputData?: boolean
+    executedAt?: boolean
+    ruleId?: boolean
+    workspaceId?: boolean
+    issueId?: boolean
+    rule?: boolean | AutomationRuleDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["automationLog"]>
+
+  export type AutomationLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    status?: boolean
+    error?: boolean
+    inputData?: boolean
+    outputData?: boolean
+    executedAt?: boolean
+    ruleId?: boolean
+    workspaceId?: boolean
+    issueId?: boolean
+    rule?: boolean | AutomationRuleDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["automationLog"]>
+
+  export type AutomationLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    status?: boolean
+    error?: boolean
+    inputData?: boolean
+    outputData?: boolean
+    executedAt?: boolean
+    ruleId?: boolean
+    workspaceId?: boolean
+    issueId?: boolean
+    rule?: boolean | AutomationRuleDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["automationLog"]>
+
+  export type AutomationLogSelectScalar = {
+    id?: boolean
+    status?: boolean
+    error?: boolean
+    inputData?: boolean
+    outputData?: boolean
+    executedAt?: boolean
+    ruleId?: boolean
+    workspaceId?: boolean
+    issueId?: boolean
+  }
+
+  export type AutomationLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "status" | "error" | "inputData" | "outputData" | "executedAt" | "ruleId" | "workspaceId" | "issueId", ExtArgs["result"]["automationLog"]>
+  export type AutomationLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    rule?: boolean | AutomationRuleDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }
+  export type AutomationLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    rule?: boolean | AutomationRuleDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }
+  export type AutomationLogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    rule?: boolean | AutomationRuleDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }
+
+  export type $AutomationLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AutomationLog"
+    objects: {
+      rule: Prisma.$AutomationRulePayload<ExtArgs>
+      workspace: Prisma.$WorkspacePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      status: $Enums.AutomationLogStatus
+      error: string | null
+      inputData: string
+      outputData: string | null
+      executedAt: Date
+      ruleId: string
+      workspaceId: string
+      issueId: string | null
+    }, ExtArgs["result"]["automationLog"]>
+    composites: {}
+  }
+
+  type AutomationLogGetPayload<S extends boolean | null | undefined | AutomationLogDefaultArgs> = $Result.GetResult<Prisma.$AutomationLogPayload, S>
+
+  type AutomationLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AutomationLogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AutomationLogCountAggregateInputType | true
+    }
+
+  export interface AutomationLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AutomationLog'], meta: { name: 'AutomationLog' } }
+    /**
+     * Find zero or one AutomationLog that matches the filter.
+     * @param {AutomationLogFindUniqueArgs} args - Arguments to find a AutomationLog
+     * @example
+     * // Get one AutomationLog
+     * const automationLog = await prisma.automationLog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AutomationLogFindUniqueArgs>(args: SelectSubset<T, AutomationLogFindUniqueArgs<ExtArgs>>): Prisma__AutomationLogClient<$Result.GetResult<Prisma.$AutomationLogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AutomationLog that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AutomationLogFindUniqueOrThrowArgs} args - Arguments to find a AutomationLog
+     * @example
+     * // Get one AutomationLog
+     * const automationLog = await prisma.automationLog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AutomationLogFindUniqueOrThrowArgs>(args: SelectSubset<T, AutomationLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AutomationLogClient<$Result.GetResult<Prisma.$AutomationLogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationLog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationLogFindFirstArgs} args - Arguments to find a AutomationLog
+     * @example
+     * // Get one AutomationLog
+     * const automationLog = await prisma.automationLog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AutomationLogFindFirstArgs>(args?: SelectSubset<T, AutomationLogFindFirstArgs<ExtArgs>>): Prisma__AutomationLogClient<$Result.GetResult<Prisma.$AutomationLogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationLog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationLogFindFirstOrThrowArgs} args - Arguments to find a AutomationLog
+     * @example
+     * // Get one AutomationLog
+     * const automationLog = await prisma.automationLog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AutomationLogFindFirstOrThrowArgs>(args?: SelectSubset<T, AutomationLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__AutomationLogClient<$Result.GetResult<Prisma.$AutomationLogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AutomationLogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AutomationLogs
+     * const automationLogs = await prisma.automationLog.findMany()
+     * 
+     * // Get first 10 AutomationLogs
+     * const automationLogs = await prisma.automationLog.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const automationLogWithIdOnly = await prisma.automationLog.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AutomationLogFindManyArgs>(args?: SelectSubset<T, AutomationLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AutomationLog.
+     * @param {AutomationLogCreateArgs} args - Arguments to create a AutomationLog.
+     * @example
+     * // Create one AutomationLog
+     * const AutomationLog = await prisma.automationLog.create({
+     *   data: {
+     *     // ... data to create a AutomationLog
+     *   }
+     * })
+     * 
+     */
+    create<T extends AutomationLogCreateArgs>(args: SelectSubset<T, AutomationLogCreateArgs<ExtArgs>>): Prisma__AutomationLogClient<$Result.GetResult<Prisma.$AutomationLogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AutomationLogs.
+     * @param {AutomationLogCreateManyArgs} args - Arguments to create many AutomationLogs.
+     * @example
+     * // Create many AutomationLogs
+     * const automationLog = await prisma.automationLog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AutomationLogCreateManyArgs>(args?: SelectSubset<T, AutomationLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AutomationLogs and returns the data saved in the database.
+     * @param {AutomationLogCreateManyAndReturnArgs} args - Arguments to create many AutomationLogs.
+     * @example
+     * // Create many AutomationLogs
+     * const automationLog = await prisma.automationLog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AutomationLogs and only return the `id`
+     * const automationLogWithIdOnly = await prisma.automationLog.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AutomationLogCreateManyAndReturnArgs>(args?: SelectSubset<T, AutomationLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationLogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AutomationLog.
+     * @param {AutomationLogDeleteArgs} args - Arguments to delete one AutomationLog.
+     * @example
+     * // Delete one AutomationLog
+     * const AutomationLog = await prisma.automationLog.delete({
+     *   where: {
+     *     // ... filter to delete one AutomationLog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AutomationLogDeleteArgs>(args: SelectSubset<T, AutomationLogDeleteArgs<ExtArgs>>): Prisma__AutomationLogClient<$Result.GetResult<Prisma.$AutomationLogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AutomationLog.
+     * @param {AutomationLogUpdateArgs} args - Arguments to update one AutomationLog.
+     * @example
+     * // Update one AutomationLog
+     * const automationLog = await prisma.automationLog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AutomationLogUpdateArgs>(args: SelectSubset<T, AutomationLogUpdateArgs<ExtArgs>>): Prisma__AutomationLogClient<$Result.GetResult<Prisma.$AutomationLogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AutomationLogs.
+     * @param {AutomationLogDeleteManyArgs} args - Arguments to filter AutomationLogs to delete.
+     * @example
+     * // Delete a few AutomationLogs
+     * const { count } = await prisma.automationLog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AutomationLogDeleteManyArgs>(args?: SelectSubset<T, AutomationLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AutomationLogs
+     * const automationLog = await prisma.automationLog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AutomationLogUpdateManyArgs>(args: SelectSubset<T, AutomationLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationLogs and returns the data updated in the database.
+     * @param {AutomationLogUpdateManyAndReturnArgs} args - Arguments to update many AutomationLogs.
+     * @example
+     * // Update many AutomationLogs
+     * const automationLog = await prisma.automationLog.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AutomationLogs and only return the `id`
+     * const automationLogWithIdOnly = await prisma.automationLog.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AutomationLogUpdateManyAndReturnArgs>(args: SelectSubset<T, AutomationLogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationLogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AutomationLog.
+     * @param {AutomationLogUpsertArgs} args - Arguments to update or create a AutomationLog.
+     * @example
+     * // Update or create a AutomationLog
+     * const automationLog = await prisma.automationLog.upsert({
+     *   create: {
+     *     // ... data to create a AutomationLog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AutomationLog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AutomationLogUpsertArgs>(args: SelectSubset<T, AutomationLogUpsertArgs<ExtArgs>>): Prisma__AutomationLogClient<$Result.GetResult<Prisma.$AutomationLogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AutomationLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationLogCountArgs} args - Arguments to filter AutomationLogs to count.
+     * @example
+     * // Count the number of AutomationLogs
+     * const count = await prisma.automationLog.count({
+     *   where: {
+     *     // ... the filter for the AutomationLogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends AutomationLogCountArgs>(
+      args?: Subset<T, AutomationLogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AutomationLogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AutomationLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AutomationLogAggregateArgs>(args: Subset<T, AutomationLogAggregateArgs>): Prisma.PrismaPromise<GetAutomationLogAggregateType<T>>
+
+    /**
+     * Group by AutomationLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationLogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AutomationLogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AutomationLogGroupByArgs['orderBy'] }
+        : { orderBy?: AutomationLogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AutomationLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAutomationLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AutomationLog model
+   */
+  readonly fields: AutomationLogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AutomationLog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AutomationLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    rule<T extends AutomationRuleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AutomationRuleDefaultArgs<ExtArgs>>): Prisma__AutomationRuleClient<$Result.GetResult<Prisma.$AutomationRulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    workspace<T extends WorkspaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkspaceDefaultArgs<ExtArgs>>): Prisma__WorkspaceClient<$Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AutomationLog model
+   */
+  interface AutomationLogFieldRefs {
+    readonly id: FieldRef<"AutomationLog", 'String'>
+    readonly status: FieldRef<"AutomationLog", 'AutomationLogStatus'>
+    readonly error: FieldRef<"AutomationLog", 'String'>
+    readonly inputData: FieldRef<"AutomationLog", 'String'>
+    readonly outputData: FieldRef<"AutomationLog", 'String'>
+    readonly executedAt: FieldRef<"AutomationLog", 'DateTime'>
+    readonly ruleId: FieldRef<"AutomationLog", 'String'>
+    readonly workspaceId: FieldRef<"AutomationLog", 'String'>
+    readonly issueId: FieldRef<"AutomationLog", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AutomationLog findUnique
+   */
+  export type AutomationLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationLog
+     */
+    select?: AutomationLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationLog
+     */
+    omit?: AutomationLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationLogInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationLog to fetch.
+     */
+    where: AutomationLogWhereUniqueInput
+  }
+
+  /**
+   * AutomationLog findUniqueOrThrow
+   */
+  export type AutomationLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationLog
+     */
+    select?: AutomationLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationLog
+     */
+    omit?: AutomationLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationLogInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationLog to fetch.
+     */
+    where: AutomationLogWhereUniqueInput
+  }
+
+  /**
+   * AutomationLog findFirst
+   */
+  export type AutomationLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationLog
+     */
+    select?: AutomationLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationLog
+     */
+    omit?: AutomationLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationLogInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationLog to fetch.
+     */
+    where?: AutomationLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationLogs to fetch.
+     */
+    orderBy?: AutomationLogOrderByWithRelationInput | AutomationLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationLogs.
+     */
+    cursor?: AutomationLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationLogs.
+     */
+    distinct?: AutomationLogScalarFieldEnum | AutomationLogScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationLog findFirstOrThrow
+   */
+  export type AutomationLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationLog
+     */
+    select?: AutomationLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationLog
+     */
+    omit?: AutomationLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationLogInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationLog to fetch.
+     */
+    where?: AutomationLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationLogs to fetch.
+     */
+    orderBy?: AutomationLogOrderByWithRelationInput | AutomationLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationLogs.
+     */
+    cursor?: AutomationLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationLogs.
+     */
+    distinct?: AutomationLogScalarFieldEnum | AutomationLogScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationLog findMany
+   */
+  export type AutomationLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationLog
+     */
+    select?: AutomationLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationLog
+     */
+    omit?: AutomationLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationLogInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationLogs to fetch.
+     */
+    where?: AutomationLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationLogs to fetch.
+     */
+    orderBy?: AutomationLogOrderByWithRelationInput | AutomationLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AutomationLogs.
+     */
+    cursor?: AutomationLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationLogs.
+     */
+    skip?: number
+    distinct?: AutomationLogScalarFieldEnum | AutomationLogScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationLog create
+   */
+  export type AutomationLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationLog
+     */
+    select?: AutomationLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationLog
+     */
+    omit?: AutomationLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationLogInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AutomationLog.
+     */
+    data: XOR<AutomationLogCreateInput, AutomationLogUncheckedCreateInput>
+  }
+
+  /**
+   * AutomationLog createMany
+   */
+  export type AutomationLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AutomationLogs.
+     */
+    data: AutomationLogCreateManyInput | AutomationLogCreateManyInput[]
+  }
+
+  /**
+   * AutomationLog createManyAndReturn
+   */
+  export type AutomationLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationLog
+     */
+    select?: AutomationLogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationLog
+     */
+    omit?: AutomationLogOmit<ExtArgs> | null
+    /**
+     * The data used to create many AutomationLogs.
+     */
+    data: AutomationLogCreateManyInput | AutomationLogCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationLogIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AutomationLog update
+   */
+  export type AutomationLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationLog
+     */
+    select?: AutomationLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationLog
+     */
+    omit?: AutomationLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationLogInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AutomationLog.
+     */
+    data: XOR<AutomationLogUpdateInput, AutomationLogUncheckedUpdateInput>
+    /**
+     * Choose, which AutomationLog to update.
+     */
+    where: AutomationLogWhereUniqueInput
+  }
+
+  /**
+   * AutomationLog updateMany
+   */
+  export type AutomationLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AutomationLogs.
+     */
+    data: XOR<AutomationLogUpdateManyMutationInput, AutomationLogUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationLogs to update
+     */
+    where?: AutomationLogWhereInput
+    /**
+     * Limit how many AutomationLogs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationLog updateManyAndReturn
+   */
+  export type AutomationLogUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationLog
+     */
+    select?: AutomationLogSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationLog
+     */
+    omit?: AutomationLogOmit<ExtArgs> | null
+    /**
+     * The data used to update AutomationLogs.
+     */
+    data: XOR<AutomationLogUpdateManyMutationInput, AutomationLogUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationLogs to update
+     */
+    where?: AutomationLogWhereInput
+    /**
+     * Limit how many AutomationLogs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationLogIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AutomationLog upsert
+   */
+  export type AutomationLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationLog
+     */
+    select?: AutomationLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationLog
+     */
+    omit?: AutomationLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationLogInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AutomationLog to update in case it exists.
+     */
+    where: AutomationLogWhereUniqueInput
+    /**
+     * In case the AutomationLog found by the `where` argument doesn't exist, create a new AutomationLog with this data.
+     */
+    create: XOR<AutomationLogCreateInput, AutomationLogUncheckedCreateInput>
+    /**
+     * In case the AutomationLog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AutomationLogUpdateInput, AutomationLogUncheckedUpdateInput>
+  }
+
+  /**
+   * AutomationLog delete
+   */
+  export type AutomationLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationLog
+     */
+    select?: AutomationLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationLog
+     */
+    omit?: AutomationLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationLogInclude<ExtArgs> | null
+    /**
+     * Filter which AutomationLog to delete.
+     */
+    where: AutomationLogWhereUniqueInput
+  }
+
+  /**
+   * AutomationLog deleteMany
+   */
+  export type AutomationLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationLogs to delete
+     */
+    where?: AutomationLogWhereInput
+    /**
+     * Limit how many AutomationLogs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationLog without action
+   */
+  export type AutomationLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationLog
+     */
+    select?: AutomationLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationLog
+     */
+    omit?: AutomationLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationLogInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -24175,6 +26847,39 @@ export namespace Prisma {
   export type TemplateScalarFieldEnum = (typeof TemplateScalarFieldEnum)[keyof typeof TemplateScalarFieldEnum]
 
 
+  export const AutomationRuleScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    trigger: 'trigger',
+    conditions: 'conditions',
+    actions: 'actions',
+    enabled: 'enabled',
+    isTemplate: 'isTemplate',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    workspaceId: 'workspaceId',
+    teamId: 'teamId'
+  };
+
+  export type AutomationRuleScalarFieldEnum = (typeof AutomationRuleScalarFieldEnum)[keyof typeof AutomationRuleScalarFieldEnum]
+
+
+  export const AutomationLogScalarFieldEnum: {
+    id: 'id',
+    status: 'status',
+    error: 'error',
+    inputData: 'inputData',
+    outputData: 'outputData',
+    executedAt: 'executedAt',
+    ruleId: 'ruleId',
+    workspaceId: 'workspaceId',
+    issueId: 'issueId'
+  };
+
+  export type AutomationLogScalarFieldEnum = (typeof AutomationLogScalarFieldEnum)[keyof typeof AutomationLogScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -24263,6 +26968,20 @@ export namespace Prisma {
    * Reference to a field of type 'NotificationType'
    */
   export type EnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType'>
+    
+
+
+  /**
+   * Reference to a field of type 'AutomationTrigger'
+   */
+  export type EnumAutomationTriggerFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AutomationTrigger'>
+    
+
+
+  /**
+   * Reference to a field of type 'AutomationLogStatus'
+   */
+  export type EnumAutomationLogStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AutomationLogStatus'>
     
 
 
@@ -24675,6 +27394,8 @@ export namespace Prisma {
     notifications?: NotificationListRelationFilter
     notificationPreferences?: NotificationPreferencesListRelationFilter
     templates?: TemplateListRelationFilter
+    automationRules?: AutomationRuleListRelationFilter
+    automationLogs?: AutomationLogListRelationFilter
   }
 
   export type WorkspaceOrderByWithRelationInput = {
@@ -24693,6 +27414,8 @@ export namespace Prisma {
     notifications?: NotificationOrderByRelationAggregateInput
     notificationPreferences?: NotificationPreferencesOrderByRelationAggregateInput
     templates?: TemplateOrderByRelationAggregateInput
+    automationRules?: AutomationRuleOrderByRelationAggregateInput
+    automationLogs?: AutomationLogOrderByRelationAggregateInput
   }
 
   export type WorkspaceWhereUniqueInput = Prisma.AtLeast<{
@@ -24714,6 +27437,8 @@ export namespace Prisma {
     notifications?: NotificationListRelationFilter
     notificationPreferences?: NotificationPreferencesListRelationFilter
     templates?: TemplateListRelationFilter
+    automationRules?: AutomationRuleListRelationFilter
+    automationLogs?: AutomationLogListRelationFilter
   }, "id" | "slug">
 
   export type WorkspaceOrderByWithAggregationInput = {
@@ -24815,6 +27540,7 @@ export namespace Prisma {
     cycles?: CycleListRelationFilter
     labels?: LabelListRelationFilter
     templates?: TemplateListRelationFilter
+    automationRules?: AutomationRuleListRelationFilter
   }
 
   export type TeamOrderByWithRelationInput = {
@@ -24830,6 +27556,7 @@ export namespace Prisma {
     cycles?: CycleOrderByRelationAggregateInput
     labels?: LabelOrderByRelationAggregateInput
     templates?: TemplateOrderByRelationAggregateInput
+    automationRules?: AutomationRuleOrderByRelationAggregateInput
   }
 
   export type TeamWhereUniqueInput = Prisma.AtLeast<{
@@ -24849,6 +27576,7 @@ export namespace Prisma {
     cycles?: CycleListRelationFilter
     labels?: LabelListRelationFilter
     templates?: TemplateListRelationFilter
+    automationRules?: AutomationRuleListRelationFilter
   }, "id" | "workspaceId_key">
 
   export type TeamOrderByWithAggregationInput = {
@@ -25718,6 +28446,180 @@ export namespace Prisma {
     labelIds?: StringWithAggregatesFilter<"Template"> | string
   }
 
+  export type AutomationRuleWhereInput = {
+    AND?: AutomationRuleWhereInput | AutomationRuleWhereInput[]
+    OR?: AutomationRuleWhereInput[]
+    NOT?: AutomationRuleWhereInput | AutomationRuleWhereInput[]
+    id?: StringFilter<"AutomationRule"> | string
+    name?: StringFilter<"AutomationRule"> | string
+    description?: StringNullableFilter<"AutomationRule"> | string | null
+    trigger?: EnumAutomationTriggerFilter<"AutomationRule"> | $Enums.AutomationTrigger
+    conditions?: StringFilter<"AutomationRule"> | string
+    actions?: StringFilter<"AutomationRule"> | string
+    enabled?: BoolFilter<"AutomationRule"> | boolean
+    isTemplate?: BoolFilter<"AutomationRule"> | boolean
+    createdAt?: DateTimeFilter<"AutomationRule"> | Date | string
+    updatedAt?: DateTimeFilter<"AutomationRule"> | Date | string
+    workspaceId?: StringFilter<"AutomationRule"> | string
+    teamId?: StringNullableFilter<"AutomationRule"> | string | null
+    workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
+    team?: XOR<TeamNullableScalarRelationFilter, TeamWhereInput> | null
+    logs?: AutomationLogListRelationFilter
+  }
+
+  export type AutomationRuleOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    trigger?: SortOrder
+    conditions?: SortOrder
+    actions?: SortOrder
+    enabled?: SortOrder
+    isTemplate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    workspaceId?: SortOrder
+    teamId?: SortOrderInput | SortOrder
+    workspace?: WorkspaceOrderByWithRelationInput
+    team?: TeamOrderByWithRelationInput
+    logs?: AutomationLogOrderByRelationAggregateInput
+  }
+
+  export type AutomationRuleWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AutomationRuleWhereInput | AutomationRuleWhereInput[]
+    OR?: AutomationRuleWhereInput[]
+    NOT?: AutomationRuleWhereInput | AutomationRuleWhereInput[]
+    name?: StringFilter<"AutomationRule"> | string
+    description?: StringNullableFilter<"AutomationRule"> | string | null
+    trigger?: EnumAutomationTriggerFilter<"AutomationRule"> | $Enums.AutomationTrigger
+    conditions?: StringFilter<"AutomationRule"> | string
+    actions?: StringFilter<"AutomationRule"> | string
+    enabled?: BoolFilter<"AutomationRule"> | boolean
+    isTemplate?: BoolFilter<"AutomationRule"> | boolean
+    createdAt?: DateTimeFilter<"AutomationRule"> | Date | string
+    updatedAt?: DateTimeFilter<"AutomationRule"> | Date | string
+    workspaceId?: StringFilter<"AutomationRule"> | string
+    teamId?: StringNullableFilter<"AutomationRule"> | string | null
+    workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
+    team?: XOR<TeamNullableScalarRelationFilter, TeamWhereInput> | null
+    logs?: AutomationLogListRelationFilter
+  }, "id">
+
+  export type AutomationRuleOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    trigger?: SortOrder
+    conditions?: SortOrder
+    actions?: SortOrder
+    enabled?: SortOrder
+    isTemplate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    workspaceId?: SortOrder
+    teamId?: SortOrderInput | SortOrder
+    _count?: AutomationRuleCountOrderByAggregateInput
+    _max?: AutomationRuleMaxOrderByAggregateInput
+    _min?: AutomationRuleMinOrderByAggregateInput
+  }
+
+  export type AutomationRuleScalarWhereWithAggregatesInput = {
+    AND?: AutomationRuleScalarWhereWithAggregatesInput | AutomationRuleScalarWhereWithAggregatesInput[]
+    OR?: AutomationRuleScalarWhereWithAggregatesInput[]
+    NOT?: AutomationRuleScalarWhereWithAggregatesInput | AutomationRuleScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AutomationRule"> | string
+    name?: StringWithAggregatesFilter<"AutomationRule"> | string
+    description?: StringNullableWithAggregatesFilter<"AutomationRule"> | string | null
+    trigger?: EnumAutomationTriggerWithAggregatesFilter<"AutomationRule"> | $Enums.AutomationTrigger
+    conditions?: StringWithAggregatesFilter<"AutomationRule"> | string
+    actions?: StringWithAggregatesFilter<"AutomationRule"> | string
+    enabled?: BoolWithAggregatesFilter<"AutomationRule"> | boolean
+    isTemplate?: BoolWithAggregatesFilter<"AutomationRule"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"AutomationRule"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AutomationRule"> | Date | string
+    workspaceId?: StringWithAggregatesFilter<"AutomationRule"> | string
+    teamId?: StringNullableWithAggregatesFilter<"AutomationRule"> | string | null
+  }
+
+  export type AutomationLogWhereInput = {
+    AND?: AutomationLogWhereInput | AutomationLogWhereInput[]
+    OR?: AutomationLogWhereInput[]
+    NOT?: AutomationLogWhereInput | AutomationLogWhereInput[]
+    id?: StringFilter<"AutomationLog"> | string
+    status?: EnumAutomationLogStatusFilter<"AutomationLog"> | $Enums.AutomationLogStatus
+    error?: StringNullableFilter<"AutomationLog"> | string | null
+    inputData?: StringFilter<"AutomationLog"> | string
+    outputData?: StringNullableFilter<"AutomationLog"> | string | null
+    executedAt?: DateTimeFilter<"AutomationLog"> | Date | string
+    ruleId?: StringFilter<"AutomationLog"> | string
+    workspaceId?: StringFilter<"AutomationLog"> | string
+    issueId?: StringNullableFilter<"AutomationLog"> | string | null
+    rule?: XOR<AutomationRuleScalarRelationFilter, AutomationRuleWhereInput>
+    workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
+  }
+
+  export type AutomationLogOrderByWithRelationInput = {
+    id?: SortOrder
+    status?: SortOrder
+    error?: SortOrderInput | SortOrder
+    inputData?: SortOrder
+    outputData?: SortOrderInput | SortOrder
+    executedAt?: SortOrder
+    ruleId?: SortOrder
+    workspaceId?: SortOrder
+    issueId?: SortOrderInput | SortOrder
+    rule?: AutomationRuleOrderByWithRelationInput
+    workspace?: WorkspaceOrderByWithRelationInput
+  }
+
+  export type AutomationLogWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AutomationLogWhereInput | AutomationLogWhereInput[]
+    OR?: AutomationLogWhereInput[]
+    NOT?: AutomationLogWhereInput | AutomationLogWhereInput[]
+    status?: EnumAutomationLogStatusFilter<"AutomationLog"> | $Enums.AutomationLogStatus
+    error?: StringNullableFilter<"AutomationLog"> | string | null
+    inputData?: StringFilter<"AutomationLog"> | string
+    outputData?: StringNullableFilter<"AutomationLog"> | string | null
+    executedAt?: DateTimeFilter<"AutomationLog"> | Date | string
+    ruleId?: StringFilter<"AutomationLog"> | string
+    workspaceId?: StringFilter<"AutomationLog"> | string
+    issueId?: StringNullableFilter<"AutomationLog"> | string | null
+    rule?: XOR<AutomationRuleScalarRelationFilter, AutomationRuleWhereInput>
+    workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
+  }, "id">
+
+  export type AutomationLogOrderByWithAggregationInput = {
+    id?: SortOrder
+    status?: SortOrder
+    error?: SortOrderInput | SortOrder
+    inputData?: SortOrder
+    outputData?: SortOrderInput | SortOrder
+    executedAt?: SortOrder
+    ruleId?: SortOrder
+    workspaceId?: SortOrder
+    issueId?: SortOrderInput | SortOrder
+    _count?: AutomationLogCountOrderByAggregateInput
+    _max?: AutomationLogMaxOrderByAggregateInput
+    _min?: AutomationLogMinOrderByAggregateInput
+  }
+
+  export type AutomationLogScalarWhereWithAggregatesInput = {
+    AND?: AutomationLogScalarWhereWithAggregatesInput | AutomationLogScalarWhereWithAggregatesInput[]
+    OR?: AutomationLogScalarWhereWithAggregatesInput[]
+    NOT?: AutomationLogScalarWhereWithAggregatesInput | AutomationLogScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AutomationLog"> | string
+    status?: EnumAutomationLogStatusWithAggregatesFilter<"AutomationLog"> | $Enums.AutomationLogStatus
+    error?: StringNullableWithAggregatesFilter<"AutomationLog"> | string | null
+    inputData?: StringWithAggregatesFilter<"AutomationLog"> | string
+    outputData?: StringNullableWithAggregatesFilter<"AutomationLog"> | string | null
+    executedAt?: DateTimeWithAggregatesFilter<"AutomationLog"> | Date | string
+    ruleId?: StringWithAggregatesFilter<"AutomationLog"> | string
+    workspaceId?: StringWithAggregatesFilter<"AutomationLog"> | string
+    issueId?: StringNullableWithAggregatesFilter<"AutomationLog"> | string | null
+  }
+
   export type PostCreateInput = {
     id?: string
     name: string
@@ -26164,6 +29066,8 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateInput = {
@@ -26182,6 +29086,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUpdateInput = {
@@ -26200,6 +29106,8 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateInput = {
@@ -26218,6 +29126,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceCreateManyInput = {
@@ -26313,6 +29223,7 @@ export namespace Prisma {
     cycles?: CycleCreateNestedManyWithoutTeamInput
     labels?: LabelCreateNestedManyWithoutTeamInput
     templates?: TemplateCreateNestedManyWithoutTeamInput
+    automationRules?: AutomationRuleCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateInput = {
@@ -26327,6 +29238,7 @@ export namespace Prisma {
     cycles?: CycleUncheckedCreateNestedManyWithoutTeamInput
     labels?: LabelUncheckedCreateNestedManyWithoutTeamInput
     templates?: TemplateUncheckedCreateNestedManyWithoutTeamInput
+    automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUpdateInput = {
@@ -26341,6 +29253,7 @@ export namespace Prisma {
     cycles?: CycleUpdateManyWithoutTeamNestedInput
     labels?: LabelUpdateManyWithoutTeamNestedInput
     templates?: TemplateUpdateManyWithoutTeamNestedInput
+    automationRules?: AutomationRuleUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateInput = {
@@ -26355,6 +29268,7 @@ export namespace Prisma {
     cycles?: CycleUncheckedUpdateManyWithoutTeamNestedInput
     labels?: LabelUncheckedUpdateManyWithoutTeamNestedInput
     templates?: TemplateUncheckedUpdateManyWithoutTeamNestedInput
+    automationRules?: AutomationRuleUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamCreateManyInput = {
@@ -27245,6 +30159,195 @@ export namespace Prisma {
     labelIds?: StringFieldUpdateOperationsInput | string
   }
 
+  export type AutomationRuleCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    trigger: $Enums.AutomationTrigger
+    conditions: string
+    actions: string
+    enabled?: boolean
+    isTemplate?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutAutomationRulesInput
+    team?: TeamCreateNestedOneWithoutAutomationRulesInput
+    logs?: AutomationLogCreateNestedManyWithoutRuleInput
+  }
+
+  export type AutomationRuleUncheckedCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    trigger: $Enums.AutomationTrigger
+    conditions: string
+    actions: string
+    enabled?: boolean
+    isTemplate?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspaceId: string
+    teamId?: string | null
+    logs?: AutomationLogUncheckedCreateNestedManyWithoutRuleInput
+  }
+
+  export type AutomationRuleUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    trigger?: EnumAutomationTriggerFieldUpdateOperationsInput | $Enums.AutomationTrigger
+    conditions?: StringFieldUpdateOperationsInput | string
+    actions?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutAutomationRulesNestedInput
+    team?: TeamUpdateOneWithoutAutomationRulesNestedInput
+    logs?: AutomationLogUpdateManyWithoutRuleNestedInput
+  }
+
+  export type AutomationRuleUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    trigger?: EnumAutomationTriggerFieldUpdateOperationsInput | $Enums.AutomationTrigger
+    conditions?: StringFieldUpdateOperationsInput | string
+    actions?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    teamId?: NullableStringFieldUpdateOperationsInput | string | null
+    logs?: AutomationLogUncheckedUpdateManyWithoutRuleNestedInput
+  }
+
+  export type AutomationRuleCreateManyInput = {
+    id?: string
+    name: string
+    description?: string | null
+    trigger: $Enums.AutomationTrigger
+    conditions: string
+    actions: string
+    enabled?: boolean
+    isTemplate?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspaceId: string
+    teamId?: string | null
+  }
+
+  export type AutomationRuleUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    trigger?: EnumAutomationTriggerFieldUpdateOperationsInput | $Enums.AutomationTrigger
+    conditions?: StringFieldUpdateOperationsInput | string
+    actions?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationRuleUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    trigger?: EnumAutomationTriggerFieldUpdateOperationsInput | $Enums.AutomationTrigger
+    conditions?: StringFieldUpdateOperationsInput | string
+    actions?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    teamId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AutomationLogCreateInput = {
+    id?: string
+    status?: $Enums.AutomationLogStatus
+    error?: string | null
+    inputData: string
+    outputData?: string | null
+    executedAt?: Date | string
+    issueId?: string | null
+    rule: AutomationRuleCreateNestedOneWithoutLogsInput
+    workspace: WorkspaceCreateNestedOneWithoutAutomationLogsInput
+  }
+
+  export type AutomationLogUncheckedCreateInput = {
+    id?: string
+    status?: $Enums.AutomationLogStatus
+    error?: string | null
+    inputData: string
+    outputData?: string | null
+    executedAt?: Date | string
+    ruleId: string
+    workspaceId: string
+    issueId?: string | null
+  }
+
+  export type AutomationLogUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAutomationLogStatusFieldUpdateOperationsInput | $Enums.AutomationLogStatus
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    inputData?: StringFieldUpdateOperationsInput | string
+    outputData?: NullableStringFieldUpdateOperationsInput | string | null
+    executedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    issueId?: NullableStringFieldUpdateOperationsInput | string | null
+    rule?: AutomationRuleUpdateOneRequiredWithoutLogsNestedInput
+    workspace?: WorkspaceUpdateOneRequiredWithoutAutomationLogsNestedInput
+  }
+
+  export type AutomationLogUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAutomationLogStatusFieldUpdateOperationsInput | $Enums.AutomationLogStatus
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    inputData?: StringFieldUpdateOperationsInput | string
+    outputData?: NullableStringFieldUpdateOperationsInput | string | null
+    executedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ruleId?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    issueId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AutomationLogCreateManyInput = {
+    id?: string
+    status?: $Enums.AutomationLogStatus
+    error?: string | null
+    inputData: string
+    outputData?: string | null
+    executedAt?: Date | string
+    ruleId: string
+    workspaceId: string
+    issueId?: string | null
+  }
+
+  export type AutomationLogUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAutomationLogStatusFieldUpdateOperationsInput | $Enums.AutomationLogStatus
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    inputData?: StringFieldUpdateOperationsInput | string
+    outputData?: NullableStringFieldUpdateOperationsInput | string | null
+    executedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    issueId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AutomationLogUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAutomationLogStatusFieldUpdateOperationsInput | $Enums.AutomationLogStatus
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    inputData?: StringFieldUpdateOperationsInput | string
+    outputData?: NullableStringFieldUpdateOperationsInput | string | null
+    executedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ruleId?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    issueId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -27669,6 +30772,18 @@ export namespace Prisma {
     none?: TemplateWhereInput
   }
 
+  export type AutomationRuleListRelationFilter = {
+    every?: AutomationRuleWhereInput
+    some?: AutomationRuleWhereInput
+    none?: AutomationRuleWhereInput
+  }
+
+  export type AutomationLogListRelationFilter = {
+    every?: AutomationLogWhereInput
+    some?: AutomationLogWhereInput
+    none?: AutomationLogWhereInput
+  }
+
   export type TeamOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -27682,6 +30797,14 @@ export namespace Prisma {
   }
 
   export type TemplateOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AutomationRuleOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AutomationLogOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -28354,6 +31477,126 @@ export namespace Prisma {
     labelIds?: SortOrder
   }
 
+  export type EnumAutomationTriggerFilter<$PrismaModel = never> = {
+    equals?: $Enums.AutomationTrigger | EnumAutomationTriggerFieldRefInput<$PrismaModel>
+    in?: $Enums.AutomationTrigger[]
+    notIn?: $Enums.AutomationTrigger[]
+    not?: NestedEnumAutomationTriggerFilter<$PrismaModel> | $Enums.AutomationTrigger
+  }
+
+  export type AutomationRuleCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    trigger?: SortOrder
+    conditions?: SortOrder
+    actions?: SortOrder
+    enabled?: SortOrder
+    isTemplate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    workspaceId?: SortOrder
+    teamId?: SortOrder
+  }
+
+  export type AutomationRuleMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    trigger?: SortOrder
+    conditions?: SortOrder
+    actions?: SortOrder
+    enabled?: SortOrder
+    isTemplate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    workspaceId?: SortOrder
+    teamId?: SortOrder
+  }
+
+  export type AutomationRuleMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    trigger?: SortOrder
+    conditions?: SortOrder
+    actions?: SortOrder
+    enabled?: SortOrder
+    isTemplate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    workspaceId?: SortOrder
+    teamId?: SortOrder
+  }
+
+  export type EnumAutomationTriggerWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AutomationTrigger | EnumAutomationTriggerFieldRefInput<$PrismaModel>
+    in?: $Enums.AutomationTrigger[]
+    notIn?: $Enums.AutomationTrigger[]
+    not?: NestedEnumAutomationTriggerWithAggregatesFilter<$PrismaModel> | $Enums.AutomationTrigger
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAutomationTriggerFilter<$PrismaModel>
+    _max?: NestedEnumAutomationTriggerFilter<$PrismaModel>
+  }
+
+  export type EnumAutomationLogStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.AutomationLogStatus | EnumAutomationLogStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.AutomationLogStatus[]
+    notIn?: $Enums.AutomationLogStatus[]
+    not?: NestedEnumAutomationLogStatusFilter<$PrismaModel> | $Enums.AutomationLogStatus
+  }
+
+  export type AutomationRuleScalarRelationFilter = {
+    is?: AutomationRuleWhereInput
+    isNot?: AutomationRuleWhereInput
+  }
+
+  export type AutomationLogCountOrderByAggregateInput = {
+    id?: SortOrder
+    status?: SortOrder
+    error?: SortOrder
+    inputData?: SortOrder
+    outputData?: SortOrder
+    executedAt?: SortOrder
+    ruleId?: SortOrder
+    workspaceId?: SortOrder
+    issueId?: SortOrder
+  }
+
+  export type AutomationLogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    status?: SortOrder
+    error?: SortOrder
+    inputData?: SortOrder
+    outputData?: SortOrder
+    executedAt?: SortOrder
+    ruleId?: SortOrder
+    workspaceId?: SortOrder
+    issueId?: SortOrder
+  }
+
+  export type AutomationLogMinOrderByAggregateInput = {
+    id?: SortOrder
+    status?: SortOrder
+    error?: SortOrder
+    inputData?: SortOrder
+    outputData?: SortOrder
+    executedAt?: SortOrder
+    ruleId?: SortOrder
+    workspaceId?: SortOrder
+    issueId?: SortOrder
+  }
+
+  export type EnumAutomationLogStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AutomationLogStatus | EnumAutomationLogStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.AutomationLogStatus[]
+    notIn?: $Enums.AutomationLogStatus[]
+    not?: NestedEnumAutomationLogStatusWithAggregatesFilter<$PrismaModel> | $Enums.AutomationLogStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAutomationLogStatusFilter<$PrismaModel>
+    _max?: NestedEnumAutomationLogStatusFilter<$PrismaModel>
+  }
+
   export type UserCreateNestedOneWithoutPostsInput = {
     create?: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
     connectOrCreate?: UserCreateOrConnectWithoutPostsInput
@@ -28983,6 +32226,20 @@ export namespace Prisma {
     connect?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
   }
 
+  export type AutomationRuleCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<AutomationRuleCreateWithoutWorkspaceInput, AutomationRuleUncheckedCreateWithoutWorkspaceInput> | AutomationRuleCreateWithoutWorkspaceInput[] | AutomationRuleUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: AutomationRuleCreateOrConnectWithoutWorkspaceInput | AutomationRuleCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: AutomationRuleCreateManyWorkspaceInputEnvelope
+    connect?: AutomationRuleWhereUniqueInput | AutomationRuleWhereUniqueInput[]
+  }
+
+  export type AutomationLogCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<AutomationLogCreateWithoutWorkspaceInput, AutomationLogUncheckedCreateWithoutWorkspaceInput> | AutomationLogCreateWithoutWorkspaceInput[] | AutomationLogUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: AutomationLogCreateOrConnectWithoutWorkspaceInput | AutomationLogCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: AutomationLogCreateManyWorkspaceInputEnvelope
+    connect?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
+  }
+
   export type WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput = {
     create?: XOR<WorkspaceMemberCreateWithoutWorkspaceInput, WorkspaceMemberUncheckedCreateWithoutWorkspaceInput> | WorkspaceMemberCreateWithoutWorkspaceInput[] | WorkspaceMemberUncheckedCreateWithoutWorkspaceInput[]
     connectOrCreate?: WorkspaceMemberCreateOrConnectWithoutWorkspaceInput | WorkspaceMemberCreateOrConnectWithoutWorkspaceInput[]
@@ -29044,6 +32301,20 @@ export namespace Prisma {
     connectOrCreate?: TemplateCreateOrConnectWithoutWorkspaceInput | TemplateCreateOrConnectWithoutWorkspaceInput[]
     createMany?: TemplateCreateManyWorkspaceInputEnvelope
     connect?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
+  }
+
+  export type AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<AutomationRuleCreateWithoutWorkspaceInput, AutomationRuleUncheckedCreateWithoutWorkspaceInput> | AutomationRuleCreateWithoutWorkspaceInput[] | AutomationRuleUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: AutomationRuleCreateOrConnectWithoutWorkspaceInput | AutomationRuleCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: AutomationRuleCreateManyWorkspaceInputEnvelope
+    connect?: AutomationRuleWhereUniqueInput | AutomationRuleWhereUniqueInput[]
+  }
+
+  export type AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<AutomationLogCreateWithoutWorkspaceInput, AutomationLogUncheckedCreateWithoutWorkspaceInput> | AutomationLogCreateWithoutWorkspaceInput[] | AutomationLogUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: AutomationLogCreateOrConnectWithoutWorkspaceInput | AutomationLogCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: AutomationLogCreateManyWorkspaceInputEnvelope
+    connect?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
   }
 
   export type WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput = {
@@ -29172,6 +32443,34 @@ export namespace Prisma {
     deleteMany?: TemplateScalarWhereInput | TemplateScalarWhereInput[]
   }
 
+  export type AutomationRuleUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<AutomationRuleCreateWithoutWorkspaceInput, AutomationRuleUncheckedCreateWithoutWorkspaceInput> | AutomationRuleCreateWithoutWorkspaceInput[] | AutomationRuleUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: AutomationRuleCreateOrConnectWithoutWorkspaceInput | AutomationRuleCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: AutomationRuleUpsertWithWhereUniqueWithoutWorkspaceInput | AutomationRuleUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: AutomationRuleCreateManyWorkspaceInputEnvelope
+    set?: AutomationRuleWhereUniqueInput | AutomationRuleWhereUniqueInput[]
+    disconnect?: AutomationRuleWhereUniqueInput | AutomationRuleWhereUniqueInput[]
+    delete?: AutomationRuleWhereUniqueInput | AutomationRuleWhereUniqueInput[]
+    connect?: AutomationRuleWhereUniqueInput | AutomationRuleWhereUniqueInput[]
+    update?: AutomationRuleUpdateWithWhereUniqueWithoutWorkspaceInput | AutomationRuleUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: AutomationRuleUpdateManyWithWhereWithoutWorkspaceInput | AutomationRuleUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: AutomationRuleScalarWhereInput | AutomationRuleScalarWhereInput[]
+  }
+
+  export type AutomationLogUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<AutomationLogCreateWithoutWorkspaceInput, AutomationLogUncheckedCreateWithoutWorkspaceInput> | AutomationLogCreateWithoutWorkspaceInput[] | AutomationLogUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: AutomationLogCreateOrConnectWithoutWorkspaceInput | AutomationLogCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: AutomationLogUpsertWithWhereUniqueWithoutWorkspaceInput | AutomationLogUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: AutomationLogCreateManyWorkspaceInputEnvelope
+    set?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
+    disconnect?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
+    delete?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
+    connect?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
+    update?: AutomationLogUpdateWithWhereUniqueWithoutWorkspaceInput | AutomationLogUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: AutomationLogUpdateManyWithWhereWithoutWorkspaceInput | AutomationLogUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: AutomationLogScalarWhereInput | AutomationLogScalarWhereInput[]
+  }
+
   export type WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput = {
     create?: XOR<WorkspaceMemberCreateWithoutWorkspaceInput, WorkspaceMemberUncheckedCreateWithoutWorkspaceInput> | WorkspaceMemberCreateWithoutWorkspaceInput[] | WorkspaceMemberUncheckedCreateWithoutWorkspaceInput[]
     connectOrCreate?: WorkspaceMemberCreateOrConnectWithoutWorkspaceInput | WorkspaceMemberCreateOrConnectWithoutWorkspaceInput[]
@@ -29298,6 +32597,34 @@ export namespace Prisma {
     deleteMany?: TemplateScalarWhereInput | TemplateScalarWhereInput[]
   }
 
+  export type AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<AutomationRuleCreateWithoutWorkspaceInput, AutomationRuleUncheckedCreateWithoutWorkspaceInput> | AutomationRuleCreateWithoutWorkspaceInput[] | AutomationRuleUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: AutomationRuleCreateOrConnectWithoutWorkspaceInput | AutomationRuleCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: AutomationRuleUpsertWithWhereUniqueWithoutWorkspaceInput | AutomationRuleUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: AutomationRuleCreateManyWorkspaceInputEnvelope
+    set?: AutomationRuleWhereUniqueInput | AutomationRuleWhereUniqueInput[]
+    disconnect?: AutomationRuleWhereUniqueInput | AutomationRuleWhereUniqueInput[]
+    delete?: AutomationRuleWhereUniqueInput | AutomationRuleWhereUniqueInput[]
+    connect?: AutomationRuleWhereUniqueInput | AutomationRuleWhereUniqueInput[]
+    update?: AutomationRuleUpdateWithWhereUniqueWithoutWorkspaceInput | AutomationRuleUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: AutomationRuleUpdateManyWithWhereWithoutWorkspaceInput | AutomationRuleUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: AutomationRuleScalarWhereInput | AutomationRuleScalarWhereInput[]
+  }
+
+  export type AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<AutomationLogCreateWithoutWorkspaceInput, AutomationLogUncheckedCreateWithoutWorkspaceInput> | AutomationLogCreateWithoutWorkspaceInput[] | AutomationLogUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: AutomationLogCreateOrConnectWithoutWorkspaceInput | AutomationLogCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: AutomationLogUpsertWithWhereUniqueWithoutWorkspaceInput | AutomationLogUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: AutomationLogCreateManyWorkspaceInputEnvelope
+    set?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
+    disconnect?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
+    delete?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
+    connect?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
+    update?: AutomationLogUpdateWithWhereUniqueWithoutWorkspaceInput | AutomationLogUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: AutomationLogUpdateManyWithWhereWithoutWorkspaceInput | AutomationLogUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: AutomationLogScalarWhereInput | AutomationLogScalarWhereInput[]
+  }
+
   export type WorkspaceCreateNestedOneWithoutMembersInput = {
     create?: XOR<WorkspaceCreateWithoutMembersInput, WorkspaceUncheckedCreateWithoutMembersInput>
     connectOrCreate?: WorkspaceCreateOrConnectWithoutMembersInput
@@ -29371,6 +32698,13 @@ export namespace Prisma {
     connect?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
   }
 
+  export type AutomationRuleCreateNestedManyWithoutTeamInput = {
+    create?: XOR<AutomationRuleCreateWithoutTeamInput, AutomationRuleUncheckedCreateWithoutTeamInput> | AutomationRuleCreateWithoutTeamInput[] | AutomationRuleUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: AutomationRuleCreateOrConnectWithoutTeamInput | AutomationRuleCreateOrConnectWithoutTeamInput[]
+    createMany?: AutomationRuleCreateManyTeamInputEnvelope
+    connect?: AutomationRuleWhereUniqueInput | AutomationRuleWhereUniqueInput[]
+  }
+
   export type ProjectUncheckedCreateNestedManyWithoutTeamInput = {
     create?: XOR<ProjectCreateWithoutTeamInput, ProjectUncheckedCreateWithoutTeamInput> | ProjectCreateWithoutTeamInput[] | ProjectUncheckedCreateWithoutTeamInput[]
     connectOrCreate?: ProjectCreateOrConnectWithoutTeamInput | ProjectCreateOrConnectWithoutTeamInput[]
@@ -29404,6 +32738,13 @@ export namespace Prisma {
     connectOrCreate?: TemplateCreateOrConnectWithoutTeamInput | TemplateCreateOrConnectWithoutTeamInput[]
     createMany?: TemplateCreateManyTeamInputEnvelope
     connect?: TemplateWhereUniqueInput | TemplateWhereUniqueInput[]
+  }
+
+  export type AutomationRuleUncheckedCreateNestedManyWithoutTeamInput = {
+    create?: XOR<AutomationRuleCreateWithoutTeamInput, AutomationRuleUncheckedCreateWithoutTeamInput> | AutomationRuleCreateWithoutTeamInput[] | AutomationRuleUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: AutomationRuleCreateOrConnectWithoutTeamInput | AutomationRuleCreateOrConnectWithoutTeamInput[]
+    createMany?: AutomationRuleCreateManyTeamInputEnvelope
+    connect?: AutomationRuleWhereUniqueInput | AutomationRuleWhereUniqueInput[]
   }
 
   export type WorkspaceUpdateOneRequiredWithoutTeamsNestedInput = {
@@ -29484,6 +32825,20 @@ export namespace Prisma {
     deleteMany?: TemplateScalarWhereInput | TemplateScalarWhereInput[]
   }
 
+  export type AutomationRuleUpdateManyWithoutTeamNestedInput = {
+    create?: XOR<AutomationRuleCreateWithoutTeamInput, AutomationRuleUncheckedCreateWithoutTeamInput> | AutomationRuleCreateWithoutTeamInput[] | AutomationRuleUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: AutomationRuleCreateOrConnectWithoutTeamInput | AutomationRuleCreateOrConnectWithoutTeamInput[]
+    upsert?: AutomationRuleUpsertWithWhereUniqueWithoutTeamInput | AutomationRuleUpsertWithWhereUniqueWithoutTeamInput[]
+    createMany?: AutomationRuleCreateManyTeamInputEnvelope
+    set?: AutomationRuleWhereUniqueInput | AutomationRuleWhereUniqueInput[]
+    disconnect?: AutomationRuleWhereUniqueInput | AutomationRuleWhereUniqueInput[]
+    delete?: AutomationRuleWhereUniqueInput | AutomationRuleWhereUniqueInput[]
+    connect?: AutomationRuleWhereUniqueInput | AutomationRuleWhereUniqueInput[]
+    update?: AutomationRuleUpdateWithWhereUniqueWithoutTeamInput | AutomationRuleUpdateWithWhereUniqueWithoutTeamInput[]
+    updateMany?: AutomationRuleUpdateManyWithWhereWithoutTeamInput | AutomationRuleUpdateManyWithWhereWithoutTeamInput[]
+    deleteMany?: AutomationRuleScalarWhereInput | AutomationRuleScalarWhereInput[]
+  }
+
   export type ProjectUncheckedUpdateManyWithoutTeamNestedInput = {
     create?: XOR<ProjectCreateWithoutTeamInput, ProjectUncheckedCreateWithoutTeamInput> | ProjectCreateWithoutTeamInput[] | ProjectUncheckedCreateWithoutTeamInput[]
     connectOrCreate?: ProjectCreateOrConnectWithoutTeamInput | ProjectCreateOrConnectWithoutTeamInput[]
@@ -29552,6 +32907,20 @@ export namespace Prisma {
     update?: TemplateUpdateWithWhereUniqueWithoutTeamInput | TemplateUpdateWithWhereUniqueWithoutTeamInput[]
     updateMany?: TemplateUpdateManyWithWhereWithoutTeamInput | TemplateUpdateManyWithWhereWithoutTeamInput[]
     deleteMany?: TemplateScalarWhereInput | TemplateScalarWhereInput[]
+  }
+
+  export type AutomationRuleUncheckedUpdateManyWithoutTeamNestedInput = {
+    create?: XOR<AutomationRuleCreateWithoutTeamInput, AutomationRuleUncheckedCreateWithoutTeamInput> | AutomationRuleCreateWithoutTeamInput[] | AutomationRuleUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: AutomationRuleCreateOrConnectWithoutTeamInput | AutomationRuleCreateOrConnectWithoutTeamInput[]
+    upsert?: AutomationRuleUpsertWithWhereUniqueWithoutTeamInput | AutomationRuleUpsertWithWhereUniqueWithoutTeamInput[]
+    createMany?: AutomationRuleCreateManyTeamInputEnvelope
+    set?: AutomationRuleWhereUniqueInput | AutomationRuleWhereUniqueInput[]
+    disconnect?: AutomationRuleWhereUniqueInput | AutomationRuleWhereUniqueInput[]
+    delete?: AutomationRuleWhereUniqueInput | AutomationRuleWhereUniqueInput[]
+    connect?: AutomationRuleWhereUniqueInput | AutomationRuleWhereUniqueInput[]
+    update?: AutomationRuleUpdateWithWhereUniqueWithoutTeamInput | AutomationRuleUpdateWithWhereUniqueWithoutTeamInput[]
+    updateMany?: AutomationRuleUpdateManyWithWhereWithoutTeamInput | AutomationRuleUpdateManyWithWhereWithoutTeamInput[]
+    deleteMany?: AutomationRuleScalarWhereInput | AutomationRuleScalarWhereInput[]
   }
 
   export type WorkspaceCreateNestedOneWithoutProjectsInput = {
@@ -30270,6 +33639,114 @@ export namespace Prisma {
     update?: XOR<XOR<TeamUpdateToOneWithWhereWithoutTemplatesInput, TeamUpdateWithoutTemplatesInput>, TeamUncheckedUpdateWithoutTemplatesInput>
   }
 
+  export type WorkspaceCreateNestedOneWithoutAutomationRulesInput = {
+    create?: XOR<WorkspaceCreateWithoutAutomationRulesInput, WorkspaceUncheckedCreateWithoutAutomationRulesInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutAutomationRulesInput
+    connect?: WorkspaceWhereUniqueInput
+  }
+
+  export type TeamCreateNestedOneWithoutAutomationRulesInput = {
+    create?: XOR<TeamCreateWithoutAutomationRulesInput, TeamUncheckedCreateWithoutAutomationRulesInput>
+    connectOrCreate?: TeamCreateOrConnectWithoutAutomationRulesInput
+    connect?: TeamWhereUniqueInput
+  }
+
+  export type AutomationLogCreateNestedManyWithoutRuleInput = {
+    create?: XOR<AutomationLogCreateWithoutRuleInput, AutomationLogUncheckedCreateWithoutRuleInput> | AutomationLogCreateWithoutRuleInput[] | AutomationLogUncheckedCreateWithoutRuleInput[]
+    connectOrCreate?: AutomationLogCreateOrConnectWithoutRuleInput | AutomationLogCreateOrConnectWithoutRuleInput[]
+    createMany?: AutomationLogCreateManyRuleInputEnvelope
+    connect?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
+  }
+
+  export type AutomationLogUncheckedCreateNestedManyWithoutRuleInput = {
+    create?: XOR<AutomationLogCreateWithoutRuleInput, AutomationLogUncheckedCreateWithoutRuleInput> | AutomationLogCreateWithoutRuleInput[] | AutomationLogUncheckedCreateWithoutRuleInput[]
+    connectOrCreate?: AutomationLogCreateOrConnectWithoutRuleInput | AutomationLogCreateOrConnectWithoutRuleInput[]
+    createMany?: AutomationLogCreateManyRuleInputEnvelope
+    connect?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
+  }
+
+  export type EnumAutomationTriggerFieldUpdateOperationsInput = {
+    set?: $Enums.AutomationTrigger
+  }
+
+  export type WorkspaceUpdateOneRequiredWithoutAutomationRulesNestedInput = {
+    create?: XOR<WorkspaceCreateWithoutAutomationRulesInput, WorkspaceUncheckedCreateWithoutAutomationRulesInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutAutomationRulesInput
+    upsert?: WorkspaceUpsertWithoutAutomationRulesInput
+    connect?: WorkspaceWhereUniqueInput
+    update?: XOR<XOR<WorkspaceUpdateToOneWithWhereWithoutAutomationRulesInput, WorkspaceUpdateWithoutAutomationRulesInput>, WorkspaceUncheckedUpdateWithoutAutomationRulesInput>
+  }
+
+  export type TeamUpdateOneWithoutAutomationRulesNestedInput = {
+    create?: XOR<TeamCreateWithoutAutomationRulesInput, TeamUncheckedCreateWithoutAutomationRulesInput>
+    connectOrCreate?: TeamCreateOrConnectWithoutAutomationRulesInput
+    upsert?: TeamUpsertWithoutAutomationRulesInput
+    disconnect?: TeamWhereInput | boolean
+    delete?: TeamWhereInput | boolean
+    connect?: TeamWhereUniqueInput
+    update?: XOR<XOR<TeamUpdateToOneWithWhereWithoutAutomationRulesInput, TeamUpdateWithoutAutomationRulesInput>, TeamUncheckedUpdateWithoutAutomationRulesInput>
+  }
+
+  export type AutomationLogUpdateManyWithoutRuleNestedInput = {
+    create?: XOR<AutomationLogCreateWithoutRuleInput, AutomationLogUncheckedCreateWithoutRuleInput> | AutomationLogCreateWithoutRuleInput[] | AutomationLogUncheckedCreateWithoutRuleInput[]
+    connectOrCreate?: AutomationLogCreateOrConnectWithoutRuleInput | AutomationLogCreateOrConnectWithoutRuleInput[]
+    upsert?: AutomationLogUpsertWithWhereUniqueWithoutRuleInput | AutomationLogUpsertWithWhereUniqueWithoutRuleInput[]
+    createMany?: AutomationLogCreateManyRuleInputEnvelope
+    set?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
+    disconnect?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
+    delete?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
+    connect?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
+    update?: AutomationLogUpdateWithWhereUniqueWithoutRuleInput | AutomationLogUpdateWithWhereUniqueWithoutRuleInput[]
+    updateMany?: AutomationLogUpdateManyWithWhereWithoutRuleInput | AutomationLogUpdateManyWithWhereWithoutRuleInput[]
+    deleteMany?: AutomationLogScalarWhereInput | AutomationLogScalarWhereInput[]
+  }
+
+  export type AutomationLogUncheckedUpdateManyWithoutRuleNestedInput = {
+    create?: XOR<AutomationLogCreateWithoutRuleInput, AutomationLogUncheckedCreateWithoutRuleInput> | AutomationLogCreateWithoutRuleInput[] | AutomationLogUncheckedCreateWithoutRuleInput[]
+    connectOrCreate?: AutomationLogCreateOrConnectWithoutRuleInput | AutomationLogCreateOrConnectWithoutRuleInput[]
+    upsert?: AutomationLogUpsertWithWhereUniqueWithoutRuleInput | AutomationLogUpsertWithWhereUniqueWithoutRuleInput[]
+    createMany?: AutomationLogCreateManyRuleInputEnvelope
+    set?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
+    disconnect?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
+    delete?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
+    connect?: AutomationLogWhereUniqueInput | AutomationLogWhereUniqueInput[]
+    update?: AutomationLogUpdateWithWhereUniqueWithoutRuleInput | AutomationLogUpdateWithWhereUniqueWithoutRuleInput[]
+    updateMany?: AutomationLogUpdateManyWithWhereWithoutRuleInput | AutomationLogUpdateManyWithWhereWithoutRuleInput[]
+    deleteMany?: AutomationLogScalarWhereInput | AutomationLogScalarWhereInput[]
+  }
+
+  export type AutomationRuleCreateNestedOneWithoutLogsInput = {
+    create?: XOR<AutomationRuleCreateWithoutLogsInput, AutomationRuleUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: AutomationRuleCreateOrConnectWithoutLogsInput
+    connect?: AutomationRuleWhereUniqueInput
+  }
+
+  export type WorkspaceCreateNestedOneWithoutAutomationLogsInput = {
+    create?: XOR<WorkspaceCreateWithoutAutomationLogsInput, WorkspaceUncheckedCreateWithoutAutomationLogsInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutAutomationLogsInput
+    connect?: WorkspaceWhereUniqueInput
+  }
+
+  export type EnumAutomationLogStatusFieldUpdateOperationsInput = {
+    set?: $Enums.AutomationLogStatus
+  }
+
+  export type AutomationRuleUpdateOneRequiredWithoutLogsNestedInput = {
+    create?: XOR<AutomationRuleCreateWithoutLogsInput, AutomationRuleUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: AutomationRuleCreateOrConnectWithoutLogsInput
+    upsert?: AutomationRuleUpsertWithoutLogsInput
+    connect?: AutomationRuleWhereUniqueInput
+    update?: XOR<XOR<AutomationRuleUpdateToOneWithWhereWithoutLogsInput, AutomationRuleUpdateWithoutLogsInput>, AutomationRuleUncheckedUpdateWithoutLogsInput>
+  }
+
+  export type WorkspaceUpdateOneRequiredWithoutAutomationLogsNestedInput = {
+    create?: XOR<WorkspaceCreateWithoutAutomationLogsInput, WorkspaceUncheckedCreateWithoutAutomationLogsInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutAutomationLogsInput
+    upsert?: WorkspaceUpsertWithoutAutomationLogsInput
+    connect?: WorkspaceWhereUniqueInput
+    update?: XOR<XOR<WorkspaceUpdateToOneWithWhereWithoutAutomationLogsInput, WorkspaceUpdateWithoutAutomationLogsInput>, WorkspaceUncheckedUpdateWithoutAutomationLogsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -30544,6 +34021,40 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumNotificationTypeFilter<$PrismaModel>
     _max?: NestedEnumNotificationTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumAutomationTriggerFilter<$PrismaModel = never> = {
+    equals?: $Enums.AutomationTrigger | EnumAutomationTriggerFieldRefInput<$PrismaModel>
+    in?: $Enums.AutomationTrigger[]
+    notIn?: $Enums.AutomationTrigger[]
+    not?: NestedEnumAutomationTriggerFilter<$PrismaModel> | $Enums.AutomationTrigger
+  }
+
+  export type NestedEnumAutomationTriggerWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AutomationTrigger | EnumAutomationTriggerFieldRefInput<$PrismaModel>
+    in?: $Enums.AutomationTrigger[]
+    notIn?: $Enums.AutomationTrigger[]
+    not?: NestedEnumAutomationTriggerWithAggregatesFilter<$PrismaModel> | $Enums.AutomationTrigger
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAutomationTriggerFilter<$PrismaModel>
+    _max?: NestedEnumAutomationTriggerFilter<$PrismaModel>
+  }
+
+  export type NestedEnumAutomationLogStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.AutomationLogStatus | EnumAutomationLogStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.AutomationLogStatus[]
+    notIn?: $Enums.AutomationLogStatus[]
+    not?: NestedEnumAutomationLogStatusFilter<$PrismaModel> | $Enums.AutomationLogStatus
+  }
+
+  export type NestedEnumAutomationLogStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AutomationLogStatus | EnumAutomationLogStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.AutomationLogStatus[]
+    notIn?: $Enums.AutomationLogStatus[]
+    not?: NestedEnumAutomationLogStatusWithAggregatesFilter<$PrismaModel> | $Enums.AutomationLogStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAutomationLogStatusFilter<$PrismaModel>
+    _max?: NestedEnumAutomationLogStatusFilter<$PrismaModel>
   }
 
   export type UserCreateWithoutPostsInput = {
@@ -31651,6 +35162,7 @@ export namespace Prisma {
     cycles?: CycleCreateNestedManyWithoutTeamInput
     labels?: LabelCreateNestedManyWithoutTeamInput
     templates?: TemplateCreateNestedManyWithoutTeamInput
+    automationRules?: AutomationRuleCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateWithoutWorkspaceInput = {
@@ -31664,6 +35176,7 @@ export namespace Prisma {
     cycles?: CycleUncheckedCreateNestedManyWithoutTeamInput
     labels?: LabelUncheckedCreateNestedManyWithoutTeamInput
     templates?: TemplateUncheckedCreateNestedManyWithoutTeamInput
+    automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamCreateOrConnectWithoutWorkspaceInput = {
@@ -31934,6 +35447,76 @@ export namespace Prisma {
     data: TemplateCreateManyWorkspaceInput | TemplateCreateManyWorkspaceInput[]
   }
 
+  export type AutomationRuleCreateWithoutWorkspaceInput = {
+    id?: string
+    name: string
+    description?: string | null
+    trigger: $Enums.AutomationTrigger
+    conditions: string
+    actions: string
+    enabled?: boolean
+    isTemplate?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    team?: TeamCreateNestedOneWithoutAutomationRulesInput
+    logs?: AutomationLogCreateNestedManyWithoutRuleInput
+  }
+
+  export type AutomationRuleUncheckedCreateWithoutWorkspaceInput = {
+    id?: string
+    name: string
+    description?: string | null
+    trigger: $Enums.AutomationTrigger
+    conditions: string
+    actions: string
+    enabled?: boolean
+    isTemplate?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    teamId?: string | null
+    logs?: AutomationLogUncheckedCreateNestedManyWithoutRuleInput
+  }
+
+  export type AutomationRuleCreateOrConnectWithoutWorkspaceInput = {
+    where: AutomationRuleWhereUniqueInput
+    create: XOR<AutomationRuleCreateWithoutWorkspaceInput, AutomationRuleUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type AutomationRuleCreateManyWorkspaceInputEnvelope = {
+    data: AutomationRuleCreateManyWorkspaceInput | AutomationRuleCreateManyWorkspaceInput[]
+  }
+
+  export type AutomationLogCreateWithoutWorkspaceInput = {
+    id?: string
+    status?: $Enums.AutomationLogStatus
+    error?: string | null
+    inputData: string
+    outputData?: string | null
+    executedAt?: Date | string
+    issueId?: string | null
+    rule: AutomationRuleCreateNestedOneWithoutLogsInput
+  }
+
+  export type AutomationLogUncheckedCreateWithoutWorkspaceInput = {
+    id?: string
+    status?: $Enums.AutomationLogStatus
+    error?: string | null
+    inputData: string
+    outputData?: string | null
+    executedAt?: Date | string
+    ruleId: string
+    issueId?: string | null
+  }
+
+  export type AutomationLogCreateOrConnectWithoutWorkspaceInput = {
+    where: AutomationLogWhereUniqueInput
+    create: XOR<AutomationLogCreateWithoutWorkspaceInput, AutomationLogUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type AutomationLogCreateManyWorkspaceInputEnvelope = {
+    data: AutomationLogCreateManyWorkspaceInput | AutomationLogCreateManyWorkspaceInput[]
+  }
+
   export type WorkspaceMemberUpsertWithWhereUniqueWithoutWorkspaceInput = {
     where: WorkspaceMemberWhereUniqueInput
     update: XOR<WorkspaceMemberUpdateWithoutWorkspaceInput, WorkspaceMemberUncheckedUpdateWithoutWorkspaceInput>
@@ -32136,6 +35719,71 @@ export namespace Prisma {
     labelIds?: StringFilter<"Template"> | string
   }
 
+  export type AutomationRuleUpsertWithWhereUniqueWithoutWorkspaceInput = {
+    where: AutomationRuleWhereUniqueInput
+    update: XOR<AutomationRuleUpdateWithoutWorkspaceInput, AutomationRuleUncheckedUpdateWithoutWorkspaceInput>
+    create: XOR<AutomationRuleCreateWithoutWorkspaceInput, AutomationRuleUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type AutomationRuleUpdateWithWhereUniqueWithoutWorkspaceInput = {
+    where: AutomationRuleWhereUniqueInput
+    data: XOR<AutomationRuleUpdateWithoutWorkspaceInput, AutomationRuleUncheckedUpdateWithoutWorkspaceInput>
+  }
+
+  export type AutomationRuleUpdateManyWithWhereWithoutWorkspaceInput = {
+    where: AutomationRuleScalarWhereInput
+    data: XOR<AutomationRuleUpdateManyMutationInput, AutomationRuleUncheckedUpdateManyWithoutWorkspaceInput>
+  }
+
+  export type AutomationRuleScalarWhereInput = {
+    AND?: AutomationRuleScalarWhereInput | AutomationRuleScalarWhereInput[]
+    OR?: AutomationRuleScalarWhereInput[]
+    NOT?: AutomationRuleScalarWhereInput | AutomationRuleScalarWhereInput[]
+    id?: StringFilter<"AutomationRule"> | string
+    name?: StringFilter<"AutomationRule"> | string
+    description?: StringNullableFilter<"AutomationRule"> | string | null
+    trigger?: EnumAutomationTriggerFilter<"AutomationRule"> | $Enums.AutomationTrigger
+    conditions?: StringFilter<"AutomationRule"> | string
+    actions?: StringFilter<"AutomationRule"> | string
+    enabled?: BoolFilter<"AutomationRule"> | boolean
+    isTemplate?: BoolFilter<"AutomationRule"> | boolean
+    createdAt?: DateTimeFilter<"AutomationRule"> | Date | string
+    updatedAt?: DateTimeFilter<"AutomationRule"> | Date | string
+    workspaceId?: StringFilter<"AutomationRule"> | string
+    teamId?: StringNullableFilter<"AutomationRule"> | string | null
+  }
+
+  export type AutomationLogUpsertWithWhereUniqueWithoutWorkspaceInput = {
+    where: AutomationLogWhereUniqueInput
+    update: XOR<AutomationLogUpdateWithoutWorkspaceInput, AutomationLogUncheckedUpdateWithoutWorkspaceInput>
+    create: XOR<AutomationLogCreateWithoutWorkspaceInput, AutomationLogUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type AutomationLogUpdateWithWhereUniqueWithoutWorkspaceInput = {
+    where: AutomationLogWhereUniqueInput
+    data: XOR<AutomationLogUpdateWithoutWorkspaceInput, AutomationLogUncheckedUpdateWithoutWorkspaceInput>
+  }
+
+  export type AutomationLogUpdateManyWithWhereWithoutWorkspaceInput = {
+    where: AutomationLogScalarWhereInput
+    data: XOR<AutomationLogUpdateManyMutationInput, AutomationLogUncheckedUpdateManyWithoutWorkspaceInput>
+  }
+
+  export type AutomationLogScalarWhereInput = {
+    AND?: AutomationLogScalarWhereInput | AutomationLogScalarWhereInput[]
+    OR?: AutomationLogScalarWhereInput[]
+    NOT?: AutomationLogScalarWhereInput | AutomationLogScalarWhereInput[]
+    id?: StringFilter<"AutomationLog"> | string
+    status?: EnumAutomationLogStatusFilter<"AutomationLog"> | $Enums.AutomationLogStatus
+    error?: StringNullableFilter<"AutomationLog"> | string | null
+    inputData?: StringFilter<"AutomationLog"> | string
+    outputData?: StringNullableFilter<"AutomationLog"> | string | null
+    executedAt?: DateTimeFilter<"AutomationLog"> | Date | string
+    ruleId?: StringFilter<"AutomationLog"> | string
+    workspaceId?: StringFilter<"AutomationLog"> | string
+    issueId?: StringNullableFilter<"AutomationLog"> | string | null
+  }
+
   export type WorkspaceCreateWithoutMembersInput = {
     id?: string
     name: string
@@ -32151,6 +35799,8 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutMembersInput = {
@@ -32168,6 +35818,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutMembersInput = {
@@ -32250,6 +35902,8 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutMembersInput = {
@@ -32267,6 +35921,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type UserUpsertWithoutMembershipsInput = {
@@ -32339,6 +35995,8 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutTeamsInput = {
@@ -32356,6 +36014,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutTeamsInput = {
@@ -32552,6 +36212,45 @@ export namespace Prisma {
     data: TemplateCreateManyTeamInput | TemplateCreateManyTeamInput[]
   }
 
+  export type AutomationRuleCreateWithoutTeamInput = {
+    id?: string
+    name: string
+    description?: string | null
+    trigger: $Enums.AutomationTrigger
+    conditions: string
+    actions: string
+    enabled?: boolean
+    isTemplate?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutAutomationRulesInput
+    logs?: AutomationLogCreateNestedManyWithoutRuleInput
+  }
+
+  export type AutomationRuleUncheckedCreateWithoutTeamInput = {
+    id?: string
+    name: string
+    description?: string | null
+    trigger: $Enums.AutomationTrigger
+    conditions: string
+    actions: string
+    enabled?: boolean
+    isTemplate?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspaceId: string
+    logs?: AutomationLogUncheckedCreateNestedManyWithoutRuleInput
+  }
+
+  export type AutomationRuleCreateOrConnectWithoutTeamInput = {
+    where: AutomationRuleWhereUniqueInput
+    create: XOR<AutomationRuleCreateWithoutTeamInput, AutomationRuleUncheckedCreateWithoutTeamInput>
+  }
+
+  export type AutomationRuleCreateManyTeamInputEnvelope = {
+    data: AutomationRuleCreateManyTeamInput | AutomationRuleCreateManyTeamInput[]
+  }
+
   export type WorkspaceUpsertWithoutTeamsInput = {
     update: XOR<WorkspaceUpdateWithoutTeamsInput, WorkspaceUncheckedUpdateWithoutTeamsInput>
     create: XOR<WorkspaceCreateWithoutTeamsInput, WorkspaceUncheckedCreateWithoutTeamsInput>
@@ -32578,6 +36277,8 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutTeamsInput = {
@@ -32595,6 +36296,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type ProjectUpsertWithWhereUniqueWithoutTeamInput = {
@@ -32677,6 +36380,22 @@ export namespace Prisma {
     data: XOR<TemplateUpdateManyMutationInput, TemplateUncheckedUpdateManyWithoutTeamInput>
   }
 
+  export type AutomationRuleUpsertWithWhereUniqueWithoutTeamInput = {
+    where: AutomationRuleWhereUniqueInput
+    update: XOR<AutomationRuleUpdateWithoutTeamInput, AutomationRuleUncheckedUpdateWithoutTeamInput>
+    create: XOR<AutomationRuleCreateWithoutTeamInput, AutomationRuleUncheckedCreateWithoutTeamInput>
+  }
+
+  export type AutomationRuleUpdateWithWhereUniqueWithoutTeamInput = {
+    where: AutomationRuleWhereUniqueInput
+    data: XOR<AutomationRuleUpdateWithoutTeamInput, AutomationRuleUncheckedUpdateWithoutTeamInput>
+  }
+
+  export type AutomationRuleUpdateManyWithWhereWithoutTeamInput = {
+    where: AutomationRuleScalarWhereInput
+    data: XOR<AutomationRuleUpdateManyMutationInput, AutomationRuleUncheckedUpdateManyWithoutTeamInput>
+  }
+
   export type WorkspaceCreateWithoutProjectsInput = {
     id?: string
     name: string
@@ -32692,6 +36411,8 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutProjectsInput = {
@@ -32709,6 +36430,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutProjectsInput = {
@@ -32727,6 +36450,7 @@ export namespace Prisma {
     cycles?: CycleCreateNestedManyWithoutTeamInput
     labels?: LabelCreateNestedManyWithoutTeamInput
     templates?: TemplateCreateNestedManyWithoutTeamInput
+    automationRules?: AutomationRuleCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateWithoutProjectsInput = {
@@ -32740,6 +36464,7 @@ export namespace Prisma {
     cycles?: CycleUncheckedCreateNestedManyWithoutTeamInput
     labels?: LabelUncheckedCreateNestedManyWithoutTeamInput
     templates?: TemplateUncheckedCreateNestedManyWithoutTeamInput
+    automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamCreateOrConnectWithoutProjectsInput = {
@@ -32875,6 +36600,8 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutProjectsInput = {
@@ -32892,6 +36619,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TeamUpsertWithoutProjectsInput = {
@@ -32916,6 +36645,7 @@ export namespace Prisma {
     cycles?: CycleUpdateManyWithoutTeamNestedInput
     labels?: LabelUpdateManyWithoutTeamNestedInput
     templates?: TemplateUpdateManyWithoutTeamNestedInput
+    automationRules?: AutomationRuleUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateWithoutProjectsInput = {
@@ -32929,6 +36659,7 @@ export namespace Prisma {
     cycles?: CycleUncheckedUpdateManyWithoutTeamNestedInput
     labels?: LabelUncheckedUpdateManyWithoutTeamNestedInput
     templates?: TemplateUncheckedUpdateManyWithoutTeamNestedInput
+    automationRules?: AutomationRuleUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type UserUpsertWithoutProjectsLeadInput = {
@@ -33017,6 +36748,8 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutCyclesInput = {
@@ -33034,6 +36767,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutCyclesInput = {
@@ -33052,6 +36787,7 @@ export namespace Prisma {
     issues?: IssueCreateNestedManyWithoutTeamInput
     labels?: LabelCreateNestedManyWithoutTeamInput
     templates?: TemplateCreateNestedManyWithoutTeamInput
+    automationRules?: AutomationRuleCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateWithoutCyclesInput = {
@@ -33065,6 +36801,7 @@ export namespace Prisma {
     issues?: IssueUncheckedCreateNestedManyWithoutTeamInput
     labels?: LabelUncheckedCreateNestedManyWithoutTeamInput
     templates?: TemplateUncheckedCreateNestedManyWithoutTeamInput
+    automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamCreateOrConnectWithoutCyclesInput = {
@@ -33151,6 +36888,8 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutCyclesInput = {
@@ -33168,6 +36907,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TeamUpsertWithoutCyclesInput = {
@@ -33192,6 +36933,7 @@ export namespace Prisma {
     issues?: IssueUpdateManyWithoutTeamNestedInput
     labels?: LabelUpdateManyWithoutTeamNestedInput
     templates?: TemplateUpdateManyWithoutTeamNestedInput
+    automationRules?: AutomationRuleUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateWithoutCyclesInput = {
@@ -33205,6 +36947,7 @@ export namespace Prisma {
     issues?: IssueUncheckedUpdateManyWithoutTeamNestedInput
     labels?: LabelUncheckedUpdateManyWithoutTeamNestedInput
     templates?: TemplateUncheckedUpdateManyWithoutTeamNestedInput
+    automationRules?: AutomationRuleUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type IssueUpsertWithWhereUniqueWithoutCycleInput = {
@@ -33238,6 +36981,8 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutLabelsInput = {
@@ -33255,6 +37000,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutLabelsInput = {
@@ -33273,6 +37020,7 @@ export namespace Prisma {
     issues?: IssueCreateNestedManyWithoutTeamInput
     cycles?: CycleCreateNestedManyWithoutTeamInput
     templates?: TemplateCreateNestedManyWithoutTeamInput
+    automationRules?: AutomationRuleCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateWithoutLabelsInput = {
@@ -33286,6 +37034,7 @@ export namespace Prisma {
     issues?: IssueUncheckedCreateNestedManyWithoutTeamInput
     cycles?: CycleUncheckedCreateNestedManyWithoutTeamInput
     templates?: TemplateUncheckedCreateNestedManyWithoutTeamInput
+    automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamCreateOrConnectWithoutLabelsInput = {
@@ -33338,6 +37087,8 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutLabelsInput = {
@@ -33355,6 +37106,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TeamUpsertWithoutLabelsInput = {
@@ -33379,6 +37132,7 @@ export namespace Prisma {
     issues?: IssueUpdateManyWithoutTeamNestedInput
     cycles?: CycleUpdateManyWithoutTeamNestedInput
     templates?: TemplateUpdateManyWithoutTeamNestedInput
+    automationRules?: AutomationRuleUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateWithoutLabelsInput = {
@@ -33392,6 +37146,7 @@ export namespace Prisma {
     issues?: IssueUncheckedUpdateManyWithoutTeamNestedInput
     cycles?: CycleUncheckedUpdateManyWithoutTeamNestedInput
     templates?: TemplateUncheckedUpdateManyWithoutTeamNestedInput
+    automationRules?: AutomationRuleUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type IssueLabelUpsertWithWhereUniqueWithoutLabelInput = {
@@ -33434,6 +37189,8 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutIssuesInput = {
@@ -33451,6 +37208,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutIssuesInput = {
@@ -33469,6 +37228,7 @@ export namespace Prisma {
     cycles?: CycleCreateNestedManyWithoutTeamInput
     labels?: LabelCreateNestedManyWithoutTeamInput
     templates?: TemplateCreateNestedManyWithoutTeamInput
+    automationRules?: AutomationRuleCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateWithoutIssuesInput = {
@@ -33482,6 +37242,7 @@ export namespace Prisma {
     cycles?: CycleUncheckedCreateNestedManyWithoutTeamInput
     labels?: LabelUncheckedCreateNestedManyWithoutTeamInput
     templates?: TemplateUncheckedCreateNestedManyWithoutTeamInput
+    automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamCreateOrConnectWithoutIssuesInput = {
@@ -33781,6 +37542,8 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutIssuesInput = {
@@ -33798,6 +37561,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TeamUpsertWithoutIssuesInput = {
@@ -33822,6 +37587,7 @@ export namespace Prisma {
     cycles?: CycleUpdateManyWithoutTeamNestedInput
     labels?: LabelUpdateManyWithoutTeamNestedInput
     templates?: TemplateUpdateManyWithoutTeamNestedInput
+    automationRules?: AutomationRuleUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateWithoutIssuesInput = {
@@ -33835,6 +37601,7 @@ export namespace Prisma {
     cycles?: CycleUncheckedUpdateManyWithoutTeamNestedInput
     labels?: LabelUncheckedUpdateManyWithoutTeamNestedInput
     templates?: TemplateUncheckedUpdateManyWithoutTeamNestedInput
+    automationRules?: AutomationRuleUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type ProjectUpsertWithoutIssuesInput = {
@@ -34721,6 +38488,8 @@ export namespace Prisma {
     labels?: LabelCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutNotificationsInput = {
@@ -34738,6 +38507,8 @@ export namespace Prisma {
     labels?: LabelUncheckedCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutNotificationsInput = {
@@ -34924,6 +38695,8 @@ export namespace Prisma {
     labels?: LabelUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutNotificationsInput = {
@@ -34941,6 +38714,8 @@ export namespace Prisma {
     labels?: LabelUncheckedUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type IssueUpsertWithoutNotificationsInput = {
@@ -35117,6 +38892,8 @@ export namespace Prisma {
     labels?: LabelCreateNestedManyWithoutWorkspaceInput
     notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutNotificationPreferencesInput = {
@@ -35134,6 +38911,8 @@ export namespace Prisma {
     labels?: LabelUncheckedCreateNestedManyWithoutWorkspaceInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
     templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutNotificationPreferencesInput = {
@@ -35222,6 +39001,8 @@ export namespace Prisma {
     labels?: LabelUpdateManyWithoutWorkspaceNestedInput
     notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutNotificationPreferencesInput = {
@@ -35239,6 +39020,8 @@ export namespace Prisma {
     labels?: LabelUncheckedUpdateManyWithoutWorkspaceNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
     templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceCreateWithoutTemplatesInput = {
@@ -35256,6 +39039,8 @@ export namespace Prisma {
     labels?: LabelCreateNestedManyWithoutWorkspaceInput
     notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutTemplatesInput = {
@@ -35273,6 +39058,8 @@ export namespace Prisma {
     labels?: LabelUncheckedCreateNestedManyWithoutWorkspaceInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
     notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutTemplatesInput = {
@@ -35291,6 +39078,7 @@ export namespace Prisma {
     issues?: IssueCreateNestedManyWithoutTeamInput
     cycles?: CycleCreateNestedManyWithoutTeamInput
     labels?: LabelCreateNestedManyWithoutTeamInput
+    automationRules?: AutomationRuleCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateWithoutTemplatesInput = {
@@ -35304,6 +39092,7 @@ export namespace Prisma {
     issues?: IssueUncheckedCreateNestedManyWithoutTeamInput
     cycles?: CycleUncheckedCreateNestedManyWithoutTeamInput
     labels?: LabelUncheckedCreateNestedManyWithoutTeamInput
+    automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamCreateOrConnectWithoutTemplatesInput = {
@@ -35337,6 +39126,8 @@ export namespace Prisma {
     labels?: LabelUpdateManyWithoutWorkspaceNestedInput
     notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutTemplatesInput = {
@@ -35354,6 +39145,8 @@ export namespace Prisma {
     labels?: LabelUncheckedUpdateManyWithoutWorkspaceNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
     notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TeamUpsertWithoutTemplatesInput = {
@@ -35378,6 +39171,7 @@ export namespace Prisma {
     issues?: IssueUpdateManyWithoutTeamNestedInput
     cycles?: CycleUpdateManyWithoutTeamNestedInput
     labels?: LabelUpdateManyWithoutTeamNestedInput
+    automationRules?: AutomationRuleUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateWithoutTemplatesInput = {
@@ -35391,6 +39185,386 @@ export namespace Prisma {
     issues?: IssueUncheckedUpdateManyWithoutTeamNestedInput
     cycles?: CycleUncheckedUpdateManyWithoutTeamNestedInput
     labels?: LabelUncheckedUpdateManyWithoutTeamNestedInput
+    automationRules?: AutomationRuleUncheckedUpdateManyWithoutTeamNestedInput
+  }
+
+  export type WorkspaceCreateWithoutAutomationRulesInput = {
+    id?: string
+    name: string
+    slug: string
+    settings?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: WorkspaceMemberCreateNestedManyWithoutWorkspaceInput
+    teams?: TeamCreateNestedManyWithoutWorkspaceInput
+    projects?: ProjectCreateNestedManyWithoutWorkspaceInput
+    issues?: IssueCreateNestedManyWithoutWorkspaceInput
+    cycles?: CycleCreateNestedManyWithoutWorkspaceInput
+    labels?: LabelCreateNestedManyWithoutWorkspaceInput
+    notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
+    notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceUncheckedCreateWithoutAutomationRulesInput = {
+    id?: string
+    name: string
+    slug: string
+    settings?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput
+    teams?: TeamUncheckedCreateNestedManyWithoutWorkspaceInput
+    projects?: ProjectUncheckedCreateNestedManyWithoutWorkspaceInput
+    issues?: IssueUncheckedCreateNestedManyWithoutWorkspaceInput
+    cycles?: CycleUncheckedCreateNestedManyWithoutWorkspaceInput
+    labels?: LabelUncheckedCreateNestedManyWithoutWorkspaceInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
+    notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationLogs?: AutomationLogUncheckedCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceCreateOrConnectWithoutAutomationRulesInput = {
+    where: WorkspaceWhereUniqueInput
+    create: XOR<WorkspaceCreateWithoutAutomationRulesInput, WorkspaceUncheckedCreateWithoutAutomationRulesInput>
+  }
+
+  export type TeamCreateWithoutAutomationRulesInput = {
+    id?: string
+    name: string
+    key: string
+    color: string
+    createdAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutTeamsInput
+    projects?: ProjectCreateNestedManyWithoutTeamInput
+    issues?: IssueCreateNestedManyWithoutTeamInput
+    cycles?: CycleCreateNestedManyWithoutTeamInput
+    labels?: LabelCreateNestedManyWithoutTeamInput
+    templates?: TemplateCreateNestedManyWithoutTeamInput
+  }
+
+  export type TeamUncheckedCreateWithoutAutomationRulesInput = {
+    id?: string
+    name: string
+    key: string
+    color: string
+    createdAt?: Date | string
+    workspaceId: string
+    projects?: ProjectUncheckedCreateNestedManyWithoutTeamInput
+    issues?: IssueUncheckedCreateNestedManyWithoutTeamInput
+    cycles?: CycleUncheckedCreateNestedManyWithoutTeamInput
+    labels?: LabelUncheckedCreateNestedManyWithoutTeamInput
+    templates?: TemplateUncheckedCreateNestedManyWithoutTeamInput
+  }
+
+  export type TeamCreateOrConnectWithoutAutomationRulesInput = {
+    where: TeamWhereUniqueInput
+    create: XOR<TeamCreateWithoutAutomationRulesInput, TeamUncheckedCreateWithoutAutomationRulesInput>
+  }
+
+  export type AutomationLogCreateWithoutRuleInput = {
+    id?: string
+    status?: $Enums.AutomationLogStatus
+    error?: string | null
+    inputData: string
+    outputData?: string | null
+    executedAt?: Date | string
+    issueId?: string | null
+    workspace: WorkspaceCreateNestedOneWithoutAutomationLogsInput
+  }
+
+  export type AutomationLogUncheckedCreateWithoutRuleInput = {
+    id?: string
+    status?: $Enums.AutomationLogStatus
+    error?: string | null
+    inputData: string
+    outputData?: string | null
+    executedAt?: Date | string
+    workspaceId: string
+    issueId?: string | null
+  }
+
+  export type AutomationLogCreateOrConnectWithoutRuleInput = {
+    where: AutomationLogWhereUniqueInput
+    create: XOR<AutomationLogCreateWithoutRuleInput, AutomationLogUncheckedCreateWithoutRuleInput>
+  }
+
+  export type AutomationLogCreateManyRuleInputEnvelope = {
+    data: AutomationLogCreateManyRuleInput | AutomationLogCreateManyRuleInput[]
+  }
+
+  export type WorkspaceUpsertWithoutAutomationRulesInput = {
+    update: XOR<WorkspaceUpdateWithoutAutomationRulesInput, WorkspaceUncheckedUpdateWithoutAutomationRulesInput>
+    create: XOR<WorkspaceCreateWithoutAutomationRulesInput, WorkspaceUncheckedCreateWithoutAutomationRulesInput>
+    where?: WorkspaceWhereInput
+  }
+
+  export type WorkspaceUpdateToOneWithWhereWithoutAutomationRulesInput = {
+    where?: WorkspaceWhereInput
+    data: XOR<WorkspaceUpdateWithoutAutomationRulesInput, WorkspaceUncheckedUpdateWithoutAutomationRulesInput>
+  }
+
+  export type WorkspaceUpdateWithoutAutomationRulesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput
+    teams?: TeamUpdateManyWithoutWorkspaceNestedInput
+    projects?: ProjectUpdateManyWithoutWorkspaceNestedInput
+    issues?: IssueUpdateManyWithoutWorkspaceNestedInput
+    cycles?: CycleUpdateManyWithoutWorkspaceNestedInput
+    labels?: LabelUpdateManyWithoutWorkspaceNestedInput
+    notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
+    notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type WorkspaceUncheckedUpdateWithoutAutomationRulesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput
+    teams?: TeamUncheckedUpdateManyWithoutWorkspaceNestedInput
+    projects?: ProjectUncheckedUpdateManyWithoutWorkspaceNestedInput
+    issues?: IssueUncheckedUpdateManyWithoutWorkspaceNestedInput
+    cycles?: CycleUncheckedUpdateManyWithoutWorkspaceNestedInput
+    labels?: LabelUncheckedUpdateManyWithoutWorkspaceNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
+    notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationLogs?: AutomationLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type TeamUpsertWithoutAutomationRulesInput = {
+    update: XOR<TeamUpdateWithoutAutomationRulesInput, TeamUncheckedUpdateWithoutAutomationRulesInput>
+    create: XOR<TeamCreateWithoutAutomationRulesInput, TeamUncheckedCreateWithoutAutomationRulesInput>
+    where?: TeamWhereInput
+  }
+
+  export type TeamUpdateToOneWithWhereWithoutAutomationRulesInput = {
+    where?: TeamWhereInput
+    data: XOR<TeamUpdateWithoutAutomationRulesInput, TeamUncheckedUpdateWithoutAutomationRulesInput>
+  }
+
+  export type TeamUpdateWithoutAutomationRulesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutTeamsNestedInput
+    projects?: ProjectUpdateManyWithoutTeamNestedInput
+    issues?: IssueUpdateManyWithoutTeamNestedInput
+    cycles?: CycleUpdateManyWithoutTeamNestedInput
+    labels?: LabelUpdateManyWithoutTeamNestedInput
+    templates?: TemplateUpdateManyWithoutTeamNestedInput
+  }
+
+  export type TeamUncheckedUpdateWithoutAutomationRulesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    projects?: ProjectUncheckedUpdateManyWithoutTeamNestedInput
+    issues?: IssueUncheckedUpdateManyWithoutTeamNestedInput
+    cycles?: CycleUncheckedUpdateManyWithoutTeamNestedInput
+    labels?: LabelUncheckedUpdateManyWithoutTeamNestedInput
+    templates?: TemplateUncheckedUpdateManyWithoutTeamNestedInput
+  }
+
+  export type AutomationLogUpsertWithWhereUniqueWithoutRuleInput = {
+    where: AutomationLogWhereUniqueInput
+    update: XOR<AutomationLogUpdateWithoutRuleInput, AutomationLogUncheckedUpdateWithoutRuleInput>
+    create: XOR<AutomationLogCreateWithoutRuleInput, AutomationLogUncheckedCreateWithoutRuleInput>
+  }
+
+  export type AutomationLogUpdateWithWhereUniqueWithoutRuleInput = {
+    where: AutomationLogWhereUniqueInput
+    data: XOR<AutomationLogUpdateWithoutRuleInput, AutomationLogUncheckedUpdateWithoutRuleInput>
+  }
+
+  export type AutomationLogUpdateManyWithWhereWithoutRuleInput = {
+    where: AutomationLogScalarWhereInput
+    data: XOR<AutomationLogUpdateManyMutationInput, AutomationLogUncheckedUpdateManyWithoutRuleInput>
+  }
+
+  export type AutomationRuleCreateWithoutLogsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    trigger: $Enums.AutomationTrigger
+    conditions: string
+    actions: string
+    enabled?: boolean
+    isTemplate?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutAutomationRulesInput
+    team?: TeamCreateNestedOneWithoutAutomationRulesInput
+  }
+
+  export type AutomationRuleUncheckedCreateWithoutLogsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    trigger: $Enums.AutomationTrigger
+    conditions: string
+    actions: string
+    enabled?: boolean
+    isTemplate?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspaceId: string
+    teamId?: string | null
+  }
+
+  export type AutomationRuleCreateOrConnectWithoutLogsInput = {
+    where: AutomationRuleWhereUniqueInput
+    create: XOR<AutomationRuleCreateWithoutLogsInput, AutomationRuleUncheckedCreateWithoutLogsInput>
+  }
+
+  export type WorkspaceCreateWithoutAutomationLogsInput = {
+    id?: string
+    name: string
+    slug: string
+    settings?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: WorkspaceMemberCreateNestedManyWithoutWorkspaceInput
+    teams?: TeamCreateNestedManyWithoutWorkspaceInput
+    projects?: ProjectCreateNestedManyWithoutWorkspaceInput
+    issues?: IssueCreateNestedManyWithoutWorkspaceInput
+    cycles?: CycleCreateNestedManyWithoutWorkspaceInput
+    labels?: LabelCreateNestedManyWithoutWorkspaceInput
+    notifications?: NotificationCreateNestedManyWithoutWorkspaceInput
+    notificationPreferences?: NotificationPreferencesCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceUncheckedCreateWithoutAutomationLogsInput = {
+    id?: string
+    name: string
+    slug: string
+    settings?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput
+    teams?: TeamUncheckedCreateNestedManyWithoutWorkspaceInput
+    projects?: ProjectUncheckedCreateNestedManyWithoutWorkspaceInput
+    issues?: IssueUncheckedCreateNestedManyWithoutWorkspaceInput
+    cycles?: CycleUncheckedCreateNestedManyWithoutWorkspaceInput
+    labels?: LabelUncheckedCreateNestedManyWithoutWorkspaceInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutWorkspaceInput
+    notificationPreferences?: NotificationPreferencesUncheckedCreateNestedManyWithoutWorkspaceInput
+    templates?: TemplateUncheckedCreateNestedManyWithoutWorkspaceInput
+    automationRules?: AutomationRuleUncheckedCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceCreateOrConnectWithoutAutomationLogsInput = {
+    where: WorkspaceWhereUniqueInput
+    create: XOR<WorkspaceCreateWithoutAutomationLogsInput, WorkspaceUncheckedCreateWithoutAutomationLogsInput>
+  }
+
+  export type AutomationRuleUpsertWithoutLogsInput = {
+    update: XOR<AutomationRuleUpdateWithoutLogsInput, AutomationRuleUncheckedUpdateWithoutLogsInput>
+    create: XOR<AutomationRuleCreateWithoutLogsInput, AutomationRuleUncheckedCreateWithoutLogsInput>
+    where?: AutomationRuleWhereInput
+  }
+
+  export type AutomationRuleUpdateToOneWithWhereWithoutLogsInput = {
+    where?: AutomationRuleWhereInput
+    data: XOR<AutomationRuleUpdateWithoutLogsInput, AutomationRuleUncheckedUpdateWithoutLogsInput>
+  }
+
+  export type AutomationRuleUpdateWithoutLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    trigger?: EnumAutomationTriggerFieldUpdateOperationsInput | $Enums.AutomationTrigger
+    conditions?: StringFieldUpdateOperationsInput | string
+    actions?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutAutomationRulesNestedInput
+    team?: TeamUpdateOneWithoutAutomationRulesNestedInput
+  }
+
+  export type AutomationRuleUncheckedUpdateWithoutLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    trigger?: EnumAutomationTriggerFieldUpdateOperationsInput | $Enums.AutomationTrigger
+    conditions?: StringFieldUpdateOperationsInput | string
+    actions?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    teamId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type WorkspaceUpsertWithoutAutomationLogsInput = {
+    update: XOR<WorkspaceUpdateWithoutAutomationLogsInput, WorkspaceUncheckedUpdateWithoutAutomationLogsInput>
+    create: XOR<WorkspaceCreateWithoutAutomationLogsInput, WorkspaceUncheckedCreateWithoutAutomationLogsInput>
+    where?: WorkspaceWhereInput
+  }
+
+  export type WorkspaceUpdateToOneWithWhereWithoutAutomationLogsInput = {
+    where?: WorkspaceWhereInput
+    data: XOR<WorkspaceUpdateWithoutAutomationLogsInput, WorkspaceUncheckedUpdateWithoutAutomationLogsInput>
+  }
+
+  export type WorkspaceUpdateWithoutAutomationLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput
+    teams?: TeamUpdateManyWithoutWorkspaceNestedInput
+    projects?: ProjectUpdateManyWithoutWorkspaceNestedInput
+    issues?: IssueUpdateManyWithoutWorkspaceNestedInput
+    cycles?: CycleUpdateManyWithoutWorkspaceNestedInput
+    labels?: LabelUpdateManyWithoutWorkspaceNestedInput
+    notifications?: NotificationUpdateManyWithoutWorkspaceNestedInput
+    notificationPreferences?: NotificationPreferencesUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type WorkspaceUncheckedUpdateWithoutAutomationLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput
+    teams?: TeamUncheckedUpdateManyWithoutWorkspaceNestedInput
+    projects?: ProjectUncheckedUpdateManyWithoutWorkspaceNestedInput
+    issues?: IssueUncheckedUpdateManyWithoutWorkspaceNestedInput
+    cycles?: CycleUncheckedUpdateManyWithoutWorkspaceNestedInput
+    labels?: LabelUncheckedUpdateManyWithoutWorkspaceNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutWorkspaceNestedInput
+    notificationPreferences?: NotificationPreferencesUncheckedUpdateManyWithoutWorkspaceNestedInput
+    templates?: TemplateUncheckedUpdateManyWithoutWorkspaceNestedInput
+    automationRules?: AutomationRuleUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type SessionCreateManyUserInput = {
@@ -36093,6 +40267,31 @@ export namespace Prisma {
     labelIds: string
   }
 
+  export type AutomationRuleCreateManyWorkspaceInput = {
+    id?: string
+    name: string
+    description?: string | null
+    trigger: $Enums.AutomationTrigger
+    conditions: string
+    actions: string
+    enabled?: boolean
+    isTemplate?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    teamId?: string | null
+  }
+
+  export type AutomationLogCreateManyWorkspaceInput = {
+    id?: string
+    status?: $Enums.AutomationLogStatus
+    error?: string | null
+    inputData: string
+    outputData?: string | null
+    executedAt?: Date | string
+    ruleId: string
+    issueId?: string | null
+  }
+
   export type WorkspaceMemberUpdateWithoutWorkspaceInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole
@@ -36125,6 +40324,7 @@ export namespace Prisma {
     cycles?: CycleUpdateManyWithoutTeamNestedInput
     labels?: LabelUpdateManyWithoutTeamNestedInput
     templates?: TemplateUpdateManyWithoutTeamNestedInput
+    automationRules?: AutomationRuleUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateWithoutWorkspaceInput = {
@@ -36138,6 +40338,7 @@ export namespace Prisma {
     cycles?: CycleUncheckedUpdateManyWithoutTeamNestedInput
     labels?: LabelUncheckedUpdateManyWithoutTeamNestedInput
     templates?: TemplateUncheckedUpdateManyWithoutTeamNestedInput
+    automationRules?: AutomationRuleUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateManyWithoutWorkspaceInput = {
@@ -36435,6 +40636,83 @@ export namespace Prisma {
     labelIds?: StringFieldUpdateOperationsInput | string
   }
 
+  export type AutomationRuleUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    trigger?: EnumAutomationTriggerFieldUpdateOperationsInput | $Enums.AutomationTrigger
+    conditions?: StringFieldUpdateOperationsInput | string
+    actions?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    team?: TeamUpdateOneWithoutAutomationRulesNestedInput
+    logs?: AutomationLogUpdateManyWithoutRuleNestedInput
+  }
+
+  export type AutomationRuleUncheckedUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    trigger?: EnumAutomationTriggerFieldUpdateOperationsInput | $Enums.AutomationTrigger
+    conditions?: StringFieldUpdateOperationsInput | string
+    actions?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    teamId?: NullableStringFieldUpdateOperationsInput | string | null
+    logs?: AutomationLogUncheckedUpdateManyWithoutRuleNestedInput
+  }
+
+  export type AutomationRuleUncheckedUpdateManyWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    trigger?: EnumAutomationTriggerFieldUpdateOperationsInput | $Enums.AutomationTrigger
+    conditions?: StringFieldUpdateOperationsInput | string
+    actions?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    teamId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AutomationLogUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAutomationLogStatusFieldUpdateOperationsInput | $Enums.AutomationLogStatus
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    inputData?: StringFieldUpdateOperationsInput | string
+    outputData?: NullableStringFieldUpdateOperationsInput | string | null
+    executedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    issueId?: NullableStringFieldUpdateOperationsInput | string | null
+    rule?: AutomationRuleUpdateOneRequiredWithoutLogsNestedInput
+  }
+
+  export type AutomationLogUncheckedUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAutomationLogStatusFieldUpdateOperationsInput | $Enums.AutomationLogStatus
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    inputData?: StringFieldUpdateOperationsInput | string
+    outputData?: NullableStringFieldUpdateOperationsInput | string | null
+    executedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ruleId?: StringFieldUpdateOperationsInput | string
+    issueId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AutomationLogUncheckedUpdateManyWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAutomationLogStatusFieldUpdateOperationsInput | $Enums.AutomationLogStatus
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    inputData?: StringFieldUpdateOperationsInput | string
+    outputData?: NullableStringFieldUpdateOperationsInput | string | null
+    executedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ruleId?: StringFieldUpdateOperationsInput | string
+    issueId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type ProjectCreateManyTeamInput = {
     id?: string
     name: string
@@ -36498,6 +40776,20 @@ export namespace Prisma {
     updatedAt?: Date | string
     workspaceId: string
     labelIds: string
+  }
+
+  export type AutomationRuleCreateManyTeamInput = {
+    id?: string
+    name: string
+    description?: string | null
+    trigger: $Enums.AutomationTrigger
+    conditions: string
+    actions: string
+    enabled?: boolean
+    isTemplate?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspaceId: string
   }
 
   export type ProjectUpdateWithoutTeamInput = {
@@ -36707,6 +40999,50 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspaceId?: StringFieldUpdateOperationsInput | string
     labelIds?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AutomationRuleUpdateWithoutTeamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    trigger?: EnumAutomationTriggerFieldUpdateOperationsInput | $Enums.AutomationTrigger
+    conditions?: StringFieldUpdateOperationsInput | string
+    actions?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutAutomationRulesNestedInput
+    logs?: AutomationLogUpdateManyWithoutRuleNestedInput
+  }
+
+  export type AutomationRuleUncheckedUpdateWithoutTeamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    trigger?: EnumAutomationTriggerFieldUpdateOperationsInput | $Enums.AutomationTrigger
+    conditions?: StringFieldUpdateOperationsInput | string
+    actions?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    logs?: AutomationLogUncheckedUpdateManyWithoutRuleNestedInput
+  }
+
+  export type AutomationRuleUncheckedUpdateManyWithoutTeamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    trigger?: EnumAutomationTriggerFieldUpdateOperationsInput | $Enums.AutomationTrigger
+    conditions?: StringFieldUpdateOperationsInput | string
+    actions?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
   }
 
   export type IssueCreateManyProjectInput = {
@@ -37027,6 +41363,50 @@ export namespace Prisma {
     workspaceId?: StringFieldUpdateOperationsInput | string
     actorId?: NullableStringFieldUpdateOperationsInput | string | null
     mentionedInComment?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AutomationLogCreateManyRuleInput = {
+    id?: string
+    status?: $Enums.AutomationLogStatus
+    error?: string | null
+    inputData: string
+    outputData?: string | null
+    executedAt?: Date | string
+    workspaceId: string
+    issueId?: string | null
+  }
+
+  export type AutomationLogUpdateWithoutRuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAutomationLogStatusFieldUpdateOperationsInput | $Enums.AutomationLogStatus
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    inputData?: StringFieldUpdateOperationsInput | string
+    outputData?: NullableStringFieldUpdateOperationsInput | string | null
+    executedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    issueId?: NullableStringFieldUpdateOperationsInput | string | null
+    workspace?: WorkspaceUpdateOneRequiredWithoutAutomationLogsNestedInput
+  }
+
+  export type AutomationLogUncheckedUpdateWithoutRuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAutomationLogStatusFieldUpdateOperationsInput | $Enums.AutomationLogStatus
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    inputData?: StringFieldUpdateOperationsInput | string
+    outputData?: NullableStringFieldUpdateOperationsInput | string | null
+    executedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    issueId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AutomationLogUncheckedUpdateManyWithoutRuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAutomationLogStatusFieldUpdateOperationsInput | $Enums.AutomationLogStatus
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    inputData?: StringFieldUpdateOperationsInput | string
+    outputData?: NullableStringFieldUpdateOperationsInput | string | null
+    executedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    issueId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

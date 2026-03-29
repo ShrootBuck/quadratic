@@ -322,6 +322,33 @@ exports.Prisma.TemplateScalarFieldEnum = {
   labelIds: 'labelIds'
 };
 
+exports.Prisma.AutomationRuleScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  trigger: 'trigger',
+  conditions: 'conditions',
+  actions: 'actions',
+  enabled: 'enabled',
+  isTemplate: 'isTemplate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  workspaceId: 'workspaceId',
+  teamId: 'teamId'
+};
+
+exports.Prisma.AutomationLogScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  error: 'error',
+  inputData: 'inputData',
+  outputData: 'outputData',
+  executedAt: 'executedAt',
+  ruleId: 'ruleId',
+  workspaceId: 'workspaceId',
+  issueId: 'issueId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -375,6 +402,20 @@ exports.NotificationType = exports.$Enums.NotificationType = {
   CYCLE_ENDED: 'CYCLE_ENDED'
 };
 
+exports.AutomationTrigger = exports.$Enums.AutomationTrigger = {
+  ISSUE_CREATED: 'ISSUE_CREATED',
+  ISSUE_UPDATED: 'ISSUE_UPDATED',
+  STATUS_CHANGED: 'STATUS_CHANGED',
+  ASSIGNEE_CHANGED: 'ASSIGNEE_CHANGED',
+  PRIORITY_CHANGED: 'PRIORITY_CHANGED'
+};
+
+exports.AutomationLogStatus = exports.$Enums.AutomationLogStatus = {
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED',
+  SKIPPED: 'SKIPPED'
+};
+
 exports.Prisma.ModelName = {
   Post: 'Post',
   User: 'User',
@@ -393,7 +434,9 @@ exports.Prisma.ModelName = {
   IssueHistory: 'IssueHistory',
   Notification: 'Notification',
   NotificationPreferences: 'NotificationPreferences',
-  Template: 'Template'
+  Template: 'Template',
+  AutomationRule: 'AutomationRule',
+  AutomationLog: 'AutomationLog'
 };
 
 /**

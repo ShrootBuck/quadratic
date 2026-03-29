@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { executeAutomations } from "~/server/api/routers/automation";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { realtimeManager } from "~/server/realtime/manager";
 
@@ -251,6 +252,24 @@ export const issueRouter = createTRPCRouter({
 				issue,
 				ctx.session.user.id,
 			);
+
+			// Execute automations
+			void executeAutomations({
+				trigger: "ISSUE_CREATED",
+				workspaceId: issue.workspaceId,
+				issueId: issue.id,
+				data: {
+					issueId: issue.id,
+					title: issue.title,
+					status: issue.status,
+					priority: issue.priority,
+					assigneeId: issue.assigneeId,
+					creatorId: issue.creatorId,
+					teamId: issue.teamId,
+					projectId: issue.projectId,
+					labelIds: issue.labels.map((l) => l.labelId),
+				},
+			});
 
 			return issue;
 		}),
@@ -547,15 +566,63 @@ export const issueRouter = createTRPCRouter({
 				updatedIssue.workspaceId,
 				updatedIssue.id,
 				{
-					id: updatedIssue.id,
 					title: updatedIssue.title,
 					status: updatedIssue.status,
 					priority: updatedIssue.priority,
 					assigneeId: updatedIssue.assigneeId,
-					changes,
+					...changes,
 				},
 				ctx.session.user.id,
 			);
+
+			// Execute automations based on changes
+			const automationData = {
+				issueId: updatedIssue.id,
+				title: updatedIssue.title,
+				status: updatedIssue.status,
+				priority: updatedIssue.priority,
+				assigneeId: updatedIssue.assigneeId,
+				creatorId: updatedIssue.creatorId,
+				teamId: updatedIssue.teamId,
+				projectId: updatedIssue.projectId,
+				labelIds: updatedIssue.labels.map((l) => l.labelId),
+			};
+
+			// General issue update automation
+			void executeAutomations({
+				trigger: "ISSUE_UPDATED",
+				workspaceId: updatedIssue.workspaceId,
+				issueId: updatedIssue.id,
+				data: automationData,
+			});
+
+			// Specific field change automations
+			for (const change of changes) {
+				if (change.field === "status") {
+					void executeAutomations({
+						trigger: "STATUS_CHANGED",
+						workspaceId: updatedIssue.workspaceId,
+						issueId: updatedIssue.id,
+						data: { ...automationData, oldStatus: change.oldValue },
+					});
+				}
+				if (change.field === "assigneeId") {
+					void executeAutomations({
+						trigger: "ASSIGNEE_CHANGED",
+						workspaceId: updatedIssue.workspaceId,
+						issueId: updatedIssue.id,
+						data: { ...automationData, oldAssigneeId: change.oldValue },
+					});
+				}
+				if (change.field === "priority") {
+					void executeAutomations({
+						trigger: "PRIORITY_CHANGED",
+						workspaceId: updatedIssue.workspaceId,
+						issueId: updatedIssue.id,
+						data: { ...automationData, oldPriority: change.oldValue },
+					});
+				}
+			}
 
 			return updatedIssue;
 		}),

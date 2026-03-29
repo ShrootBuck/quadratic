@@ -12,6 +12,7 @@ import {
 	Settings,
 	Tag,
 	Users,
+	Workflow,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -74,6 +75,11 @@ const secondaryNavItems = [
 		name: "Templates",
 		href: "/app/templates",
 		icon: FileText,
+	},
+	{
+		name: "Automations",
+		href: "/app/automations",
+		icon: Workflow,
 	},
 	{
 		name: "Settings",

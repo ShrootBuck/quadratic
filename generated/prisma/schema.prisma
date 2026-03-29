@@ -119,6 +119,8 @@ model Workspace {
   notifications           Notification[]
   notificationPreferences NotificationPreferences[]
   templates               Template[]
+  automationRules         AutomationRule[]
+  automationLogs          AutomationLog[]
 
   @@map("workspace")
 }
@@ -145,13 +147,14 @@ model Team {
   color     String // e.g., "#5E6AD2"
   createdAt DateTime @default(now())
 
-  workspaceId String
-  workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  projects    Project[]
-  issues      Issue[]
-  cycles      Cycle[]
-  labels      Label[]
-  templates   Template[]
+  workspaceId     String
+  workspace       Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  projects        Project[]
+  issues          Issue[]
+  cycles          Cycle[]
+  labels          Label[]
+  templates       Template[]
+  automationRules AutomationRule[]
 
   @@unique([workspaceId, key])
   @@index([workspaceId])
@@ -381,7 +384,67 @@ model Template {
   @@map("template")
 }
 
+model AutomationRule {
+  id          String            @id @default(cuid())
+  name        String
+  description String?
+  trigger     AutomationTrigger
+  conditions  String // JSON array of conditions
+  actions     String // JSON array of actions
+  enabled     Boolean           @default(true)
+  isTemplate  Boolean           @default(false)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  workspaceId String
+  workspace   Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  teamId      String?
+  team        Team?           @relation(fields: [teamId], references: [id], onDelete: SetNull)
+  logs        AutomationLog[]
+
+  @@index([workspaceId])
+  @@index([teamId])
+  @@index([enabled])
+  @@index([isTemplate])
+  @@map("automation_rule")
+}
+
+model AutomationLog {
+  id         String              @id @default(cuid())
+  status     AutomationLogStatus @default(SUCCESS)
+  error      String? // Error message if failed
+  inputData  String // JSON of the trigger event data
+  outputData String? // JSON of actions taken
+  executedAt DateTime            @default(now())
+
+  ruleId      String
+  rule        AutomationRule @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+  workspaceId String
+  workspace   Workspace      @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  issueId     String?
+
+  @@index([ruleId])
+  @@index([workspaceId])
+  @@index([executedAt])
+  @@index([status])
+  @@map("automation_log")
+}
+
 // Enums
+
+enum AutomationTrigger {
+  ISSUE_CREATED
+  ISSUE_UPDATED
+  STATUS_CHANGED
+  ASSIGNEE_CHANGED
+  PRIORITY_CHANGED
+}
+
+enum AutomationLogStatus {
+  SUCCESS
+  FAILED
+  SKIPPED
+}
 
 enum WorkspaceRole {
   ADMIN

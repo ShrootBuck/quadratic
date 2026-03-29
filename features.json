@@ -363,7 +363,7 @@
 				"Execution log showing automation history",
 				"Built-in templates: 'Auto-assign to creator', 'Move to backlog when unassigned'"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "github-integration",
