@@ -492,7 +492,7 @@
 				"Refined sidebar styling and navigation",
 				"Icon consistency (use same icon set throughout)"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "cleanup",

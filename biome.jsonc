@@ -79,6 +79,16 @@
 					}
 				}
 			}
+		},
+		{
+			"includes": ["**/skeleton.tsx"],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noArrayIndexKey": "off"
+					}
+				}
+			}
 		}
 	]
 }

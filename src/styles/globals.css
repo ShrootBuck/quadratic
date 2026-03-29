@@ -188,3 +188,193 @@ label {
 	color: #16a34a;
 	border: 1px solid #bbf7d0;
 }
+
+/* Animation Keyframes */
+@keyframes fade-in {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes slide-in-left {
+	from {
+		opacity: 0;
+		transform: translateX(-20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes slide-in-right {
+	from {
+		opacity: 0;
+		transform: translateX(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes slide-in-up {
+	from {
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes slide-in-down {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes scale-in {
+	from {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes shimmer {
+	0% {
+		background-position: -200% 0;
+	}
+	100% {
+		background-position: 200% 0;
+	}
+}
+
+/* Animation Classes */
+.animate-fade-in {
+	animation: fade-in 0.3s ease-out forwards;
+}
+
+.animate-slide-in-left {
+	animation: slide-in-left 0.3s ease-out forwards;
+}
+
+.animate-slide-in-right {
+	animation: slide-in-right 0.3s ease-out forwards;
+}
+
+.animate-slide-in-up {
+	animation: slide-in-up 0.3s ease-out forwards;
+}
+
+.animate-slide-in-down {
+	animation: slide-in-down 0.3s ease-out forwards;
+}
+
+.animate-scale-in {
+	animation: scale-in 0.2s ease-out forwards;
+}
+
+.animate-shimmer {
+	background: linear-gradient(
+		90deg,
+		rgba(255, 255, 255, 0) 0%,
+		rgba(255, 255, 255, 0.05) 50%,
+		rgba(255, 255, 255, 0) 100%
+	);
+	background-size: 200% 100%;
+	animation: shimmer 2s infinite;
+}
+
+/* Smooth Transitions */
+.transition-smooth {
+	transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover Micro-interactions */
+.hover-lift {
+	transition:
+		transform 0.2s ease,
+		box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.hover-scale {
+	transition: transform 0.2s ease;
+}
+
+.hover-scale:hover {
+	transform: scale(1.02);
+}
+
+.hover-glow {
+	transition: box-shadow 0.2s ease;
+}
+
+.hover-glow:hover {
+	box-shadow: 0 0 20px rgba(94, 106, 210, 0.3);
+}
+
+/* Button Micro-interactions */
+button:not(:disabled) {
+	transition: all 0.15s ease;
+}
+
+button:not(:disabled):active {
+	transform: scale(0.98);
+}
+
+/* Card Interactions */
+.card-interactive {
+	transition: all 0.2s ease;
+}
+
+.card-interactive:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Focus Ring Animation */
+.focus-ring-animated:focus-visible {
+	outline: 2px solid #5e6ad2;
+	outline-offset: 2px;
+	transition: outline-offset 0.15s ease;
+}
+
+/* Loading Skeleton Shimmer */
+.skeleton-shimmer {
+	position: relative;
+	overflow: hidden;
+}
+
+.skeleton-shimmer::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		90deg,
+		transparent 0%,
+		rgba(255, 255, 255, 0.03) 50%,
+		transparent 100%
+	);
+	animation: shimmer 1.5s infinite;
+}
