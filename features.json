@@ -347,7 +347,7 @@
 				"Automatic reconnection on disconnect",
 				"Batch rapid updates (don't spam the API)"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "workflow-automations",

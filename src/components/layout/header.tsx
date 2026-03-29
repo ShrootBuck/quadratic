@@ -3,6 +3,8 @@
 import { Command, LogOut, Search, Settings, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { NotificationDropdown } from "@/components/notifications";
+import { ConnectionStatusIndicator } from "@/components/realtime/connection-status";
+import { useRealtimeContext } from "@/components/realtime/realtime-provider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -78,6 +80,12 @@ export function Header({
 
 					{/* Notifications */}
 					<NotificationDropdown workspaceId={workspaceId} />
+
+					{/* Connection Status */}
+					<ConnectionStatusIndicator
+						className="mr-2"
+						status={useRealtimeContext().status}
+					/>
 
 					{/* User Menu */}
 					<DropdownMenu>

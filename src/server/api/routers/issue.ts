@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import { realtimeManager } from "~/server/realtime/manager";
 
 // Enums for validation
 const IssueStatus = z.enum([
@@ -217,7 +218,39 @@ export const issueRouter = createTRPCRouter({
 						actorId: ctx.session.user.id,
 					},
 				});
+
+				// Notify via realtime
+				realtimeManager.notifyNewNotification(
+					issue.workspaceId,
+					issue.assigneeId,
+					{
+						type: "ASSIGNED",
+						title: `assigned you to ${issue.identifier}`,
+						issueId: issue.id,
+					},
+				);
+
+				// Update notification count
+				const unreadCount = await ctx.db.notification.count({
+					where: {
+						userId: issue.assigneeId,
+						workspaceId: issue.workspaceId,
+						read: false,
+					},
+				});
+				realtimeManager.notifyNotificationCountUpdate(
+					issue.workspaceId,
+					issue.assigneeId,
+					unreadCount,
+				);
 			}
+
+			// Broadcast issue creation to all clients in workspace
+			realtimeManager.notifyIssueCreated(
+				issue.workspaceId,
+				issue,
+				ctx.session.user.id,
+			);
 
 			return issue;
 		}),
@@ -464,6 +497,30 @@ export const issueRouter = createTRPCRouter({
 								actorId: ctx.session.user.id,
 							},
 						});
+
+						// Realtime notification
+						realtimeManager.notifyNewNotification(
+							updatedIssue.workspaceId,
+							updateData.assigneeId,
+							{
+								type: "ASSIGNED",
+								title: `assigned you to ${updatedIssue.identifier}`,
+								issueId: updatedIssue.id,
+							},
+						);
+
+						const unreadCount = await ctx.db.notification.count({
+							where: {
+								userId: updateData.assigneeId,
+								workspaceId: updatedIssue.workspaceId,
+								read: false,
+							},
+						});
+						realtimeManager.notifyNotificationCountUpdate(
+							updatedIssue.workspaceId,
+							updateData.assigneeId,
+							unreadCount,
+						);
 					}
 				}
 
@@ -484,6 +541,21 @@ export const issueRouter = createTRPCRouter({
 					}
 				}
 			}
+
+			// Broadcast issue update to all clients in workspace
+			realtimeManager.notifyIssueUpdated(
+				updatedIssue.workspaceId,
+				updatedIssue.id,
+				{
+					id: updatedIssue.id,
+					title: updatedIssue.title,
+					status: updatedIssue.status,
+					priority: updatedIssue.priority,
+					assigneeId: updatedIssue.assigneeId,
+					changes,
+				},
+				ctx.session.user.id,
+			);
 
 			return updatedIssue;
 		}),
@@ -522,6 +594,13 @@ export const issueRouter = createTRPCRouter({
 			await ctx.db.issue.delete({
 				where: { id: input.id },
 			});
+
+			// Broadcast issue deletion to all clients in workspace
+			realtimeManager.notifyIssueDeleted(
+				issue.workspaceId,
+				input.id,
+				ctx.session.user.id,
+			);
 
 			return { success: true };
 		}),
