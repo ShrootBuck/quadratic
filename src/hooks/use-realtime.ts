@@ -101,11 +101,7 @@ export function useRealtime({
 		};
 
 		// Handle connected event
-		es.addEventListener("connected", (event) => {
-			const data = JSON.parse(event.data) as {
-				connected: boolean;
-				userId: string;
-			};
+		es.addEventListener("connected", () => {
 			setStatus("connected");
 		});
 

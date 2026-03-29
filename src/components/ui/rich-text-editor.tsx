@@ -5,6 +5,10 @@ import LinkExtension from "@tiptap/extension-link";
 import Mention from "@tiptap/extension-mention";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import type {
+	SuggestionKeyDownProps,
+	SuggestionProps,
+} from "@tiptap/suggestion";
 import { common, createLowlight } from "lowlight";
 import {
 	Bold,
@@ -134,7 +138,7 @@ const RichTextEditor = forwardRef<RichTextEditorRef, RichTextEditorProps>(
 							let component: HTMLElement | null = null;
 
 							return {
-								onStart: (props) => {
+								onStart: (props: SuggestionProps<MentionSuggestionItem>) => {
 									setSelectedIndex(0);
 									component = document.createElement("div");
 									component.className =
@@ -152,20 +156,26 @@ const RichTextEditor = forwardRef<RichTextEditorRef, RichTextEditorProps>(
 										},
 									);
 
-									const tippyInstances = tippy(document.body, {
-										getReferenceClientRect: props.clientRect as () => DOMRect,
-										appendTo: () => document.body,
-										content: component,
-										showOnCreate: true,
-										interactive: true,
-										trigger: "manual",
-										placement: "bottom-start",
-									});
+									const tippyInstances = tippy(
+										document.body as unknown as Element,
+										{
+											getReferenceClientRect: () => {
+												const rect = props.clientRect?.();
+												return rect ?? new DOMRect(0, 0, 0, 0);
+											},
+											appendTo: () => document.body,
+											content: component,
+											showOnCreate: true,
+											interactive: true,
+											trigger: "manual",
+											placement: "bottom-start",
+										},
+									);
 									popup = Array.isArray(tippyInstances)
-										? tippyInstances[0]
+										? (tippyInstances[0] ?? null)
 										: tippyInstances;
 								},
-								onUpdate: (props) => {
+								onUpdate: (props: SuggestionProps<MentionSuggestionItem>) => {
 									if (!component) return;
 									component.innerHTML = "";
 
@@ -182,21 +192,21 @@ const RichTextEditor = forwardRef<RichTextEditorRef, RichTextEditorProps>(
 									);
 
 									popup?.setProps({
-										getReferenceClientRect: props.clientRect as () => DOMRect,
+										getReferenceClientRect: () => {
+											const rect = props.clientRect?.();
+											return rect ?? new DOMRect(0, 0, 0, 0);
+										},
 									});
 								},
-								onKeyDown: (props) => {
-									// biome-ignore lint/suspicious/noExplicitAny: TipTap suggestion types are complex
-									const event = (props as any).event as KeyboardEvent;
-									// biome-ignore lint/suspicious/noExplicitAny: TipTap suggestion types are complex
-									const items = (props as any).items as MentionSuggestionItem[];
+								onKeyDown: (props: SuggestionKeyDownProps) => {
+									const { event } = props;
 									if (event.key === "Escape") {
 										popup?.hide();
 										return true;
 									}
 									if (event.key === "ArrowDown") {
 										setSelectedIndex((prev) =>
-											Math.min(prev + 1, items.length - 1),
+											Math.min(prev + 1, suggestionsList.length - 1),
 										);
 										return true;
 									}
@@ -274,7 +284,9 @@ const RichTextEditor = forwardRef<RichTextEditorRef, RichTextEditorProps>(
 		const setLink = useCallback(() => {
 			if (!editor) return;
 
-			const previousUrl = editor.getAttributes("link").href as string;
+			const attributes = editor.getAttributes("link");
+			const previousUrl =
+				typeof attributes.href === "string" ? attributes.href : "";
 			const url = window.prompt("Enter URL", previousUrl);
 
 			if (url === null) return;
