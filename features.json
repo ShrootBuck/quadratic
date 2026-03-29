@@ -330,7 +330,7 @@
 				"Keyboard shortcuts within editor (Cmd+B for bold, etc.)",
 				"Stash/undo stack on blur"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "realtime-updates",
@@ -479,7 +479,18 @@
 				"Empty states for all views",
 				"Tooltip explanations throughout",
 				"Performance: First load under 2s",
-				"Performance: Issue list scrolls smoothly with 500+ items"
+				"Performance: Issue list scrolls smoothly with 500+ items",
+				"Clean, minimal UI design (Vercel/Linear aesthetic)",
+				"Refined spacing and typography hierarchy",
+				"Subtle shadows and borders (no heavy visual noise)",
+				"Consistent color palette throughout",
+				"Micro-interactions on buttons and interactive elements",
+				"Hover states for all interactive components",
+				"Focus rings and accessibility indicators",
+				"Remove any unnecessary visual clutter",
+				"Polished dropdown menus and modals",
+				"Refined sidebar styling and navigation",
+				"Icon consistency (use same icon set throughout)"
 			],
 			"passes": false
 		},

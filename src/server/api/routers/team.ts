@@ -485,10 +485,11 @@ export const teamRouter = createTRPCRouter({
 
 	// Get workspace members (for team member management)
 	getMembers: protectedProcedure
-		.input(teamIdSchema)
+		.input(z.union([teamIdSchema, z.object({ teamId: z.string() })]))
 		.query(async ({ ctx, input }) => {
+			const teamId = "id" in input ? input.id : input.teamId;
 			const team = await ctx.db.team.findUnique({
-				where: { id: input.id },
+				where: { id: teamId },
 			});
 
 			if (!team) {

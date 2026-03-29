@@ -10,10 +10,11 @@ import {
 	CircleDot,
 	Link2,
 	MoreHorizontal,
+	Undo,
 	XCircle,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IssueActivity } from "@/components/features/issues/issue-activity";
 import { IssueComments } from "@/components/features/issues/issue-comments";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -26,8 +27,10 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+import RichTextEditor, {
+	type RichTextEditorRef,
+} from "@/components/ui/rich-text-editor";
 import { Separator } from "@/components/ui/separator";
-import { Textarea } from "@/components/ui/textarea";
 import {
 	Tooltip,
 	TooltipContent,
@@ -111,13 +114,18 @@ export default function IssueDetailPage({ params }: IssueDetailPageProps) {
 		},
 	});
 
+	const editorRef = useRef<RichTextEditorRef>(null);
 	const [title, setTitle] = useState(issue?.title ?? "");
 	const [description, setDescription] = useState(issue?.description ?? "");
+	const [lastSavedDescription, setLastSavedDescription] = useState(
+		issue?.description ?? "",
+	);
 
 	useEffect(() => {
 		if (issue) {
 			setTitle(issue.title);
 			setDescription(issue.description ?? "");
+			setLastSavedDescription(issue.description ?? "");
 		}
 	}, [issue]);
 
@@ -131,15 +139,33 @@ export default function IssueDetailPage({ params }: IssueDetailPageProps) {
 		return () => clearTimeout(timeout);
 	}, [title, issue, updateMutation]);
 
+	// Debounced auto-save for description (2 seconds)
 	useEffect(() => {
-		if (!issue || description === (issue.description ?? "")) return;
+		if (!issue || description === lastSavedDescription) return;
 
 		const timeout = setTimeout(() => {
 			updateMutation.mutate({ id: issue.id, description });
-		}, 1000);
+			setLastSavedDescription(description);
+		}, 2000);
 
 		return () => clearTimeout(timeout);
-	}, [description, issue, updateMutation]);
+	}, [description, issue, updateMutation, lastSavedDescription]);
+
+	// Save on blur
+	const handleDescriptionBlur = () => {
+		if (issue && description !== lastSavedDescription) {
+			updateMutation.mutate({ id: issue.id, description });
+			setLastSavedDescription(description);
+		}
+	};
+
+	// Undo to last saved state
+	const handleUndo = () => {
+		if (editorRef.current) {
+			editorRef.current.undo();
+			setDescription(lastSavedDescription);
+		}
+	};
 
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
@@ -296,11 +322,42 @@ export default function IssueDetailPage({ params }: IssueDetailPageProps) {
 						</div>
 
 						<div className="mb-8">
-							<Textarea
-								className="min-h-[200px] border-[#2A2F35] bg-[#16181D] text-[#F7F8F8] placeholder:text-[#8A8F98] focus:border-[#5E6AD2]"
-								onChange={(e) => setDescription(e.target.value)}
+							<div className="mb-2 flex items-center justify-between">
+								<span className="font-medium text-[#8A8F98] text-sm uppercase tracking-wider">
+									Description
+								</span>
+								{description !== lastSavedDescription && (
+									<div className="flex items-center gap-2">
+										<span className="text-[#8A8F98] text-xs">
+											Unsaved changes
+										</span>
+										<Tooltip>
+											<TooltipTrigger asChild>
+												<Button
+													className="h-7 px-2 text-[#8A8F98] hover:bg-[#2A2F35] hover:text-[#F7F8F8]"
+													onClick={handleUndo}
+													size="sm"
+													variant="ghost"
+												>
+													<Undo className="mr-1 h-3.5 w-3.5" />
+													Undo
+												</Button>
+											</TooltipTrigger>
+											<TooltipContent>
+												<p>Undo to last saved state</p>
+											</TooltipContent>
+										</Tooltip>
+									</div>
+								)}
+							</div>
+							<RichTextEditor
+								content={description}
+								minHeight={200}
+								onBlur={handleDescriptionBlur}
+								onChange={(html) => setDescription(html)}
 								placeholder="Add a description..."
-								value={description}
+								ref={editorRef}
+								teamId={issue?.teamId}
 							/>
 						</div>
 
