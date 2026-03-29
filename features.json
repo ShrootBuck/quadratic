@@ -446,7 +446,7 @@
 				"Import validation and preview before committing",
 				"Export includes all metadata (labels, comments, history)"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "custom-fields",

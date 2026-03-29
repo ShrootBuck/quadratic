@@ -1,4 +1,12 @@
-import { Bell, Brush, Key, Palette, Settings, User } from "lucide-react";
+import {
+	Bell,
+	Brush,
+	Database,
+	Key,
+	Palette,
+	Settings,
+	User,
+} from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getSession } from "~/server/better-auth/server";
@@ -58,6 +66,12 @@ export default async function SettingsLayout({
 			label: "API Keys",
 			href: "/settings/api-keys",
 			icon: Key,
+			adminOnly: true,
+		},
+		{
+			label: "Import / Export",
+			href: "/settings/import-export",
+			icon: Database,
 			adminOnly: true,
 		},
 	];
