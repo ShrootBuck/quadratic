@@ -34,7 +34,7 @@
 				"Document why remaining TODOs can't be fixed yet (if any)",
 				"Zero TODO/FIXME comments remain in production code"
 			],
-			"passes": false
+			"passes": true
 		},
 		{
 			"id": "type-safety",

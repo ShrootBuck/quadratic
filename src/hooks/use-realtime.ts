@@ -107,7 +107,6 @@ export function useRealtime({
 				userId: string;
 			};
 			setStatus("connected");
-			console.log("[Realtime] Connected:", data);
 		});
 
 		// Handle ping (keep-alive)
@@ -118,7 +117,6 @@ export function useRealtime({
 		// Handle issue created
 		es.addEventListener("issue_created", (event) => {
 			const data = JSON.parse(event.data) as { issue: unknown };
-			console.log("[Realtime] Issue created:", data.issue);
 
 			// Invalidate issue list queries
 			queryClient.invalidateQueries({ queryKey: ["issue", "list"] });
@@ -133,7 +131,6 @@ export function useRealtime({
 				changes: unknown;
 				timestamp: number;
 			};
-			console.log("[Realtime] Issue updated:", data);
 
 			// Invalidate specific issue query
 			queryClient.invalidateQueries({
@@ -148,7 +145,6 @@ export function useRealtime({
 		// Handle issue deleted
 		es.addEventListener("issue_deleted", (event) => {
 			const data = JSON.parse(event.data) as { issueId: string };
-			console.log("[Realtime] Issue deleted:", data.issueId);
 
 			// Invalidate issue queries
 			queryClient.invalidateQueries({ queryKey: ["issue", "list"] });
@@ -160,7 +156,6 @@ export function useRealtime({
 		// Handle new notification
 		es.addEventListener("notification_new", (event) => {
 			const data = JSON.parse(event.data) as { notification: unknown };
-			console.log("[Realtime] New notification:", data.notification);
 
 			// Invalidate notification queries
 			queryClient.invalidateQueries({ queryKey: ["notification", "list"] });
@@ -171,7 +166,6 @@ export function useRealtime({
 		// Handle notification count update
 		es.addEventListener("notification_count", (event) => {
 			const data = JSON.parse(event.data) as { count: number };
-			console.log("[Realtime] Notification count:", data.count);
 
 			// Update notification count query
 			queryClient.setQueryData(
@@ -190,7 +184,6 @@ export function useRealtime({
 				userName: string;
 				field: string;
 			};
-			console.log("[Realtime] Editing started:", data);
 			onEditingStarted?.(data);
 		});
 
@@ -201,7 +194,6 @@ export function useRealtime({
 				userId: string;
 				field: string;
 			};
-			console.log("[Realtime] Editing stopped:", data);
 			onEditingStopped?.(data);
 		});
 	}, [
